@@ -1,4 +1,4 @@
-﻿namespace ChameleonMiniGUI
+namespace ChameleonMiniGUI
 {
     partial class frm_main
     {
@@ -144,6 +144,8 @@
             this.btn_refresh = new System.Windows.Forms.Button();
             this.btn_exitboot = new System.Windows.Forms.Button();
             this.btn_bootmode = new System.Windows.Forms.Button();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.gb_tagslot1.SuspendLayout();
             this.gb_tagslot2.SuspendLayout();
             this.gb_tagslot3.SuspendLayout();
@@ -221,6 +223,7 @@
             this.btn_download1.TabIndex = 8;
             this.btn_download1.Text = "Download Dump";
             this.btn_download1.UseVisualStyleBackColor = true;
+            this.btn_download1.Click += new System.EventHandler(this.btn_download_Click);
             // 
             // btn_upload1
             // 
@@ -230,6 +233,7 @@
             this.btn_upload1.TabIndex = 7;
             this.btn_upload1.Text = "Upload Dump";
             this.btn_upload1.UseVisualStyleBackColor = true;
+            this.btn_upload1.Click += new System.EventHandler(this.btn_upload_Click);
             // 
             // txt_result1
             // 
@@ -369,6 +373,7 @@
             this.btn_download2.TabIndex = 8;
             this.btn_download2.Text = "Download Dump";
             this.btn_download2.UseVisualStyleBackColor = true;
+            this.btn_download2.Click += new System.EventHandler(this.btn_download_Click);
             // 
             // btn_upload2
             // 
@@ -378,6 +383,7 @@
             this.btn_upload2.TabIndex = 7;
             this.btn_upload2.Text = "Upload Dump";
             this.btn_upload2.UseVisualStyleBackColor = true;
+            this.btn_upload2.Click += new System.EventHandler(this.btn_upload_Click);
             // 
             // txt_result2
             // 
@@ -517,6 +523,7 @@
             this.btn_download3.TabIndex = 8;
             this.btn_download3.Text = "Download Dump";
             this.btn_download3.UseVisualStyleBackColor = true;
+            this.btn_download3.Click += new System.EventHandler(this.btn_download_Click);
             // 
             // btn_upload3
             // 
@@ -526,6 +533,7 @@
             this.btn_upload3.TabIndex = 7;
             this.btn_upload3.Text = "Upload Dump";
             this.btn_upload3.UseVisualStyleBackColor = true;
+            this.btn_upload3.Click += new System.EventHandler(this.btn_upload_Click);
             // 
             // txt_result3
             // 
@@ -665,6 +673,7 @@
             this.btn_download4.TabIndex = 8;
             this.btn_download4.Text = "Download Dump";
             this.btn_download4.UseVisualStyleBackColor = true;
+            this.btn_download4.Click += new System.EventHandler(this.btn_download_Click);
             // 
             // btn_upload4
             // 
@@ -674,6 +683,7 @@
             this.btn_upload4.TabIndex = 7;
             this.btn_upload4.Text = "Upload Dump";
             this.btn_upload4.UseVisualStyleBackColor = true;
+            this.btn_upload4.Click += new System.EventHandler(this.btn_upload_Click);
             // 
             // txt_result4
             // 
@@ -813,6 +823,7 @@
             this.btn_download5.TabIndex = 8;
             this.btn_download5.Text = "Download Dump";
             this.btn_download5.UseVisualStyleBackColor = true;
+            this.btn_download5.Click += new System.EventHandler(this.btn_download_Click);
             // 
             // btn_upload5
             // 
@@ -822,6 +833,7 @@
             this.btn_upload5.TabIndex = 7;
             this.btn_upload5.Text = "Upload Dump";
             this.btn_upload5.UseVisualStyleBackColor = true;
+            this.btn_upload5.Click += new System.EventHandler(this.btn_upload_Click);
             // 
             // txt_result5
             // 
@@ -961,6 +973,7 @@
             this.btn_download6.TabIndex = 8;
             this.btn_download6.Text = "Download Dump";
             this.btn_download6.UseVisualStyleBackColor = true;
+            this.btn_download6.Click += new System.EventHandler(this.btn_download_Click);
             // 
             // btn_upload6
             // 
@@ -970,6 +983,7 @@
             this.btn_upload6.TabIndex = 7;
             this.btn_upload6.Text = "Upload Dump";
             this.btn_upload6.UseVisualStyleBackColor = true;
+            this.btn_upload6.Click += new System.EventHandler(this.btn_upload_Click);
             // 
             // txt_result6
             // 
@@ -1109,6 +1123,7 @@
             this.btn_download7.TabIndex = 8;
             this.btn_download7.Text = "Download Dump";
             this.btn_download7.UseVisualStyleBackColor = true;
+            this.btn_download7.Click += new System.EventHandler(this.btn_download_Click);
             // 
             // btn_upload7
             // 
@@ -1118,6 +1133,7 @@
             this.btn_upload7.TabIndex = 7;
             this.btn_upload7.Text = "Upload Dump";
             this.btn_upload7.UseVisualStyleBackColor = true;
+            this.btn_upload7.Click += new System.EventHandler(this.btn_upload_Click);
             // 
             // txt_result7
             // 
@@ -1257,6 +1273,7 @@
             this.btn_download8.TabIndex = 8;
             this.btn_download8.Text = "Download Dump";
             this.btn_download8.UseVisualStyleBackColor = true;
+            this.btn_download8.Click += new System.EventHandler(this.btn_download_Click);
             // 
             // btn_upload8
             // 
@@ -1266,6 +1283,7 @@
             this.btn_upload8.TabIndex = 7;
             this.btn_upload8.Text = "Upload Dump";
             this.btn_upload8.UseVisualStyleBackColor = true;
+            this.btn_upload8.Click += new System.EventHandler(this.btn_upload_Click);
             // 
             // txt_result8
             // 
@@ -1374,6 +1392,10 @@
             this.btn_bootmode.Text = "Boot Mode";
             this.btn_bootmode.UseVisualStyleBackColor = true;
             this.btn_bootmode.Click += new System.EventHandler(this.btn_bootmode_Click);
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.Filter = "Dump Files|*.dump";
             // 
             // frm_main
             // 
@@ -1543,6 +1565,8 @@
         private System.Windows.Forms.Button btn_refresh;
         private System.Windows.Forms.Button btn_exitboot;
         private System.Windows.Forms.Button btn_bootmode;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
     }
 }
 

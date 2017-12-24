@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Configuration;
 using System.Linq;
 using System.Text;
@@ -8,12 +8,15 @@ using System.Threading;
 using System.Text.RegularExpressions;
 using System.IO;
 using static System.Diagnostics.Process;
+using System.Management;
 
 namespace ChameleonMiniGUI
 {
     public partial class frm_main : Form
     {
         private SerialPort _comport = null;
+        private string[] modesArray = null;
+        private string[] buttonModesArray = null;
 
         public frm_main()
         {
@@ -28,10 +31,14 @@ namespace ChameleonMiniGUI
 
             if (_comport != null && _comport.IsOpen)
             {
+                // Get all available modes and populate the dropdowns
+                GetSupportedModes();
+
                 // Refresh all
                 RefreshAllSlots();
             }
         }
+
         private void frm_main_FormClosed(object sender, FormClosedEventArgs e)
         {
             if (_comport != null && _comport.IsOpen)
@@ -96,6 +103,11 @@ namespace ChameleonMiniGUI
 
             if (_comport != null && _comport.IsOpen)
             {
+                if (modesArray == null || buttonModesArray == null)
+                {
+                    GetSupportedModes();
+                }
+
                 RefreshAllSlots();
             }
             else
@@ -126,14 +138,23 @@ namespace ChameleonMiniGUI
             // Run the bootloader exe
             try
             {
-                var fp = ConfigurationManager.AppSettings["BOOTLOADER_PATH"];
-                var fn = ConfigurationManager.AppSettings["BOOTLOADER_EXE"];
-                var path = Path.Combine(fp, fn);
+                var bootloaderPath = ConfigurationManager.AppSettings["BOOTLOADER_PATH"];
+                var bootloaderFileName = ConfigurationManager.AppSettings["BOOTLOADER_EXE"];
+                var flashFileName = ConfigurationManager.AppSettings["FLASH_BINARY"];
+                var eepromFileName = ConfigurationManager.AppSettings["EEPROM_BINARY"];
 
-                if (File.Exists(path))
+                var fullBootloaderPath = Path.Combine(bootloaderPath, bootloaderFileName);
+                var fullFlashBinaryPath = Path.Combine(bootloaderPath, flashFileName);
+                var fullEepromBinaryPath = Path.Combine(bootloaderPath, eepromFileName);
+
+                if (File.Exists(fullBootloaderPath) && File.Exists(fullFlashBinaryPath) && File.Exists(fullEepromBinaryPath))
                 {
-                    Start(path);
+                    Start(fullBootloaderPath);
                     failed = false;
+                }
+                else
+                {
+                    MessageBox.Show("Unable to find all the required files to exit the boot mode", "Exit Boot Mode failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception)
@@ -144,6 +165,68 @@ namespace ChameleonMiniGUI
             if (failed)
             {
                 MessageBox.Show("Unable to exit the bootloader mode", "Exit Boot Mode failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btn_upload_Click(object sender, EventArgs e)
+        {
+            string dumpFilename = null;
+
+            Button uploadButtonClicked = sender as Button;
+
+            int tagslotIndex = int.Parse(uploadButtonClicked.Name.Substring(uploadButtonClicked.Name.Length - 1));
+            if (tagslotIndex > 0)
+            {
+                // select the corresponding slot
+                SendCommandWithoutResult("SETTINGMY=" + (tagslotIndex - 1));
+
+                // Open dialog
+                DialogResult result = openFileDialog1.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    dumpFilename = openFileDialog1.FileName;
+                }
+
+                if (dumpFilename != null)
+                {
+                    // Load the dump
+                    LoadDump(dumpFilename);
+
+                    // Refresh slot
+                    RefreshSlot(tagslotIndex - 1);
+                }
+            }
+        }
+
+        private void btn_download_Click(object sender, EventArgs e)
+        {
+            string dumpFilename = null;
+
+            Button downloadButtonClicked = sender as Button;
+
+            int tagslotIndex = int.Parse(downloadButtonClicked.Name.Substring(downloadButtonClicked.Name.Length - 1));
+            if (tagslotIndex > 0)
+            {
+                // select the corresponding slot
+                SendCommandWithoutResult("SETTINGMY=" + (tagslotIndex - 1));
+
+                // Save dialog
+                if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    dumpFilename = saveFileDialog1.FileName;
+                }
+
+                if (dumpFilename != null)
+                {
+                    // Add extension if missing
+                    dumpFilename = (!dumpFilename.ToLower().Contains(".dump") ? dumpFilename = dumpFilename + ".dump" : dumpFilename);
+
+                    // Save the dump
+                    SaveDump(dumpFilename);
+
+                    // Refresh slot
+                    RefreshSlot(tagslotIndex - 1);
+                }
             }
         }
         #endregion
@@ -184,6 +267,29 @@ namespace ChameleonMiniGUI
             if (_comport != null && _comport.IsOpen)
             {
                 this.Text = "Device connected";
+            }
+        }
+
+        // Alternative open serial port helper method
+        private void OpenChameleonSerialPort()
+        {
+            var searcher = new ManagementObjectSearcher("select DeviceID from Win32_SerialPort where Description = \"ChameleonMini Virtual Serial Port\"");
+            foreach (var obj in searcher.Get())
+            {
+                string comPortStr = (string)obj["DeviceID"];
+
+                _comport = new SerialPort(comPortStr, 115200);
+            }
+
+            try
+            {
+                _comport.Open();
+            }
+            catch (Exception) { }
+
+            if (_comport == null)
+            {
+                throw new Exception("Unable to find ChameleonMini device.");
             }
         }
 
@@ -325,7 +431,7 @@ namespace ChameleonMiniGUI
 
         private bool IsButtonModeValid(string slotButtonMode)
         {
-            if (new[] { "SWITCHCARD", "RANDOM_UID", "CLOSED" }.Contains(slotButtonMode))
+            if (buttonModesArray.Contains(slotButtonMode))
             {
                 return true;
             }
@@ -335,12 +441,147 @@ namespace ChameleonMiniGUI
 
         private bool IsModeValid(string slotMode)
         {
-            if (new[] { "MF_CLASSIC_1K", "MF_CLASSIC_4K", "MF_ULTRALIGHT", "MF_DETECTION", "CLOSED" }.Contains(slotMode))
+            if (modesArray.Contains(slotMode))
             {
                 return true;
             }
 
             return false;
+        }
+
+        private void GetSupportedModes()
+        {
+            string resultModesStr = SendCommand("CONFIGMY");
+
+            if (!String.IsNullOrEmpty(resultModesStr))
+            {
+                // split by comma
+                modesArray = resultModesStr.Split(',');
+
+                if (modesArray.Length > 0)
+                {
+                    // populate all dropdowns
+                    this.cb_mode1.Items.Clear();
+                    this.cb_mode1.Items.AddRange(modesArray);
+                    this.cb_mode2.Items.Clear();
+                    this.cb_mode2.Items.AddRange(modesArray);
+                    this.cb_mode3.Items.Clear();
+                    this.cb_mode3.Items.AddRange(modesArray);
+                    this.cb_mode4.Items.Clear();
+                    this.cb_mode4.Items.AddRange(modesArray);
+                    this.cb_mode5.Items.Clear();
+                    this.cb_mode5.Items.AddRange(modesArray);
+                    this.cb_mode6.Items.Clear();
+                    this.cb_mode6.Items.AddRange(modesArray);
+                    this.cb_mode7.Items.Clear();
+                    this.cb_mode7.Items.AddRange(modesArray);
+                    this.cb_mode8.Items.Clear();
+                    this.cb_mode8.Items.AddRange(modesArray);
+                }
+            }
+
+            string resultButtonModesStr = SendCommand("BUTTONMY");
+
+            if (!String.IsNullOrEmpty(resultButtonModesStr))
+            {
+                // split by comma
+                buttonModesArray = resultButtonModesStr.Split(',');
+
+                if (buttonModesArray.Length > 0)
+                {
+                    if (!buttonModesArray.Contains("SWITCHCARD"))
+                    {
+                        buttonModesArray = buttonModesArray.Concat(new string[] { "SWITCHCARD" }).ToArray();
+                    }
+
+                    // populate all dropdowns
+                    this.cb_button1.Items.Clear();
+                    this.cb_button1.Items.AddRange(buttonModesArray);
+                    this.cb_button2.Items.Clear();
+                    this.cb_button2.Items.AddRange(buttonModesArray);
+                    this.cb_button3.Items.Clear();
+                    this.cb_button3.Items.AddRange(buttonModesArray);
+                    this.cb_button4.Items.Clear();
+                    this.cb_button4.Items.AddRange(buttonModesArray);
+                    this.cb_button5.Items.Clear();
+                    this.cb_button5.Items.AddRange(buttonModesArray);
+                    this.cb_button6.Items.Clear();
+                    this.cb_button6.Items.AddRange(buttonModesArray);
+                    this.cb_button7.Items.Clear();
+                    this.cb_button7.Items.AddRange(buttonModesArray);
+                    this.cb_button8.Items.Clear();
+                    this.cb_button8.Items.AddRange(buttonModesArray);
+                }
+            }
+        }
+
+        private static byte[] ReadFileIntoByteArray(string filename)
+        {
+            MemoryStream outputStream;
+
+            using (var inputStream = new FileStream(filename, FileMode.Open, FileAccess.Read))
+            {
+                outputStream = new MemoryStream((int)inputStream.Length);
+                inputStream.CopyTo(outputStream);
+            }
+
+            return outputStream.ToArray();
+        }
+
+        internal void LoadDump(string filename)
+        {
+            // Load the file into a memory block
+            byte[] DataArray = ReadFileIntoByteArray(filename);
+
+            // Set up an XMODEM object
+            XMODEM Modem = new XMODEM(_comport, XMODEM.Variants.XModemChecksum);
+
+            // First send the upload command
+            SendCommandWithoutResult("UPLOADMY");
+            _comport.ReadLine(); // For the "110:WAITING FOR XMODEM" text
+
+            int numBytesSuccessfullySent = Modem.Send(DataArray);
+
+            if (numBytesSuccessfullySent == DataArray.Length && Modem.TerminationReason == XMODEM.TerminationReasonEnum.EndOfFile)
+                Console.WriteLine("FILE LOAD SUCCESSFUL!");
+            else
+                MessageBox.Show("Failed to upload file");
+
+        }
+
+        internal void SaveDump(string filename)
+        {
+            // Set up an XMODEM object
+            XMODEM Modem = new XMODEM(_comport, XMODEM.Variants.XModemChecksum);
+
+            // First send the download command
+            SendCommandWithoutResult("DOWNLOADMY");
+            
+            _comport.ReadLine(); // For the "110:WAITING FOR XMODEM" text
+
+            MemoryStream DataMemoryStream = new MemoryStream(); // Grows dynamically
+            byte[] DataArray = new byte[0];
+
+            XMODEM.TerminationReasonEnum terminationReason = Modem.Receive(DataMemoryStream);
+
+            if (terminationReason == XMODEM.TerminationReasonEnum.EndOfFile)
+            {
+                Console.WriteLine("FILE RECEIVE SUCCESSFUL!");
+
+                // Transfer successful, so convert MemoryStream to byte array
+                DataArray = DataMemoryStream.ToArray();
+
+                // Strip away the SUB (byte value 26) padding bytes
+                DataArray = Modem.TrimPaddingBytesFromEnd(DataArray);
+
+                // Write the actual file
+                File.WriteAllBytes(filename, DataArray);
+            }
+            else
+            {
+                // Something went wrong during the transfer
+                MessageBox.Show("Failed to save the dump");
+            }
         }
         #endregion
     }

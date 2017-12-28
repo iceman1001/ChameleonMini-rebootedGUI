@@ -9,9 +9,11 @@ using System.Text.RegularExpressions;
 using System.IO;
 using static System.Diagnostics.Process;
 using System.Management;
+using System.Runtime.InteropServices;
 
 namespace ChameleonMiniGUI
 {
+
     public partial class frm_main : Form
     {
         private SerialPort _comport = null;
@@ -28,7 +30,7 @@ namespace ChameleonMiniGUI
         {
             // Find the COM port of the Chameleon (wait reply of VERSIONMY? from every available port)
             ConnectToChameleon();
-
+            
             if (_comport != null && _comport.IsOpen)
             {
                 // Get all available modes and populate the dropdowns
@@ -49,6 +51,7 @@ namespace ChameleonMiniGUI
 
         private void btn_apply_Click(object sender, EventArgs e)
         {
+            string selectedMode = null;
             var applyButtonClicked = sender as Button;
 
             int tagslotIndex = int.Parse(applyButtonClicked.Name.Substring(applyButtonClicked.Name.Length - 1));
@@ -59,7 +62,7 @@ namespace ChameleonMiniGUI
 
             //SETTINGMY? -> SHOULD BE "NO."+tagslotIndex
             string selectedSlot = SendCommand("SETTINGMY?");
-            if ((selectedSlot != null) && (selectedSlot.Contains("NO." + (tagslotIndex - 1))))
+            if ((selectedSlot != null) && (selectedSlot.Contains("" + (tagslotIndex - 1))))
             {
                 // Set the mode of the selected slot
                 ComboBox cb_mode = (ComboBox)(applyButtonClicked.Parent.Controls["cb_mode" + tagslotIndex]);
@@ -67,17 +70,7 @@ namespace ChameleonMiniGUI
                 if (cb_mode != null) {
                     //CONFIGMY=cb_mode.SelectedItem
                     SendCommandWithoutResult("CONFIGMY=" + cb_mode.SelectedItem);
-
-                    // Set the UID
-                    TextBox txtUid = (TextBox)(applyButtonClicked.Parent.Controls["txt_uid" + tagslotIndex]);
-                    if (txtUid != null)
-                    {
-                        string uid = txtUid.Text;
-                        if (!string.IsNullOrEmpty(uid) && IsUidValid(uid, (string)cb_mode.SelectedItem))
-                        {
-                            SendCommandWithoutResult("UIDMY=" + uid);
-                        }
-                    }
+                    selectedMode = (string)cb_mode.SelectedItem;
                 }
 
                 // Set the button mode of the selected slot
@@ -87,6 +80,22 @@ namespace ChameleonMiniGUI
                 {
                     //BUTTONMY=cb_buttonMode.SelectedItem
                     SendCommandWithoutResult("BUTTONMY=" + cb_buttonMode.SelectedItem);
+                }
+
+                // Set the UID
+                TextBox txtUid = (TextBox)(applyButtonClicked.Parent.Controls["txt_uid" + tagslotIndex]);
+                if (txtUid != null)
+                {
+                    string uid = txtUid.Text;
+                    if (!string.IsNullOrEmpty(uid) && !string.IsNullOrEmpty(selectedMode) && IsUidValid(uid, selectedMode))
+                    {
+                        SendCommandWithoutResult("UIDMY=" + uid);
+                    }
+                    else
+                    {
+                        // set a random UID
+                        SendCommandWithoutResult("UIDMY=?");
+                    }
                 }
 
                 RefreshSlot(tagslotIndex - 1);
@@ -309,7 +318,7 @@ namespace ChameleonMiniGUI
 
             int read_count = 0;
             byte[] tx_data;
-            byte[] rx_data = new byte[100];
+            byte[] rx_data = new byte[200];
 
             // send command
             tx_data = Encoding.UTF8.GetBytes(cmdText);
@@ -339,9 +348,9 @@ namespace ChameleonMiniGUI
 
         private bool IsUidValid(string uid, string selectedMode)
         {
-            if (string.IsNullOrEmpty(uid)) return false;
-
             if (!Regex.IsMatch(uid, @"\A\b[0-9a-fA-F]+\b\Z")) return false;
+
+            // TODO: We could also find out the UID size with the UIDSIZEMY cmd
 
             // if mode is classic then UID must be 4 bytes (8 hex digits) long
             if (selectedMode == "MF_CLASSIC_1K" || selectedMode == "MF_CLASSIC_4K")
@@ -353,7 +362,7 @@ namespace ChameleonMiniGUI
             }
                     
             // if mode is ul then UID must be 7 bytes (14 hex digits) long
-            if (selectedMode == "MF_ULTRALIGHT")
+            if (selectedMode == "MF_ULTRALIGHT" || selectedMode == "MF_ULTRALIGHT_EV1_80B" || selectedMode == "MF_ULTRALIGHT_EV1_164B")
             {
                 if (uid.Length == 14)
                 {
@@ -383,7 +392,7 @@ namespace ChameleonMiniGUI
 
             //SETTINGMY? -> SHOULD BE "NO."+i
             var selectedSlot = SendCommand("SETTINGMY?");
-            if ((selectedSlot != null) && (selectedSlot.Contains("NO." + slotIndex)))
+            if ((selectedSlot != null) && (selectedSlot.Contains("" + slotIndex)))
             {
                 var gbTagSlot = (GroupBox)this.Controls["gb_tagslot" + (slotIndex + 1)];
 
@@ -489,11 +498,6 @@ namespace ChameleonMiniGUI
 
                 if (buttonModesArray.Length > 0)
                 {
-                    if (!buttonModesArray.Contains("SWITCHCARD"))
-                    {
-                        buttonModesArray = buttonModesArray.Concat(new string[] { "SWITCHCARD" }).ToArray();
-                    }
-
                     // populate all dropdowns
                     this.cb_button1.Items.Clear();
                     this.cb_button1.Items.AddRange(buttonModesArray);
@@ -567,6 +571,8 @@ namespace ChameleonMiniGUI
             if (terminationReason == XMODEM.TerminationReasonEnum.EndOfFile)
             {
                 Console.WriteLine("FILE RECEIVE SUCCESSFUL!");
+
+                // TODO: Check if we should determine the size with MEMSIZEMY cmd
 
                 // Transfer successful, so convert MemoryStream to byte array
                 DataArray = DataMemoryStream.ToArray();

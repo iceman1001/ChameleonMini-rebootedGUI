@@ -1397,6 +1397,10 @@ namespace ChameleonMiniGUI
             // 
             this.openFileDialog1.Filter = "Dump Files|*.dump";
             // 
+            // saveFileDialog1
+            // 
+            this.saveFileDialog1.Filter = "Dump Files|*.dump";
+            // 
             // frm_main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1569,4 +1573,3 @@ namespace ChameleonMiniGUI
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
     }
 }
-

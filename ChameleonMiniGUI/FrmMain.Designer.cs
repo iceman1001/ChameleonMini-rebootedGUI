@@ -186,6 +186,7 @@ namespace ChameleonMiniGUI
             this.btn_fullcalc1.TabIndex = 12;
             this.btn_fullcalc1.Text = "Full Calc.";
             this.btn_fullcalc1.UseVisualStyleBackColor = true;
+            this.btn_fullcalc1.Click += new System.EventHandler(this.btn_fullcalc_Click);
             // 
             // btn_clear1
             // 
@@ -195,6 +196,7 @@ namespace ChameleonMiniGUI
             this.btn_clear1.TabIndex = 11;
             this.btn_clear1.Text = "Clear";
             this.btn_clear1.UseVisualStyleBackColor = true;
+            this.btn_clear1.Click += new System.EventHandler(this.btn_clear_Click);
             // 
             // btn_fastcalc1
             // 
@@ -204,6 +206,7 @@ namespace ChameleonMiniGUI
             this.btn_fastcalc1.TabIndex = 10;
             this.btn_fastcalc1.Text = "Fast Calc.";
             this.btn_fastcalc1.UseVisualStyleBackColor = true;
+            this.btn_fastcalc1.Click += new System.EventHandler(this.btn_fastcalc_Click);
             // 
             // btn_apply1
             // 
@@ -336,6 +339,7 @@ namespace ChameleonMiniGUI
             this.btn_fullcalc2.TabIndex = 12;
             this.btn_fullcalc2.Text = "Full Calc.";
             this.btn_fullcalc2.UseVisualStyleBackColor = true;
+            this.btn_fullcalc2.Click += new System.EventHandler(this.btn_fullcalc_Click);
             // 
             // btn_clear2
             // 
@@ -345,6 +349,7 @@ namespace ChameleonMiniGUI
             this.btn_clear2.TabIndex = 11;
             this.btn_clear2.Text = "Clear";
             this.btn_clear2.UseVisualStyleBackColor = true;
+            this.btn_clear2.Click += new System.EventHandler(this.btn_clear_Click);
             // 
             // btn_fastcalc2
             // 
@@ -354,6 +359,7 @@ namespace ChameleonMiniGUI
             this.btn_fastcalc2.TabIndex = 10;
             this.btn_fastcalc2.Text = "Fast Calc.";
             this.btn_fastcalc2.UseVisualStyleBackColor = true;
+            this.btn_fastcalc2.Click += new System.EventHandler(this.btn_fastcalc_Click);
             // 
             // btn_apply2
             // 
@@ -486,6 +492,7 @@ namespace ChameleonMiniGUI
             this.btn_fullcalc3.TabIndex = 12;
             this.btn_fullcalc3.Text = "Full Calc.";
             this.btn_fullcalc3.UseVisualStyleBackColor = true;
+            this.btn_fullcalc3.Click += new System.EventHandler(this.btn_fullcalc_Click);
             // 
             // btn_clear3
             // 
@@ -495,6 +502,7 @@ namespace ChameleonMiniGUI
             this.btn_clear3.TabIndex = 11;
             this.btn_clear3.Text = "Clear";
             this.btn_clear3.UseVisualStyleBackColor = true;
+            this.btn_clear3.Click += new System.EventHandler(this.btn_clear_Click);
             // 
             // btn_fastcalc3
             // 
@@ -504,6 +512,7 @@ namespace ChameleonMiniGUI
             this.btn_fastcalc3.TabIndex = 10;
             this.btn_fastcalc3.Text = "Fast Calc.";
             this.btn_fastcalc3.UseVisualStyleBackColor = true;
+            this.btn_fastcalc3.Click += new System.EventHandler(this.btn_fastcalc_Click);
             // 
             // btn_apply3
             // 
@@ -636,6 +645,7 @@ namespace ChameleonMiniGUI
             this.btn_fullcalc4.TabIndex = 12;
             this.btn_fullcalc4.Text = "Full Calc.";
             this.btn_fullcalc4.UseVisualStyleBackColor = true;
+            this.btn_fullcalc4.Click += new System.EventHandler(this.btn_fullcalc_Click);
             // 
             // btn_clear4
             // 
@@ -645,6 +655,7 @@ namespace ChameleonMiniGUI
             this.btn_clear4.TabIndex = 11;
             this.btn_clear4.Text = "Clear";
             this.btn_clear4.UseVisualStyleBackColor = true;
+            this.btn_clear4.Click += new System.EventHandler(this.btn_clear_Click);
             // 
             // btn_fastcalc4
             // 
@@ -654,6 +665,7 @@ namespace ChameleonMiniGUI
             this.btn_fastcalc4.TabIndex = 10;
             this.btn_fastcalc4.Text = "Fast Calc.";
             this.btn_fastcalc4.UseVisualStyleBackColor = true;
+            this.btn_fastcalc4.Click += new System.EventHandler(this.btn_fastcalc_Click);
             // 
             // btn_apply4
             // 
@@ -786,6 +798,7 @@ namespace ChameleonMiniGUI
             this.btn_fullcalc5.TabIndex = 12;
             this.btn_fullcalc5.Text = "Full Calc.";
             this.btn_fullcalc5.UseVisualStyleBackColor = true;
+            this.btn_fullcalc5.Click += new System.EventHandler(this.btn_fullcalc_Click);
             // 
             // btn_clear5
             // 
@@ -795,6 +808,7 @@ namespace ChameleonMiniGUI
             this.btn_clear5.TabIndex = 11;
             this.btn_clear5.Text = "Clear";
             this.btn_clear5.UseVisualStyleBackColor = true;
+            this.btn_clear5.Click += new System.EventHandler(this.btn_clear_Click);
             // 
             // btn_fastcalc5
             // 
@@ -804,6 +818,7 @@ namespace ChameleonMiniGUI
             this.btn_fastcalc5.TabIndex = 10;
             this.btn_fastcalc5.Text = "Fast Calc.";
             this.btn_fastcalc5.UseVisualStyleBackColor = true;
+            this.btn_fastcalc5.Click += new System.EventHandler(this.btn_fastcalc_Click);
             // 
             // btn_apply5
             // 
@@ -936,6 +951,7 @@ namespace ChameleonMiniGUI
             this.btn_fullcalc6.TabIndex = 12;
             this.btn_fullcalc6.Text = "Full Calc.";
             this.btn_fullcalc6.UseVisualStyleBackColor = true;
+            this.btn_fullcalc6.Click += new System.EventHandler(this.btn_fullcalc_Click);
             // 
             // btn_clear6
             // 
@@ -945,6 +961,7 @@ namespace ChameleonMiniGUI
             this.btn_clear6.TabIndex = 11;
             this.btn_clear6.Text = "Clear";
             this.btn_clear6.UseVisualStyleBackColor = true;
+            this.btn_clear6.Click += new System.EventHandler(this.btn_clear_Click);
             // 
             // btn_fastcalc6
             // 
@@ -954,6 +971,7 @@ namespace ChameleonMiniGUI
             this.btn_fastcalc6.TabIndex = 10;
             this.btn_fastcalc6.Text = "Fast Calc.";
             this.btn_fastcalc6.UseVisualStyleBackColor = true;
+            this.btn_fastcalc6.Click += new System.EventHandler(this.btn_fastcalc_Click);
             // 
             // btn_apply6
             // 
@@ -1086,6 +1104,7 @@ namespace ChameleonMiniGUI
             this.btn_fullcalc7.TabIndex = 12;
             this.btn_fullcalc7.Text = "Full Calc.";
             this.btn_fullcalc7.UseVisualStyleBackColor = true;
+            this.btn_fullcalc7.Click += new System.EventHandler(this.btn_fullcalc_Click);
             // 
             // btn_clear7
             // 
@@ -1095,6 +1114,7 @@ namespace ChameleonMiniGUI
             this.btn_clear7.TabIndex = 11;
             this.btn_clear7.Text = "Clear";
             this.btn_clear7.UseVisualStyleBackColor = true;
+            this.btn_clear7.Click += new System.EventHandler(this.btn_clear_Click);
             // 
             // btn_fastcalc7
             // 
@@ -1104,6 +1124,7 @@ namespace ChameleonMiniGUI
             this.btn_fastcalc7.TabIndex = 10;
             this.btn_fastcalc7.Text = "Fast Calc.";
             this.btn_fastcalc7.UseVisualStyleBackColor = true;
+            this.btn_fastcalc7.Click += new System.EventHandler(this.btn_fastcalc_Click);
             // 
             // btn_apply7
             // 
@@ -1236,6 +1257,7 @@ namespace ChameleonMiniGUI
             this.btn_fullcalc8.TabIndex = 12;
             this.btn_fullcalc8.Text = "Full Calc.";
             this.btn_fullcalc8.UseVisualStyleBackColor = true;
+            this.btn_fullcalc8.Click += new System.EventHandler(this.btn_fullcalc_Click);
             // 
             // btn_clear8
             // 
@@ -1245,6 +1267,7 @@ namespace ChameleonMiniGUI
             this.btn_clear8.TabIndex = 11;
             this.btn_clear8.Text = "Clear";
             this.btn_clear8.UseVisualStyleBackColor = true;
+            this.btn_clear8.Click += new System.EventHandler(this.btn_clear_Click);
             // 
             // btn_fastcalc8
             // 
@@ -1254,6 +1277,7 @@ namespace ChameleonMiniGUI
             this.btn_fastcalc8.TabIndex = 10;
             this.btn_fastcalc8.Text = "Fast Calc.";
             this.btn_fastcalc8.UseVisualStyleBackColor = true;
+            this.btn_fastcalc8.Click += new System.EventHandler(this.btn_fastcalc_Click);
             // 
             // btn_apply8
             // 
@@ -1573,3 +1597,4 @@ namespace ChameleonMiniGUI
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
     }
 }
+

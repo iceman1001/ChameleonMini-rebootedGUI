@@ -10,12 +10,15 @@ using System.IO;
 using static System.Diagnostics.Process;
 using System.Management;
 using System.Runtime.InteropServices;
+using System.Collections.Generic;
 
 namespace ChameleonMiniGUI
 {
-
     public partial class frm_main : Form
     {
+        [DllImport("Crapto1.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern UInt64 mfkey(UInt32 uid, UInt32 nt, UInt32 nt1, UInt32 nr0_enc, UInt32 ar0_enc, UInt32 nr1_enc, UInt32 ar1_enc);
+
         private SerialPort _comport = null;
         private string[] modesArray = null;
         private string[] buttonModesArray = null;
@@ -30,7 +33,7 @@ namespace ChameleonMiniGUI
         {
             // Find the COM port of the Chameleon (wait reply of VERSIONMY? from every available port)
             ConnectToChameleon();
-            
+
             if (_comport != null && _comport.IsOpen)
             {
                 // Get all available modes and populate the dropdowns
@@ -67,7 +70,8 @@ namespace ChameleonMiniGUI
                 // Set the mode of the selected slot
                 ComboBox cb_mode = (ComboBox)(applyButtonClicked.Parent.Controls["cb_mode" + tagslotIndex]);
 
-                if (cb_mode != null) {
+                if (cb_mode != null)
+                {
                     //CONFIGMY=cb_mode.SelectedItem
                     SendCommandWithoutResult("CONFIGMY=" + cb_mode.SelectedItem);
                     selectedMode = (string)cb_mode.SelectedItem;
@@ -238,6 +242,65 @@ namespace ChameleonMiniGUI
                 }
             }
         }
+
+        private void btn_fastcalc_Click(object sender, EventArgs e)
+        {
+            var fastCalcButtonClicked = sender as Button;
+
+            int tagslotIndex = int.Parse(fastCalcButtonClicked.Name.Substring(fastCalcButtonClicked.Name.Length - 1));
+            if (tagslotIndex <= 0) return;
+
+            //SETTINGMY=tagslotIndex-1
+            SendCommandWithoutResult("SETTINGMY=" + (tagslotIndex - 1));
+
+            string result = Key_Calculate(true);
+
+            TextBox txtResult = (TextBox)(fastCalcButtonClicked.Parent.Controls["txt_result" + tagslotIndex]);
+            if (txtResult != null)
+            {
+                txtResult.Text = result;
+            }
+        }
+
+        private void btn_fullcalc_Click(object sender, EventArgs e)
+        {
+            var fullCalcButtonClicked = sender as Button;
+
+            int tagslotIndex = int.Parse(fullCalcButtonClicked.Name.Substring(fullCalcButtonClicked.Name.Length - 1));
+            if (tagslotIndex <= 0) return;
+
+            //SETTINGMY=tagslotIndex-1
+            SendCommandWithoutResult("SETTINGMY=" + (tagslotIndex - 1));
+
+            string result = Key_Calculate(false);
+
+            TextBox txtResult = (TextBox)(fullCalcButtonClicked.Parent.Controls["txt_result" + tagslotIndex]);
+            if (txtResult != null)
+            {
+                txtResult.Text = result;
+            }
+        }
+
+        private void btn_clear_Click(object sender, EventArgs e)
+        {
+            var clearButtonClicked = sender as Button;
+
+            int tagslotIndex = int.Parse(clearButtonClicked.Name.Substring(clearButtonClicked.Name.Length - 1));
+            if (tagslotIndex <= 0) return;
+
+            //SETTINGMY=tagslotIndex-1
+            SendCommandWithoutResult("SETTINGMY=" + (tagslotIndex - 1));
+
+            // DETECTIONMY = CLOSED
+            SendCommandWithoutResult("DETECTIONMY=CLOSED");
+
+            TextBox txtResult = (TextBox)(clearButtonClicked.Parent.Controls["txt_result" + tagslotIndex]);
+            if (txtResult != null)
+            {
+                txtResult.Clear();
+            }
+        }
+
         #endregion
 
         #region Helper methods
@@ -360,7 +423,7 @@ namespace ChameleonMiniGUI
                     return true;
                 }
             }
-                    
+
             // if mode is ul then UID must be 7 bytes (14 hex digits) long
             if (selectedMode == "MF_ULTRALIGHT" || selectedMode == "MF_ULTRALIGHT_EV1_80B" || selectedMode == "MF_ULTRALIGHT_EV1_164B")
             {
@@ -560,7 +623,7 @@ namespace ChameleonMiniGUI
 
             // First send the download command
             SendCommandWithoutResult("DOWNLOADMY");
-            
+
             _comport.ReadLine(); // For the "110:WAITING FOR XMODEM" text
 
             MemoryStream DataMemoryStream = new MemoryStream(); // Grows dynamically
@@ -589,6 +652,239 @@ namespace ChameleonMiniGUI
                 MessageBox.Show("Failed to save the dump");
             }
         }
+
+        string Key_Calculate(bool fast)
+        {
+            string show_all = "";
+
+            // TODO: should be byte instead of char
+            char[] data_receive = SendCommand("DETECTIONMY?").ToArray();
+            if (data_receive != null && data_receive.Length > 0)
+            {
+                ComPass(data_receive, 123321, 208);
+                if (ISO14443ACheckCRCA(data_receive, 208))
+                {
+                    //vector<uint64_t> key_sum;
+                    List<MyKey> mykey = new List<MyKey>();
+
+                    UInt32[] nt = { 0, 0, 0, 0, 0, 0 }, nr = { 0, 0, 0, 0, 0, 0 }, ar = { 0, 0, 0, 0, 0, 0 }, sector = { 0, 0, 0, 0, 0, 0 }, Key = { 0, 0, 0, 0, 0, 0 };
+                    UInt32 UID = 0;
+
+                    UID = (uint)(data_receive[0] << 24) + (uint)(data_receive[1] << 16) + (uint)(data_receive[2] << 8) + (data_receive[3]);
+
+                    //KEYA data copy
+                    for (byte i = 0; i < 6; i++)
+                    {
+                        Key[i] = data_receive[(i + 1) * 16];
+                        sector[i] = data_receive[(i + 1) * 16 + 1];
+                        nt[i] = (uint)(data_receive[(i + 1) * 16 + 4] << 24) + (uint)(data_receive[(i + 1) * 16 + 5] << 16) + (uint)(data_receive[(i + 1) * 16 + 6] << 8) + (data_receive[(i + 1) * 16 + 7]);
+                        nr[i] = (uint)(data_receive[(i + 1) * 16 + 8] << 24) + (uint)(data_receive[(i + 1) * 16 + 9] << 16) + (uint)(data_receive[(i + 1) * 16 + 10] << 8) + (data_receive[(i + 1) * 16 + 11]);
+                        ar[i] = (uint)(data_receive[(i + 1) * 16 + 12] << 24) + (uint)(data_receive[(i + 1) * 16 + 13] << 16) + (uint)(data_receive[(i + 1) * 16 + 14] << 8) + (data_receive[(i + 1) * 16 + 15]);
+                    }
+
+                    //KEYA into list
+                    int cout = Calculation_times(fast);
+
+                    //status
+                    //byte k = 0;
+                    //M_progress_speed.SetRange(0, (cout + 1) * cout / 2 * 2);
+                    //M_progress_speed.SetPos(k);
+                    // TODO: Set progress bar
+
+                    for (byte i = 0; i < cout; i++)
+                    {
+                        for (byte j = i; j < cout; j++)
+                        {
+                            MyKey ktmp = new MyKey();
+                            ktmp.key_sum = mfkey(UID, /* uid */
+                                nt[i], /* nt0 */
+                                nt[j + 1], /* nt1 */
+                                nr[i], /* nr0 */
+                                ar[i], /* ar0 */
+                                nr[j + 1],  /* nr1 */
+                                ar[j + 1]); /* ar1 */
+
+                            ktmp.sector1 = sector[i];
+                            ktmp.sector2 = sector[j + 1];
+
+                            if (ktmp.key_sum != 0xffffffffffffffff)
+                                mykey.Add(ktmp);
+
+                            //refresh
+                            //M_progress_speed.SetPos(++k);
+                            // TODO: progress
+                        }
+                    }
+
+                    //KEYA result
+                    KeyComparer my_cmp = new KeyComparer();
+                    mykey.Sort(my_cmp);
+
+                    // TODO: Implement this
+                    // mykey.erase(unique(mykey.begin(), mykey.end(), my_uiq), mykey.end());//remove repeat 
+
+                    cout = mykey.Count;
+                    if (cout > 0)
+                    {
+                        for (byte i = 0; i < cout; i++)
+                        {
+                            //temp_num.Format("KeyA%d:\r\n", i + 1);
+                            // TODO: What to do with these?
+                            string temp_num = "", temp_sector2 = "";
+
+                            if (mykey[i].sector1 != 0xff)
+                                show_all += (string.Format("%dsec%dblo A:\r\n", mykey[i].sector1 / 4, mykey[i].sector1) + temp_sector2 + temp_num + string.Format("%06X", mykey[i].key_sum / 16777216) + string.Format("%06X", mykey[i].key_sum % 16777216) + "\r\n");
+                        }
+                    }
+                    else
+                        show_all += "keyA error\r\n";
+
+                    //clear keyb
+                    mykey.Clear();
+
+                    //KEYB data copy
+                    for (byte i = 6; i < 12; i++)
+                    {
+                        Key[i - 6] = data_receive[(i + 1) * 16];
+                        sector[i - 6] = data_receive[(i + 1) * 16 + 1];
+                        nt[i - 6] = (uint)(data_receive[(i + 1) * 16 + 4] << 24) + (uint)(data_receive[(i + 1) * 16 + 5] << 16) + (uint)(data_receive[(i + 1) * 16 + 6] << 8) + (data_receive[(i + 1) * 16 + 7]);
+                        nr[i - 6] = (uint)(data_receive[(i + 1) * 16 + 8] << 24) + (uint)(data_receive[(i + 1) * 16 + 9] << 16) + (uint)(data_receive[(i + 1) * 16 + 10] << 8) + (data_receive[(i + 1) * 16 + 11]);
+                        ar[i - 6] = (uint)(data_receive[(i + 1) * 16 + 12] << 24) + (uint)(data_receive[(i + 1) * 16 + 13] << 16) + (uint)(data_receive[(i + 1) * 16 + 14] << 8) + (data_receive[(i + 1) * 16 + 15]);
+                    }
+
+                    //KEYB into list 
+                    cout = Calculation_times(fast);
+
+                    for (byte i = 0; i < cout; i++)
+                    {
+                        for (byte j = i; j < cout; j++)
+                        {
+                            MyKey ktmp = new MyKey();
+                            ktmp.key_sum = mfkey(UID, /* uid */
+                                nt[i], /* nt0 */
+                                nt[j + 1], /* nt1 */
+                                nr[i], /* nr0 */
+                                ar[i], /* ar0 */
+                                nr[j + 1],  /* nr1 */
+                                ar[j + 1]); /* ar1 */
+                            ktmp.sector1 = sector[i];
+                            ktmp.sector2 = sector[j + 1];
+
+                            if (ktmp.key_sum != 0xffffffffffffffff)
+                                mykey.Add(ktmp);
+
+                            //refresh
+                            //M_progress_speed.SetPos(++k);
+                            // TODO: progress
+                        }
+                    }
+
+                    //KEYB get result
+                    // sort(mykey.begin(), mykey.end(), my_cmp);
+                    mykey.Sort(my_cmp);
+
+                    // TODO: Implement this
+                    //mykey.erase(unique(mykey.begin(), mykey.end(), my_uiq), mykey.end());//remove repeat
+
+                    cout = mykey.Count;
+
+                    if (cout > 0)
+                    {
+                        for (byte i = 0; i < cout; i++)
+                        {
+                            // TODO: What to do with these?
+                            string temp_num = "", temp_sector2 = "";
+
+                            if (mykey[i].sector1 != 0xff)
+                                show_all += (string.Format("%dsec%dblo B:\r\n", mykey[i].sector1 / 4, mykey[i].sector1) + temp_sector2 + temp_num + string.Format("%06X", mykey[i].key_sum / 16777216) + string.Format("%06X", mykey[i].key_sum % 16777216) + "\r\n");
+                        }
+                    }
+                    else
+                        show_all += "keyB error\r\n";
+
+                    //m_edit_carda_detection[num].SetWindowText(show_all);
+                }
+            }
+
+            return show_all;
+
+        }
+
+        private int Calculation_times(bool fast)
+        {
+            // TODO: Implement this
+            throw new NotImplementedException();
+        }
+
+        private int genFun(int size, int key, int i)
+        {
+            return size + key + i - size / key;
+        }
+
+        void ComPass(char[] toBeEncFileName, int key, int len)
+        {
+            uint[] newFileName = new uint[275];
+            toBeEncFileName.CopyTo(newFileName, 0);
+            int i, s, t, size = len;
+
+            for (i = 0; i < size; i++)
+            {
+                s = (int)newFileName[i];
+                t = genFun(size, key, i) ^ s;  // encryption
+                toBeEncFileName[i] = (char)t;
+            }
+        }
+
+        bool ISO14443ACheckCRCA(char[] Buffer, UInt16 ByteCount)
+        {
+            UInt16 Checksum = 0x6363;
+            char[] DataPtr = Buffer;
+
+            int i = 0;
+
+            while (ByteCount > 0)
+            {
+                uint Byte = DataPtr[i++];
+
+                Byte ^= (uint)(Checksum & 0x00FF);
+                Byte ^= Byte << 4;
+
+                Checksum = (ushort)((ushort)(Checksum >> 8) ^ (Checksum ^ (ushort)(Byte << 8)) ^ (ushort)(Checksum ^
+                        ((ushort)Byte << 3) ^ (ushort)((ushort)Byte >> 4)));
+                ByteCount--;
+            }
+
+            return (DataPtr[0] == ((Checksum >> 0) & 0xFF)) && (DataPtr[1] == ((Checksum >> 8) & 0xFF));
+        }
         #endregion
+
     }
+
+    #region MyKey
+    public class MyKey
+    {
+        public UInt64 key_sum;
+        public UInt32 sector1;
+        public UInt32 sector2;
+    }
+
+    // TODO: Implement a real comparator
+    public class KeyComparer : IComparer<MyKey>
+    {
+        public int Compare(MyKey x, MyKey y)
+        {
+            MyKey c1 = (MyKey)x;
+            MyKey c2 = (MyKey)y;
+
+            if (c1.key_sum > c2.key_sum)
+                return 1;
+
+            if (c1.key_sum < c2.key_sum)
+                return -1;
+
+            else
+                return 0;
+        }
+    }
+    #endregion
 }

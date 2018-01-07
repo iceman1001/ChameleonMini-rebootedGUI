@@ -22,6 +22,7 @@ namespace ChameleonMiniGUI
         private SerialPort _comport = null;
         private string[] modesArray = null;
         private string[] buttonModesArray = null;
+        private string cmdExtension = "MY";
 
         public frm_main()
         {
@@ -61,10 +62,10 @@ namespace ChameleonMiniGUI
             if (tagslotIndex <= 0) return;
 
             //SETTINGMY=tagslotIndex-1
-            SendCommandWithoutResult("SETTINGMY=" + (tagslotIndex - 1));
+            SendCommandWithoutResult("SETTING" + cmdExtension + "=" + (tagslotIndex - 1));
 
             //SETTINGMY? -> SHOULD BE "NO."+tagslotIndex
-            string selectedSlot = SendCommand("SETTINGMY?");
+            string selectedSlot = SendCommand("SETTING" + cmdExtension + "?");
             if ((selectedSlot != null) && (selectedSlot.Contains("" + (tagslotIndex - 1))))
             {
                 // Set the mode of the selected slot
@@ -73,7 +74,7 @@ namespace ChameleonMiniGUI
                 if (cb_mode != null)
                 {
                     //CONFIGMY=cb_mode.SelectedItem
-                    SendCommandWithoutResult("CONFIGMY=" + cb_mode.SelectedItem);
+                    SendCommandWithoutResult("CONFIG" + cmdExtension + "=" + cb_mode.SelectedItem);
                     selectedMode = (string)cb_mode.SelectedItem;
                 }
 
@@ -83,7 +84,7 @@ namespace ChameleonMiniGUI
                 if (cb_buttonMode != null)
                 {
                     //BUTTONMY=cb_buttonMode.SelectedItem
-                    SendCommandWithoutResult("BUTTONMY=" + cb_buttonMode.SelectedItem);
+                    SendCommandWithoutResult("BUTTON" + cmdExtension + "=" + cb_buttonMode.SelectedItem);
                 }
 
                 // Set the UID
@@ -93,12 +94,12 @@ namespace ChameleonMiniGUI
                     string uid = txtUid.Text;
                     if (!string.IsNullOrEmpty(uid) && !string.IsNullOrEmpty(selectedMode) && IsUidValid(uid, selectedMode))
                     {
-                        SendCommandWithoutResult("UIDMY=" + uid);
+                        SendCommandWithoutResult("UID" + cmdExtension + "=" + uid);
                     }
                     else
                     {
                         // set a random UID
-                        SendCommandWithoutResult("UIDMY=?");
+                        SendCommandWithoutResult("UID" + cmdExtension + "=?");
                     }
                 }
 
@@ -131,7 +132,7 @@ namespace ChameleonMiniGUI
 
         private void btn_bootmode_Click(object sender, EventArgs e)
         {
-            SendCommandWithoutResult("UPGRADEMY");
+            SendCommandWithoutResult("UPGRADE" + cmdExtension);
             try
             {
                 _comport.Close();
@@ -191,7 +192,7 @@ namespace ChameleonMiniGUI
             if (tagslotIndex > 0)
             {
                 // select the corresponding slot
-                SendCommandWithoutResult("SETTINGMY=" + (tagslotIndex - 1));
+                SendCommandWithoutResult("SETTING" + cmdExtension + "=" + (tagslotIndex - 1));
 
                 // Open dialog
                 DialogResult result = openFileDialog1.ShowDialog();
@@ -221,7 +222,7 @@ namespace ChameleonMiniGUI
             if (tagslotIndex > 0)
             {
                 // select the corresponding slot
-                SendCommandWithoutResult("SETTINGMY=" + (tagslotIndex - 1));
+                SendCommandWithoutResult("SETTING" + cmdExtension + "=" + (tagslotIndex - 1));
 
                 // Save dialog
                 if (saveFileDialog1.ShowDialog() == DialogResult.OK)
@@ -251,7 +252,7 @@ namespace ChameleonMiniGUI
             if (tagslotIndex <= 0) return;
 
             //SETTINGMY=tagslotIndex-1
-            SendCommandWithoutResult("SETTINGMY=" + (tagslotIndex - 1));
+            SendCommandWithoutResult("SETTING" + cmdExtension + "=" + (tagslotIndex - 1));
 
             string result = Key_Calculate(true);
 
@@ -270,7 +271,7 @@ namespace ChameleonMiniGUI
             if (tagslotIndex <= 0) return;
 
             //SETTINGMY=tagslotIndex-1
-            SendCommandWithoutResult("SETTINGMY=" + (tagslotIndex - 1));
+            SendCommandWithoutResult("SETTING" + cmdExtension + "=" + (tagslotIndex - 1));
 
             string result = Key_Calculate(false);
 
@@ -289,10 +290,10 @@ namespace ChameleonMiniGUI
             if (tagslotIndex <= 0) return;
 
             //SETTINGMY=tagslotIndex-1
-            SendCommandWithoutResult("SETTINGMY=" + (tagslotIndex - 1));
+            SendCommandWithoutResult("SETTING" + cmdExtension + "=" + (tagslotIndex - 1));
 
             // DETECTIONMY = CLOSED
-            SendCommandWithoutResult("DETECTIONMY=CLOSED");
+            SendCommandWithoutResult("DETECTION" + cmdExtension + "=CLOSED");
 
             TextBox txtResult = (TextBox)(clearButtonClicked.Parent.Controls["txt_result" + tagslotIndex]);
             if (txtResult != null)
@@ -321,12 +322,20 @@ namespace ChameleonMiniGUI
 
                     if (_comport.IsOpen)
                     {
-                        string version = SendCommand("VERSIONMY?");
+                        // try without the "MY" extension first
+                        string version = SendCommand("VERSION?");
                         if (!string.IsNullOrEmpty(version) && version.Contains("Chameleon"))
                         {
+                            cmdExtension = "";
                             break;
                         }
 
+                        version = SendCommand("VERSIONMY?");
+                        if (!string.IsNullOrEmpty(version) && version.Contains("Chameleon"))
+                        {
+                            cmdExtension = "MY";
+                            break;
+                        }
                     }
                 }
                 catch (Exception)
@@ -451,10 +460,10 @@ namespace ChameleonMiniGUI
         private void RefreshSlot(int slotIndex)
         {
             //SETTINGMY=i
-            SendCommandWithoutResult("SETTINGMY=" + slotIndex);
+            SendCommandWithoutResult("SETTING" + cmdExtension + "=" + slotIndex);
 
             //SETTINGMY? -> SHOULD BE "NO."+i
-            var selectedSlot = SendCommand("SETTINGMY?");
+            var selectedSlot = SendCommand("SETTING" + cmdExtension + "?");
             if ((selectedSlot != null) && (selectedSlot.Contains("" + slotIndex)))
             {
                 var gbTagSlot = (GroupBox)this.Controls["gb_tagslot" + (slotIndex + 1)];
@@ -463,7 +472,7 @@ namespace ChameleonMiniGUI
 
 
                 //CONFIGMY? -> RETURNS THE CONFIGURATION MODE
-                var slotMode = SendCommand("CONFIGMY?");
+                var slotMode = SendCommand("CONFIG" + cmdExtension + "?");
 
                 if (slotMode != null && IsModeValid(slotMode))
                 {
@@ -476,7 +485,7 @@ namespace ChameleonMiniGUI
                 }
 
                 //UIDMY? -> RETURNS THE UID
-                var slotUid = SendCommand("UIDMY?");
+                var slotUid = SendCommand("UID" + cmdExtension + "?");
                 if (slotUid != null)
                 {
                     // set the textbox value of the i+1 txt_uid
@@ -488,7 +497,7 @@ namespace ChameleonMiniGUI
                 }
 
                 //BUTTONMY? -> RETURNS THE MODE OF THE BUTTON
-                var slotButtonMode = SendCommand("BUTTONMY?");
+                var slotButtonMode = SendCommand("BUTTON" + cmdExtension + "?");
                 if (slotButtonMode != null && IsButtonModeValid(slotButtonMode))
                 {
                     // set the combobox value of the i+1 cb_button
@@ -523,7 +532,7 @@ namespace ChameleonMiniGUI
 
         private void GetSupportedModes()
         {
-            string resultModesStr = SendCommand("CONFIGMY");
+            string resultModesStr = SendCommand("CONFIG" + cmdExtension);
 
             if (!String.IsNullOrEmpty(resultModesStr))
             {
@@ -552,7 +561,7 @@ namespace ChameleonMiniGUI
                 }
             }
 
-            string resultButtonModesStr = SendCommand("BUTTONMY");
+            string resultButtonModesStr = SendCommand("BUTTON" + cmdExtension);
 
             if (!String.IsNullOrEmpty(resultButtonModesStr))
             {
@@ -604,7 +613,7 @@ namespace ChameleonMiniGUI
             XMODEM Modem = new XMODEM(_comport, XMODEM.Variants.XModemChecksum);
 
             // First send the upload command
-            SendCommandWithoutResult("UPLOADMY");
+            SendCommandWithoutResult("UPLOAD" + cmdExtension);
             _comport.ReadLine(); // For the "110:WAITING FOR XMODEM" text
 
             int numBytesSuccessfullySent = Modem.Send(DataArray);
@@ -622,7 +631,7 @@ namespace ChameleonMiniGUI
             XMODEM Modem = new XMODEM(_comport, XMODEM.Variants.XModemChecksum);
 
             // First send the download command
-            SendCommandWithoutResult("DOWNLOADMY");
+            SendCommandWithoutResult("DOWNLOAD" + cmdExtension);
 
             _comport.ReadLine(); // For the "110:WAITING FOR XMODEM" text
 
@@ -658,7 +667,7 @@ namespace ChameleonMiniGUI
             string show_all = "";
 
             // TODO: should be byte instead of char
-            char[] data_receive = SendCommand("DETECTIONMY?").ToArray();
+            char[] data_receive = SendCommand("DETECTION" + cmdExtension + "?").ToArray();
             if (data_receive != null && data_receive.Length > 0)
             {
                 ComPass(data_receive, 123321, 208);

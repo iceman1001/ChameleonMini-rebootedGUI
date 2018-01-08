@@ -20,18 +20,8 @@ Copyright (C) 2008-2014 bla <blapost@gmail.com>
 #include "Stdafx.h"
 #include "crapto1.h"
 #include <stdlib.h>
+#include "parity.h"
 
-
-#if !defined LOWMEM && defined __GNUC__
-static uint8_t filterlut[1 << 20];
-static void __attribute__((constructor)) fill_lut()
-{
-	uint32_t i;
-	for (i = 0; i < 1 << 20; ++i)
-		filterlut[i] = filter(i);
-}
-#define filter(x) (filterlut[(x) & 0xfffff])
-#endif
 
 static void quicksort(uint32_t* const start, uint32_t* const stop)
 {
@@ -74,21 +64,19 @@ static inline uint32_t* binsearch(uint32_t *start, uint32_t *stop)
 /** update_contribution
 * helper, calculates the partial linear feedback contributions and puts in MSB
 */
-static inline void
-update_contribution(uint32_t *item, const uint32_t mask1, const uint32_t mask2)
+static inline void update_contribution(uint32_t *item, const uint32_t mask1, const uint32_t mask2)
 {
 	uint32_t p = *item >> 25;
 
-	p = p << 1 | parity(*item & mask1);
-	p = p << 1 | parity(*item & mask2);
+	p = p << 1 | evenparity32(*item & mask1);
+	p = p << 1 | evenparity32(*item & mask2);
 	*item = p << 24 | (*item & 0xffffff);
 }
 
 /** extend_table
 * using a bit of the keystream extend the table of possible lfsr states
 */
-static inline void
-extend_table(uint32_t *tbl, uint32_t **end, int bit, int m1, int m2, uint32_t in)
+static inline void extend_table(uint32_t *tbl, uint32_t **end, int bit, int m1, int m2, uint32_t in)
 {
 	in <<= 24;
 	for (*tbl <<= 1; tbl <= *end; *++tbl <<= 1)
@@ -96,16 +84,14 @@ extend_table(uint32_t *tbl, uint32_t **end, int bit, int m1, int m2, uint32_t in
 			*tbl |= filter(*tbl) ^ bit;
 			update_contribution(tbl, m1, m2);
 			*tbl ^= in;
-		}
-		else if (filter(*tbl) == bit) {
+		} else if(filter(*tbl) == bit) {
 			*++*end = tbl[1];
 			tbl[1] = tbl[0] | 1;
 			update_contribution(tbl, m1, m2);
 			*tbl++ ^= in;
 			update_contribution(tbl, m1, m2);
 			*tbl ^= in;
-		}
-		else
+		} else
 			*tbl-- = *(*end)--;
 }
 /** extend_table_simple
@@ -113,49 +99,46 @@ extend_table(uint32_t *tbl, uint32_t **end, int bit, int m1, int m2, uint32_t in
 */
 static inline void extend_table_simple(uint32_t *tbl, uint32_t **end, int bit)
 {
-	for (*tbl <<= 1; tbl <= *end; *++tbl <<= 1)
-		if (filter(*tbl) ^ filter(*tbl | 1))
+	for(*tbl <<= 1; tbl <= *end; *++tbl <<= 1) {
+		if(filter(*tbl) ^ filter(*tbl | 1)) {	// replace
 			*tbl |= filter(*tbl) ^ bit;
-		else if (filter(*tbl) == bit) {
+		} else if(filter(*tbl) == bit) {		// insert
 			*++*end = *++tbl;
 			*tbl = tbl[-1] | 1;
-		}
-		else
+		} else	{								// drop
 			*tbl-- = *(*end)--;
+}
+	}
 }
 /** recover
 * recursively narrow down the search space, 4 bits of keystream at a time
 */
-static struct Crypto1State*
-recover(uint32_t *o_head, uint32_t *o_tail, uint32_t oks,
-	uint32_t *e_head, uint32_t *e_tail, uint32_t eks, int rem,
-struct Crypto1State *sl, uint32_t in)
+static struct Crypto1State* recover(uint32_t *o_head, uint32_t *o_tail, uint32_t oks, 
+	uint32_t *e_head, uint32_t *e_tail, uint32_t eks, int rem, struct Crypto1State *sl, uint32_t in)
 {
-	uint32_t *o, *e, i;
+	uint32_t *o, *e;
 
 	if (rem == -1) {
 		for (e = e_head; e <= e_tail; ++e) {
-			*e = *e << 1 ^ parity(*e & LF_POLY_EVEN) ^ !!(in & 4);
+			*e = *e << 1 ^ evenparity32(*e & LF_POLY_EVEN) ^ !!(in & 4);
 			for (o = o_head; o <= o_tail; ++o, ++sl) {
 				sl->even = *o;
-				sl->odd = *e ^ parity(*o & LF_POLY_ODD);
+				sl->odd = *e ^ evenparity32(*o & LF_POLY_ODD);
 				sl[1].odd = sl[1].even = 0;
 			}
 		}
 		return sl;
 	}
 
-	for (i = 0; i < 4 && rem--; i++) {
+	for (uint32_t i = 0; i < 4 && rem--; i++) {
 		oks >>= 1;
 		eks >>= 1;
 		in >>= 2;
-		extend_table(o_head, &o_tail, oks & 1, LF_POLY_EVEN << 1 | 1,
-			LF_POLY_ODD << 1, 0);
+		extend_table(o_head, &o_tail, oks & 1, LF_POLY_EVEN << 1 | 1, LF_POLY_ODD << 1, 0);
 		if (o_head > o_tail)
 			return sl;
 
-		extend_table(e_head, &e_tail, eks & 1, LF_POLY_ODD,
-			LF_POLY_EVEN << 1 | 1, in & 3);
+		extend_table(e_head, &e_tail, eks & 1, LF_POLY_ODD, LF_POLY_EVEN << 1 | 1, in & 3);
 		if (e_head > e_tail)
 			return sl;
 	}
@@ -227,24 +210,30 @@ out:
 	return statelist;
 }
 
-static const uint32_t S1[] = { 0x62141, 0x310A0, 0x18850, 0x0C428, 0x06214,
-0x0310A, 0x85E30, 0xC69AD, 0x634D6, 0xB5CDE, 0xDE8DA, 0x6F46D, 0xB3C83,
-0x59E41, 0xA8995, 0xD027F, 0x6813F, 0x3409F, 0x9E6FA };
-static const uint32_t S2[] = { 0x3A557B00, 0x5D2ABD80, 0x2E955EC0, 0x174AAF60,
-0x0BA557B0, 0x05D2ABD8, 0x0449DE68, 0x048464B0, 0x42423258, 0x278192A8,
-0x156042D0, 0x0AB02168, 0x43F89B30, 0x61FC4D98, 0x765EAD48, 0x7D8FDD20,
-0x7EC7EE90, 0x7F63F748, 0x79117020 };
+static const uint32_t S1[] = {
+	0x62141, 0x310A0, 0x18850, 0x0C428, 0x06214, 0x0310A, 
+	0x85E30, 0xC69AD, 0x634D6, 0xB5CDE,	0xDE8DA, 0x6F46D, 
+	0xB3C83, 0x59E41, 0xA8995,	0xD027F, 0x6813F, 0x3409F, 0x9E6FA };
+
+static const uint32_t S2[] = { 
+	0x3A557B00, 0x5D2ABD80, 0x2E955EC0, 0x174AAF60, 0x0BA557B0,
+	0x05D2ABD8, 0x0449DE68, 0x048464B0,	0x42423258, 0x278192A8,
+	0x156042D0, 0x0AB02168,	0x43F89B30, 0x61FC4D98, 0x765EAD48,
+	0x7D8FDD20,	0x7EC7EE90, 0x7F63F748, 0x79117020 };
 static const uint32_t T1[] = {
 	0x4F37D, 0x279BE, 0x97A6A, 0x4BD35, 0x25E9A, 0x12F4D, 0x097A6, 0x80D66,
 	0xC4006, 0x62003, 0xB56B4, 0x5AB5A, 0xA9318, 0xD0F39, 0x6879C, 0xB057B,
 	0x582BD, 0x2C15E, 0x160AF, 0x8F6E2, 0xC3DC4, 0xE5857, 0x72C2B, 0x39615,
 	0x98DBF, 0xC806A, 0xE0680, 0x70340, 0x381A0, 0x98665, 0x4C332, 0xA272C };
-static const uint32_t T2[] = { 0x3C88B810, 0x5E445C08, 0x2982A580, 0x14C152C0,
-0x4A60A960, 0x253054B0, 0x52982A58, 0x2FEC9EA8, 0x1156C4D0, 0x08AB6268,
-0x42F53AB0, 0x217A9D58, 0x161DC528, 0x0DAE6910, 0x46D73488, 0x25CB11C0,
-0x52E588E0, 0x6972C470, 0x34B96238, 0x5CFC3A98, 0x28DE96C8, 0x12CFC0E0,
-0x4967E070, 0x64B3F038, 0x74F97398, 0x7CDC3248, 0x38CE92A0, 0x1C674950,
-0x0E33A4A8, 0x01B959D0, 0x40DCACE8, 0x26CEDDF0 };
+static const uint32_t T2[] = { 
+	0x3C88B810, 0x5E445C08, 0x2982A580, 0x14C152C0,	0x4A60A960,
+	0x253054B0, 0x52982A58, 0x2FEC9EA8, 0x1156C4D0, 0x08AB6268,
+	0x42F53AB0, 0x217A9D58, 0x161DC528, 0x0DAE6910, 0x46D73488,
+	0x25CB11C0,	0x52E588E0, 0x6972C470, 0x34B96238, 0x5CFC3A98,
+	0x28DE96C8, 0x12CFC0E0,	0x4967E070, 0x64B3F038, 0x74F97398,
+	0x7CDC3248, 0x38CE92A0, 0x1C674950,	0x0E33A4A8, 0x01B959D0,
+	0x40DCACE8, 0x26CEDDF0 };
+
 static const uint32_t C1[] = { 0x846B5, 0x4235A, 0x211AD };
 static const uint32_t C2[] = { 0x1A822E0, 0x21A822E0, 0x21A822E0 };
 /** Reverse 64 bits of keystream into possible cipher states
@@ -284,30 +273,30 @@ struct Crypto1State* lfsr_recovery64(uint32_t ks2, uint32_t ks3)
 			continue;
 
 		for (j = 0; j < 19; ++j)
-			low = low << 1 | parity(i & S1[j]);
+			low = low << 1 | evenparity32(i & S1[j]);
 		for (j = 0; j < 32; ++j)
-			hi[j] = parity(i & T1[j]);
+			hi[j] = evenparity32(i & T1[j]);
 
 		for (; tail >= table; --tail) {
 			for (j = 0; j < 3; ++j) {
 				*tail = *tail << 1;
-				*tail |= parity((i & C1[j]) ^ (*tail & C2[j]));
+				*tail |= evenparity32((i & C1[j]) ^ (*tail & C2[j]));
 				if (filter(*tail) != oks[29 + j])
 					goto continue2;
 			}
 
 			for (j = 0; j < 19; ++j)
-				win = win << 1 | parity(*tail & S2[j]);
+				win = win << 1 | evenparity32(*tail & S2[j]);
 
 			win ^= low;
 			for (j = 0; j < 32; ++j) {
-				win = win << 1 ^ hi[j] ^ parity(*tail & T2[j]);
+				win = win << 1 ^ hi[j] ^ evenparity32(*tail & T2[j]);
 				if (filter(win) != eks[j])
 					goto continue2;
 			}
 
-			*tail = *tail << 1 | parity(LF_POLY_EVEN & *tail);
-			sl->odd = *tail ^ parity(LF_POLY_ODD & win);
+			*tail = *tail << 1 | evenparity32(LF_POLY_EVEN & *tail);
+			sl->odd = *tail ^ evenparity32(LF_POLY_ODD & win);
 			sl->even = win;
 			++sl;
 			sl->odd = sl->even = 0;
@@ -335,7 +324,7 @@ uint8_t lfsr_rollback_bit(struct Crypto1State *s, uint32_t in, int fb)
 	out ^= !!in;
 	out ^= (ret = filter(s->odd)) & !!fb;
 
-	s->even |= parity(out) << 23;
+	s->even |= evenparity32(out) << 23;
 	return ret;
 }
 /** lfsr_rollback_byte
@@ -343,9 +332,21 @@ uint8_t lfsr_rollback_bit(struct Crypto1State *s, uint32_t in, int fb)
 */
 uint8_t lfsr_rollback_byte(struct Crypto1State *s, uint32_t in, int fb)
 {
+	/*
 	int i, ret = 0;
 	for (i = 7; i >= 0; --i)
 		ret |= lfsr_rollback_bit(s, BIT(in, i), fb) << i;
+*/
+// unfold loop 20160112
+	uint8_t ret = 0;
+	ret |= lfsr_rollback_bit(s, BIT(in, 7), fb) << 7;
+	ret |= lfsr_rollback_bit(s, BIT(in, 6), fb) << 6;
+	ret |= lfsr_rollback_bit(s, BIT(in, 5), fb) << 5;
+	ret |= lfsr_rollback_bit(s, BIT(in, 4), fb) << 4;
+	ret |= lfsr_rollback_bit(s, BIT(in, 3), fb) << 3;
+	ret |= lfsr_rollback_bit(s, BIT(in, 2), fb) << 2;
+	ret |= lfsr_rollback_bit(s, BIT(in, 1), fb) << 1;
+	ret |= lfsr_rollback_bit(s, BIT(in, 0), fb) << 0;
 	return ret;
 }
 /** lfsr_rollback_word
@@ -353,10 +354,49 @@ uint8_t lfsr_rollback_byte(struct Crypto1State *s, uint32_t in, int fb)
 */
 uint32_t lfsr_rollback_word(struct Crypto1State *s, uint32_t in, int fb)
 {
+	/*
 	int i;
 	uint32_t ret = 0;
 	for (i = 31; i >= 0; --i)
 		ret |= lfsr_rollback_bit(s, BEBIT(in, i), fb) << (i ^ 24);
+*/
+// unfold loop 20160112
+	uint32_t ret = 0;
+	ret |= lfsr_rollback_bit(s, BEBIT(in, 31), fb) << (31 ^ 24);
+	ret |= lfsr_rollback_bit(s, BEBIT(in, 30), fb) << (30 ^ 24);
+	ret |= lfsr_rollback_bit(s, BEBIT(in, 29), fb) << (29 ^ 24);
+	ret |= lfsr_rollback_bit(s, BEBIT(in, 28), fb) << (28 ^ 24);
+	ret |= lfsr_rollback_bit(s, BEBIT(in, 27), fb) << (27 ^ 24);
+	ret |= lfsr_rollback_bit(s, BEBIT(in, 26), fb) << (26 ^ 24);
+	ret |= lfsr_rollback_bit(s, BEBIT(in, 25), fb) << (25 ^ 24);
+	ret |= lfsr_rollback_bit(s, BEBIT(in, 24), fb) << (24 ^ 24);
+
+	ret |= lfsr_rollback_bit(s, BEBIT(in, 23), fb) << (23 ^ 24);
+	ret |= lfsr_rollback_bit(s, BEBIT(in, 22), fb) << (22 ^ 24);
+	ret |= lfsr_rollback_bit(s, BEBIT(in, 21), fb) << (21 ^ 24);
+	ret |= lfsr_rollback_bit(s, BEBIT(in, 20), fb) << (20 ^ 24);
+	ret |= lfsr_rollback_bit(s, BEBIT(in, 19), fb) << (19 ^ 24);
+	ret |= lfsr_rollback_bit(s, BEBIT(in, 18), fb) << (18 ^ 24);
+	ret |= lfsr_rollback_bit(s, BEBIT(in, 17), fb) << (17 ^ 24);
+	ret |= lfsr_rollback_bit(s, BEBIT(in, 16), fb) << (16 ^ 24);
+	
+	ret |= lfsr_rollback_bit(s, BEBIT(in, 15), fb) << (15 ^ 24);
+	ret |= lfsr_rollback_bit(s, BEBIT(in, 14), fb) << (14 ^ 24);
+	ret |= lfsr_rollback_bit(s, BEBIT(in, 13), fb) << (13 ^ 24);
+	ret |= lfsr_rollback_bit(s, BEBIT(in, 12), fb) << (12 ^ 24);
+	ret |= lfsr_rollback_bit(s, BEBIT(in, 11), fb) << (11 ^ 24);
+	ret |= lfsr_rollback_bit(s, BEBIT(in, 10), fb) << (10 ^ 24);
+	ret |= lfsr_rollback_bit(s, BEBIT(in, 9), fb) << (9 ^ 24);
+	ret |= lfsr_rollback_bit(s, BEBIT(in, 8), fb) << (8 ^ 24);
+	
+	ret |= lfsr_rollback_bit(s, BEBIT(in, 7), fb) << (7 ^ 24);
+	ret |= lfsr_rollback_bit(s, BEBIT(in, 6), fb) << (6 ^ 24);
+	ret |= lfsr_rollback_bit(s, BEBIT(in, 5), fb) << (5 ^ 24);
+	ret |= lfsr_rollback_bit(s, BEBIT(in, 4), fb) << (4 ^ 24);
+	ret |= lfsr_rollback_bit(s, BEBIT(in, 3), fb) << (3 ^ 24);
+	ret |= lfsr_rollback_bit(s, BEBIT(in, 2), fb) << (2 ^ 24);
+	ret |= lfsr_rollback_bit(s, BEBIT(in, 1), fb) << (1 ^ 24);
+	ret |= lfsr_rollback_bit(s, BEBIT(in, 0), fb) << (0 ^ 24);
 	return ret;
 }
 
@@ -379,10 +419,22 @@ int nonce_distance(uint32_t from, uint32_t to)
 	return (65535 + dist[to >> 16] - dist[from >> 16]) % 65535;
 }
 
+/** validate_prng_nonce
+ * Determine if nonce is deterministic. ie: Suspectable to Darkside attack.
+ * returns
+ *   true = weak prng
+ *   false = hardend prng
+ */
+bool validate_prng_nonce(uint32_t nonce) {
+	// init prng table:
+	nonce_distance(nonce, nonce);
+	return ((65535 - dist[nonce >> 16] + dist[nonce & 0xffff]) % 65535) == 16;
+}
 
 static uint32_t fastfwd[2][8] = {
 	{ 0, 0x4BC53, 0xECB1, 0x450E2, 0x25E29, 0x6E27A, 0x2B298, 0x60ECB },
 	{ 0, 0x1D962, 0x4BC53, 0x56531, 0xECB1, 0x135D3, 0x450E2, 0x58980 } };
+
 /** lfsr_prefix_ks
 *
 * Is an exported helper function from the common prefix attack
@@ -394,11 +446,11 @@ static uint32_t fastfwd[2][8] = {
 */
 uint32_t *lfsr_prefix_ks(uint8_t ks[8], int isodd)
 {
-	uint32_t c, entry, *candidates = (uint32_t*)malloc(4 << 10);
-	int i, size = 0, good;
-
-	if (!candidates)
-		return 0;
+	uint32_t *candidates = (uint32_t*)malloc(4 << 10);
+	if (!candidates) return 0;
+		
+	uint32_t c,  entry;
+	int size = 0, i, good;
 
 	for (i = 0; i < 1 << 21; ++i) {
 		for (c = 0, good = 1; good && c < 8; ++c) {
@@ -418,9 +470,7 @@ uint32_t *lfsr_prefix_ks(uint8_t ks[8], int isodd)
 /** check_pfx_parity
 * helper function which eliminates possible secret states using parity bits
 */
-static struct Crypto1State*
-check_pfx_parity(uint32_t prefix, uint32_t rresp, uint8_t parities[8][8],
-	uint32_t odd, uint32_t even, struct Crypto1State* sl)
+static struct Crypto1State* check_pfx_parity(uint32_t prefix, uint32_t rresp, uint8_t parities[8][8], uint32_t odd, uint32_t even, struct Crypto1State* sl)
 {
 	uint32_t ks1, nr, ks2, rr, ks3, c, good = 1;
 
@@ -438,11 +488,11 @@ check_pfx_parity(uint32_t prefix, uint32_t rresp, uint8_t parities[8][8],
 		nr = ks1 ^ (prefix | c << 5);
 		rr = ks2 ^ rresp;
 
-		good &= parity(nr & 0x000000ff) ^ parities[c][3] ^ BIT(ks2, 24);
-		good &= parity(rr & 0xff000000) ^ parities[c][4] ^ BIT(ks2, 16);
-		good &= parity(rr & 0x00ff0000) ^ parities[c][5] ^ BIT(ks2, 8);
-		good &= parity(rr & 0x0000ff00) ^ parities[c][6] ^ BIT(ks2, 0);
-		good &= parity(rr & 0x000000ff) ^ parities[c][7] ^ ks3;
+		good &= evenparity32(nr & 0x000000ff) ^ parities[c][3] ^ BIT(ks2, 24);
+		good &= evenparity32(rr & 0xff000000) ^ parities[c][4] ^ BIT(ks2, 16);
+		good &= evenparity32(rr & 0x00ff0000) ^ parities[c][5] ^ BIT(ks2,  8);
+		good &= evenparity32(rr & 0x0000ff00) ^ parities[c][6] ^ BIT(ks2,  0);
+		good &= evenparity32(rr & 0x000000ff) ^ parities[c][7] ^ ks3;
 	}
 
 	return sl + good;
@@ -451,9 +501,14 @@ check_pfx_parity(uint32_t prefix, uint32_t rresp, uint8_t parities[8][8],
 
 /** lfsr_common_prefix
 * Implentation of the common prefix attack.
+ * Requires the 28 bit constant prefix used as reader nonce (pfx)
+ * The reader response used (rr)
+ * The keystream used to encrypt the observed NACK's (ks)
+ * The parity bits (par)
+ * It returns a zero terminated list of possible cipher states after the
+ * tag nonce was fed in
 */
-struct Crypto1State*
-	lfsr_common_prefix(uint32_t pfx, uint32_t rr, uint8_t ks[8], uint8_t par[8][8])
+struct Crypto1State* lfsr_common_prefix(uint32_t pfx, uint32_t rr, uint8_t ks[8], uint8_t par[8][8])
 {
 	struct Crypto1State *statelist, *s;
 	uint32_t *odd, *even, *o, *e, top;
@@ -461,7 +516,7 @@ struct Crypto1State*
 	odd = lfsr_prefix_ks(ks, 1);
 	even = lfsr_prefix_ks(ks, 0);
 
-	s = statelist = (Crypto1State*)malloc((sizeof *statelist) << 20);
+	s = statelist = (Crypto1State*)malloc((sizeof *statelist) << 24);
 	if (!s || !odd || !even) {
 		free(statelist);
 		statelist = 0;
@@ -483,33 +538,3 @@ out:
 	return statelist;
 }
 
-uint64_t mfkey(uint32_t uid, uint32_t nt, uint32_t nt1, uint32_t nr0_enc, uint32_t ar0_enc, uint32_t nr1_enc, uint32_t ar1_enc) {
-
-	struct Crypto1State *s, *t;
-	uint64_t key;     // recovered key
-	uint32_t ks2;     // keystream used to encrypt reader response
-
-					  // Generate lfsr succesors of the tag challenge
-
-	prng_successor(nt, 64);
-	prng_successor(nt, 96);
-
-	ks2 = ar0_enc ^ prng_successor(nt, 64);
-
-	s = lfsr_recovery32(ar0_enc ^ prng_successor(nt, 64), 0);
-
-	for (t = s; t->odd | t->even; ++t) {
-		lfsr_rollback_word(t, 0, 0);
-		lfsr_rollback_word(t, nr0_enc, 1);
-		lfsr_rollback_word(t, uid ^ nt, 0);
-		crypto1_get_lfsr(t, &key);
-		crypto1_word(t, uid ^ nt1, 0);
-		crypto1_word(t, nr1_enc, 1);
-
-		if (ar1_enc == (crypto1_word(t, 0, 0) ^ prng_successor(nt1, 64))) {
-			return key;
-		}
-	}
-	free(s);
-	return 0xffffffffffffffff;
-}

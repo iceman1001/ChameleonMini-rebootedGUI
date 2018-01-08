@@ -20,10 +20,10 @@ Copyright (C) 2008-2014 bla <blapost@gmail.com>
 #ifndef CRAPTO1_INCLUDED
 #define CRAPTO1_INCLUDED
 #include <stdint.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
-	__declspec(dllexport) uint64_t mfkey(uint32_t uid, uint32_t nt, uint32_t nt1, uint32_t nr0_enc, uint32_t ar0_enc, uint32_t nr1_enc, uint32_t ar1_enc);
 	struct Crypto1State { uint32_t odd, even; };
 	struct Crypto1State* crypto1_create(uint64_t);
 	void crypto1_destroy(struct Crypto1State*);
@@ -43,12 +43,13 @@ extern "C" {
 	uint8_t lfsr_rollback_byte(struct Crypto1State* s, uint32_t in, int fb);
 	uint32_t lfsr_rollback_word(struct Crypto1State* s, uint32_t in, int fb);
 	int nonce_distance(uint32_t from, uint32_t to);
+extern bool validate_prng_nonce(uint32_t nonce);
 #define FOREACH_VALID_NONCE(N, FILTER, FSIZE)\
 	uint32_t __n = 0,__M = 0, N = 0;\
 	int __i;\
 	for(; __n < 1 << 16; N = prng_successor(__M = ++__n, 16))\
 		for(__i = FSIZE - 1; __i >= 0; __i--)\
-			if(BIT(FILTER, __i) ^ parity(__M & 0xFF01))\
+			if(BIT(FILTER, __i) ^ evenparity32(__M & 0xFF01))\
 				break;\
 			else if(__i)\
 				__M = prng_successor(__M, (__i == 7) ? 48 : 8);\
@@ -58,24 +59,6 @@ extern "C" {
 #define LF_POLY_EVEN (0x870804)
 #define BIT(x, n) ((x) >> (n) & 1)
 #define BEBIT(x, n) BIT(x, (n) ^ 24)
-	static inline int parity(uint32_t x)
-	{
-#if !defined __i386__ || !defined __GNUC__
-		x ^= x >> 16;
-		x ^= x >> 8;
-		x ^= x >> 4;
-		return BIT(0x6996, x & 0xf);
-#else
-		asm("movl %1, %%eax\n"
-			"mov %%ax, %%cx\n"
-			"shrl $0x10, %%eax\n"
-			"xor %%ax, %%cx\n"
-			"xor %%ch, %%cl\n"
-			"setpo %%al\n"
-			"movzx %%al, %0\n": "=r"(x) : "r"(x) : "eax", "ecx");
-		return x;
-#endif
-	}
 	static inline int filter(uint32_t const x)
 	{
 		uint32_t f;

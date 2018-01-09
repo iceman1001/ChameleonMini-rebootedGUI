@@ -29,7 +29,6 @@ namespace ChameleonMiniGUI
         private void InitializeComponent()
         {
             this.gb_tagslot1 = new System.Windows.Forms.GroupBox();
-            this.btn_fullcalc1 = new System.Windows.Forms.Button();
             this.btn_clear1 = new System.Windows.Forms.Button();
             this.btn_fastcalc1 = new System.Windows.Forms.Button();
             this.btn_apply1 = new System.Windows.Forms.Button();
@@ -43,7 +42,6 @@ namespace ChameleonMiniGUI
             this.lbl_mode1 = new System.Windows.Forms.Label();
             this.cb_mode1 = new System.Windows.Forms.ComboBox();
             this.gb_tagslot2 = new System.Windows.Forms.GroupBox();
-            this.btn_fullcalc2 = new System.Windows.Forms.Button();
             this.btn_clear2 = new System.Windows.Forms.Button();
             this.btn_fastcalc2 = new System.Windows.Forms.Button();
             this.btn_apply2 = new System.Windows.Forms.Button();
@@ -57,7 +55,6 @@ namespace ChameleonMiniGUI
             this.lbl_mode2 = new System.Windows.Forms.Label();
             this.cb_mode2 = new System.Windows.Forms.ComboBox();
             this.gb_tagslot3 = new System.Windows.Forms.GroupBox();
-            this.btn_fullcalc3 = new System.Windows.Forms.Button();
             this.btn_clear3 = new System.Windows.Forms.Button();
             this.btn_fastcalc3 = new System.Windows.Forms.Button();
             this.btn_apply3 = new System.Windows.Forms.Button();
@@ -71,7 +68,6 @@ namespace ChameleonMiniGUI
             this.lbl_mode3 = new System.Windows.Forms.Label();
             this.cb_mode3 = new System.Windows.Forms.ComboBox();
             this.gb_tagslot4 = new System.Windows.Forms.GroupBox();
-            this.btn_fullcalc4 = new System.Windows.Forms.Button();
             this.btn_clear4 = new System.Windows.Forms.Button();
             this.btn_fastcalc4 = new System.Windows.Forms.Button();
             this.btn_apply4 = new System.Windows.Forms.Button();
@@ -85,7 +81,6 @@ namespace ChameleonMiniGUI
             this.lbl_mode4 = new System.Windows.Forms.Label();
             this.cb_mode4 = new System.Windows.Forms.ComboBox();
             this.gb_tagslot5 = new System.Windows.Forms.GroupBox();
-            this.btn_fullcalc5 = new System.Windows.Forms.Button();
             this.btn_clear5 = new System.Windows.Forms.Button();
             this.btn_fastcalc5 = new System.Windows.Forms.Button();
             this.btn_apply5 = new System.Windows.Forms.Button();
@@ -99,7 +94,6 @@ namespace ChameleonMiniGUI
             this.lbl_mode5 = new System.Windows.Forms.Label();
             this.cb_mode5 = new System.Windows.Forms.ComboBox();
             this.gb_tagslot6 = new System.Windows.Forms.GroupBox();
-            this.btn_fullcalc6 = new System.Windows.Forms.Button();
             this.btn_clear6 = new System.Windows.Forms.Button();
             this.btn_fastcalc6 = new System.Windows.Forms.Button();
             this.btn_apply6 = new System.Windows.Forms.Button();
@@ -113,7 +107,6 @@ namespace ChameleonMiniGUI
             this.lbl_mode6 = new System.Windows.Forms.Label();
             this.cb_mode6 = new System.Windows.Forms.ComboBox();
             this.gb_tagslot7 = new System.Windows.Forms.GroupBox();
-            this.btn_fullcalc7 = new System.Windows.Forms.Button();
             this.btn_clear7 = new System.Windows.Forms.Button();
             this.btn_fastcalc7 = new System.Windows.Forms.Button();
             this.btn_apply7 = new System.Windows.Forms.Button();
@@ -127,7 +120,6 @@ namespace ChameleonMiniGUI
             this.lbl_mode7 = new System.Windows.Forms.Label();
             this.cb_mode7 = new System.Windows.Forms.ComboBox();
             this.gb_tagslot8 = new System.Windows.Forms.GroupBox();
-            this.btn_fullcalc8 = new System.Windows.Forms.Button();
             this.btn_clear8 = new System.Windows.Forms.Button();
             this.btn_fastcalc8 = new System.Windows.Forms.Button();
             this.btn_apply8 = new System.Windows.Forms.Button();
@@ -146,6 +138,7 @@ namespace ChameleonMiniGUI
             this.btn_bootmode = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.gb_tagslot1.SuspendLayout();
             this.gb_tagslot2.SuspendLayout();
             this.gb_tagslot3.SuspendLayout();
@@ -154,39 +147,24 @@ namespace ChameleonMiniGUI
             this.gb_tagslot6.SuspendLayout();
             this.gb_tagslot7.SuspendLayout();
             this.gb_tagslot8.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // gb_tagslot1
             // 
-            this.gb_tagslot1.Controls.Add(this.btn_fullcalc1);
+            this.gb_tagslot1.Controls.Add(this.tableLayoutPanel1);
             this.gb_tagslot1.Controls.Add(this.btn_clear1);
             this.gb_tagslot1.Controls.Add(this.btn_fastcalc1);
             this.gb_tagslot1.Controls.Add(this.btn_apply1);
             this.gb_tagslot1.Controls.Add(this.btn_download1);
             this.gb_tagslot1.Controls.Add(this.btn_upload1);
             this.gb_tagslot1.Controls.Add(this.txt_result1);
-            this.gb_tagslot1.Controls.Add(this.cb_button1);
-            this.gb_tagslot1.Controls.Add(this.lbl_button1);
-            this.gb_tagslot1.Controls.Add(this.txt_uid1);
-            this.gb_tagslot1.Controls.Add(this.lbl_uid1);
-            this.gb_tagslot1.Controls.Add(this.lbl_mode1);
-            this.gb_tagslot1.Controls.Add(this.cb_mode1);
             this.gb_tagslot1.Location = new System.Drawing.Point(6, 12);
             this.gb_tagslot1.Name = "gb_tagslot1";
             this.gb_tagslot1.Size = new System.Drawing.Size(197, 268);
             this.gb_tagslot1.TabIndex = 0;
             this.gb_tagslot1.TabStop = false;
             this.gb_tagslot1.Text = "Tag Slot 1";
-            // 
-            // btn_fullcalc1
-            // 
-            this.btn_fullcalc1.Location = new System.Drawing.Point(115, 236);
-            this.btn_fullcalc1.Name = "btn_fullcalc1";
-            this.btn_fullcalc1.Size = new System.Drawing.Size(75, 23);
-            this.btn_fullcalc1.TabIndex = 12;
-            this.btn_fullcalc1.Text = "Full Calc.";
-            this.btn_fullcalc1.UseVisualStyleBackColor = true;
-            this.btn_fullcalc1.Click += new System.EventHandler(this.btn_fullcalc_Click);
             // 
             // btn_clear1
             // 
@@ -204,9 +182,9 @@ namespace ChameleonMiniGUI
             this.btn_fastcalc1.Name = "btn_fastcalc1";
             this.btn_fastcalc1.Size = new System.Drawing.Size(75, 23);
             this.btn_fastcalc1.TabIndex = 10;
-            this.btn_fastcalc1.Text = "Fast Calc.";
+            this.btn_fastcalc1.Text = "mfkey32";
             this.btn_fastcalc1.UseVisualStyleBackColor = true;
-            this.btn_fastcalc1.Click += new System.EventHandler(this.btn_fastcalc_Click);
+            this.btn_fastcalc1.Click += new System.EventHandler(this.btn_mfkey_Click);
             // 
             // btn_apply1
             // 
@@ -255,7 +233,7 @@ namespace ChameleonMiniGUI
             "SWITCHCARD",
             "RANDOM_UID",
             "CLOSED"});
-            this.cb_button1.Location = new System.Drawing.Point(62, 83);
+            this.cb_button1.Location = new System.Drawing.Point(50, 53);
             this.cb_button1.Name = "cb_button1";
             this.cb_button1.Size = new System.Drawing.Size(128, 21);
             this.cb_button1.TabIndex = 5;
@@ -263,7 +241,7 @@ namespace ChameleonMiniGUI
             // lbl_button1
             // 
             this.lbl_button1.AutoSize = true;
-            this.lbl_button1.Location = new System.Drawing.Point(6, 86);
+            this.lbl_button1.Location = new System.Drawing.Point(3, 50);
             this.lbl_button1.Name = "lbl_button1";
             this.lbl_button1.Size = new System.Drawing.Size(38, 13);
             this.lbl_button1.TabIndex = 4;
@@ -271,7 +249,7 @@ namespace ChameleonMiniGUI
             // 
             // txt_uid1
             // 
-            this.txt_uid1.Location = new System.Drawing.Point(62, 51);
+            this.txt_uid1.Location = new System.Drawing.Point(50, 28);
             this.txt_uid1.Name = "txt_uid1";
             this.txt_uid1.Size = new System.Drawing.Size(128, 20);
             this.txt_uid1.TabIndex = 3;
@@ -279,7 +257,7 @@ namespace ChameleonMiniGUI
             // lbl_uid1
             // 
             this.lbl_uid1.AutoSize = true;
-            this.lbl_uid1.Location = new System.Drawing.Point(6, 54);
+            this.lbl_uid1.Location = new System.Drawing.Point(3, 25);
             this.lbl_uid1.Name = "lbl_uid1";
             this.lbl_uid1.Size = new System.Drawing.Size(26, 13);
             this.lbl_uid1.TabIndex = 2;
@@ -288,7 +266,7 @@ namespace ChameleonMiniGUI
             // lbl_mode1
             // 
             this.lbl_mode1.AutoSize = true;
-            this.lbl_mode1.Location = new System.Drawing.Point(6, 22);
+            this.lbl_mode1.Location = new System.Drawing.Point(3, 0);
             this.lbl_mode1.Name = "lbl_mode1";
             this.lbl_mode1.Size = new System.Drawing.Size(34, 13);
             this.lbl_mode1.TabIndex = 1;
@@ -304,14 +282,13 @@ namespace ChameleonMiniGUI
             "MF_ULTRALIGHT",
             "MF_DETECTION",
             "CLOSED"});
-            this.cb_mode1.Location = new System.Drawing.Point(62, 19);
+            this.cb_mode1.Location = new System.Drawing.Point(50, 3);
             this.cb_mode1.Name = "cb_mode1";
             this.cb_mode1.Size = new System.Drawing.Size(128, 21);
             this.cb_mode1.TabIndex = 0;
             // 
             // gb_tagslot2
             // 
-            this.gb_tagslot2.Controls.Add(this.btn_fullcalc2);
             this.gb_tagslot2.Controls.Add(this.btn_clear2);
             this.gb_tagslot2.Controls.Add(this.btn_fastcalc2);
             this.gb_tagslot2.Controls.Add(this.btn_apply2);
@@ -331,16 +308,6 @@ namespace ChameleonMiniGUI
             this.gb_tagslot2.TabStop = false;
             this.gb_tagslot2.Text = "Tag Slot 2";
             // 
-            // btn_fullcalc2
-            // 
-            this.btn_fullcalc2.Location = new System.Drawing.Point(115, 236);
-            this.btn_fullcalc2.Name = "btn_fullcalc2";
-            this.btn_fullcalc2.Size = new System.Drawing.Size(75, 23);
-            this.btn_fullcalc2.TabIndex = 12;
-            this.btn_fullcalc2.Text = "Full Calc.";
-            this.btn_fullcalc2.UseVisualStyleBackColor = true;
-            this.btn_fullcalc2.Click += new System.EventHandler(this.btn_fullcalc_Click);
-            // 
             // btn_clear2
             // 
             this.btn_clear2.Location = new System.Drawing.Point(115, 207);
@@ -357,9 +324,9 @@ namespace ChameleonMiniGUI
             this.btn_fastcalc2.Name = "btn_fastcalc2";
             this.btn_fastcalc2.Size = new System.Drawing.Size(75, 23);
             this.btn_fastcalc2.TabIndex = 10;
-            this.btn_fastcalc2.Text = "Fast Calc.";
+            this.btn_fastcalc2.Text = "mfkey32";
             this.btn_fastcalc2.UseVisualStyleBackColor = true;
-            this.btn_fastcalc2.Click += new System.EventHandler(this.btn_fastcalc_Click);
+            this.btn_fastcalc2.Click += new System.EventHandler(this.btn_mfkey_Click);
             // 
             // btn_apply2
             // 
@@ -464,7 +431,6 @@ namespace ChameleonMiniGUI
             // 
             // gb_tagslot3
             // 
-            this.gb_tagslot3.Controls.Add(this.btn_fullcalc3);
             this.gb_tagslot3.Controls.Add(this.btn_clear3);
             this.gb_tagslot3.Controls.Add(this.btn_fastcalc3);
             this.gb_tagslot3.Controls.Add(this.btn_apply3);
@@ -484,16 +450,6 @@ namespace ChameleonMiniGUI
             this.gb_tagslot3.TabStop = false;
             this.gb_tagslot3.Text = "Tag Slot 3";
             // 
-            // btn_fullcalc3
-            // 
-            this.btn_fullcalc3.Location = new System.Drawing.Point(115, 236);
-            this.btn_fullcalc3.Name = "btn_fullcalc3";
-            this.btn_fullcalc3.Size = new System.Drawing.Size(75, 23);
-            this.btn_fullcalc3.TabIndex = 12;
-            this.btn_fullcalc3.Text = "Full Calc.";
-            this.btn_fullcalc3.UseVisualStyleBackColor = true;
-            this.btn_fullcalc3.Click += new System.EventHandler(this.btn_fullcalc_Click);
-            // 
             // btn_clear3
             // 
             this.btn_clear3.Location = new System.Drawing.Point(115, 207);
@@ -510,9 +466,9 @@ namespace ChameleonMiniGUI
             this.btn_fastcalc3.Name = "btn_fastcalc3";
             this.btn_fastcalc3.Size = new System.Drawing.Size(75, 23);
             this.btn_fastcalc3.TabIndex = 10;
-            this.btn_fastcalc3.Text = "Fast Calc.";
+            this.btn_fastcalc3.Text = "mfkey32";
             this.btn_fastcalc3.UseVisualStyleBackColor = true;
-            this.btn_fastcalc3.Click += new System.EventHandler(this.btn_fastcalc_Click);
+            this.btn_fastcalc3.Click += new System.EventHandler(this.btn_mfkey_Click);
             // 
             // btn_apply3
             // 
@@ -617,7 +573,6 @@ namespace ChameleonMiniGUI
             // 
             // gb_tagslot4
             // 
-            this.gb_tagslot4.Controls.Add(this.btn_fullcalc4);
             this.gb_tagslot4.Controls.Add(this.btn_clear4);
             this.gb_tagslot4.Controls.Add(this.btn_fastcalc4);
             this.gb_tagslot4.Controls.Add(this.btn_apply4);
@@ -637,16 +592,6 @@ namespace ChameleonMiniGUI
             this.gb_tagslot4.TabStop = false;
             this.gb_tagslot4.Text = "Tag Slot 4";
             // 
-            // btn_fullcalc4
-            // 
-            this.btn_fullcalc4.Location = new System.Drawing.Point(115, 236);
-            this.btn_fullcalc4.Name = "btn_fullcalc4";
-            this.btn_fullcalc4.Size = new System.Drawing.Size(75, 23);
-            this.btn_fullcalc4.TabIndex = 12;
-            this.btn_fullcalc4.Text = "Full Calc.";
-            this.btn_fullcalc4.UseVisualStyleBackColor = true;
-            this.btn_fullcalc4.Click += new System.EventHandler(this.btn_fullcalc_Click);
-            // 
             // btn_clear4
             // 
             this.btn_clear4.Location = new System.Drawing.Point(115, 207);
@@ -663,9 +608,9 @@ namespace ChameleonMiniGUI
             this.btn_fastcalc4.Name = "btn_fastcalc4";
             this.btn_fastcalc4.Size = new System.Drawing.Size(75, 23);
             this.btn_fastcalc4.TabIndex = 10;
-            this.btn_fastcalc4.Text = "Fast Calc.";
+            this.btn_fastcalc4.Text = "mfkey32";
             this.btn_fastcalc4.UseVisualStyleBackColor = true;
-            this.btn_fastcalc4.Click += new System.EventHandler(this.btn_fastcalc_Click);
+            this.btn_fastcalc4.Click += new System.EventHandler(this.btn_mfkey_Click);
             // 
             // btn_apply4
             // 
@@ -770,7 +715,6 @@ namespace ChameleonMiniGUI
             // 
             // gb_tagslot5
             // 
-            this.gb_tagslot5.Controls.Add(this.btn_fullcalc5);
             this.gb_tagslot5.Controls.Add(this.btn_clear5);
             this.gb_tagslot5.Controls.Add(this.btn_fastcalc5);
             this.gb_tagslot5.Controls.Add(this.btn_apply5);
@@ -790,16 +734,6 @@ namespace ChameleonMiniGUI
             this.gb_tagslot5.TabStop = false;
             this.gb_tagslot5.Text = "Tag Slot 5";
             // 
-            // btn_fullcalc5
-            // 
-            this.btn_fullcalc5.Location = new System.Drawing.Point(115, 236);
-            this.btn_fullcalc5.Name = "btn_fullcalc5";
-            this.btn_fullcalc5.Size = new System.Drawing.Size(75, 23);
-            this.btn_fullcalc5.TabIndex = 12;
-            this.btn_fullcalc5.Text = "Full Calc.";
-            this.btn_fullcalc5.UseVisualStyleBackColor = true;
-            this.btn_fullcalc5.Click += new System.EventHandler(this.btn_fullcalc_Click);
-            // 
             // btn_clear5
             // 
             this.btn_clear5.Location = new System.Drawing.Point(115, 207);
@@ -816,9 +750,9 @@ namespace ChameleonMiniGUI
             this.btn_fastcalc5.Name = "btn_fastcalc5";
             this.btn_fastcalc5.Size = new System.Drawing.Size(75, 23);
             this.btn_fastcalc5.TabIndex = 10;
-            this.btn_fastcalc5.Text = "Fast Calc.";
+            this.btn_fastcalc5.Text = "mfkey32";
             this.btn_fastcalc5.UseVisualStyleBackColor = true;
-            this.btn_fastcalc5.Click += new System.EventHandler(this.btn_fastcalc_Click);
+            this.btn_fastcalc5.Click += new System.EventHandler(this.btn_mfkey_Click);
             // 
             // btn_apply5
             // 
@@ -923,7 +857,6 @@ namespace ChameleonMiniGUI
             // 
             // gb_tagslot6
             // 
-            this.gb_tagslot6.Controls.Add(this.btn_fullcalc6);
             this.gb_tagslot6.Controls.Add(this.btn_clear6);
             this.gb_tagslot6.Controls.Add(this.btn_fastcalc6);
             this.gb_tagslot6.Controls.Add(this.btn_apply6);
@@ -943,16 +876,6 @@ namespace ChameleonMiniGUI
             this.gb_tagslot6.TabStop = false;
             this.gb_tagslot6.Text = "Tag Slot 6";
             // 
-            // btn_fullcalc6
-            // 
-            this.btn_fullcalc6.Location = new System.Drawing.Point(115, 236);
-            this.btn_fullcalc6.Name = "btn_fullcalc6";
-            this.btn_fullcalc6.Size = new System.Drawing.Size(75, 23);
-            this.btn_fullcalc6.TabIndex = 12;
-            this.btn_fullcalc6.Text = "Full Calc.";
-            this.btn_fullcalc6.UseVisualStyleBackColor = true;
-            this.btn_fullcalc6.Click += new System.EventHandler(this.btn_fullcalc_Click);
-            // 
             // btn_clear6
             // 
             this.btn_clear6.Location = new System.Drawing.Point(115, 207);
@@ -969,9 +892,9 @@ namespace ChameleonMiniGUI
             this.btn_fastcalc6.Name = "btn_fastcalc6";
             this.btn_fastcalc6.Size = new System.Drawing.Size(75, 23);
             this.btn_fastcalc6.TabIndex = 10;
-            this.btn_fastcalc6.Text = "Fast Calc.";
+            this.btn_fastcalc6.Text = "mfkey32";
             this.btn_fastcalc6.UseVisualStyleBackColor = true;
-            this.btn_fastcalc6.Click += new System.EventHandler(this.btn_fastcalc_Click);
+            this.btn_fastcalc6.Click += new System.EventHandler(this.btn_mfkey_Click);
             // 
             // btn_apply6
             // 
@@ -1076,7 +999,6 @@ namespace ChameleonMiniGUI
             // 
             // gb_tagslot7
             // 
-            this.gb_tagslot7.Controls.Add(this.btn_fullcalc7);
             this.gb_tagslot7.Controls.Add(this.btn_clear7);
             this.gb_tagslot7.Controls.Add(this.btn_fastcalc7);
             this.gb_tagslot7.Controls.Add(this.btn_apply7);
@@ -1096,16 +1018,6 @@ namespace ChameleonMiniGUI
             this.gb_tagslot7.TabStop = false;
             this.gb_tagslot7.Text = "Tag Slot 7";
             // 
-            // btn_fullcalc7
-            // 
-            this.btn_fullcalc7.Location = new System.Drawing.Point(115, 236);
-            this.btn_fullcalc7.Name = "btn_fullcalc7";
-            this.btn_fullcalc7.Size = new System.Drawing.Size(75, 23);
-            this.btn_fullcalc7.TabIndex = 12;
-            this.btn_fullcalc7.Text = "Full Calc.";
-            this.btn_fullcalc7.UseVisualStyleBackColor = true;
-            this.btn_fullcalc7.Click += new System.EventHandler(this.btn_fullcalc_Click);
-            // 
             // btn_clear7
             // 
             this.btn_clear7.Location = new System.Drawing.Point(115, 207);
@@ -1122,9 +1034,9 @@ namespace ChameleonMiniGUI
             this.btn_fastcalc7.Name = "btn_fastcalc7";
             this.btn_fastcalc7.Size = new System.Drawing.Size(75, 23);
             this.btn_fastcalc7.TabIndex = 10;
-            this.btn_fastcalc7.Text = "Fast Calc.";
+            this.btn_fastcalc7.Text = "mfkey32";
             this.btn_fastcalc7.UseVisualStyleBackColor = true;
-            this.btn_fastcalc7.Click += new System.EventHandler(this.btn_fastcalc_Click);
+            this.btn_fastcalc7.Click += new System.EventHandler(this.btn_mfkey_Click);
             // 
             // btn_apply7
             // 
@@ -1229,7 +1141,6 @@ namespace ChameleonMiniGUI
             // 
             // gb_tagslot8
             // 
-            this.gb_tagslot8.Controls.Add(this.btn_fullcalc8);
             this.gb_tagslot8.Controls.Add(this.btn_clear8);
             this.gb_tagslot8.Controls.Add(this.btn_fastcalc8);
             this.gb_tagslot8.Controls.Add(this.btn_apply8);
@@ -1249,16 +1160,6 @@ namespace ChameleonMiniGUI
             this.gb_tagslot8.TabStop = false;
             this.gb_tagslot8.Text = "Tag Slot 8";
             // 
-            // btn_fullcalc8
-            // 
-            this.btn_fullcalc8.Location = new System.Drawing.Point(115, 236);
-            this.btn_fullcalc8.Name = "btn_fullcalc8";
-            this.btn_fullcalc8.Size = new System.Drawing.Size(75, 23);
-            this.btn_fullcalc8.TabIndex = 12;
-            this.btn_fullcalc8.Text = "Full Calc.";
-            this.btn_fullcalc8.UseVisualStyleBackColor = true;
-            this.btn_fullcalc8.Click += new System.EventHandler(this.btn_fullcalc_Click);
-            // 
             // btn_clear8
             // 
             this.btn_clear8.Location = new System.Drawing.Point(115, 207);
@@ -1275,9 +1176,9 @@ namespace ChameleonMiniGUI
             this.btn_fastcalc8.Name = "btn_fastcalc8";
             this.btn_fastcalc8.Size = new System.Drawing.Size(75, 23);
             this.btn_fastcalc8.TabIndex = 10;
-            this.btn_fastcalc8.Text = "Fast Calc.";
+            this.btn_fastcalc8.Text = "mfkey32";
             this.btn_fastcalc8.UseVisualStyleBackColor = true;
-            this.btn_fastcalc8.Click += new System.EventHandler(this.btn_fastcalc_Click);
+            this.btn_fastcalc8.Click += new System.EventHandler(this.btn_mfkey_Click);
             // 
             // btn_apply8
             // 
@@ -1425,11 +1326,31 @@ namespace ChameleonMiniGUI
             // 
             this.saveFileDialog1.Filter = "Dump Files|*.dump";
             // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 26.51934F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 73.48066F));
+            this.tableLayoutPanel1.Controls.Add(this.lbl_mode1, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.cb_mode1, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.lbl_uid1, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.txt_uid1, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.lbl_button1, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.cb_button1, 1, 2);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(10, 19);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 3;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 46F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(181, 97);
+            this.tableLayoutPanel1.TabIndex = 5;
+            // 
             // frm_main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(819, 614);
+            this.ClientSize = new System.Drawing.Size(978, 705);
             this.Controls.Add(this.btn_bootmode);
             this.Controls.Add(this.btn_exitboot);
             this.Controls.Add(this.btn_refresh);
@@ -1464,6 +1385,8 @@ namespace ChameleonMiniGUI
             this.gb_tagslot7.PerformLayout();
             this.gb_tagslot8.ResumeLayout(false);
             this.gb_tagslot8.PerformLayout();
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1475,7 +1398,6 @@ namespace ChameleonMiniGUI
         private System.Windows.Forms.Label lbl_mode1;
         private System.Windows.Forms.TextBox txt_uid1;
         private System.Windows.Forms.Label lbl_uid1;
-        private System.Windows.Forms.Button btn_fullcalc1;
         private System.Windows.Forms.Button btn_clear1;
         private System.Windows.Forms.Button btn_fastcalc1;
         private System.Windows.Forms.Button btn_apply1;
@@ -1490,7 +1412,6 @@ namespace ChameleonMiniGUI
         private System.Windows.Forms.Label lbl_mode2;
         private System.Windows.Forms.TextBox txt_uid2;
         private System.Windows.Forms.Label lbl_uid2;
-        private System.Windows.Forms.Button btn_fullcalc2;
         private System.Windows.Forms.Button btn_clear2;
         private System.Windows.Forms.Button btn_fastcalc2;
         private System.Windows.Forms.Button btn_apply2;
@@ -1505,7 +1426,6 @@ namespace ChameleonMiniGUI
         private System.Windows.Forms.Label lbl_mode3;
         private System.Windows.Forms.TextBox txt_uid3;
         private System.Windows.Forms.Label lbl_uid3;
-        private System.Windows.Forms.Button btn_fullcalc3;
         private System.Windows.Forms.Button btn_clear3;
         private System.Windows.Forms.Button btn_fastcalc3;
         private System.Windows.Forms.Button btn_apply3;
@@ -1520,7 +1440,6 @@ namespace ChameleonMiniGUI
         private System.Windows.Forms.Label lbl_mode4;
         private System.Windows.Forms.TextBox txt_uid4;
         private System.Windows.Forms.Label lbl_uid4;
-        private System.Windows.Forms.Button btn_fullcalc4;
         private System.Windows.Forms.Button btn_clear4;
         private System.Windows.Forms.Button btn_fastcalc4;
         private System.Windows.Forms.Button btn_apply4;
@@ -1535,7 +1454,6 @@ namespace ChameleonMiniGUI
         private System.Windows.Forms.Label lbl_mode5;
         private System.Windows.Forms.TextBox txt_uid5;
         private System.Windows.Forms.Label lbl_uid5;
-        private System.Windows.Forms.Button btn_fullcalc5;
         private System.Windows.Forms.Button btn_clear5;
         private System.Windows.Forms.Button btn_fastcalc5;
         private System.Windows.Forms.Button btn_apply5;
@@ -1550,7 +1468,6 @@ namespace ChameleonMiniGUI
         private System.Windows.Forms.Label lbl_mode6;
         private System.Windows.Forms.TextBox txt_uid6;
         private System.Windows.Forms.Label lbl_uid6;
-        private System.Windows.Forms.Button btn_fullcalc6;
         private System.Windows.Forms.Button btn_clear6;
         private System.Windows.Forms.Button btn_fastcalc6;
         private System.Windows.Forms.Button btn_apply6;
@@ -1565,7 +1482,6 @@ namespace ChameleonMiniGUI
         private System.Windows.Forms.Label lbl_mode7;
         private System.Windows.Forms.TextBox txt_uid7;
         private System.Windows.Forms.Label lbl_uid7;
-        private System.Windows.Forms.Button btn_fullcalc7;
         private System.Windows.Forms.Button btn_clear7;
         private System.Windows.Forms.Button btn_fastcalc7;
         private System.Windows.Forms.Button btn_apply7;
@@ -1580,7 +1496,6 @@ namespace ChameleonMiniGUI
         private System.Windows.Forms.Label lbl_mode8;
         private System.Windows.Forms.TextBox txt_uid8;
         private System.Windows.Forms.Label lbl_uid8;
-        private System.Windows.Forms.Button btn_fullcalc8;
         private System.Windows.Forms.Button btn_clear8;
         private System.Windows.Forms.Button btn_fastcalc8;
         private System.Windows.Forms.Button btn_apply8;
@@ -1595,6 +1510,7 @@ namespace ChameleonMiniGUI
         private System.Windows.Forms.Button btn_bootmode;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
     }
 }
 

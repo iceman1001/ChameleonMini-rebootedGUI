@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Configuration;
 using System.Linq;
 using System.Text;
@@ -19,9 +20,9 @@ namespace ChameleonMiniGUI
     {
 
         private SerialPort _comport = null;
-        private string[] modesArray = null;
-        private string[] buttonModesArray = null;
-        private string cmdExtension = "MY";
+        private string[] _modesArray = null;
+        private string[] _buttonModesArray = null;
+        private string _cmdExtension = "MY";
         public frm_main()
         {
             InitializeComponent();
@@ -53,54 +54,57 @@ namespace ChameleonMiniGUI
 
         private void btn_apply_Click(object sender, EventArgs e)
         {
-            string selectedMode = null;
-            var applyButtonClicked = sender as Button;
+            var btn = sender as Button;
+            if (btn == null) return;
 
-            int tagslotIndex = int.Parse(applyButtonClicked.Name.Substring(applyButtonClicked.Name.Length - 1));
-            if (tagslotIndex <= 0) return;
+            var index = int.Parse(btn.Name.Substring(btn.Name.Length - 1));
+            if (index <= 0) return;
 
             //SETTINGMY=tagslotIndex-1
-            SendCommandWithoutResult($"SETTING{cmdExtension}=" + (tagslotIndex - 1));
+            SendCommandWithoutResult($"SETTING{_cmdExtension}=" + (index - 1));
 
             //SETTINGMY? -> SHOULD BE "NO."+tagslotIndex
-            string selectedSlot = SendCommand($"SETTING{cmdExtension}?") as string;
-            if ((selectedSlot != null) && (selectedSlot.Contains("" + (tagslotIndex - 1))))
+            var selectedSlot = SendCommand($"SETTING{_cmdExtension}?").ToString();
+            if (!selectedSlot.Contains((index - 1).ToString())) return;
+
+
+            var selectedMode = string.Empty;
+
+            // Set the mode of the selected slot
+            var cb_mode = FindControls<ComboBox>(Controls, $"cb_mode{index}").FirstOrDefault();
+            if (cb_mode != null) 
             {
-                // Set the mode of the selected slot
-                var cb_mode = (ComboBox)(applyButtonClicked.Parent.Controls[$"cb_mode{tagslotIndex}"]);
-                if (cb_mode != null)
-                {
-                    //CONFIGMY=cb_mode.SelectedItem
-                    SendCommandWithoutResult($"CONFIG{cmdExtension}={cb_mode.SelectedItem}");
-                    selectedMode = cb_mode.SelectedItem.ToString();
-                }
-
-                // Set the button mode of the selected slot
-                var cb_buttonMode = (ComboBox)(applyButtonClicked.Parent.Controls[$"cb_button{tagslotIndex}"]);
-                if (cb_buttonMode != null)
-                {
-                    //BUTTONMY=cb_buttonMode.SelectedItem
-                    SendCommandWithoutResult($"BUTTON{cmdExtension}={cb_buttonMode.SelectedItem}");
-                }
-
-                // Set the UID
-                var txtUid = (TextBox)(applyButtonClicked.Parent.Controls[$"txt_uid{tagslotIndex}"]);
-                if (txtUid != null)
-                {
-                    string uid = txtUid.Text;
-                    if (!string.IsNullOrEmpty(uid) && !string.IsNullOrEmpty(selectedMode) && IsUidValid(uid, selectedMode))
-                    {
-                        SendCommandWithoutResult($"UID{cmdExtension}={uid}");
-                    }
-                    else
-                    {
-                        // set a random UID
-                        SendCommandWithoutResult($"UID{cmdExtension}=?");
-                    }
-                }
-
-                RefreshSlot(tagslotIndex - 1);
+                //CONFIGMY=cb_mode.SelectedItem
+                SendCommandWithoutResult($"CONFIG{_cmdExtension}={cb_mode.SelectedItem}");
+                selectedMode = cb_mode.SelectedItem.ToString();
             }
+
+            // Set the button mode of the selected slot
+            var cb_button = FindControls<ComboBox>(Controls, $"cb_button{index}").FirstOrDefault();
+            if (cb_button != null)
+            {
+                //BUTTONMY=cb_buttonMode.SelectedItem
+                SendCommandWithoutResult($"BUTTON{_cmdExtension}={cb_button.SelectedItem}");
+            }
+
+            // Set the UID
+            var txtUid = FindControls<TextBox>(Controls, $"txt_uid{index}").FirstOrDefault();
+            if (txtUid != null)
+            {
+                string uid = txtUid.Text;
+                // always set UID,  either with user provided or random. Is that acceptable?
+                if (!string.IsNullOrEmpty(uid) && !string.IsNullOrEmpty(selectedMode) && IsUidValid(uid, selectedMode))
+                {
+                    SendCommandWithoutResult($"UID{_cmdExtension}={uid}");
+                }
+                else
+                {
+                    // set a random UID
+                    SendCommandWithoutResult($"UID{_cmdExtension}=?");
+                }
+            }
+
+            RefreshSlot(index - 1);
         }
 
         private void btn_refresh_Click(object sender, EventArgs e)
@@ -113,7 +117,7 @@ namespace ChameleonMiniGUI
 
             if (_comport != null && _comport.IsOpen)
             {
-                if (modesArray == null || buttonModesArray == null)
+                if (_modesArray == null || _buttonModesArray == null)
                 {
                     GetSupportedModes();
                 }
@@ -128,7 +132,7 @@ namespace ChameleonMiniGUI
 
         private void btn_bootmode_Click(object sender, EventArgs e)
         {
-            SendCommandWithoutResult("UPGRADE" + cmdExtension);
+            SendCommandWithoutResult("UPGRADE" + _cmdExtension);
             try
             {
                 _comport.Close();
@@ -180,105 +184,88 @@ namespace ChameleonMiniGUI
 
         private void btn_upload_Click(object sender, EventArgs e)
         {
-            string dumpFilename = null;
+            var btn = sender as Button;
+            if (btn == null) return;
 
-            Button uploadButtonClicked = sender as Button;
+            int tagslotIndex = int.Parse(btn.Name.Substring(btn.Name.Length - 1));
+            if (tagslotIndex <= 0) return;
 
-            int tagslotIndex = int.Parse(uploadButtonClicked.Name.Substring(uploadButtonClicked.Name.Length - 1));
-            if (tagslotIndex > 0)
+            // select the corresponding slot
+            SendCommandWithoutResult($"SETTING{_cmdExtension}=" + (tagslotIndex - 1));
+
+            // Open dialog
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                // select the corresponding slot
-                SendCommandWithoutResult("SETTING" + cmdExtension + "=" + (tagslotIndex - 1));
+                var dumpFilename = openFileDialog1.FileName;
 
-                // Open dialog
-                DialogResult result = openFileDialog1.ShowDialog();
-                if (result == DialogResult.OK)
-                {
-                    dumpFilename = openFileDialog1.FileName;
-                }
+                // Load the dump
+                LoadDump(dumpFilename);
 
-                if (dumpFilename != null)
-                {
-                    // Load the dump
-                    LoadDump(dumpFilename);
-
-                    // Refresh slot
-                    RefreshSlot(tagslotIndex - 1);
-                }
+                // Refresh slot
+                RefreshSlot(tagslotIndex - 1);
             }
         }
 
         private void btn_download_Click(object sender, EventArgs e)
         {
-            string dumpFilename = null;
+            var btn = sender as Button;
+            if (btn == null) return;
 
-            Button downloadButtonClicked = sender as Button;
+            int tagslotIndex = int.Parse(btn.Name.Substring(btn.Name.Length - 1));
+            if (tagslotIndex <= 0) return;
 
-            int tagslotIndex = int.Parse(downloadButtonClicked.Name.Substring(downloadButtonClicked.Name.Length - 1));
-            if (tagslotIndex > 0)
+            // select the corresponding slot
+            SendCommandWithoutResult("SETTING" + _cmdExtension + "=" + (tagslotIndex - 1));
+
+            // Save dialog
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                // select the corresponding slot
-                SendCommandWithoutResult("SETTING" + cmdExtension + "=" + (tagslotIndex - 1));
+                var dumpFilename = saveFileDialog1.FileName;
 
-                // Save dialog
-                if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-                {
-                    dumpFilename = saveFileDialog1.FileName;
-                }
+                // Add extension if missing
+                dumpFilename = !dumpFilename.ToLower().Contains(".bin") ? dumpFilename + ".bin" : dumpFilename;
 
-                if (dumpFilename != null)
-                {
-                    // Add extension if missing
-                    dumpFilename = (!dumpFilename.ToLower().Contains(".dump") ? dumpFilename = dumpFilename + ".dump" : dumpFilename);
+                // Save the dump
+                SaveDump(dumpFilename);
 
-                    // Save the dump
-                    SaveDump(dumpFilename);
-
-                    // Refresh slot
-                    RefreshSlot(tagslotIndex - 1);
-                }
+                // Refresh slot
+                RefreshSlot(tagslotIndex - 1);
             }
         }
 
         private void btn_mfkey_Click(object sender, EventArgs e)
         {
-            var fastCalcButtonClicked = sender as Button;
+            var btn = sender as Button;
+            if (btn == null) return;
 
-            int tagslotIndex = int.Parse(fastCalcButtonClicked.Name.Substring(fastCalcButtonClicked.Name.Length - 1));
+            int tagslotIndex = int.Parse(btn.Name.Substring(btn.Name.Length - 1));
             if (tagslotIndex <= 0) return;
 
             //SETTINGMY=tagslotIndex-1
-            SendCommandWithoutResult($"SETTING{cmdExtension}=" + (tagslotIndex - 1));
+            SendCommandWithoutResult($"SETTING{_cmdExtension}=" + (tagslotIndex - 1));
 
-            var data = SendCommand($"DETECTION{cmdExtension}?") as byte[];
+            var data = SendCommand($"DETECTION{_cmdExtension}?") as byte[];
 
             string result = MfKeyAttacks.Attack(data);
 
-            var txtResult = (TextBox)(fastCalcButtonClicked.Parent.Controls[$"txt_result{tagslotIndex}"]);
-            if (txtResult != null)
-            {
-                txtResult.Text = result;
-            }
+            txt_output.Text = result;
         }
 
         private void btn_clear_Click(object sender, EventArgs e)
         {
-            var clearButtonClicked = sender as Button;
+            var btn = sender as Button;
+            if (btn == null) return;
 
-            int tagslotIndex = int.Parse(clearButtonClicked.Name.Substring(clearButtonClicked.Name.Length - 1));
+            int tagslotIndex = int.Parse(btn.Name.Substring(btn.Name.Length - 1));
             if (tagslotIndex <= 0) return;
 
             //SETTINGMY=tagslotIndex-1
-            SendCommandWithoutResult($"SETTING{cmdExtension}=" + (tagslotIndex - 1));
+            SendCommandWithoutResult($"SETTING{_cmdExtension}=" + (tagslotIndex - 1));
 
             // DETECTIONMY = CLOSED
-            SendCommandWithoutResult($"DETECTION{cmdExtension}=CLOSED");
+            SendCommandWithoutResult($"DETECTION{_cmdExtension}=CLOSED");
 
-            var txtResult = (TextBox)(clearButtonClicked.Parent.Controls["txt_result" + tagslotIndex]);
-            if (txtResult != null)
-            {
-                txtResult.Clear();
-            }
+            txt_output.Clear();
         }
 
         #endregion
@@ -305,14 +292,14 @@ namespace ChameleonMiniGUI
                         string version = SendCommand("VERSION?") as string;
                         if (!string.IsNullOrEmpty(version) && version.Contains("Chameleon"))
                         {
-                            cmdExtension = "";
+                            _cmdExtension = "";
                             break;
                         }
 
                         version = SendCommand("VERSIONMY?") as string;
                         if (!string.IsNullOrEmpty(version) && version.Contains("Chameleon"))
                         {
-                            cmdExtension = "MY";
+                            _cmdExtension = "MY";
                             break;
                         }
                     }
@@ -353,14 +340,14 @@ namespace ChameleonMiniGUI
                     string version = SendCommand("VERSION?") as string;
                     if (!string.IsNullOrEmpty(version) && version.Contains("Chameleon"))
                     {
-                        cmdExtension = "";
+                        _cmdExtension = "";
                         return;
                     }
 
                     version = SendCommand("VERSIONMY?") as string;
                     if (!string.IsNullOrEmpty(version) && version.Contains("Chameleon"))
                     {
-                        cmdExtension = "MY";
+                        _cmdExtension = "MY";
                         return;
                     }
                 }
@@ -461,195 +448,198 @@ namespace ChameleonMiniGUI
         private void RefreshSlot(int slotIndex)
         {
             //SETTINGMY=i
-            SendCommandWithoutResult($"SETTING{cmdExtension}={slotIndex}");
+            SendCommandWithoutResult($"SETTING{_cmdExtension}={slotIndex}");
 
             //SETTINGMY? -> SHOULD BE "NO."+i
-            var selectedSlot = SendCommand($"SETTING{cmdExtension}?") as string;
-            if ((selectedSlot != null) && (selectedSlot.Contains(slotIndex.ToString())))
+            var selectedSlot = SendCommand($"SETTING{_cmdExtension}?").ToString();
+            if ((!selectedSlot.Contains(slotIndex.ToString()))) return;
+
+            //CONFIGMY? -> RETURNS THE CONFIGURATION MODE
+            var slotMode = SendCommand($"CONFIG{_cmdExtension}?").ToString();
+            if (IsModeValid(slotMode))
             {
-                var gbTagSlot = (GroupBox)this.Controls["gb_tagslot" + (slotIndex + 1)];
-
-                if (gbTagSlot == null) return;
-
-
-                //CONFIGMY? -> RETURNS THE CONFIGURATION MODE
-                var slotMode = SendCommand($"CONFIG{cmdExtension}?") as string;
-
-                if (slotMode != null && IsModeValid(slotMode))
+                // set the combobox value of the i+1 cb_mode
+                var cbMode = FindControls<ComboBox>(Controls, "cb_mode" + (slotIndex + 1) );
+                foreach (var box in cbMode)
                 {
-                    // set the combobox value of the i+1 cb_mode
-                    var cbMode = (ComboBox)gbTagSlot.Controls["cb_mode" + (slotIndex + 1)];
-                    if (cbMode != null)
-                    {
-                        cbMode.SelectedItem = slotMode;
-                    }
+                    box.SelectedItem = slotMode;
                 }
+            }
 
-                //UIDMY? -> RETURNS THE UID
-                var slotUid = SendCommand($"UID{cmdExtension}?") as string;
-                if (slotUid != null)
+            //UIDMY? -> RETURNS THE UID
+            var slotUid = SendCommand($"UID{_cmdExtension}?").ToString();
+            if ( !string.IsNullOrWhiteSpace(slotUid) )
+            {
+                // set the textbox value of the i+1 txt_uid
+                var tbs = FindControls<TextBox>(Controls, "txt_uid" + (slotIndex + 1));
+                foreach( var box in tbs)
                 {
-                    // set the textbox value of the i+1 txt_uid
-                    var txtUid = (TextBox)gbTagSlot.Controls["txt_uid" + (slotIndex + 1)];
-                    if (txtUid != null)
-                    {
-                        txtUid.Text = slotUid;
-                    }
+                    box.Text = slotUid;
                 }
+            }
 
-                //BUTTONMY? -> RETURNS THE MODE OF THE BUTTON
-                var slotButtonMode = SendCommand($"BUTTON{cmdExtension}?") as string;
-                if (slotButtonMode != null && IsButtonModeValid(slotButtonMode))
+            //BUTTONMY? -> RETURNS THE MODE OF THE BUTTON
+            var slotButtonMode = SendCommand($"BUTTON{_cmdExtension}?").ToString();
+            if (IsButtonModeValid(slotButtonMode))
+            {
+                // set the combobox value of the i+1 cb_button
+                var cbButton = FindControls<ComboBox>(Controls, "cb_button" + (slotIndex + 1));
+                foreach (var box in cbButton)
                 {
-                    // set the combobox value of the i+1 cb_button
-                    var cbButton = (ComboBox)gbTagSlot.Controls["cb_button" + (slotIndex + 1)];
-                    if (cbButton != null)
-                    {
-                        cbButton.SelectedItem = slotButtonMode;
-                    }
+                    box.SelectedItem = slotButtonMode;
                 }
             }
         }
 
-        private bool IsButtonModeValid(string slotButtonMode)
+        private bool IsButtonModeValid(string s)
         {
-            return buttonModesArray.Contains(slotButtonMode);
+            if (string.IsNullOrWhiteSpace(s))
+                return false;
+            return _buttonModesArray.Contains(s);
         }
 
-        private bool IsModeValid(string slotMode)
+        private bool IsModeValid(string s)
         {
-            return modesArray.Contains(slotMode);
+            if (string.IsNullOrWhiteSpace(s))
+                return false;
+            return _modesArray.Contains(s);
+        }
+
+        private static List<T> FindControls<T>(ICollection ctrls, string searchname) where T : Control
+        {
+            var list = new List<T>();
+
+            // make sure we have controls to search for.
+            if (ctrls == null || ctrls.Count == 0) return list;
+            if (string.IsNullOrWhiteSpace(searchname)) return list;
+
+
+            foreach (Control cb in ctrls)
+            {                
+                if (cb.HasChildren)
+                {
+                    list.AddRange(FindControls<T>(cb.Controls, searchname));
+                }
+
+                if (cb.Name.StartsWith(searchname))
+                    list.Add(cb as T);
+            }
+
+            return list;
         }
 
         private void GetSupportedModes()
         {
-            string resultModesStr = SendCommand($"CONFIG{cmdExtension}") as string;
+            var modesStr = SendCommand($"CONFIG{_cmdExtension}").ToString();
 
-            if (!string.IsNullOrEmpty(resultModesStr))
+            if (!string.IsNullOrEmpty(modesStr))
             {
                 // split by comma
-                modesArray = resultModesStr.Split(',');
-
-                if (modesArray.Length > 0)
+                _modesArray = modesStr.Split(',');
+                if (_modesArray.Any())
                 {
                     // populate all dropdowns
-                    this.cb_mode1.Items.Clear();
-                    this.cb_mode1.Items.AddRange(modesArray);
-                    this.cb_mode2.Items.Clear();
-                    this.cb_mode2.Items.AddRange(modesArray);
-                    this.cb_mode3.Items.Clear();
-                    this.cb_mode3.Items.AddRange(modesArray);
-                    this.cb_mode4.Items.Clear();
-                    this.cb_mode4.Items.AddRange(modesArray);
-                    this.cb_mode5.Items.Clear();
-                    this.cb_mode5.Items.AddRange(modesArray);
-                    this.cb_mode6.Items.Clear();
-                    this.cb_mode6.Items.AddRange(modesArray);
-                    this.cb_mode7.Items.Clear();
-                    this.cb_mode7.Items.AddRange(modesArray);
-                    this.cb_mode8.Items.Clear();
-                    this.cb_mode8.Items.AddRange(modesArray);
+                    foreach (var cb in FindControls<ComboBox>(Controls,"cb_mode"))
+                    {
+                        cb.Items.Clear();
+                        cb.Items.AddRange(_modesArray);
+                    }
                 }
             }
 
-            string resultButtonModesStr = SendCommand($"BUTTON{cmdExtension}") as string;
+            var buttonModesStr = SendCommand($"BUTTON{_cmdExtension}").ToString();
+            if (string.IsNullOrEmpty(buttonModesStr)) return;
 
-            if (!string.IsNullOrEmpty(resultButtonModesStr))
+            // split by comma
+            _buttonModesArray = buttonModesStr.Split(',');
+            if (!_buttonModesArray.Any()) return;
+
+            // populate all dropdowns
+            foreach (var cb in FindControls<ComboBox>(Controls, "cb_button"))
             {
-                // split by comma
-                buttonModesArray = resultButtonModesStr.Split(',');
-
-                if (buttonModesArray.Length > 0)
-                {
-                    // populate all dropdowns
-                    this.cb_button1.Items.Clear();
-                    this.cb_button1.Items.AddRange(buttonModesArray);
-                    this.cb_button2.Items.Clear();
-                    this.cb_button2.Items.AddRange(buttonModesArray);
-                    this.cb_button3.Items.Clear();
-                    this.cb_button3.Items.AddRange(buttonModesArray);
-                    this.cb_button4.Items.Clear();
-                    this.cb_button4.Items.AddRange(buttonModesArray);
-                    this.cb_button5.Items.Clear();
-                    this.cb_button5.Items.AddRange(buttonModesArray);
-                    this.cb_button6.Items.Clear();
-                    this.cb_button6.Items.AddRange(buttonModesArray);
-                    this.cb_button7.Items.Clear();
-                    this.cb_button7.Items.AddRange(buttonModesArray);
-                    this.cb_button8.Items.Clear();
-                    this.cb_button8.Items.AddRange(buttonModesArray);
-                }
+                cb.Items.Clear();
+                cb.Items.AddRange(_buttonModesArray);
             }
         }
 
         private static byte[] ReadFileIntoByteArray(string filename)
         {
-            MemoryStream outputStream;
-
-            using (var inputStream = new FileStream(filename, FileMode.Open, FileAccess.Read))
-            {
-                outputStream = new MemoryStream((int)inputStream.Length);
-                inputStream.CopyTo(outputStream);
-            }
-
-            return outputStream.ToArray();
+            if (File.Exists(filename))
+                return File.ReadAllBytes(filename);
+            return null;
         }
 
         internal void LoadDump(string filename)
         {
             // Load the file into a memory block
-            byte[] DataArray = ReadFileIntoByteArray(filename);
+            var bytes = ReadFileIntoByteArray(filename);
 
             // Set up an XMODEM object
-            XMODEM Modem = new XMODEM(_comport, XMODEM.Variants.XModemChecksum);
+            var xmodem = new XMODEM(_comport, XMODEM.Variants.XModemChecksum);
 
             // First send the upload command
-            SendCommandWithoutResult($"UPLOAD{cmdExtension}");
+            SendCommandWithoutResult($"UPLOAD{_cmdExtension}");
             _comport.ReadLine(); // For the "110:WAITING FOR XMODEM" text
 
-            int numBytesSuccessfullySent = Modem.Send(DataArray);
+            int numBytesSuccessfullySent = xmodem.Send(bytes);
 
-            if (numBytesSuccessfullySent == DataArray.Length && Modem.TerminationReason == XMODEM.TerminationReasonEnum.EndOfFile)
-                Console.WriteLine("[+] File upload ok");
+            if (numBytesSuccessfullySent == bytes.Length &&
+                xmodem.TerminationReason == XMODEM.TerminationReasonEnum.EndOfFile)
+            {
+                var msg = $"[+] File upload ok{Environment.NewLine}";
+                Console.WriteLine(msg);
+                txt_output.Text += msg;
+            }
             else
-                MessageBox.Show("[!] Failed to upload file");
-
+            {
+                var msg = $"[!] Failed to upload file{Environment.NewLine}";
+                MessageBox.Show(msg);
+                txt_output.Text += msg;
+            }
         }
 
         internal void SaveDump(string filename)
         {
             // Set up an XMODEM object
-            XMODEM Modem = new XMODEM(_comport, XMODEM.Variants.XModemChecksum);
+            var xmodem = new XMODEM(_comport, XMODEM.Variants.XModemChecksum);
 
             // First send the download command
-            SendCommandWithoutResult($"DOWNLOAD{cmdExtension}");
+            SendCommandWithoutResult($"DOWNLOAD{_cmdExtension}");
 
-            _comport.ReadLine(); // For the "110:WAITING FOR XMODEM" text
+            // For the "110:WAITING FOR XMODEM" text
+            _comport.ReadLine();
 
-            MemoryStream DataMemoryStream = new MemoryStream(); // Grows dynamically
-            byte[] DataArray = new byte[0];
+            var ms = new MemoryStream();
+            var reason = xmodem.Receive(ms);
 
-            XMODEM.TerminationReasonEnum terminationReason = Modem.Receive(DataMemoryStream);
 
-            if (terminationReason == XMODEM.TerminationReasonEnum.EndOfFile)
+            if (reason == XMODEM.TerminationReasonEnum.EndOfFile)
             {
-                Console.WriteLine("[+] File receive ok");
+                var msg = $"[+] File download from device ok{Environment.NewLine}";
+                Console.WriteLine(msg);
+                txt_output.Text += msg;
 
                 // TODO: Check if we should determine the size with MEMSIZEMY cmd
 
                 // Transfer successful, so convert MemoryStream to byte array
-                DataArray = DataMemoryStream.ToArray();
+                var bytes = ms.ToArray();
 
                 // Strip away the SUB (byte value 26) padding bytes
-                DataArray = Modem.TrimPaddingBytesFromEnd(DataArray);
+                bytes = xmodem.TrimPaddingBytesFromEnd(bytes);
 
                 // Write the actual file
-                File.WriteAllBytes(filename, DataArray);
+                File.WriteAllBytes(filename, bytes);
+
+                msg = $"[+] File saved to {filename}{Environment.NewLine}";
+                Console.WriteLine(msg);
+                txt_output.Text += msg;
             }
             else
             {
                 // Something went wrong during the transfer
-                MessageBox.Show("[!] Failed to save the dump");
+                var msg = $"[!] Failed to save dump{Environment.NewLine}";
+                MessageBox.Show(msg);
+                txt_output.Text += msg;
             }
         }
 

@@ -11,19 +11,17 @@ using static System.Diagnostics.Process;
 using System.Management;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace ChameleonMiniGUI
 {
     public partial class frm_main : Form
     {
-        [DllImport("Crapto1.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern UInt64 mfkey(UInt32 uid, UInt32 nt, UInt32 nt1, UInt32 nr0_enc, UInt32 ar0_enc, UInt32 nr1_enc, UInt32 ar1_enc);
 
         private SerialPort _comport = null;
         private string[] modesArray = null;
         private string[] buttonModesArray = null;
         private string cmdExtension = "MY";
-
         public frm_main()
         {
             InitializeComponent();
@@ -62,44 +60,42 @@ namespace ChameleonMiniGUI
             if (tagslotIndex <= 0) return;
 
             //SETTINGMY=tagslotIndex-1
-            SendCommandWithoutResult("SETTING" + cmdExtension + "=" + (tagslotIndex - 1));
+            SendCommandWithoutResult($"SETTING{cmdExtension}=" + (tagslotIndex - 1));
 
             //SETTINGMY? -> SHOULD BE "NO."+tagslotIndex
-            string selectedSlot = SendCommand("SETTING" + cmdExtension + "?");
+            string selectedSlot = SendCommand($"SETTING{cmdExtension}?") as string;
             if ((selectedSlot != null) && (selectedSlot.Contains("" + (tagslotIndex - 1))))
             {
                 // Set the mode of the selected slot
-                ComboBox cb_mode = (ComboBox)(applyButtonClicked.Parent.Controls["cb_mode" + tagslotIndex]);
-
+                var cb_mode = (ComboBox)(applyButtonClicked.Parent.Controls[$"cb_mode{tagslotIndex}"]);
                 if (cb_mode != null)
                 {
                     //CONFIGMY=cb_mode.SelectedItem
-                    SendCommandWithoutResult("CONFIG" + cmdExtension + "=" + cb_mode.SelectedItem);
-                    selectedMode = (string)cb_mode.SelectedItem;
+                    SendCommandWithoutResult($"CONFIG{cmdExtension}={cb_mode.SelectedItem}");
+                    selectedMode = cb_mode.SelectedItem.ToString();
                 }
 
                 // Set the button mode of the selected slot
-                ComboBox cb_buttonMode = (ComboBox)(applyButtonClicked.Parent.Controls["cb_button" + tagslotIndex]);
-
+                var cb_buttonMode = (ComboBox)(applyButtonClicked.Parent.Controls[$"cb_button{tagslotIndex}"]);
                 if (cb_buttonMode != null)
                 {
                     //BUTTONMY=cb_buttonMode.SelectedItem
-                    SendCommandWithoutResult("BUTTON" + cmdExtension + "=" + cb_buttonMode.SelectedItem);
+                    SendCommandWithoutResult($"BUTTON{cmdExtension}={cb_buttonMode.SelectedItem}");
                 }
 
                 // Set the UID
-                TextBox txtUid = (TextBox)(applyButtonClicked.Parent.Controls["txt_uid" + tagslotIndex]);
+                var txtUid = (TextBox)(applyButtonClicked.Parent.Controls[$"txt_uid{tagslotIndex}"]);
                 if (txtUid != null)
                 {
                     string uid = txtUid.Text;
                     if (!string.IsNullOrEmpty(uid) && !string.IsNullOrEmpty(selectedMode) && IsUidValid(uid, selectedMode))
                     {
-                        SendCommandWithoutResult("UID" + cmdExtension + "=" + uid);
+                        SendCommandWithoutResult($"UID{cmdExtension}={uid}");
                     }
                     else
                     {
                         // set a random UID
-                        SendCommandWithoutResult("UID" + cmdExtension + "=?");
+                        SendCommandWithoutResult($"UID{cmdExtension}=?");
                     }
                 }
 
@@ -244,7 +240,7 @@ namespace ChameleonMiniGUI
             }
         }
 
-        private void btn_fastcalc_Click(object sender, EventArgs e)
+        private void btn_mfkey_Click(object sender, EventArgs e)
         {
             var fastCalcButtonClicked = sender as Button;
 
@@ -252,30 +248,13 @@ namespace ChameleonMiniGUI
             if (tagslotIndex <= 0) return;
 
             //SETTINGMY=tagslotIndex-1
-            SendCommandWithoutResult("SETTING" + cmdExtension + "=" + (tagslotIndex - 1));
+            SendCommandWithoutResult($"SETTING{cmdExtension}=" + (tagslotIndex - 1));
 
-            string result = Key_Calculate(true);
+            var data = SendCommand($"DETECTION{cmdExtension}?") as byte[];
 
-            TextBox txtResult = (TextBox)(fastCalcButtonClicked.Parent.Controls["txt_result" + tagslotIndex]);
-            if (txtResult != null)
-            {
-                txtResult.Text = result;
-            }
-        }
+            string result = MfKeyAttacks.Attack(data);
 
-        private void btn_fullcalc_Click(object sender, EventArgs e)
-        {
-            var fullCalcButtonClicked = sender as Button;
-
-            int tagslotIndex = int.Parse(fullCalcButtonClicked.Name.Substring(fullCalcButtonClicked.Name.Length - 1));
-            if (tagslotIndex <= 0) return;
-
-            //SETTINGMY=tagslotIndex-1
-            SendCommandWithoutResult("SETTING" + cmdExtension + "=" + (tagslotIndex - 1));
-
-            string result = Key_Calculate(false);
-
-            TextBox txtResult = (TextBox)(fullCalcButtonClicked.Parent.Controls["txt_result" + tagslotIndex]);
+            var txtResult = (TextBox)(fastCalcButtonClicked.Parent.Controls[$"txt_result{tagslotIndex}"]);
             if (txtResult != null)
             {
                 txtResult.Text = result;
@@ -290,12 +269,12 @@ namespace ChameleonMiniGUI
             if (tagslotIndex <= 0) return;
 
             //SETTINGMY=tagslotIndex-1
-            SendCommandWithoutResult("SETTING" + cmdExtension + "=" + (tagslotIndex - 1));
+            SendCommandWithoutResult($"SETTING{cmdExtension}=" + (tagslotIndex - 1));
 
             // DETECTIONMY = CLOSED
-            SendCommandWithoutResult("DETECTION" + cmdExtension + "=CLOSED");
+            SendCommandWithoutResult($"DETECTION{cmdExtension}=CLOSED");
 
-            TextBox txtResult = (TextBox)(clearButtonClicked.Parent.Controls["txt_result" + tagslotIndex]);
+            var txtResult = (TextBox)(clearButtonClicked.Parent.Controls["txt_result" + tagslotIndex]);
             if (txtResult != null)
             {
                 txtResult.Clear();
@@ -323,14 +302,14 @@ namespace ChameleonMiniGUI
                     if (_comport.IsOpen)
                     {
                         // try without the "MY" extension first
-                        string version = SendCommand("VERSION?");
+                        string version = SendCommand("VERSION?") as string;
                         if (!string.IsNullOrEmpty(version) && version.Contains("Chameleon"))
                         {
                             cmdExtension = "";
                             break;
                         }
 
-                        version = SendCommand("VERSIONMY?");
+                        version = SendCommand("VERSIONMY?") as string;
                         if (!string.IsNullOrEmpty(version) && version.Contains("Chameleon"))
                         {
                             cmdExtension = "MY";
@@ -360,13 +339,36 @@ namespace ChameleonMiniGUI
                 string comPortStr = (string)obj["DeviceID"];
 
                 _comport = new SerialPort(comPortStr, 115200);
+                _comport.ReadTimeout = 4000;
+                _comport.WriteTimeout = 6000;
             }
 
             try
             {
                 _comport.Open();
+
+                if (_comport.IsOpen)
+                {
+                    // try without the "MY" extension first
+                    string version = SendCommand("VERSION?") as string;
+                    if (!string.IsNullOrEmpty(version) && version.Contains("Chameleon"))
+                    {
+                        cmdExtension = "";
+                        return;
+                    }
+
+                    version = SendCommand("VERSIONMY?") as string;
+                    if (!string.IsNullOrEmpty(version) && version.Contains("Chameleon"))
+                    {
+                        cmdExtension = "MY";
+                        return;
+                    }
+                }
             }
-            catch (Exception) { }
+            catch (Exception ex)
+            {
+                
+            }
 
             if (_comport == null)
             {
@@ -374,48 +376,47 @@ namespace ChameleonMiniGUI
             }
         }
 
-        private void SendCommandWithoutResult(String cmdText)
+        private void SendCommandWithoutResult(string cmdText)
         {
+            if (string.IsNullOrWhiteSpace(cmdText)) return;
             if (_comport == null || !_comport.IsOpen) return;
 
             // send command
-            var tx_data = Encoding.UTF8.GetBytes(cmdText);
+            var tx_data = Encoding.ASCII.GetBytes(cmdText);
             _comport.Write(tx_data, 0, tx_data.Length);
             _comport.Write("\r\n");
         }
 
-        private string SendCommand(string cmdText)
+        private object SendCommand(string cmdText)
         {
-            if (_comport == null || !_comport.IsOpen) return null;
-
-            int read_count = 0;
-            byte[] tx_data;
-            byte[] rx_data = new byte[200];
+            if (string.IsNullOrWhiteSpace(cmdText)) return string.Empty;
+            if (_comport == null || !_comport.IsOpen) return string.Empty;
 
             // send command
-            tx_data = Encoding.UTF8.GetBytes(cmdText);
+            var tx_data = Encoding.ASCII.GetBytes(cmdText);
             _comport.Write(tx_data, 0, tx_data.Length);
             _comport.Write("\r\n");
 
             // wait to make sure data is transmitted
             Thread.Sleep(100);
 
+            var rx_data = new byte[275];
+
             // read the result
-            read_count = _comport.Read(rx_data, 0, rx_data.Length);
+            var read_count = _comport.Read(rx_data, 0, rx_data.Length);
+            if (read_count <= 0) return string.Empty;
 
-            if (read_count > 0)
+            if (cmdText.Contains("DETECTIONMY?"))
             {
-                var result = new string(Encoding.UTF8.GetChars(rx_data));
-                if (!string.IsNullOrEmpty(result))
-                {
-                    result = result.Replace("101:OK WITH TEXT", "");
-                    result = Regex.Replace(result, @"\p{C}+", string.Empty);
-                    return result;
-                }
-
+                var foo = new byte[read_count];
+                Array.Copy(rx_data, 8, foo, 0, read_count - 7);
+                return foo;
             }
-
-            return null;
+            else
+            {
+                var s = new string(Encoding.ASCII.GetChars(rx_data, 0, read_count));
+                return s.Replace("101:OK WITH TEXT", "").Replace("100:OK", "").Replace("\r\n", "");
+            }
         }
 
         private bool IsUidValid(string uid, string selectedMode)
@@ -460,11 +461,11 @@ namespace ChameleonMiniGUI
         private void RefreshSlot(int slotIndex)
         {
             //SETTINGMY=i
-            SendCommandWithoutResult("SETTING" + cmdExtension + "=" + slotIndex);
+            SendCommandWithoutResult($"SETTING{cmdExtension}={slotIndex}");
 
             //SETTINGMY? -> SHOULD BE "NO."+i
-            var selectedSlot = SendCommand("SETTING" + cmdExtension + "?");
-            if ((selectedSlot != null) && (selectedSlot.Contains("" + slotIndex)))
+            var selectedSlot = SendCommand($"SETTING{cmdExtension}?") as string;
+            if ((selectedSlot != null) && (selectedSlot.Contains(slotIndex.ToString())))
             {
                 var gbTagSlot = (GroupBox)this.Controls["gb_tagslot" + (slotIndex + 1)];
 
@@ -472,7 +473,7 @@ namespace ChameleonMiniGUI
 
 
                 //CONFIGMY? -> RETURNS THE CONFIGURATION MODE
-                var slotMode = SendCommand("CONFIG" + cmdExtension + "?");
+                var slotMode = SendCommand($"CONFIG{cmdExtension}?") as string;
 
                 if (slotMode != null && IsModeValid(slotMode))
                 {
@@ -485,7 +486,7 @@ namespace ChameleonMiniGUI
                 }
 
                 //UIDMY? -> RETURNS THE UID
-                var slotUid = SendCommand("UID" + cmdExtension + "?");
+                var slotUid = SendCommand($"UID{cmdExtension}?") as string;
                 if (slotUid != null)
                 {
                     // set the textbox value of the i+1 txt_uid
@@ -497,7 +498,7 @@ namespace ChameleonMiniGUI
                 }
 
                 //BUTTONMY? -> RETURNS THE MODE OF THE BUTTON
-                var slotButtonMode = SendCommand("BUTTON" + cmdExtension + "?");
+                var slotButtonMode = SendCommand($"BUTTON{cmdExtension}?") as string;
                 if (slotButtonMode != null && IsButtonModeValid(slotButtonMode))
                 {
                     // set the combobox value of the i+1 cb_button
@@ -512,29 +513,19 @@ namespace ChameleonMiniGUI
 
         private bool IsButtonModeValid(string slotButtonMode)
         {
-            if (buttonModesArray.Contains(slotButtonMode))
-            {
-                return true;
-            }
-
-            return false;
+            return buttonModesArray.Contains(slotButtonMode);
         }
 
         private bool IsModeValid(string slotMode)
         {
-            if (modesArray.Contains(slotMode))
-            {
-                return true;
-            }
-
-            return false;
+            return modesArray.Contains(slotMode);
         }
 
         private void GetSupportedModes()
         {
-            string resultModesStr = SendCommand("CONFIG" + cmdExtension);
+            string resultModesStr = SendCommand($"CONFIG{cmdExtension}") as string;
 
-            if (!String.IsNullOrEmpty(resultModesStr))
+            if (!string.IsNullOrEmpty(resultModesStr))
             {
                 // split by comma
                 modesArray = resultModesStr.Split(',');
@@ -561,9 +552,9 @@ namespace ChameleonMiniGUI
                 }
             }
 
-            string resultButtonModesStr = SendCommand("BUTTON" + cmdExtension);
+            string resultButtonModesStr = SendCommand($"BUTTON{cmdExtension}") as string;
 
-            if (!String.IsNullOrEmpty(resultButtonModesStr))
+            if (!string.IsNullOrEmpty(resultButtonModesStr))
             {
                 // split by comma
                 buttonModesArray = resultButtonModesStr.Split(',');
@@ -613,15 +604,15 @@ namespace ChameleonMiniGUI
             XMODEM Modem = new XMODEM(_comport, XMODEM.Variants.XModemChecksum);
 
             // First send the upload command
-            SendCommandWithoutResult("UPLOAD" + cmdExtension);
+            SendCommandWithoutResult($"UPLOAD{cmdExtension}");
             _comport.ReadLine(); // For the "110:WAITING FOR XMODEM" text
 
             int numBytesSuccessfullySent = Modem.Send(DataArray);
 
             if (numBytesSuccessfullySent == DataArray.Length && Modem.TerminationReason == XMODEM.TerminationReasonEnum.EndOfFile)
-                Console.WriteLine("FILE LOAD SUCCESSFUL!");
+                Console.WriteLine("[+] File upload ok");
             else
-                MessageBox.Show("Failed to upload file");
+                MessageBox.Show("[!] Failed to upload file");
 
         }
 
@@ -631,7 +622,7 @@ namespace ChameleonMiniGUI
             XMODEM Modem = new XMODEM(_comport, XMODEM.Variants.XModemChecksum);
 
             // First send the download command
-            SendCommandWithoutResult("DOWNLOAD" + cmdExtension);
+            SendCommandWithoutResult($"DOWNLOAD{cmdExtension}");
 
             _comport.ReadLine(); // For the "110:WAITING FOR XMODEM" text
 
@@ -642,7 +633,7 @@ namespace ChameleonMiniGUI
 
             if (terminationReason == XMODEM.TerminationReasonEnum.EndOfFile)
             {
-                Console.WriteLine("FILE RECEIVE SUCCESSFUL!");
+                Console.WriteLine("[+] File receive ok");
 
                 // TODO: Check if we should determine the size with MEMSIZEMY cmd
 
@@ -658,242 +649,10 @@ namespace ChameleonMiniGUI
             else
             {
                 // Something went wrong during the transfer
-                MessageBox.Show("Failed to save the dump");
+                MessageBox.Show("[!] Failed to save the dump");
             }
         }
 
-        string Key_Calculate(bool fast)
-        {
-            string show_all = "";
-
-            // TODO: should be byte instead of char
-            char[] data_receive = SendCommand("DETECTION" + cmdExtension + "?").ToArray();
-            if (data_receive != null && data_receive.Length > 0)
-            {
-                ComPass(data_receive, 123321, 208);
-                if (ISO14443ACheckCRCA(data_receive, 208))
-                {
-                    //vector<uint64_t> key_sum;
-                    List<MyKey> mykey = new List<MyKey>();
-
-                    UInt32[] nt = { 0, 0, 0, 0, 0, 0 }, nr = { 0, 0, 0, 0, 0, 0 }, ar = { 0, 0, 0, 0, 0, 0 }, sector = { 0, 0, 0, 0, 0, 0 }, Key = { 0, 0, 0, 0, 0, 0 };
-                    UInt32 UID = 0;
-
-                    UID = (uint)(data_receive[0] << 24) + (uint)(data_receive[1] << 16) + (uint)(data_receive[2] << 8) + (data_receive[3]);
-
-                    //KEYA data copy
-                    for (byte i = 0; i < 6; i++)
-                    {
-                        Key[i] = data_receive[(i + 1) * 16];
-                        sector[i] = data_receive[(i + 1) * 16 + 1];
-                        nt[i] = (uint)(data_receive[(i + 1) * 16 + 4] << 24) + (uint)(data_receive[(i + 1) * 16 + 5] << 16) + (uint)(data_receive[(i + 1) * 16 + 6] << 8) + (data_receive[(i + 1) * 16 + 7]);
-                        nr[i] = (uint)(data_receive[(i + 1) * 16 + 8] << 24) + (uint)(data_receive[(i + 1) * 16 + 9] << 16) + (uint)(data_receive[(i + 1) * 16 + 10] << 8) + (data_receive[(i + 1) * 16 + 11]);
-                        ar[i] = (uint)(data_receive[(i + 1) * 16 + 12] << 24) + (uint)(data_receive[(i + 1) * 16 + 13] << 16) + (uint)(data_receive[(i + 1) * 16 + 14] << 8) + (data_receive[(i + 1) * 16 + 15]);
-                    }
-
-                    //KEYA into list
-                    int cout = Calculation_times(fast);
-
-                    //status
-                    //byte k = 0;
-                    //M_progress_speed.SetRange(0, (cout + 1) * cout / 2 * 2);
-                    //M_progress_speed.SetPos(k);
-                    // TODO: Set progress bar
-
-                    for (byte i = 0; i < cout; i++)
-                    {
-                        for (byte j = i; j < cout; j++)
-                        {
-                            MyKey ktmp = new MyKey();
-                            ktmp.key_sum = mfkey(UID, /* uid */
-                                nt[i], /* nt0 */
-                                nt[j + 1], /* nt1 */
-                                nr[i], /* nr0 */
-                                ar[i], /* ar0 */
-                                nr[j + 1],  /* nr1 */
-                                ar[j + 1]); /* ar1 */
-
-                            ktmp.sector1 = sector[i];
-                            ktmp.sector2 = sector[j + 1];
-
-                            if (ktmp.key_sum != 0xffffffffffffffff)
-                                mykey.Add(ktmp);
-
-                            //refresh
-                            //M_progress_speed.SetPos(++k);
-                            // TODO: progress
-                        }
-                    }
-
-                    //KEYA result
-                    KeyComparer my_cmp = new KeyComparer();
-                    mykey.Sort(my_cmp);
-
-                    // TODO: Implement this
-                    // mykey.erase(unique(mykey.begin(), mykey.end(), my_uiq), mykey.end());//remove repeat 
-
-                    cout = mykey.Count;
-                    if (cout > 0)
-                    {
-                        for (byte i = 0; i < cout; i++)
-                        {
-                            //temp_num.Format("KeyA%d:\r\n", i + 1);
-                            // TODO: What to do with these?
-                            string temp_num = "", temp_sector2 = "";
-
-                            if (mykey[i].sector1 != 0xff)
-                                show_all += (string.Format("%dsec%dblo A:\r\n", mykey[i].sector1 / 4, mykey[i].sector1) + temp_sector2 + temp_num + string.Format("%06X", mykey[i].key_sum / 16777216) + string.Format("%06X", mykey[i].key_sum % 16777216) + "\r\n");
-                        }
-                    }
-                    else
-                        show_all += "keyA error\r\n";
-
-                    //clear keyb
-                    mykey.Clear();
-
-                    //KEYB data copy
-                    for (byte i = 6; i < 12; i++)
-                    {
-                        Key[i - 6] = data_receive[(i + 1) * 16];
-                        sector[i - 6] = data_receive[(i + 1) * 16 + 1];
-                        nt[i - 6] = (uint)(data_receive[(i + 1) * 16 + 4] << 24) + (uint)(data_receive[(i + 1) * 16 + 5] << 16) + (uint)(data_receive[(i + 1) * 16 + 6] << 8) + (data_receive[(i + 1) * 16 + 7]);
-                        nr[i - 6] = (uint)(data_receive[(i + 1) * 16 + 8] << 24) + (uint)(data_receive[(i + 1) * 16 + 9] << 16) + (uint)(data_receive[(i + 1) * 16 + 10] << 8) + (data_receive[(i + 1) * 16 + 11]);
-                        ar[i - 6] = (uint)(data_receive[(i + 1) * 16 + 12] << 24) + (uint)(data_receive[(i + 1) * 16 + 13] << 16) + (uint)(data_receive[(i + 1) * 16 + 14] << 8) + (data_receive[(i + 1) * 16 + 15]);
-                    }
-
-                    //KEYB into list 
-                    cout = Calculation_times(fast);
-
-                    for (byte i = 0; i < cout; i++)
-                    {
-                        for (byte j = i; j < cout; j++)
-                        {
-                            MyKey ktmp = new MyKey();
-                            ktmp.key_sum = mfkey(UID, /* uid */
-                                nt[i], /* nt0 */
-                                nt[j + 1], /* nt1 */
-                                nr[i], /* nr0 */
-                                ar[i], /* ar0 */
-                                nr[j + 1],  /* nr1 */
-                                ar[j + 1]); /* ar1 */
-                            ktmp.sector1 = sector[i];
-                            ktmp.sector2 = sector[j + 1];
-
-                            if (ktmp.key_sum != 0xffffffffffffffff)
-                                mykey.Add(ktmp);
-
-                            //refresh
-                            //M_progress_speed.SetPos(++k);
-                            // TODO: progress
-                        }
-                    }
-
-                    //KEYB get result
-                    // sort(mykey.begin(), mykey.end(), my_cmp);
-                    mykey.Sort(my_cmp);
-
-                    // TODO: Implement this
-                    //mykey.erase(unique(mykey.begin(), mykey.end(), my_uiq), mykey.end());//remove repeat
-
-                    cout = mykey.Count;
-
-                    if (cout > 0)
-                    {
-                        for (byte i = 0; i < cout; i++)
-                        {
-                            // TODO: What to do with these?
-                            string temp_num = "", temp_sector2 = "";
-
-                            if (mykey[i].sector1 != 0xff)
-                                show_all += (string.Format("%dsec%dblo B:\r\n", mykey[i].sector1 / 4, mykey[i].sector1) + temp_sector2 + temp_num + string.Format("%06X", mykey[i].key_sum / 16777216) + string.Format("%06X", mykey[i].key_sum % 16777216) + "\r\n");
-                        }
-                    }
-                    else
-                        show_all += "keyB error\r\n";
-
-                    //m_edit_carda_detection[num].SetWindowText(show_all);
-                }
-            }
-
-            return show_all;
-
-        }
-
-        private int Calculation_times(bool fast)
-        {
-            // TODO: Implement this
-            throw new NotImplementedException();
-        }
-
-        private int genFun(int size, int key, int i)
-        {
-            return size + key + i - size / key;
-        }
-
-        void ComPass(char[] toBeEncFileName, int key, int len)
-        {
-            uint[] newFileName = new uint[275];
-            toBeEncFileName.CopyTo(newFileName, 0);
-            int i, s, t, size = len;
-
-            for (i = 0; i < size; i++)
-            {
-                s = (int)newFileName[i];
-                t = genFun(size, key, i) ^ s;  // encryption
-                toBeEncFileName[i] = (char)t;
-            }
-        }
-
-        bool ISO14443ACheckCRCA(char[] Buffer, UInt16 ByteCount)
-        {
-            UInt16 Checksum = 0x6363;
-            char[] DataPtr = Buffer;
-
-            int i = 0;
-
-            while (ByteCount > 0)
-            {
-                uint Byte = DataPtr[i++];
-
-                Byte ^= (uint)(Checksum & 0x00FF);
-                Byte ^= Byte << 4;
-
-                Checksum = (ushort)((ushort)(Checksum >> 8) ^ (Checksum ^ (ushort)(Byte << 8)) ^ (ushort)(Checksum ^
-                        ((ushort)Byte << 3) ^ (ushort)((ushort)Byte >> 4)));
-                ByteCount--;
-            }
-
-            return (DataPtr[0] == ((Checksum >> 0) & 0xFF)) && (DataPtr[1] == ((Checksum >> 8) & 0xFF));
-        }
-        #endregion
-
+       #endregion
     }
-
-    #region MyKey
-    public class MyKey
-    {
-        public UInt64 key_sum;
-        public UInt32 sector1;
-        public UInt32 sector2;
-    }
-
-    // TODO: Implement a real comparator
-    public class KeyComparer : IComparer<MyKey>
-    {
-        public int Compare(MyKey x, MyKey y)
-        {
-            MyKey c1 = (MyKey)x;
-            MyKey c2 = (MyKey)y;
-
-            if (c1.key_sum > c2.key_sum)
-                return 1;
-
-            if (c1.key_sum < c2.key_sum)
-                return -1;
-
-            else
-                return 0;
-        }
-    }
-    #endregion
 }

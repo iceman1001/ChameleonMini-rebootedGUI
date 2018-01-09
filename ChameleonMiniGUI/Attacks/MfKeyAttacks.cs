@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Sockets;
 using System.Runtime.InteropServices;
 
 namespace ChameleonMiniGUI
@@ -20,6 +21,32 @@ namespace ChameleonMiniGUI
         public byte KeyType;
         public bool Found;
     }
+
+    /*
+     * Downloaded data from device should be 208 byte plus 2 for CRC. (210)
+     *  4 bytes uid, 
+     *  12 empty bytes
+     *  192 bytes of collected nonce
+     * Layout like this::
+     * 
+     *  byte 0 - 3 == UID
+     *  byte 4 - 15 == empty
+     *  --repeating 16 bytes 
+     *  byte 16  == keytype A/B
+     *  byte 17  == sector
+     *  byte 20 - 23 == NT
+     *  byte 24 - 27 == NR
+     *  byte 28 - 31 == AR
+     *  --
+     *  byte 32  == keytype A/B
+     *  byte 33  == sector
+     *  byte 36 - 39 == NT
+     *  byte 40 - 43 == NR
+     *  byte 44 - 47 == AR
+     *  
+     *  In order to run mfkey32mobieus attack, you need two authentication tries against same sector and keytype (A/B).
+     *  
+     */
 
 
     public partial class MfKeyAttacks
@@ -95,87 +122,65 @@ namespace ChameleonMiniGUI
             if (!bytes.Any())
                 return show_all;
 
-            /*
-             * Downloaded data from device should be 208 byte plus 2 for CRC. (210)
-             *  4 bytes uid, 
-             *  12 empty bytes
-             *  192 bytes of collected nonce
-             * Layout like this::
-             * 
-             *  byte 0 - 3 == UID
-             *  byte 4 - 15 == empty
-             *  --repeating 16 bytes 
-             *  byte 16  == keytype A/B
-             *  byte 17  == sector
-             *  byte 20 - 23 == NT
-             *  byte 24 - 27 == NR
-             *  byte 28 - 31 == AR
-             *  --
-             *  byte 32  == keytype A/B
-             *  byte 33  == sector
-             *  byte 36 - 39 == NT
-             *  byte 40 - 43 == NR
-             *  byte 44 - 47 == AR
-             *  
-             *  In order to run mfkey32mobieus attack, you need two authentication tries against same sector.
-             *  
-             */
-            //208
+           
+            // Decrypt data,  with key 123321,  208
             DecryptData(bytes, 123321, 208);
-            if (Crc.CheckCrc14443(Crc.CRC16_14443_A, bytes, 210))
+
+            // validate CRC is ok.
+            if (!Crc.CheckCrc14443(Crc.CRC16_14443_A, bytes, 210))
+                return show_all;
+
+
+            var myKeys = new List<MyKey>();
+
+            // Copy nonce - data into object and list
+            for (int i = 0; i < 12; i++)
             {
-                //vector<uint64_t> key_sum;
-                var myKeys = new List<MyKey>();
+                var mykey = new MyKey();
+                mykey.UID = ToUInt32(bytes, 0);
+                mykey.KeyType = bytes[(i + 1) * 16];
+                mykey.Sector = bytes[(i + 1) * 16 + 1];
 
-                //UInt32[] nt = {0, 0, 0, 0, 0, 0};
-                //UInt32[] nr = {0, 0, 0, 0, 0, 0};
-                //UInt32[] ar = {0, 0, 0, 0, 0, 0};
-                //UInt32[] sector = {0, 0, 0, 0, 0, 0};
-                //UInt32[] Key = { 0, 0, 0, 0, 0, 0 };
+                mykey.nt0 = ToUInt32(bytes, (i + 1) * 16 + 4);
+                mykey.nr0 = ToUInt32(bytes, (i + 1) * 16 + 8);
+                mykey.ar0 = ToUInt32(bytes, (i + 1) * 16 + 12);
 
-
-                // Copy KEY A data into object and list
-                for (int i = 0; i < 6; i++)
-                {
-                    var mykey = new MyKey();
-                    mykey.UID = ToUInt32(bytes, 0);
-                    mykey.KeyType = bytes[(i + 1) * 16];
-                    mykey.Sector = bytes[(i + 1) * 16 + 1];
-
-                    mykey.nt0 = ToUInt32(bytes, (i + 1) * 16 + 4);
-                    mykey.nr0 = ToUInt32(bytes, (i + 1) * 16 + 8);
-                    mykey.ar0 = ToUInt32(bytes, (i + 1) * 16 + 12);
+                // skip sectors with 0xFF
+                if ( mykey.Sector != 0xFF)
                     myKeys.Add(mykey);
-                }
-                /*
-                t.Found = mfkey32_moebius(t.UID, t.nt0, t.nt1, t.nr0, t.ar0, t.nt1, t.ar1, out outputkey);
-                */
+            }
 
-                //KEYA result
-                var my_cmp = new KeyComparer();
-                myKeys.Sort(my_cmp);
 
-                foreach (var item in myKeys)
+            var my_cmp = new KeyComparer();
+            myKeys.Sort(my_cmp);
+
+            foreach (var item in myKeys)
+            {
+                Debug.WriteLine($"{item.Sector}");
+
+                if (item.Found) continue;
+                var keytype = (item.KeyType == 0x60) ? "A" : "B";
+
+                var subs = myKeys.Where(i => i.KeyType == item.KeyType && i.Sector == item.Sector && item.nr0 != i.nr0 && !i.Found ).ToList();
+                Debug.WriteLine($"{item.Sector} - {keytype} | {subs.Count}");
+
+                foreach (var bar in subs)
                 {
-                    if (item.Found) continue;
+                    if (bar.Found) continue;
 
-                    var subs = myKeys.Where(i => i.KeyType == item.KeyType && i.Sector == item.Sector).ToList();
-                    foreach (var bar in subs)
+                    item.Found = mfkey32_moebius(item.UID, item.nt0, bar.nt0, item.nr0, item.ar0, bar.nr0, bar.ar0, out item.key);
+                    if (item.Found)
                     {
-                        if (bar.Found) continue;
+                        var s = $"[S{item.Sector}] Key{keytype} [{item.key:x12}] {Environment.NewLine}";
+                        Debug.WriteLine(s);
+                        show_all += s;
 
-                        //item.Found = mfkey32_moebius(item.UID, item.nt0, bar.nt1, item.nr0, item.ar0, bar.nr1, bar.ar1, out item.key);
-                        item.Found = mfkey32_moebius(item.UID, item.nt0, bar.nt0, item.nr0, item.ar0, bar.nr0, bar.ar0, out item.key);
-                        if (item.Found)
-                        {
-                            var keytype = (item.KeyType == 0x60) ? "A" : "B";
-                            var s = $"[S{item.Sector}/B%d] Type {keytype} Key found [{item.key:x12}] {Environment.NewLine} ";
-                            Debug.WriteLine(s);
-                            show_all += s;
-
-                            bar.Found = true;
-                            bar.key = item.key;
-                        }
+                        bar.Found = true;
+                        bar.key = item.key;
+                    }
+                    else
+                    {
+                        Debug.WriteLine($"{bar.Sector}");
                     }
                 }
             }

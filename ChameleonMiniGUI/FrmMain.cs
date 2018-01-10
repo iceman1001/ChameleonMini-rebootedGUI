@@ -413,7 +413,7 @@ namespace ChameleonMiniGUI
             // TODO: We could also find out the UID size with the UIDSIZEMY cmd
 
             // if mode is classic then UID must be 4 bytes (8 hex digits) long
-            if (selectedMode == "MF_CLASSIC_1K" || selectedMode == "MF_CLASSIC_4K")
+            if (selectedMode.StartsWith("MF_CLASSIC"))
             {
                 if (uid.Length == 8)
                 {
@@ -422,13 +422,14 @@ namespace ChameleonMiniGUI
             }
 
             // if mode is ul then UID must be 7 bytes (14 hex digits) long
-            if (selectedMode == "MF_ULTRALIGHT" || selectedMode == "MF_ULTRALIGHT_EV1_80B" || selectedMode == "MF_ULTRALIGHT_EV1_164B")
+            if (selectedMode.StartsWith("MF_ULTRALIGHT"))
             {
                 if (uid.Length == 14)
                 {
                     return true;
                 }
             }
+
             return false;
         }
 
@@ -603,7 +604,17 @@ namespace ChameleonMiniGUI
             // Set up an XMODEM object
             var xmodem = new XMODEM(_comport, XMODEM.Variants.XModemChecksum);
 
-            // First send the download command
+            // First get the current memory size of the slot
+            var memsizeStr = SendCommand($"MEMSIZE{_cmdExtension}?");
+
+            int memsize = 4096; // Default value
+
+            if (!string.IsNullOrEmpty((string)memsizeStr))
+            {
+                int.TryParse((string)memsizeStr, out memsize);
+            }
+
+            // Then send the download command
             SendCommandWithoutResult($"DOWNLOAD{_cmdExtension}");
 
             // For the "110:WAITING FOR XMODEM" text
@@ -612,14 +623,11 @@ namespace ChameleonMiniGUI
             var ms = new MemoryStream();
             var reason = xmodem.Receive(ms);
 
-
             if (reason == XMODEM.TerminationReasonEnum.EndOfFile)
             {
                 var msg = $"[+] File download from device ok{Environment.NewLine}";
                 Console.WriteLine(msg);
                 txt_output.Text += msg;
-
-                // TODO: Check if we should determine the size with MEMSIZEMY cmd
 
                 // Transfer successful, so convert MemoryStream to byte array
                 var bytes = ms.ToArray();
@@ -627,8 +635,18 @@ namespace ChameleonMiniGUI
                 // Strip away the SUB (byte value 26) padding bytes
                 bytes = xmodem.TrimPaddingBytesFromEnd(bytes);
 
+                byte[] neededBytes = bytes;
+
+                if (bytes.Length > memsize)
+                {
+                    // Create a new array same size as memsize
+                    neededBytes = new byte[memsize];
+
+                    Array.Copy(bytes, neededBytes, neededBytes.Length);
+                }
+
                 // Write the actual file
-                File.WriteAllBytes(filename, bytes);
+                File.WriteAllBytes(filename, neededBytes);
 
                 msg = $"[+] File saved to {filename}{Environment.NewLine}";
                 Console.WriteLine(msg);

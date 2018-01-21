@@ -70,7 +70,7 @@ namespace ChameleonMiniGUI
                 if (Directory.Exists(Properties.Settings.Default.DownloadDumpPath))
                 {
                     txt_defaultdownload.Text = Properties.Settings.Default.DownloadDumpPath;
-                }
+                } // else create folder?
             }
 
             // Set the keep alive options
@@ -82,6 +82,7 @@ namespace ChameleonMiniGUI
             else
             {
                 // set the default value
+                // should be a setting aswell 
                 txt_interval.Text = "2000";
             }
         }
@@ -116,57 +117,56 @@ namespace ChameleonMiniGUI
             // Get all selected indices
             foreach (var cb in FindControls<CheckBox>(Controls, "checkBox"))
             {
-                if (cb.Checked)
+                if (!cb.Checked) continue;
+
+                var tagslotIndex = int.Parse(cb.Name.Substring(cb.Name.Length - 1));
+                if (tagslotIndex <= 0) continue;
+
+                //SETTINGMY=tagslotIndex-1
+                SendCommandWithoutResult($"SETTING{_cmdExtension}=" + (tagslotIndex - 1));
+
+                //SETTINGMY? -> SHOULD BE "NO."+tagslotIndex
+                var selectedSlot = SendCommand($"SETTING{_cmdExtension}?").ToString();
+                if (!selectedSlot.Contains((tagslotIndex - 1).ToString())) return;
+
+
+                var selectedMode = string.Empty;
+
+                // Set the mode of the selected slot
+                var cb_mode = FindControls<ComboBox>(Controls, $"cb_mode{tagslotIndex}").FirstOrDefault();
+                if (cb_mode != null)
                 {
-                    var tagslotIndex = int.Parse(cb.Name.Substring(cb.Name.Length - 1));
-                    if (tagslotIndex <= 0) return;
-
-                    //SETTINGMY=tagslotIndex-1
-                    SendCommandWithoutResult($"SETTING{_cmdExtension}=" + (tagslotIndex - 1));
-
-                    //SETTINGMY? -> SHOULD BE "NO."+tagslotIndex
-                    var selectedSlot = SendCommand($"SETTING{_cmdExtension}?").ToString();
-                    if (!selectedSlot.Contains((tagslotIndex - 1).ToString())) return;
-
-
-                    var selectedMode = string.Empty;
-
-                    // Set the mode of the selected slot
-                    var cb_mode = FindControls<ComboBox>(Controls, $"cb_mode{tagslotIndex}").FirstOrDefault();
-                    if (cb_mode != null)
-                    {
-                        //CONFIGMY=cb_mode.SelectedItem
-                        SendCommandWithoutResult($"CONFIG{_cmdExtension}={cb_mode.SelectedItem}");
-                        selectedMode = cb_mode.SelectedItem.ToString();
-                    }
-
-                    // Set the button mode of the selected slot
-                    var cb_button = FindControls<ComboBox>(Controls, $"cb_button{tagslotIndex}").FirstOrDefault();
-                    if (cb_button != null)
-                    {
-                        //BUTTONMY=cb_buttonMode.SelectedItem
-                        SendCommandWithoutResult($"BUTTON{_cmdExtension}={cb_button.SelectedItem}");
-                    }
-
-                    // Set the UID
-                    var txtUid = FindControls<TextBox>(Controls, $"txt_uid{tagslotIndex}").FirstOrDefault();
-                    if (txtUid != null)
-                    {
-                        string uid = txtUid.Text;
-                        // always set UID,  either with user provided or random. Is that acceptable?
-                        if (!string.IsNullOrEmpty(uid) && !string.IsNullOrEmpty(selectedMode) && IsUidValid(uid, selectedMode))
-                        {
-                            SendCommandWithoutResult($"UID{_cmdExtension}={uid}");
-                        }
-                        else
-                        {
-                            // set a random UID
-                            SendCommandWithoutResult($"UID{_cmdExtension}=?");
-                        }
-                    }
-
-                    RefreshSlot(tagslotIndex - 1);
+                    //CONFIGMY=cb_mode.SelectedItem
+                    SendCommandWithoutResult($"CONFIG{_cmdExtension}={cb_mode.SelectedItem}");
+                    selectedMode = cb_mode.SelectedItem.ToString();
                 }
+
+                // Set the button mode of the selected slot
+                var cb_button = FindControls<ComboBox>(Controls, $"cb_button{tagslotIndex}").FirstOrDefault();
+                if (cb_button != null)
+                {
+                    //BUTTONMY=cb_buttonMode.SelectedItem
+                    SendCommandWithoutResult($"BUTTON{_cmdExtension}={cb_button.SelectedItem}");
+                }
+
+                // Set the UID
+                var txtUid = FindControls<TextBox>(Controls, $"txt_uid{tagslotIndex}").FirstOrDefault();
+                if (txtUid != null)
+                {
+                    string uid = txtUid.Text;
+                    // always set UID,  either with user provided or random. Is that acceptable?
+                    if (!string.IsNullOrEmpty(uid) && !string.IsNullOrEmpty(selectedMode) && IsUidValid(uid, selectedMode))
+                    {
+                        SendCommandWithoutResult($"UID{_cmdExtension}={uid}");
+                    }
+                    else
+                    {
+                        // set a random UID
+                        SendCommandWithoutResult($"UID{_cmdExtension}=?");
+                    }
+                }
+
+                RefreshSlot(tagslotIndex - 1);
             }
         }
 
@@ -226,28 +226,27 @@ namespace ChameleonMiniGUI
         {
             foreach (var cb in FindControls<CheckBox>(Controls, "checkBox"))
             {
-                if (cb.Checked)
+                if (!cb.Checked) continue;
+
+                var tagslotIndex = int.Parse(cb.Name.Substring(cb.Name.Length - 1));
+                if (tagslotIndex <= 0) continue;
+
+                // select the corresponding slot
+                SendCommandWithoutResult($"SETTING{_cmdExtension}={tagslotIndex - 1}");
+
+                // Open dialog
+                if (openFileDialog1.ShowDialog() == DialogResult.OK)
                 {
-                    var tagslotIndex = int.Parse(cb.Name.Substring(cb.Name.Length - 1));
-                    if (tagslotIndex <= 0) return;
+                    var dumpFilename = openFileDialog1.FileName;
 
-                    // select the corresponding slot
-                    SendCommandWithoutResult($"SETTING{_cmdExtension}={tagslotIndex - 1}");
+                    // Load the dump
+                    LoadDump(dumpFilename);
 
-                    // Open dialog
-                    if (openFileDialog1.ShowDialog() == DialogResult.OK)
-                    {
-                        var dumpFilename = openFileDialog1.FileName;
-
-                        // Load the dump
-                        LoadDump(dumpFilename);
-
-                        // Refresh slot
-                        RefreshSlot(tagslotIndex - 1);
-                    }
-
-                    break; // We can only upload a single dump at a time
+                    // Refresh slot
+                    RefreshSlot(tagslotIndex - 1);
                 }
+
+                break; // We can only upload a single dump at a time
             }
         }
 
@@ -267,43 +266,42 @@ namespace ChameleonMiniGUI
             // Get all selected indices
             foreach (var cb in FindControls<CheckBox>(Controls, "checkBox"))
             {
-                if (cb.Checked)
+                if (!cb.Checked) continue;
+
+                var tagslotIndex = int.Parse(cb.Name.Substring(cb.Name.Length - 1));
+                if (tagslotIndex <= 0) continue;
+
+                // select the corresponding slot
+                SendCommandWithoutResult("SETTING" + _cmdExtension + "=" + (tagslotIndex - 1));
+
+                if (btn_upload.Enabled)
                 {
-                    var tagslotIndex = int.Parse(cb.Name.Substring(cb.Name.Length - 1));
-                    if (tagslotIndex <= 0) return;
+                    // Only one tag slot is selected, show the save dialog
 
-                    // select the corresponding slot
-                    SendCommandWithoutResult("SETTING" + _cmdExtension + "=" + (tagslotIndex - 1));
+                    saveFileDialog1.InitialDirectory = downloadPath;
 
-                    if (btn_upload.Enabled)
+                    if (saveFileDialog1.ShowDialog() == DialogResult.OK)
                     {
-                        // Only one tag slot is selected, show the save dialog
+                        var dumpFilename = saveFileDialog1.FileName;
 
-                        saveFileDialog1.InitialDirectory = downloadPath;
+                        // Add extension if missing
+                        dumpFilename = !dumpFilename.ToLower().Contains(".bin") ? dumpFilename + ".bin" : dumpFilename;
 
-                        if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-                        {
-                            var dumpFilename = saveFileDialog1.FileName;
-
-                            // Add extension if missing
-                            dumpFilename = !dumpFilename.ToLower().Contains(".bin") ? dumpFilename + ".bin" : dumpFilename;
-
-                            // Save the dump
-                            SaveDump(dumpFilename);
-                        }
-
-                        break; // no need to check the others
+                        // Save the dump
+                        SaveDump(dumpFilename);
                     }
-                    else
-                    {
-                        // Get UID first
-                        var uid = SendCommand("UID" + _cmdExtension + "?").ToString();
 
-                        if (!string.IsNullOrEmpty(uid))
-                        {
-                            var varFullDownloadPath = Path.Combine(downloadPath, uid + ".bin");
-                            SaveDump(varFullDownloadPath);
-                        }
+                    break; // no need to check the others
+                }
+                else
+                {
+                    // Get UID first
+                    var uid = SendCommand("UID" + _cmdExtension + "?").ToString();
+
+                    if (!string.IsNullOrEmpty(uid))
+                    {
+                        var varFullDownloadPath = Path.Combine(downloadPath, uid + ".bin");
+                        SaveDump(varFullDownloadPath);
                     }
                 }
             }
@@ -364,13 +362,12 @@ namespace ChameleonMiniGUI
             // Get all selected indices
             foreach (var cb in FindControls<CheckBox>(Controls, "checkBox"))
             {
-                if (cb.Checked)
-                {
-                    var tagslotIndex = int.Parse(cb.Name.Substring(cb.Name.Length - 1));
-                    if (tagslotIndex <= 0) return;
+                if (!cb.Checked) continue;
 
-                    RefreshSlot(tagslotIndex - 1);
-                }
+                var tagslotIndex = int.Parse(cb.Name.Substring(cb.Name.Length - 1));
+                if (tagslotIndex <= 0) continue;
+
+                RefreshSlot(tagslotIndex - 1);
             }
         }
 
@@ -378,15 +375,14 @@ namespace ChameleonMiniGUI
         {
             foreach (var cb in FindControls<CheckBox>(Controls, "checkBox"))
             {
-                if (cb.Checked)
-                {
-                    var tagslotIndex = int.Parse(cb.Name.Substring(cb.Name.Length - 1));
-                    if (tagslotIndex <= 0) return;
+                if (!cb.Checked) continue;
 
-                    SendCommandWithoutResult($"SETTING{_cmdExtension}={tagslotIndex -1}");
+                var tagslotIndex = int.Parse(cb.Name.Substring(cb.Name.Length - 1));
+                if (tagslotIndex <= 0) continue;
 
-                    break; // Only one can be set as active
-                }
+                SendCommandWithoutResult($"SETTING{_cmdExtension}={tagslotIndex -1}");
+
+                break; // Only one can be set as active
             }
         }
 
@@ -424,27 +420,17 @@ namespace ChameleonMiniGUI
 
         private void btn_selectall_Click(object sender, EventArgs e)
         {
-            foreach (var cb in FindControls<CheckBox>(Controls, "checkBox"))
-            {
-                cb.Checked = true;
-            }
+            SetCheckBox(true);
         }
 
         private void btn_selectnone_Click(object sender, EventArgs e)
         {
-            foreach (var cb in FindControls<CheckBox>(Controls, "checkBox"))
-            {
-                cb.Checked = false;
-            }
+            SetCheckBox(false);
         }
 
         private void checkBox_CheckedChanged(object sender, EventArgs e)
         {
-            int checkCount = 0;
-            foreach (var cb in FindControls<CheckBox>(Controls, "checkBox"))
-            {
-                if (cb.Checked) { checkCount++; }
-            }
+            var checkCount = GetNumberOfChecked();
 
             if (checkCount == 1)
             {
@@ -503,9 +489,9 @@ namespace ChameleonMiniGUI
 
                 if (selectedFolder != null)
                 {
-                    txt_defaultdownload.Text = selectedFolder.ToString();
+                    txt_defaultdownload.Text = selectedFolder;
                     // Save setting
-                    Properties.Settings.Default.DownloadDumpPath = selectedFolder.ToString();
+                    Properties.Settings.Default.DownloadDumpPath = selectedFolder;
                     Properties.Settings.Default.Save();
                 }
             }
@@ -513,7 +499,7 @@ namespace ChameleonMiniGUI
 
         private void btn_setInterval_Click(object sender, EventArgs e)
         {
-            int keepAliveInterval = 0;
+            var keepAliveInterval = 0;
 
             if (!string.IsNullOrEmpty(txt_interval.Text))
             {
@@ -542,30 +528,28 @@ namespace ChameleonMiniGUI
 
         private void btn_disconnect_Click(object sender, EventArgs e)
         {
-            if (isConnected)
-            {
-                if (_comport != null && _comport.IsOpen)
-                {
-                    _comport.Close();
-                    _comport = null;
+            if (!isConnected) return;
 
-                    // Set that the disconnect button was pressed
-                    disconnectPressed = true;
-                }
+            if (_comport != null && _comport.IsOpen)
+            {
+                _comport.Close();
+                _comport = null;
+
+                // Set that the disconnect button was pressed
+                disconnectPressed = true;
             }
         }
 
         private void btn_connect_Click(object sender, EventArgs e)
         {
-            if (!isConnected)
-            {
-                // Try to connect
-                OpenChameleonSerialPort();
+            if (isConnected) return;
 
-                if (_comport == null || !_comport.IsOpen)
-                {
-                    MessageBox.Show("Unable to connect to the Chameleon device", "Connection failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+            // Try to connect
+            OpenChameleonSerialPort();
+
+            if (_comport == null || !_comport.IsOpen)
+            {
+                MessageBox.Show("Unable to connect to the Chameleon device", "Connection failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -573,103 +557,114 @@ namespace ChameleonMiniGUI
 
         #region Helper methods
 
+        private void SetCheckBox(bool value)
+        {
+            foreach (var cb in FindControls<CheckBox>(Controls, "checkBox"))
+            {
+                cb.Checked = value;
+            }
+        }
+
+        private int GetNumberOfChecked()
+        {
+            return FindControls<CheckBox>(Controls, "checkBox").Count(cb => cb.Checked);
+        }
+
         private void DeviceDisconnected()
         {
-            if (isConnected)
+            if (!isConnected) return;
+
+            isConnected = false;
+            try
             {
-                isConnected = false;
-                try
-                {
-                    _comport.Close();
-                }
-                catch (Exception) { }
-                finally
-                {
-                    _comport = null;
-                }
-
-                this.Text = "Device disconnected";
-
-                txt_constatus.Text = "NOT CONNECTED";
-                txt_constatus.BackColor = System.Drawing.Color.Red;
-                txt_constatus.ForeColor = System.Drawing.Color.White;
-                txt_constatus.SelectionLength = 0;
-
-                // Disable all tag slots and don't select any tag slot
-                foreach (var cb in FindControls<CheckBox>(Controls, "checkBox"))
-                {
-                    cb.Enabled = false;
-                    cb.Checked = false;
-                }
-
-                // Disable controls
-                btn_selectall.Enabled = false;
-                btn_selectnone.Enabled = false;
-
-                btn_apply.Enabled = false;
-                btn_refresh.Enabled = false;
-                btn_clear.Enabled = false;
-                btn_setactive.Enabled = false;
-                btn_keycalc.Enabled = false;
-                btn_upload.Enabled = false;
-                btn_download.Enabled = false;
-
-                btn_reset.Enabled = false;
-                btn_bootmode.Enabled = false;
-                btn_rssirefresh.Enabled = false;
-                btn_setInterval.Enabled = false;
-                btn_disconnect.Enabled = false;
-
-                btn_connect.Enabled = true;
+                _comport.Close();
             }
+            catch (Exception) { }
+            finally
+            {
+                _comport = null;
+            }
+
+            this.Text = "Device disconnected";
+
+            txt_constatus.Text = "NOT CONNECTED";
+            txt_constatus.BackColor = System.Drawing.Color.Red;
+            txt_constatus.ForeColor = System.Drawing.Color.White;
+            txt_constatus.SelectionLength = 0;
+
+            // Disable all tag slots and don't select any tag slot
+            foreach (var cb in FindControls<CheckBox>(Controls, "checkBox"))
+            {
+                cb.Enabled = false;
+                cb.Checked = false;
+            }
+
+            // Disable controls
+            btn_selectall.Enabled = false;
+            btn_selectnone.Enabled = false;
+
+            btn_apply.Enabled = false;
+            btn_refresh.Enabled = false;
+            btn_clear.Enabled = false;
+            btn_setactive.Enabled = false;
+            btn_keycalc.Enabled = false;
+            btn_upload.Enabled = false;
+            btn_download.Enabled = false;
+
+            btn_reset.Enabled = false;
+            btn_bootmode.Enabled = false;
+            btn_rssirefresh.Enabled = false;
+            btn_setInterval.Enabled = false;
+            btn_disconnect.Enabled = false;
+
+            btn_connect.Enabled = true;
         }
 
         private void DeviceConnected()
         {
-            if (!isConnected)
+            if (isConnected) return;
+
+            isConnected = true;
+            this.Text = "Device connected";
+
+            txt_constatus.Text = "CONNECTED!";
+            txt_constatus.BackColor = System.Drawing.Color.Green;
+            txt_constatus.ForeColor = System.Drawing.Color.White;
+            txt_constatus.SelectionLength = 0;
+
+            if (_modesArray == null || _modesArray.Length == 0)
             {
-                isConnected = true;
-                this.Text = "Device connected";
-
-                txt_constatus.Text = "CONNECTED!";
-                txt_constatus.BackColor = System.Drawing.Color.Green;
-                txt_constatus.ForeColor = System.Drawing.Color.White;
-                txt_constatus.SelectionLength = 0;
-
-                if (_modesArray == null || _modesArray.Length == 0)
-                {
-                    GetSupportedModes();
-                }
-                
-                RefreshAllSlots();
-
-                // Enable all tag slots but don't select any tag slot
-                foreach (var cb in FindControls<CheckBox>(Controls, "checkBox"))
-                {
-                    cb.Enabled = true;
-                    cb.Checked = false;
-                }
-
-                // Enable controls
-                btn_selectall.Enabled = true;
-                btn_selectnone.Enabled = true;
-
-                btn_apply.Enabled = false;
-                btn_refresh.Enabled = false;
-                btn_clear.Enabled = false;
-                btn_setactive.Enabled = false;
-                btn_keycalc.Enabled = false;
-                btn_upload.Enabled = false;
-                btn_download.Enabled = false;
-
-                btn_reset.Enabled = true;
-                btn_bootmode.Enabled = true;
-                btn_rssirefresh.Enabled = true;
-                btn_setInterval.Enabled = true;
-                btn_disconnect.Enabled = true;
-
-                btn_connect.Enabled = false;
+                GetSupportedModes();
             }
+                
+            RefreshAllSlots();
+
+            // Enable all tag slots but don't select any tag slot
+            foreach (var cb in FindControls<CheckBox>(Controls, "checkBox"))
+            {
+                cb.Enabled = true;
+                cb.Checked = false;
+            }
+
+            // Enable controls
+            btn_selectall.Enabled = true;
+            btn_selectnone.Enabled = true;
+
+            btn_apply.Enabled = false;
+            btn_refresh.Enabled = false;
+            btn_clear.Enabled = false;
+            btn_setactive.Enabled = false;
+            btn_keycalc.Enabled = false;
+            btn_upload.Enabled = false;
+            btn_download.Enabled = false;
+
+            btn_reset.Enabled = true;
+            btn_bootmode.Enabled = true;
+            btn_rssirefresh.Enabled = true;
+            btn_setInterval.Enabled = true;
+            btn_disconnect.Enabled = true;
+
+            btn_connect.Enabled = false;
         }
 
         /*
@@ -821,6 +816,7 @@ namespace ChameleonMiniGUI
             if (!Regex.IsMatch(uid, @"\A\b[0-9a-fA-F]+\b\Z")) return false;
 
             // TODO: We could also find out the UID size with the UIDSIZEMY cmd
+            // and there exists 4,7,10 uid lengths.
 
             // if mode is classic then UID must be 4 bytes (8 hex digits) long
             if (selectedMode.StartsWith("MF_CLASSIC"))

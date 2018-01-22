@@ -27,6 +27,7 @@ namespace ChameleonMiniGUI
         private bool disconnectPressed = false;
 
         private string _deviceIdentification;
+       
 
         public frm_main()
         {
@@ -559,6 +560,16 @@ namespace ChameleonMiniGUI
 
         #region Helper methods
 
+        private void DisplayText()
+        {
+            var ident = string.Empty;
+            if (!string.IsNullOrWhiteSpace(_deviceIdentification))
+            {
+                ident = $"({_deviceIdentification})";
+            }
+            this.Text = $"Device connected {ident} - {Environment.OSVersion.VersionString}";
+        }
+
         private void SetCheckBox(bool value)
         {
             foreach (var cb in FindControls<CheckBox>(Controls, "checkBox"))
@@ -592,7 +603,7 @@ namespace ChameleonMiniGUI
             txt_constatus.Text = "NOT CONNECTED";
             txt_constatus.BackColor = System.Drawing.Color.Red;
             txt_constatus.ForeColor = System.Drawing.Color.White;
-            txt_constatus.SelectionLength = 0;
+            txt_constatus.SelectionStart = 0;
 
             // Disable all tag slots and don't select any tag slot
             foreach (var cb in FindControls<CheckBox>(Controls, "checkBox"))
@@ -627,7 +638,15 @@ namespace ChameleonMiniGUI
             if (isConnected) return;
 
             isConnected = true;
-            this.Text = $"Device connected ({_deviceIdentification})";
+
+            DisplayText();
+
+            // Enable all tag slots but don't select any tag slot
+            foreach (var cb in FindControls<CheckBox>(Controls, "checkBox"))
+            {
+                cb.Enabled = true;
+                cb.Checked = false;
+            }
 
             txt_constatus.Text = "CONNECTED!";
             txt_constatus.BackColor = System.Drawing.Color.Green;
@@ -638,15 +657,8 @@ namespace ChameleonMiniGUI
             {
                 GetSupportedModes();
             }
-                
-            RefreshAllSlots();
 
-            // Enable all tag slots but don't select any tag slot
-            foreach (var cb in FindControls<CheckBox>(Controls, "checkBox"))
-            {
-                cb.Enabled = true;
-                cb.Checked = false;
-            }
+            RefreshAllSlots();
 
             // Enable controls
             btn_selectall.Enabled = true;
@@ -1103,7 +1115,6 @@ namespace ChameleonMiniGUI
 
             timer1.Start();
         }
-
         #endregion
     }
 }

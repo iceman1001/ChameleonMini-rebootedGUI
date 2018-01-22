@@ -322,26 +322,28 @@ namespace ChameleonMiniGUI
 
         private void btn_mfkey_Click(object sender, EventArgs e)
         {
+            this.Cursor = Cursors.WaitCursor;
+
             // Get all selected indices
             foreach (var cb in FindControls<CheckBox>(Controls, "checkBox"))
             {
-                if (cb.Checked)
-                {
-                    var tagslotIndex = int.Parse(cb.Name.Substring(cb.Name.Length - 1));
-                    if (tagslotIndex <= 0) return;
+                if (!cb.Checked) continue;
 
-                    txt_output.Text += $"[Tag slot {tagslotIndex}]{Environment.NewLine}";
+                var tagslotIndex = int.Parse(cb.Name.Substring(cb.Name.Length - 1));
+                if (tagslotIndex <= 0) return;
 
-                    //SETTINGMY=tagslotIndex-1
-                    SendCommandWithoutResult($"SETTING{_cmdExtension}=" + (tagslotIndex - 1));
+                txt_output.Text += $"[Tag slot {tagslotIndex}]{Environment.NewLine}";
 
-                    var data = SendCommand($"DETECTION{_cmdExtension}?") as byte[];
+                //SETTINGMY=tagslotIndex-1
+                SendCommandWithoutResult($"SETTING{_cmdExtension}=" + (tagslotIndex - 1));
 
-                    string result = MfKeyAttacks.Attack(data);
+                var data = SendCommand($"DETECTION{_cmdExtension}?") as byte[];
 
-                    txt_output.Text += result;
-                }
+                var result = MfKeyAttacks.Attack(data);
+
+                txt_output.Text += result;
             }
+            this.Cursor = Cursors.Default;
         }
 
         private void btn_clear_Click(object sender, EventArgs e)
@@ -647,6 +649,8 @@ namespace ChameleonMiniGUI
         {
             if (isConnected) return;
 
+            this.Cursor = Cursors.WaitCursor;
+
             isConnected = true;
 
             DisplayText();
@@ -689,6 +693,8 @@ namespace ChameleonMiniGUI
             btn_disconnect.Enabled = true;
 
             btn_connect.Enabled = false;
+
+            this.Cursor = Cursors.Default;
         }
 
         /*
@@ -741,6 +747,8 @@ namespace ChameleonMiniGUI
 
         private void OpenChameleonSerialPort()
         {
+            this.Cursor = Cursors.WaitCursor;
+
             var searcher = new ManagementObjectSearcher("select DeviceID from Win32_SerialPort where Description = \"ChameleonMini Virtual Serial Port\"");
             foreach (var obj in searcher.Get())
             {
@@ -769,6 +777,7 @@ namespace ChameleonMiniGUI
                     {
                         _cmdExtension = string.Empty;
                         _deviceIdentification = "Firmware Official";
+                        this.Cursor = Cursors.Default;
                         return;
                     }
 
@@ -777,6 +786,7 @@ namespace ChameleonMiniGUI
                     {
                         _cmdExtension = "MY";
                         _deviceIdentification = "Firmware RevE rebooted";
+                        this.Cursor = Cursors.Default;
                         return;
                     }
                 }

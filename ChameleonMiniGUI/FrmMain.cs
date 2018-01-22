@@ -43,6 +43,8 @@ namespace ChameleonMiniGUI
         public frm_main()
         {
             InitializeComponent();
+
+            txt_output.SelectionStart = 0;
         }
 
         #region Event Handlers

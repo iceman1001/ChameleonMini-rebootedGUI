@@ -41,6 +41,7 @@ namespace ChameleonMiniGUI
             this.lbl_interval = new System.Windows.Forms.Label();
             this.chk_keepalive = new System.Windows.Forms.CheckBox();
             this.gb_connectionSettings = new System.Windows.Forms.GroupBox();
+            this.tb_firmware = new System.Windows.Forms.TextBox();
             this.txt_constatus = new System.Windows.Forms.TextBox();
             this.btn_disconnect = new System.Windows.Forms.Button();
             this.btn_connect = new System.Windows.Forms.Button();
@@ -152,7 +153,6 @@ namespace ChameleonMiniGUI
             this.cb_mode8 = new System.Windows.Forms.ComboBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.tb_firmware = new System.Windows.Forms.TextBox();
             this.gb_output.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.gb_keepalive.SuspendLayout();
@@ -284,6 +284,15 @@ namespace ChameleonMiniGUI
             this.gb_connectionSettings.TabIndex = 3;
             this.gb_connectionSettings.TabStop = false;
             this.gb_connectionSettings.Text = "Connection status";
+            // 
+            // tb_firmware
+            // 
+            this.tb_firmware.Enabled = false;
+            this.tb_firmware.Location = new System.Drawing.Point(44, 70);
+            this.tb_firmware.Name = "tb_firmware";
+            this.tb_firmware.ReadOnly = true;
+            this.tb_firmware.Size = new System.Drawing.Size(165, 20);
+            this.tb_firmware.TabIndex = 6;
             // 
             // txt_constatus
             // 
@@ -502,7 +511,7 @@ namespace ChameleonMiniGUI
             this.checkBox8.Location = new System.Drawing.Point(626, 204);
             this.checkBox8.Name = "checkBox8";
             this.checkBox8.Size = new System.Drawing.Size(59, 17);
-            this.checkBox8.TabIndex = 44;
+            this.checkBox8.TabIndex = 8;
             this.checkBox8.Text = "Slot 8";
             this.checkBox8.UseVisualStyleBackColor = true;
             this.checkBox8.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChanged);
@@ -515,7 +524,7 @@ namespace ChameleonMiniGUI
             this.checkBox7.Location = new System.Drawing.Point(423, 204);
             this.checkBox7.Name = "checkBox7";
             this.checkBox7.Size = new System.Drawing.Size(59, 17);
-            this.checkBox7.TabIndex = 43;
+            this.checkBox7.TabIndex = 7;
             this.checkBox7.Text = "Slot 7";
             this.checkBox7.UseVisualStyleBackColor = true;
             this.checkBox7.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChanged);
@@ -528,7 +537,7 @@ namespace ChameleonMiniGUI
             this.checkBox6.Location = new System.Drawing.Point(220, 204);
             this.checkBox6.Name = "checkBox6";
             this.checkBox6.Size = new System.Drawing.Size(59, 17);
-            this.checkBox6.TabIndex = 42;
+            this.checkBox6.TabIndex = 6;
             this.checkBox6.Text = "Slot 6";
             this.checkBox6.UseVisualStyleBackColor = true;
             this.checkBox6.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChanged);
@@ -541,7 +550,7 @@ namespace ChameleonMiniGUI
             this.checkBox5.Location = new System.Drawing.Point(17, 204);
             this.checkBox5.Name = "checkBox5";
             this.checkBox5.Size = new System.Drawing.Size(59, 17);
-            this.checkBox5.TabIndex = 41;
+            this.checkBox5.TabIndex = 5;
             this.checkBox5.Text = "Slot 5";
             this.checkBox5.UseVisualStyleBackColor = true;
             this.checkBox5.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChanged);
@@ -554,7 +563,7 @@ namespace ChameleonMiniGUI
             this.checkBox4.Location = new System.Drawing.Point(626, 16);
             this.checkBox4.Name = "checkBox4";
             this.checkBox4.Size = new System.Drawing.Size(59, 17);
-            this.checkBox4.TabIndex = 40;
+            this.checkBox4.TabIndex = 4;
             this.checkBox4.Text = "Slot 4";
             this.checkBox4.UseVisualStyleBackColor = true;
             this.checkBox4.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChanged);
@@ -567,7 +576,7 @@ namespace ChameleonMiniGUI
             this.checkBox3.Location = new System.Drawing.Point(423, 16);
             this.checkBox3.Name = "checkBox3";
             this.checkBox3.Size = new System.Drawing.Size(59, 17);
-            this.checkBox3.TabIndex = 39;
+            this.checkBox3.TabIndex = 3;
             this.checkBox3.Text = "Slot 3";
             this.checkBox3.UseVisualStyleBackColor = true;
             this.checkBox3.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChanged);
@@ -580,7 +589,7 @@ namespace ChameleonMiniGUI
             this.checkBox2.Location = new System.Drawing.Point(220, 16);
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(59, 17);
-            this.checkBox2.TabIndex = 38;
+            this.checkBox2.TabIndex = 2;
             this.checkBox2.Text = "Slot 2";
             this.checkBox2.UseVisualStyleBackColor = true;
             this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChanged);
@@ -595,7 +604,7 @@ namespace ChameleonMiniGUI
             this.checkBox1.Location = new System.Drawing.Point(17, 16);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(59, 17);
-            this.checkBox1.TabIndex = 37;
+            this.checkBox1.TabIndex = 1;
             this.checkBox1.Text = "Slot 1";
             this.checkBox1.UseVisualStyleBackColor = true;
             this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChanged);
@@ -623,7 +632,7 @@ namespace ChameleonMiniGUI
             this.btn_setactive.Location = new System.Drawing.Point(425, 24);
             this.btn_setactive.Name = "btn_setactive";
             this.btn_setactive.Size = new System.Drawing.Size(75, 23);
-            this.btn_setactive.TabIndex = 28;
+            this.btn_setactive.TabIndex = 14;
             this.btn_setactive.Text = "Set Active";
             this.btn_setactive.UseVisualStyleBackColor = true;
             this.btn_setactive.Click += new System.EventHandler(this.btn_setactive_Click);
@@ -634,7 +643,7 @@ namespace ChameleonMiniGUI
             this.btn_selectnone.Location = new System.Drawing.Point(90, 24);
             this.btn_selectnone.Name = "btn_selectnone";
             this.btn_selectnone.Size = new System.Drawing.Size(75, 23);
-            this.btn_selectnone.TabIndex = 27;
+            this.btn_selectnone.TabIndex = 10;
             this.btn_selectnone.Text = "Select None";
             this.btn_selectnone.UseVisualStyleBackColor = true;
             this.btn_selectnone.Click += new System.EventHandler(this.btn_selectnone_Click);
@@ -645,7 +654,7 @@ namespace ChameleonMiniGUI
             this.btn_selectall.Location = new System.Drawing.Point(9, 24);
             this.btn_selectall.Name = "btn_selectall";
             this.btn_selectall.Size = new System.Drawing.Size(75, 23);
-            this.btn_selectall.TabIndex = 26;
+            this.btn_selectall.TabIndex = 9;
             this.btn_selectall.Text = "Select All";
             this.btn_selectall.UseVisualStyleBackColor = true;
             this.btn_selectall.Click += new System.EventHandler(this.btn_selectall_Click);
@@ -655,7 +664,7 @@ namespace ChameleonMiniGUI
             this.btn_refresh.Location = new System.Drawing.Point(344, 24);
             this.btn_refresh.Name = "btn_refresh";
             this.btn_refresh.Size = new System.Drawing.Size(75, 23);
-            this.btn_refresh.TabIndex = 25;
+            this.btn_refresh.TabIndex = 13;
             this.btn_refresh.Text = "Refresh";
             this.btn_refresh.UseVisualStyleBackColor = true;
             this.btn_refresh.Click += new System.EventHandler(this.btn_refresh_Click);
@@ -665,7 +674,7 @@ namespace ChameleonMiniGUI
             this.btn_clear.Location = new System.Drawing.Point(263, 24);
             this.btn_clear.Name = "btn_clear";
             this.btn_clear.Size = new System.Drawing.Size(75, 23);
-            this.btn_clear.TabIndex = 23;
+            this.btn_clear.TabIndex = 12;
             this.btn_clear.Text = "Clear";
             this.btn_clear.UseVisualStyleBackColor = true;
             this.btn_clear.Click += new System.EventHandler(this.btn_clear_Click);
@@ -675,7 +684,7 @@ namespace ChameleonMiniGUI
             this.btn_keycalc.Location = new System.Drawing.Point(506, 24);
             this.btn_keycalc.Name = "btn_keycalc";
             this.btn_keycalc.Size = new System.Drawing.Size(75, 23);
-            this.btn_keycalc.TabIndex = 22;
+            this.btn_keycalc.TabIndex = 15;
             this.btn_keycalc.Text = "mfkey32";
             this.btn_keycalc.UseVisualStyleBackColor = true;
             this.btn_keycalc.Click += new System.EventHandler(this.btn_mfkey_Click);
@@ -685,7 +694,7 @@ namespace ChameleonMiniGUI
             this.btn_apply.Location = new System.Drawing.Point(182, 24);
             this.btn_apply.Name = "btn_apply";
             this.btn_apply.Size = new System.Drawing.Size(75, 23);
-            this.btn_apply.TabIndex = 21;
+            this.btn_apply.TabIndex = 11;
             this.btn_apply.Text = "Apply";
             this.btn_apply.UseVisualStyleBackColor = true;
             this.btn_apply.Click += new System.EventHandler(this.btn_apply_Click);
@@ -695,7 +704,7 @@ namespace ChameleonMiniGUI
             this.btn_download.Location = new System.Drawing.Point(696, 24);
             this.btn_download.Name = "btn_download";
             this.btn_download.Size = new System.Drawing.Size(103, 23);
-            this.btn_download.TabIndex = 20;
+            this.btn_download.TabIndex = 17;
             this.btn_download.Text = "Download Dump";
             this.btn_download.UseVisualStyleBackColor = true;
             this.btn_download.Click += new System.EventHandler(this.btn_download_Click);
@@ -705,7 +714,7 @@ namespace ChameleonMiniGUI
             this.btn_upload.Location = new System.Drawing.Point(587, 24);
             this.btn_upload.Name = "btn_upload";
             this.btn_upload.Size = new System.Drawing.Size(103, 23);
-            this.btn_upload.TabIndex = 19;
+            this.btn_upload.TabIndex = 16;
             this.btn_upload.Text = "Upload Dump";
             this.btn_upload.UseVisualStyleBackColor = true;
             this.btn_upload.Click += new System.EventHandler(this.btn_upload_Click);
@@ -1479,15 +1488,6 @@ namespace ChameleonMiniGUI
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(832, 472);
             this.tabControl1.TabIndex = 8;
-            // 
-            // tb_firmware
-            // 
-            this.tb_firmware.Enabled = false;
-            this.tb_firmware.Location = new System.Drawing.Point(44, 70);
-            this.tb_firmware.Name = "tb_firmware";
-            this.tb_firmware.ReadOnly = true;
-            this.tb_firmware.Size = new System.Drawing.Size(165, 20);
-            this.tb_firmware.TabIndex = 6;
             // 
             // frm_main
             // 

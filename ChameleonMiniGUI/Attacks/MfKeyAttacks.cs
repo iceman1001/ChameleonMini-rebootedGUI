@@ -1,9 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Sockets;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Runtime.Remoting.Messaging;
+using System.Threading.Tasks;
 
 namespace ChameleonMiniGUI
 {
@@ -116,17 +120,17 @@ namespace ChameleonMiniGUI
             return BitConverter.ToUInt32(data, offset);
         }
 
-        public static string Attack(byte[] bytes)
+        public static string Attack(byte[] bytes )
         {
             var show_all = "";
             if (!bytes.Any())
                 return show_all;
 
            
-            // Decrypt data,  with key 123321,  208
+            // Decrypt data,  with key 123321,  length 208
             DecryptData(bytes, 123321, 208);
 
-            // validate CRC is ok.
+            // validate CRC is ok.  (length 210,  since two last bytes is crc)
             if (!Crc.CheckCrc14443(Crc.CRC16_14443_A, bytes, 210))
                 return show_all;
 
@@ -154,26 +158,40 @@ namespace ChameleonMiniGUI
             var my_cmp = new KeyComparer();
             myKeys.Sort(my_cmp);
 
-            foreach (var item in myKeys)
+            show_all = KeyWorker(myKeys);
+            return show_all;
+        }
+
+        private static string KeyWorker(List<MyKey> keys)
+        {
+            var ret_mes = string.Empty;
+
+            foreach (var item in keys)
             {
                 Debug.WriteLine($"{item.Sector}");
 
                 if (item.Found) continue;
+
                 var keytype = (item.KeyType == 0x60) ? "A" : "B";
 
-                var subs = myKeys.Where(i => i.KeyType == item.KeyType && i.Sector == item.Sector && item.nr0 != i.nr0 && !i.Found ).ToList();
+                var subs =
+                    keys.Where(
+                        i => i.KeyType == item.KeyType && i.Sector == item.Sector && item.nr0 != i.nr0 && !i.Found)
+                        .ToList();
+
                 Debug.WriteLine($"{item.Sector} - {keytype} | {subs.Count}");
 
-                foreach (var bar in subs)
+                Parallel.ForEach(subs, bar =>
                 {
-                    if (bar.Found) continue;
+                    if (bar.Found) return;
 
-                    item.Found = mfkey32_moebius(item.UID, item.nt0, bar.nt0, item.nr0, item.ar0, bar.nr0, bar.ar0, out item.key);
+                    item.Found = mfkey32_moebius(item.UID, item.nt0, bar.nt0, item.nr0, item.ar0, bar.nr0, bar.ar0,
+                        out item.key);
                     if (item.Found)
                     {
                         var s = $"[S{item.Sector}] Key{keytype} [{item.key:x12}] {Environment.NewLine}";
                         Debug.WriteLine(s);
-                        show_all += s;
+                        ret_mes += s;
 
                         bar.Found = true;
                         bar.key = item.key;
@@ -182,9 +200,11 @@ namespace ChameleonMiniGUI
                     {
                         Debug.WriteLine($"{bar.Sector}");
                     }
-                }
+
+                    //Dispatcher.BeginInvoke();
+                } );
             }
-            return show_all;
+            return ret_mes;
         }
 
         // Takes encrypted data from device,  decodes it, and puts the decoded data back to same array.

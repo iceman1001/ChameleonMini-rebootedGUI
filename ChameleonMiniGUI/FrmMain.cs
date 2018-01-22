@@ -580,7 +580,7 @@ namespace ChameleonMiniGUI
             {
                 ident = $"({_deviceIdentification})";
             }
-            this.Text = $"Connected {ident} {_current_comport} - {Environment.OSVersion.VersionString}";
+            this.Text = $"Connected {_current_comport} [{ident}] - {Environment.OSVersion.VersionString}";
         }
 
         private void SetCheckBox(bool value)
@@ -782,7 +782,8 @@ namespace ChameleonMiniGUI
                     {
                         _cmdExtension = string.Empty;
                         _deviceIdentification = "Firmware Official";
-                        txt_output.Text = $"Success, found Chameleon Mini device {comPortStr} with {_deviceIdentification} installed";
+                        txt_output.Text = $"Success{Environment.NewLine}Found Chameleon Mini device {comPortStr} with {_deviceIdentification} installed{Environment.NewLine}";
+                        txt_output.Text += $"---------------------------------------------------------------{Environment.NewLine}";
                         _current_comport = comPortStr;
                         this.Cursor = Cursors.Default;
                         return;
@@ -793,7 +794,8 @@ namespace ChameleonMiniGUI
                     {
                         _cmdExtension = "MY";
                         _deviceIdentification = "Firmware RevE rebooted";
-                        txt_output.Text = $"Success, found Chameleon Mini device {comPortStr} with {_deviceIdentification} installed";
+                        txt_output.Text = $"Success{Environment.NewLine}Found Chameleon Mini device {comPortStr} with {_deviceIdentification} installed{Environment.NewLine}";
+                        txt_output.Text += $"---------------------------------------------------------------{Environment.NewLine}";
                         _current_comport = comPortStr;
                         this.Cursor = Cursors.Default;
                         return;
@@ -806,7 +808,8 @@ namespace ChameleonMiniGUI
             }
             _current_comport = string.Empty;
             this.Cursor = Cursors.Default;
-            txt_output.Text += $"Didn't find any Chameleon Mini device connected";
+            txt_output.Text += $"Didn't find any Chameleon Mini device connected{Environment.NewLine}";
+            txt_output.Text += $"---------------------------------------------------------------{Environment.NewLine}";
         }
 
         private void SendCommandWithoutResult(string cmdText)

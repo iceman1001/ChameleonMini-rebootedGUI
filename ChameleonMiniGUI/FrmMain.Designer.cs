@@ -152,6 +152,7 @@ namespace ChameleonMiniGUI
             this.cb_mode8 = new System.Windows.Forms.ComboBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.tb_firmware = new System.Windows.Forms.TextBox();
             this.gb_output.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.gb_keepalive.SuspendLayout();
@@ -273,6 +274,7 @@ namespace ChameleonMiniGUI
             // 
             // gb_connectionSettings
             // 
+            this.gb_connectionSettings.Controls.Add(this.tb_firmware);
             this.gb_connectionSettings.Controls.Add(this.txt_constatus);
             this.gb_connectionSettings.Controls.Add(this.btn_disconnect);
             this.gb_connectionSettings.Controls.Add(this.btn_connect);
@@ -1478,6 +1480,15 @@ namespace ChameleonMiniGUI
             this.tabControl1.Size = new System.Drawing.Size(832, 472);
             this.tabControl1.TabIndex = 8;
             // 
+            // tb_firmware
+            // 
+            this.tb_firmware.Enabled = false;
+            this.tb_firmware.Location = new System.Drawing.Point(44, 70);
+            this.tb_firmware.Name = "tb_firmware";
+            this.tb_firmware.ReadOnly = true;
+            this.tb_firmware.Size = new System.Drawing.Size(165, 20);
+            this.tb_firmware.TabIndex = 6;
+            // 
             // frm_main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1654,5 +1665,6 @@ namespace ChameleonMiniGUI
         private System.Windows.Forms.TextBox txt_constatus;
         private System.Windows.Forms.Button btn_disconnect;
         private System.Windows.Forms.Button btn_connect;
+        private System.Windows.Forms.TextBox tb_firmware;
     }
 }

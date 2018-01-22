@@ -27,7 +27,17 @@ namespace ChameleonMiniGUI
         private bool disconnectPressed = false;
 
         private string _deviceIdentification;
-       
+        private string _firmwareVersion;
+
+        public string FirmwareVersion
+        {
+            get { return _firmwareVersion; }
+            set
+            {
+                _firmwareVersion = value;
+                tb_firmware.Text = _firmwareVersion;
+            }
+        }
 
         public frm_main()
         {
@@ -754,19 +764,19 @@ namespace ChameleonMiniGUI
                 if (_comport.IsOpen)
                 {
                     // try without the "MY" extension first
-                    string version = SendCommand("VERSION?") as string;
-                    if (!string.IsNullOrEmpty(version) && version.Contains("Chameleon"))
+                    FirmwareVersion = SendCommand("VERSION?") as string;
+                    if (!string.IsNullOrEmpty(_firmwareVersion) && _firmwareVersion.Contains("Chameleon"))
                     {
-                        _cmdExtension = "";
-                        _deviceIdentification = "Official Chameleon Mini";
+                        _cmdExtension = string.Empty;
+                        _deviceIdentification = "Firmware Official";
                         return;
                     }
 
-                    version = SendCommand("VERSIONMY?") as string;
-                    if (!string.IsNullOrEmpty(version) && version.Contains("Chameleon"))
+                    FirmwareVersion = SendCommand("VERSIONMY?") as string;
+                    if (!string.IsNullOrEmpty(_firmwareVersion) && _firmwareVersion.Contains("Chameleon"))
                     {
                         _cmdExtension = "MY";
-                        _deviceIdentification = "Chameleon Mini RevE rebooted";
+                        _deviceIdentification = "Firmware RevE rebooted";
                         return;
                     }
                 }

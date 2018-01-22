@@ -26,6 +26,8 @@ namespace ChameleonMiniGUI
         private bool isConnected = false;
         private bool disconnectPressed = false;
 
+        private string _deviceIdentification;
+
         public frm_main()
         {
             InitializeComponent();
@@ -625,7 +627,7 @@ namespace ChameleonMiniGUI
             if (isConnected) return;
 
             isConnected = true;
-            this.Text = "Device connected";
+            this.Text = $"Device connected ({_deviceIdentification})";
 
             txt_constatus.Text = "CONNECTED!";
             txt_constatus.BackColor = System.Drawing.Color.Green;
@@ -720,21 +722,22 @@ namespace ChameleonMiniGUI
             var searcher = new ManagementObjectSearcher("select DeviceID from Win32_SerialPort where Description = \"ChameleonMini Virtual Serial Port\"");
             foreach (var obj in searcher.Get())
             {
-                string comPortStr = (string)obj["DeviceID"];
+                var comPortStr = obj["DeviceID"].ToString();
 
-                _comport = new SerialPort(comPortStr, 115200);
-                _comport.ReadTimeout = 4000;
-                _comport.WriteTimeout = 6000;
-            }
+                _comport = new SerialPort(comPortStr, 115200)
+                {
+                    ReadTimeout = 4000,
+                    WriteTimeout = 6000
+                };
 
-            if (_comport != null)
-            {
                 try
                 {
                     _comport.Open();
                 }
                 catch (Exception)
-                { }
+                {
+                    txt_output.Text = $"Failed connecting to {comPortStr}{Environment.NewLine}";
+                }
 
                 if (_comport.IsOpen)
                 {
@@ -743,6 +746,7 @@ namespace ChameleonMiniGUI
                     if (!string.IsNullOrEmpty(version) && version.Contains("Chameleon"))
                     {
                         _cmdExtension = "";
+                        _deviceIdentification = "Official Chameleon Mini";
                         return;
                     }
 
@@ -750,6 +754,7 @@ namespace ChameleonMiniGUI
                     if (!string.IsNullOrEmpty(version) && version.Contains("Chameleon"))
                     {
                         _cmdExtension = "MY";
+                        _deviceIdentification = "Chameleon Mini RevE rebooted";
                         return;
                     }
                 }

@@ -21,6 +21,7 @@ namespace ChameleonMiniGUI
         private SerialPort _comport = null;
         private string[] _modesArray = null;
         private string[] _buttonModesArray = null;
+        private string[] _buttonLongModesArray = null;
         private string _cmdExtension = "MY";
         private System.Windows.Forms.Timer timer1;
         private bool isConnected = false;
@@ -163,6 +164,14 @@ namespace ChameleonMiniGUI
                 {
                     //BUTTONMY=cb_buttonMode.SelectedItem
                     SendCommandWithoutResult($"BUTTON{_cmdExtension}={cb_button.SelectedItem}");
+                }
+
+                // Set the button long mode of the selected slot
+                var cb_buttonlong = FindControls<ComboBox>(Controls, $"cb_buttonlong{tagslotIndex}").FirstOrDefault();
+                if (cb_buttonlong != null)
+                {
+                    //BUTTONLONGMY=cb_buttonMode.SelectedItem
+                    SendCommandWithoutResult($"BUTTONLONG{_cmdExtension}={cb_buttonlong.SelectedItem}");
                 }
 
                 // Set the UID
@@ -368,9 +377,29 @@ namespace ChameleonMiniGUI
                     // CLEARMY
                     SendCommandWithoutResult($"CLEAR{_cmdExtension}");
 
-                    RefreshSlot(tagslotIndex - 1);
+                    // Set every field to a default value
+                    var cb_mode = FindControls<ComboBox>(Controls, $"cb_mode{tagslotIndex}").FirstOrDefault();
+                    if (cb_mode != null)
+                    {
+                        SendCommandWithoutResult($"CONFIG{_cmdExtension}={cb_mode.Items[0]}");
+                    }
 
-                    //txt_output.Clear();
+                    var cb_button = FindControls<ComboBox>(Controls, $"cb_button{tagslotIndex}").FirstOrDefault();
+                    if (cb_button != null)
+                    {
+                        SendCommandWithoutResult($"BUTTON{_cmdExtension}={cb_button.Items[0]}");
+                    }
+
+                    var cb_buttonlong = FindControls<ComboBox>(Controls, $"cb_buttonlong{tagslotIndex}").FirstOrDefault();
+                    if (cb_buttonlong != null)
+                    {
+                        SendCommandWithoutResult($"BUTTONLONG{_cmdExtension}={cb_buttonlong.Items[0]}");
+                    }
+
+                    SendCommandWithoutResult($"UID{_cmdExtension}=?");
+
+                    // Refresh
+                    RefreshSlot(tagslotIndex - 1);
                 }
             }
         }
@@ -927,6 +956,8 @@ namespace ChameleonMiniGUI
                 var cbMode = FindControls<ComboBox>(Controls, "cb_mode" + (slotIndex + 1) );
                 foreach (var box in cbMode)
                 {
+                    if (slotMode.Equals("MF_CLASSIC_4K") && box.Name != "cb_mode1")
+                        continue;
                     box.SelectedItem = slotMode;
                 }
             }
@@ -952,6 +983,18 @@ namespace ChameleonMiniGUI
                 foreach (var box in cbButton)
                 {
                     box.SelectedItem = slotButtonMode;
+                }
+            }
+
+            //BUTTONLONGMY? -> RETURNS THE MODE OF THE BUTTON LONG
+            var slotButtonLongMode = SendCommand($"BUTTONLONG{_cmdExtension}?").ToString();
+            if (IsButtonModeValid(slotButtonLongMode))
+            {
+                // set the combobox value of the i+1 cb_buttonlong
+                var cbButtonLong = FindControls<ComboBox>(Controls, "cb_buttonlong" + (slotIndex + 1));
+                foreach (var box in cbButtonLong)
+                {
+                    box.SelectedItem = slotButtonLongMode;
                 }
             }
 
@@ -1020,10 +1063,17 @@ namespace ChameleonMiniGUI
                     {
                         cb.Items.Clear();
                         cb.Items.AddRange(_modesArray);
+
+                        // We can set the MF_CLASSIC_4K mode only on the first tag slot
+                        if (cb.Name != "cb_mode1")
+                        {
+                            cb.Items.Remove("MF_CLASSIC_4K");
+                        }
                     }
                 }
             }
 
+            // Get button modes
             var buttonModesStr = SendCommand($"BUTTON{_cmdExtension}").ToString();
             if (string.IsNullOrEmpty(buttonModesStr)) return;
 
@@ -1036,6 +1086,21 @@ namespace ChameleonMiniGUI
             {
                 cb.Items.Clear();
                 cb.Items.AddRange(_buttonModesArray);
+            }
+
+            // Get button long modes
+            var buttonLongModesStr = SendCommand($"BUTTONLONG{_cmdExtension}").ToString();
+            if (string.IsNullOrEmpty(buttonLongModesStr)) return;
+
+            // split by comma
+            _buttonLongModesArray = buttonLongModesStr.Split(',');
+            if (!_buttonLongModesArray.Any()) return;
+
+            // populate all dropdowns
+            foreach (var cb in FindControls<ComboBox>(Controls, "cb_buttonlong"))
+            {
+                cb.Items.Clear();
+                cb.Items.AddRange(_buttonLongModesArray);
             }
         }
 
@@ -1088,6 +1153,16 @@ namespace ChameleonMiniGUI
             if (!string.IsNullOrEmpty((string)memsizeStr))
             {
                 int.TryParse((string)memsizeStr, out memsize);
+            }
+
+            // Also check if the tag is UL to save the counters too
+            var configStr = SendCommand($"CONFIG{_cmdExtension}?") as string;
+            if ((configStr != null) && (configStr.Contains("ULTRALIGHT")))
+            {
+                if (memsize < 4069)
+                {
+                    memsize += 3 * 4; // 3 more pages
+                }
             }
 
             // Then send the download command

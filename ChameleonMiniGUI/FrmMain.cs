@@ -13,6 +13,7 @@ using System.Management;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Be.Windows.Forms;
 
 namespace ChameleonMiniGUI
 {
@@ -598,6 +599,68 @@ namespace ChameleonMiniGUI
             {
                 MessageBox.Show("Unable to connect to the Chameleon device", "Connection failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+
+        private void btn_open1_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                var fileName = openFileDialog1.FileName;
+
+                OpenFile(fileName, hexBox1);
+            }
+        }
+
+        private void btn_save1_Click(object sender, EventArgs e)
+        {
+            SaveFile(hexBox1);
+        }
+
+
+        private void btn_open2_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                var fileName = openFileDialog1.FileName;
+
+                OpenFile(fileName, hexBox2);
+            }
+        }
+
+        private void btn_save2_Click(object sender, EventArgs e)
+        {
+            SaveFile(hexBox2);
+        }
+
+        private void btn_open3_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                var fileName = openFileDialog1.FileName;
+
+                OpenFile(fileName, hexBox3);
+            }
+        }
+
+        private void btn_save3_Click(object sender, EventArgs e)
+        {
+            SaveFile(hexBox3);
+        }
+
+        private void btn_open4_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                var fileName = openFileDialog1.FileName;
+
+                OpenFile(fileName, hexBox4);
+            }
+        }
+
+        private void btn_save4_Click(object sender, EventArgs e)
+        {
+            SaveFile(hexBox4);
         }
 
         #endregion
@@ -1231,6 +1294,100 @@ namespace ChameleonMiniGUI
 
             timer1.Start();
         }
+
+        void SaveFile(HexBox hexBox)
+        {
+            if (hexBox.ByteProvider == null)
+                return;
+
+            try
+            {
+                DynamicFileByteProvider dynamicFileByteProvider = hexBox.ByteProvider as DynamicFileByteProvider;
+                dynamicFileByteProvider.ApplyChanges();
+            }
+            catch (Exception)
+            {
+                var msg = $"[!] Failed to save file{Environment.NewLine}";
+                MessageBox.Show(msg);
+                txt_output.Text += msg;
+            }
+        }
+
+        public void OpenFile(string fileName, HexBox hexBox)
+        {
+            if (!File.Exists(fileName))
+            {
+                var msg = $"[!] Failed to open - File does not exist{Environment.NewLine}";
+                MessageBox.Show(msg);
+                txt_output.Text += msg;
+                return;
+            }
+
+            if (CloseFile(hexBox) == DialogResult.Cancel)
+                return;
+
+            DynamicFileByteProvider dynamicFileByteProvider;
+            try
+            {
+                // try to open in write mode
+                dynamicFileByteProvider = new DynamicFileByteProvider(fileName);
+                hexBox.ByteProvider = dynamicFileByteProvider;
+            }
+            catch (IOException) // write mode failed
+            {
+                // file cannot be opened
+                var msg = $"[!] Failed to open file{Environment.NewLine}";
+                MessageBox.Show(msg);
+                txt_output.Text += msg;
+            }
+        }
+
+        DialogResult CloseFile(HexBox hexBox)
+        {
+            if (hexBox.ByteProvider == null)
+                return DialogResult.OK;
+
+            if (hexBox.ByteProvider != null && hexBox.ByteProvider.HasChanges())
+            {
+                DialogResult res = MessageBox.Show("There are unsaved changes. Do you want to save them?",
+                    "File changed",
+                    MessageBoxButtons.YesNoCancel,
+                    MessageBoxIcon.Warning);
+
+                if (res == DialogResult.Yes)
+                {
+                    SaveFile(hexBox);
+                    CleanUp(hexBox);
+                }
+                else if (res == DialogResult.No)
+                {
+                    CleanUp(hexBox);
+                }
+                else if (res == DialogResult.Cancel)
+                {
+                    return res;
+                }
+
+                return res;
+            }
+            else
+            {
+                CleanUp(hexBox);
+                return DialogResult.OK;
+            }
+        }
+
+        void CleanUp(HexBox hexBox)
+        {
+            if (hexBox.ByteProvider != null)
+            {
+                IDisposable byteProvider = hexBox.ByteProvider as IDisposable;
+                if (byteProvider != null)
+                    byteProvider.Dispose();
+                hexBox.ByteProvider = null;
+            }
+        }
         #endregion
+
     }
 }

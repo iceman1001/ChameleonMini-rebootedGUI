@@ -152,7 +152,20 @@ namespace ChameleonMiniGUI
             this.lbl_mode8 = new System.Windows.Forms.Label();
             this.cb_mode8 = new System.Windows.Forms.ComboBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.hexBox4 = new Be.Windows.Forms.HexBox();
+            this.hexBox3 = new Be.Windows.Forms.HexBox();
+            this.hexBox2 = new Be.Windows.Forms.HexBox();
+            this.hexBox1 = new Be.Windows.Forms.HexBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.btn_open1 = new System.Windows.Forms.Button();
+            this.btn_save1 = new System.Windows.Forms.Button();
+            this.btn_save2 = new System.Windows.Forms.Button();
+            this.btn_open2 = new System.Windows.Forms.Button();
+            this.btn_save3 = new System.Windows.Forms.Button();
+            this.btn_open3 = new System.Windows.Forms.Button();
+            this.btn_save4 = new System.Windows.Forms.Button();
+            this.btn_open4 = new System.Windows.Forms.Button();
             this.cb_buttonlong5 = new System.Windows.Forms.ComboBox();
             this.lbl_buttonlong5 = new System.Windows.Forms.Label();
             this.cb_buttonlong6 = new System.Windows.Forms.ComboBox();
@@ -187,6 +200,7 @@ namespace ChameleonMiniGUI
             this.gb_tagslot7.SuspendLayout();
             this.gb_tagslot8.SuspendLayout();
             this.tabControl1.SuspendLayout();
+            this.tabPage3.SuspendLayout();
             this.SuspendLayout();
             // 
             // txt_output
@@ -1514,12 +1528,162 @@ namespace ChameleonMiniGUI
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Location = new System.Drawing.Point(8, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(832, 517);
             this.tabControl1.TabIndex = 8;
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.btn_save4);
+            this.tabPage3.Controls.Add(this.btn_open4);
+            this.tabPage3.Controls.Add(this.btn_save3);
+            this.tabPage3.Controls.Add(this.btn_open3);
+            this.tabPage3.Controls.Add(this.btn_save2);
+            this.tabPage3.Controls.Add(this.btn_open2);
+            this.tabPage3.Controls.Add(this.btn_save1);
+            this.tabPage3.Controls.Add(this.btn_open1);
+            this.tabPage3.Controls.Add(this.hexBox4);
+            this.tabPage3.Controls.Add(this.hexBox3);
+            this.tabPage3.Controls.Add(this.hexBox2);
+            this.tabPage3.Controls.Add(this.hexBox1);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(824, 446);
+            this.tabPage3.TabIndex = 4;
+            this.tabPage3.Text = "Dump Management";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // hexBox4
+            // 
+            this.hexBox4.ColumnInfoVisible = true;
+            this.hexBox4.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.hexBox4.LineInfoVisible = true;
+            this.hexBox4.Location = new System.Drawing.Point(621, 70);
+            this.hexBox4.Name = "hexBox4";
+            this.hexBox4.ShadowSelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(60)))), ((int)(((byte)(188)))), ((int)(((byte)(255)))));
+            this.hexBox4.Size = new System.Drawing.Size(200, 328);
+            this.hexBox4.TabIndex = 4;
+            this.hexBox4.VScrollBarVisible = true;
+            // 
+            // hexBox3
+            // 
+            this.hexBox3.ColumnInfoVisible = true;
+            this.hexBox3.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.hexBox3.LineInfoVisible = true;
+            this.hexBox3.Location = new System.Drawing.Point(415, 70);
+            this.hexBox3.Name = "hexBox3";
+            this.hexBox3.ShadowSelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(60)))), ((int)(((byte)(188)))), ((int)(((byte)(255)))));
+            this.hexBox3.Size = new System.Drawing.Size(200, 328);
+            this.hexBox3.TabIndex = 3;
+            this.hexBox3.VScrollBarVisible = true;
+            // 
+            // hexBox2
+            // 
+            this.hexBox2.ColumnInfoVisible = true;
+            this.hexBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.hexBox2.LineInfoVisible = true;
+            this.hexBox2.Location = new System.Drawing.Point(209, 70);
+            this.hexBox2.Name = "hexBox2";
+            this.hexBox2.ShadowSelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(60)))), ((int)(((byte)(188)))), ((int)(((byte)(255)))));
+            this.hexBox2.Size = new System.Drawing.Size(200, 328);
+            this.hexBox2.TabIndex = 2;
+            this.hexBox2.VScrollBarVisible = true;
+            // 
+            // hexBox1
+            // 
+            this.hexBox1.ColumnInfoVisible = true;
+            this.hexBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.hexBox1.LineInfoVisible = true;
+            this.hexBox1.Location = new System.Drawing.Point(3, 70);
+            this.hexBox1.Name = "hexBox1";
+            this.hexBox1.ShadowSelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(60)))), ((int)(((byte)(188)))), ((int)(((byte)(255)))));
+            this.hexBox1.Size = new System.Drawing.Size(200, 328);
+            this.hexBox1.TabIndex = 1;
+            this.hexBox1.VScrollBarVisible = true;
+            // 
+            // btn_open1
+            // 
+            this.btn_open1.Location = new System.Drawing.Point(4, 41);
+            this.btn_open1.Name = "btn_open1";
+            this.btn_open1.Size = new System.Drawing.Size(50, 23);
+            this.btn_open1.TabIndex = 5;
+            this.btn_open1.Text = "Open";
+            this.btn_open1.UseVisualStyleBackColor = true;
+            this.btn_open1.Click += new System.EventHandler(this.btn_open1_Click);
+            // 
+            // btn_save1
+            // 
+            this.btn_save1.Location = new System.Drawing.Point(60, 41);
+            this.btn_save1.Name = "btn_save1";
+            this.btn_save1.Size = new System.Drawing.Size(50, 23);
+            this.btn_save1.TabIndex = 6;
+            this.btn_save1.Text = "Save";
+            this.btn_save1.UseVisualStyleBackColor = true;
+            this.btn_save1.Click += new System.EventHandler(this.btn_save1_Click);
+            // 
+            // btn_save2
+            // 
+            this.btn_save2.Location = new System.Drawing.Point(265, 41);
+            this.btn_save2.Name = "btn_save2";
+            this.btn_save2.Size = new System.Drawing.Size(50, 23);
+            this.btn_save2.TabIndex = 8;
+            this.btn_save2.Text = "Save";
+            this.btn_save2.UseVisualStyleBackColor = true;
+            this.btn_save2.Click += new System.EventHandler(this.btn_save2_Click);
+            // 
+            // btn_open2
+            // 
+            this.btn_open2.Location = new System.Drawing.Point(209, 41);
+            this.btn_open2.Name = "btn_open2";
+            this.btn_open2.Size = new System.Drawing.Size(50, 23);
+            this.btn_open2.TabIndex = 7;
+            this.btn_open2.Text = "Open";
+            this.btn_open2.UseVisualStyleBackColor = true;
+            this.btn_open2.Click += new System.EventHandler(this.btn_open2_Click);
+            // 
+            // btn_save3
+            // 
+            this.btn_save3.Location = new System.Drawing.Point(471, 41);
+            this.btn_save3.Name = "btn_save3";
+            this.btn_save3.Size = new System.Drawing.Size(50, 23);
+            this.btn_save3.TabIndex = 10;
+            this.btn_save3.Text = "Save";
+            this.btn_save3.UseVisualStyleBackColor = true;
+            this.btn_save3.Click += new System.EventHandler(this.btn_save3_Click);
+            // 
+            // btn_open3
+            // 
+            this.btn_open3.Location = new System.Drawing.Point(415, 41);
+            this.btn_open3.Name = "btn_open3";
+            this.btn_open3.Size = new System.Drawing.Size(50, 23);
+            this.btn_open3.TabIndex = 9;
+            this.btn_open3.Text = "Open";
+            this.btn_open3.UseVisualStyleBackColor = true;
+            this.btn_open3.Click += new System.EventHandler(this.btn_open3_Click);
+            // 
+            // btn_save4
+            // 
+            this.btn_save4.Location = new System.Drawing.Point(677, 41);
+            this.btn_save4.Name = "btn_save4";
+            this.btn_save4.Size = new System.Drawing.Size(50, 23);
+            this.btn_save4.TabIndex = 12;
+            this.btn_save4.Text = "Save";
+            this.btn_save4.UseVisualStyleBackColor = true;
+            this.btn_save4.Click += new System.EventHandler(this.btn_save4_Click);
+            // 
+            // btn_open4
+            // 
+            this.btn_open4.Location = new System.Drawing.Point(621, 41);
+            this.btn_open4.Name = "btn_open4";
+            this.btn_open4.Size = new System.Drawing.Size(50, 23);
+            this.btn_open4.TabIndex = 11;
+            this.btn_open4.Text = "Open";
+            this.btn_open4.UseVisualStyleBackColor = true;
+            this.btn_open4.Click += new System.EventHandler(this.btn_open4_Click);
             // 
             // cb_buttonlong5
             // 
@@ -1745,6 +1909,7 @@ namespace ChameleonMiniGUI
             this.gb_tagslot8.ResumeLayout(false);
             this.gb_tagslot8.PerformLayout();
             this.tabControl1.ResumeLayout(false);
+            this.tabPage3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1874,6 +2039,19 @@ namespace ChameleonMiniGUI
         private System.Windows.Forms.Button btn_disconnect;
         private System.Windows.Forms.Button btn_connect;
         private System.Windows.Forms.TextBox tb_firmware;
+        private System.Windows.Forms.TabPage tabPage3;
+        private Be.Windows.Forms.HexBox hexBox4;
+        private Be.Windows.Forms.HexBox hexBox3;
+        private Be.Windows.Forms.HexBox hexBox2;
+        private Be.Windows.Forms.HexBox hexBox1;
+        private System.Windows.Forms.Button btn_save4;
+        private System.Windows.Forms.Button btn_open4;
+        private System.Windows.Forms.Button btn_save3;
+        private System.Windows.Forms.Button btn_open3;
+        private System.Windows.Forms.Button btn_save2;
+        private System.Windows.Forms.Button btn_open2;
+        private System.Windows.Forms.Button btn_save1;
+        private System.Windows.Forms.Button btn_open1;
         private System.Windows.Forms.ComboBox cb_buttonlong6;
         private System.Windows.Forms.Label lbl_buttonlong6;
         private System.Windows.Forms.ComboBox cb_buttonlong1;

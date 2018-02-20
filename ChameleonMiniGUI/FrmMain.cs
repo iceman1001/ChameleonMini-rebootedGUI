@@ -633,34 +633,102 @@ namespace ChameleonMiniGUI
             SaveFile(hexBox2);
         }
 
-        private void btn_open3_Click(object sender, EventArgs e)
+        private void tabPage3_DragEnter(object sender, DragEventArgs e)
         {
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                var fileName = openFileDialog1.FileName;
+            if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.Copy;
+        }
 
-                OpenFile(fileName, hexBox3);
+        private void tabPage3_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            int fileCount = 0;
+            foreach (string file in files)
+            {
+                fileCount++;
+                switch (fileCount)
+                {
+                    case 1:
+                        OpenFile(file, hexBox1);
+                        break;
+                    case 2:
+                        OpenFile(file, hexBox2);
+                        break;
+                }
+            };
+        }
+
+        private void btn_compare_Click(object sender, EventArgs e)
+        {
+            if (hexBox1.ByteProvider != null && hexBox2.ByteProvider != null)
+            {
+                // TODO: compare byte-by-byte and highlight the different ones
+                if (hexBox1.ByteProvider.Length == hexBox2.ByteProvider.Length)
+                {
+                    for (int i = 0; i < hexBox1.ByteProvider.Length; i++)
+                    {
+                        if (hexBox1.ByteProvider.ReadByte(i) != hexBox2.ByteProvider.ReadByte(i))
+                        {
+                            Console.WriteLine("Byte " + i + " is different.");
+                        }
+                    }
+                }
             }
         }
 
-        private void btn_save3_Click(object sender, EventArgs e)
+        private void byteWidthCheckBoxes_CheckedChanged(Object sender, EventArgs e)
         {
-            SaveFile(hexBox3);
-        }
-
-        private void btn_open4_Click(object sender, EventArgs e)
-        {
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            if (((RadioButton)sender).Checked)
             {
-                var fileName = openFileDialog1.FileName;
-
-                OpenFile(fileName, hexBox4);
+                RadioButton rb = (RadioButton)sender;
+                var byteWidthStr = rb.Name.Substring(rb.Name.Length - 2);
+                int bytesPerLine = int.Parse(byteWidthStr) * 4;
+                hexBox1.BytesPerLine = bytesPerLine;
+                hexBox2.BytesPerLine = bytesPerLine;
+                if (bytesPerLine == 4 * 4)
+                {
+                    hexBox1.Size = new System.Drawing.Size(200, 370);
+                    btn_open2.Location = new System.Drawing.Point(btn_open1.Location.X + 420, btn_open1.Location.Y);
+                    btn_save2.Location = new System.Drawing.Point(btn_open2.Location.X + 56, btn_open1.Location.Y);
+                    hexBox2.Location = new System.Drawing.Point(hexBox1.Location.X + 420, hexBox1.Location.Y);
+                    hexBox2.Size = new System.Drawing.Size(200, 370);
+                }
+                else if (bytesPerLine == 4 * 8)
+                {
+                    hexBox1.Size = new System.Drawing.Size(300, 370);
+                    btn_open2.Location = new System.Drawing.Point(btn_open1.Location.X + 420, btn_open1.Location.Y);
+                    btn_save2.Location = new System.Drawing.Point(btn_open2.Location.X + 56, btn_open1.Location.Y);
+                    hexBox2.Location = new System.Drawing.Point(hexBox1.Location.X + 420, hexBox1.Location.Y);
+                    hexBox2.Size = new System.Drawing.Size(300, 370);
+                }
+                else if (bytesPerLine == 4 * 16)
+                {
+                    hexBox1.Size = new System.Drawing.Size(480, 180);
+                    btn_open2.Location = new System.Drawing.Point(hexBox1.Location.X, hexBox1.Location.Y + 180 + 10);
+                    btn_save2.Location = new System.Drawing.Point(btn_save1.Location.X, btn_open2.Location.Y);
+                    hexBox2.Location = new System.Drawing.Point(hexBox1.Location.X, btn_save2.Location.Y + btn_save2.Size.Height + 5);
+                    hexBox2.Size = new System.Drawing.Size(480, 180);
+                }
             }
         }
 
-        private void btn_save4_Click(object sender, EventArgs e)
+        private void hexBox1_CurrentLineChanged(object sender, EventArgs e)
         {
-            SaveFile(hexBox4);
+            // TODO: Highlight the byte in the same location across the different controls
+        }
+
+        private void hexBox1_CurrentPositionInLineChanged(object sender, EventArgs e)
+        {
+            // TODO: Highlight the byte in the same location across the different controls
+        }
+
+        private void hexBox2_CurrentLineChanged(object sender, EventArgs e)
+        {
+            // TODO: Highlight the byte in the same location across the different controls
+        }
+
+        private void hexBox2_CurrentPositionInLineChanged(object sender, EventArgs e)
+        {
+            // TODO: Highlight the byte in the same location across the different controls
         }
 
         #endregion
@@ -1388,6 +1456,5 @@ namespace ChameleonMiniGUI
             }
         }
         #endregion
-
     }
 }

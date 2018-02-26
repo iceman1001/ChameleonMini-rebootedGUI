@@ -1839,8 +1839,6 @@ namespace ChameleonMiniGUI
             this.hexBox2.Size = new System.Drawing.Size(200, 370);
             this.hexBox2.TabIndex = 2;
             this.hexBox2.VScrollBarVisible = true;
-            this.hexBox2.CurrentLineChanged += new System.EventHandler(this.hexBox2_CurrentLineChanged);
-            this.hexBox2.CurrentPositionInLineChanged += new System.EventHandler(this.hexBox2_CurrentPositionInLineChanged);
             // 
             // hexBox1
             // 
@@ -1853,8 +1851,6 @@ namespace ChameleonMiniGUI
             this.hexBox1.Size = new System.Drawing.Size(200, 370);
             this.hexBox1.TabIndex = 1;
             this.hexBox1.VScrollBarVisible = true;
-            this.hexBox1.CurrentLineChanged += new System.EventHandler(this.hexBox1_CurrentLineChanged);
-            this.hexBox1.CurrentPositionInLineChanged += new System.EventHandler(this.hexBox1_CurrentPositionInLineChanged);
             // 
             // frm_main
             // 

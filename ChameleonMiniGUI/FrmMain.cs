@@ -14,6 +14,7 @@ using System.Runtime.InteropServices;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Be.Windows.Forms;
+using System.Drawing;
 
 namespace ChameleonMiniGUI
 {
@@ -642,35 +643,51 @@ namespace ChameleonMiniGUI
         {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
             int fileCount = 0;
-            foreach (string file in files)
+
+            if ((files != null) && (files.Length > 0))
             {
-                fileCount++;
-                switch (fileCount)
+                // TODO: Should check if files are open instead of closing both files
+                CloseFile(hexBox1);
+                CloseFile(hexBox2);
+
+                foreach (string file in files)
                 {
-                    case 1:
-                        OpenFile(file, hexBox1);
-                        break;
-                    case 2:
-                        OpenFile(file, hexBox2);
-                        break;
+                    fileCount++;
+                    switch (fileCount)
+                    {
+                        case 1:
+                            OpenFile(file, hexBox1);
+                            break;
+                        case 2:
+                            OpenFile(file, hexBox2);
+                            break;
+                    }
                 }
-            };
+            }
         }
 
         private void btn_compare_Click(object sender, EventArgs e)
         {
             if (hexBox1.ByteProvider != null && hexBox2.ByteProvider != null)
             {
-                // TODO: compare byte-by-byte and highlight the different ones
                 if (hexBox1.ByteProvider.Length == hexBox2.ByteProvider.Length)
                 {
+                    // Clear the last highlights
+                    hexBox1.ClearHighlights();
+                    hexBox2.ClearHighlights();
+
                     for (int i = 0; i < hexBox1.ByteProvider.Length; i++)
                     {
                         if (hexBox1.ByteProvider.ReadByte(i) != hexBox2.ByteProvider.ReadByte(i))
                         {
                             Console.WriteLine("Byte " + i + " is different.");
+                            hexBox1.AddHighlight(i, 1, Color.Red, Color.White);
+                            hexBox2.AddHighlight(i, 1, Color.Red, Color.White);
                         }
                     }
+
+                    hexBox1.Invalidate();
+                    hexBox2.Invalidate();
                 }
             }
         }
@@ -710,27 +727,6 @@ namespace ChameleonMiniGUI
                 }
             }
         }
-
-        private void hexBox1_CurrentLineChanged(object sender, EventArgs e)
-        {
-            // TODO: Highlight the byte in the same location across the different controls
-        }
-
-        private void hexBox1_CurrentPositionInLineChanged(object sender, EventArgs e)
-        {
-            // TODO: Highlight the byte in the same location across the different controls
-        }
-
-        private void hexBox2_CurrentLineChanged(object sender, EventArgs e)
-        {
-            // TODO: Highlight the byte in the same location across the different controls
-        }
-
-        private void hexBox2_CurrentPositionInLineChanged(object sender, EventArgs e)
-        {
-            // TODO: Highlight the byte in the same location across the different controls
-        }
-
         #endregion
 
         #region Helper methods
@@ -1456,5 +1452,6 @@ namespace ChameleonMiniGUI
             }
         }
         #endregion
+
     }
 }

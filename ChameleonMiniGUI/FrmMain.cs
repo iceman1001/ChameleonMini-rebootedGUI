@@ -666,32 +666,6 @@ namespace ChameleonMiniGUI
             }
         }
 
-        private void btn_compare_Click(object sender, EventArgs e)
-        {
-            if (hexBox1.ByteProvider != null && hexBox2.ByteProvider != null)
-            {
-                if (hexBox1.ByteProvider.Length == hexBox2.ByteProvider.Length)
-                {
-                    // Clear the last highlights
-                    hexBox1.ClearHighlights();
-                    hexBox2.ClearHighlights();
-
-                    for (int i = 0; i < hexBox1.ByteProvider.Length; i++)
-                    {
-                        if (hexBox1.ByteProvider.ReadByte(i) != hexBox2.ByteProvider.ReadByte(i))
-                        {
-                            Console.WriteLine("Byte " + i + " is different.");
-                            hexBox1.AddHighlight(i, 1, Color.Red, Color.White);
-                            hexBox2.AddHighlight(i, 1, Color.Red, Color.White);
-                        }
-                    }
-
-                    hexBox1.Invalidate();
-                    hexBox2.Invalidate();
-                }
-            }
-        }
-
         private void byteWidthCheckBoxes_CheckedChanged(Object sender, EventArgs e)
         {
             if (((RadioButton)sender).Checked)
@@ -726,6 +700,12 @@ namespace ChameleonMiniGUI
                     hexBox2.Size = new System.Drawing.Size(480, 180);
                 }
             }
+        }
+
+        private void hexBox_ByteProviderWriteFinished(object sender, EventArgs e)
+        {
+            // TODO: Add the index of the written byte to the event and compare only that
+            PerformComparison();
         }
         #endregion
 
@@ -1396,6 +1376,9 @@ namespace ChameleonMiniGUI
                 // try to open in write mode
                 dynamicFileByteProvider = new DynamicFileByteProvider(fileName);
                 hexBox.ByteProvider = dynamicFileByteProvider;
+
+                // run the comparison automatically
+                PerformComparison();
             }
             catch (IOException) // write mode failed
             {
@@ -1451,7 +1434,37 @@ namespace ChameleonMiniGUI
                 hexBox.ByteProvider = null;
             }
         }
-        #endregion
 
+        private void PerformComparison()
+        {
+            // Clear the last highlights
+            hexBox1.ClearHighlights();
+            hexBox2.ClearHighlights();
+
+            if (hexBox1.ByteProvider != null && hexBox2.ByteProvider != null)
+            {
+                if (hexBox1.ByteProvider.Length == hexBox2.ByteProvider.Length)
+                {
+                    for (int i = 0; i < hexBox1.ByteProvider.Length; i++)
+                    {
+                        CompareByte(i);
+                    }
+
+                    hexBox1.Invalidate();
+                    hexBox2.Invalidate();
+                }
+            }
+        }
+
+        private void CompareByte(int byteIndex)
+        {
+            if (hexBox1.ByteProvider.ReadByte(byteIndex) != hexBox2.ByteProvider.ReadByte(byteIndex))
+            {
+                //Console.WriteLine("Byte " + i + " is different.");
+                hexBox1.AddHighlight(byteIndex, 1, Color.Red, Color.White);
+                hexBox2.AddHighlight(byteIndex, 1, Color.Red, Color.White);
+            }
+        }
+        #endregion
     }
 }

@@ -1172,15 +1172,15 @@ namespace Be.Windows.Forms
 		/// </summary>
 		int _lastThumbtrack;
 		/// <summary>
-		/// Contains the border´s left shift
+		/// Contains the borderÎ„s left shift
 		/// </summary>
 		int _recBorderLeft = SystemInformation.Border3DSize.Width;
 		/// <summary>
-		/// Contains the border´s right shift
+		/// Contains the borderÎ„s right shift
 		/// </summary>
 		int _recBorderRight = SystemInformation.Border3DSize.Width;
 		/// <summary>
-		/// Contains the border´s top shift
+		/// Contains the borderÎ„s top shift
 		/// </summary>
 		int _recBorderTop = SystemInformation.Border3DSize.Height;
 		/// <summary>
@@ -1270,10 +1270,17 @@ namespace Be.Windows.Forms
 		/// </summary>
 		[Description("Occurs, when the value of ByteProvider property has changed.")]
 		public event EventHandler ByteProviderChanged;
-		/// <summary>
-		/// Occurs, when the value of SelectionStart property has changed.
+
+        /// <summary>
+		/// Occurs after the WriteByte method call
 		/// </summary>
-		[Description("Occurs, when the value of SelectionStart property has changed.")]
+		[Description("Occurs after the WriteByte method call.")]
+        public event EventHandler ByteProviderWriteFinished;
+
+        /// <summary>
+        /// Occurs, when the value of SelectionStart property has changed.
+        /// </summary>
+        [Description("Occurs, when the value of SelectionStart property has changed.")]
 		public event EventHandler SelectionStartChanged;
 		/// <summary>
 		/// Occurs, when the value of SelectionLength property has changed.
@@ -3172,11 +3179,17 @@ namespace Be.Windows.Forms
 					ActivateKeyInterpreter();
 
 				if (_byteProvider != null)
-					_byteProvider.LengthChanged -= new EventHandler(_byteProvider_LengthChanged);
-
+                {
+                    _byteProvider.LengthChanged -= new EventHandler(_byteProvider_LengthChanged);
+                    _byteProvider.WriteFinished -= new EventHandler(_byteProvider_WriteFinished);
+                }
+					
 				_byteProvider = value;
 				if (_byteProvider != null)
-					_byteProvider.LengthChanged += new EventHandler(_byteProvider_LengthChanged);
+                {
+                    _byteProvider.LengthChanged += new EventHandler(_byteProvider_LengthChanged);
+                    _byteProvider.WriteFinished += new EventHandler(_byteProvider_WriteFinished);
+                }
 
 				OnByteProviderChanged(EventArgs.Empty);
 
@@ -3291,9 +3304,9 @@ namespace Be.Windows.Forms
 		} long _lineInfoOffset = 0;
 
 		/// <summary>
-		/// Gets or sets the hex box´s border style.
+		/// Gets or sets the hex boxÎ„s border style.
 		/// </summary>
-		[DefaultValue(typeof(BorderStyle), "Fixed3D"), Category("Hex"), Description("Gets or sets the hex box´s border style.")]
+		[DefaultValue(typeof(BorderStyle), "Fixed3D"), Category("Hex"), Description("Gets or sets the hex boxÎ„s border style.")]
 		public BorderStyle BorderStyle
 		{
 			get { return _borderStyle; }
@@ -3770,11 +3783,21 @@ namespace Be.Windows.Forms
 				ByteProviderChanged(this, e);
 		}
 
-		/// <summary>
-		/// Raises the SelectionStartChanged event.
-		/// </summary>
-		/// <param name="e">An EventArgs that contains the event data.</param>
-		protected virtual void OnSelectionStartChanged(EventArgs e)
+        /// <summary>
+        /// Raises the ByteProviderWriteFinished event.
+        /// </summary>
+        /// <param name="e">An EventArgs that contains the event data.</param>
+        protected virtual void OnByteProviderWriteFinished(EventArgs e)
+        {
+            if (ByteProviderWriteFinished != null)
+                ByteProviderWriteFinished(this, e);
+        }
+
+        /// <summary>
+        /// Raises the SelectionStartChanged event.
+        /// </summary>
+        /// <param name="e">An EventArgs that contains the event data.</param>
+        protected virtual void OnSelectionStartChanged(EventArgs e)
 		{
 			if (SelectionStartChanged != null)
 				SelectionStartChanged(this, e);
@@ -4021,7 +4044,12 @@ namespace Be.Windows.Forms
 		{
 			UpdateScrollSize();
 		}
-		#endregion
+
+        void _byteProvider_WriteFinished(object sender, EventArgs e)
+        {
+            OnByteProviderWriteFinished(EventArgs.Empty);
+        }
+        #endregion
 
         #region Scaling Support for High DPI resolution screens
         /// <summary>

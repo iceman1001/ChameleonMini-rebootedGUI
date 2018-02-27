@@ -89,13 +89,17 @@ namespace Be.Windows.Forms
 		/// </summary>
 		public event EventHandler LengthChanged;
 
+        /// <summary>
+        /// Occurs after the WriteByte method call
+        /// </summary>
+        public event EventHandler WriteFinished;
 
-		/// <summary>
-		/// Reads a byte from the byte collection.
-		/// </summary>
-		/// <param name="index">the index of the byte to read</param>
-		/// <returns>the byte</returns>
-		public byte ReadByte(long index)
+        /// <summary>
+        /// Reads a byte from the byte collection.
+        /// </summary>
+        /// <param name="index">the index of the byte to read</param>
+        /// <returns>the byte</returns>
+        public byte ReadByte(long index)
 		{ return _bytes[(int)index]; }
 
 		/// <summary>

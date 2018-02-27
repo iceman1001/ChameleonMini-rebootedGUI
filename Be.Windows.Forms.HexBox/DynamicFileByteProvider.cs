@@ -81,6 +81,11 @@ namespace Be.Windows.Forms
         public event EventHandler Changed;
 
         /// <summary>
+        /// See <see cref="IByteProvider.WriteFinished" /> for more information.
+        /// </summary>
+        public event EventHandler WriteFinished;
+
+        /// <summary>
         /// See <see cref="IByteProvider.ReadByte" /> for more information.
         /// </summary>
         public byte ReadByte(long index)
@@ -182,6 +187,7 @@ namespace Be.Windows.Forms
             finally
             {
                 OnChanged(EventArgs.Empty);
+                OnWriteFinished(EventArgs.Empty);
             }
         }
 
@@ -460,6 +466,11 @@ namespace Be.Windows.Forms
             {
                 Changed(this, e);
             }
+        }
+
+        void OnWriteFinished(EventArgs e)
+        {
+            WriteFinished(this, e);
         }
 
         DataBlock GetDataBlock(long findOffset, out long blockOffset)

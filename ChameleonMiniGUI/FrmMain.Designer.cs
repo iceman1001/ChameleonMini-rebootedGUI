@@ -169,7 +169,6 @@ namespace ChameleonMiniGUI
             this.cb_mode8 = new System.Windows.Forms.ComboBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.btn_compare = new System.Windows.Forms.Button();
             this.rbtn_bytewidth16 = new System.Windows.Forms.RadioButton();
             this.rbtn_bytewidth08 = new System.Windows.Forms.RadioButton();
             this.rbtn_bytewidth04 = new System.Windows.Forms.RadioButton();
@@ -1714,7 +1713,6 @@ namespace ChameleonMiniGUI
             // tabPage3
             // 
             this.tabPage3.AllowDrop = true;
-            this.tabPage3.Controls.Add(this.btn_compare);
             this.tabPage3.Controls.Add(this.rbtn_bytewidth16);
             this.tabPage3.Controls.Add(this.rbtn_bytewidth08);
             this.tabPage3.Controls.Add(this.rbtn_bytewidth04);
@@ -1733,16 +1731,6 @@ namespace ChameleonMiniGUI
             this.tabPage3.UseVisualStyleBackColor = true;
             this.tabPage3.DragDrop += new System.Windows.Forms.DragEventHandler(this.tabPage3_DragDrop);
             this.tabPage3.DragEnter += new System.Windows.Forms.DragEventHandler(this.tabPage3_DragEnter);
-            // 
-            // btn_compare
-            // 
-            this.btn_compare.Location = new System.Drawing.Point(255, 8);
-            this.btn_compare.Name = "btn_compare";
-            this.btn_compare.Size = new System.Drawing.Size(75, 23);
-            this.btn_compare.TabIndex = 15;
-            this.btn_compare.Text = "Compare";
-            this.btn_compare.UseVisualStyleBackColor = true;
-            this.btn_compare.Click += new System.EventHandler(this.btn_compare_Click);
             // 
             // rbtn_bytewidth16
             // 
@@ -1839,6 +1827,7 @@ namespace ChameleonMiniGUI
             this.hexBox2.Size = new System.Drawing.Size(200, 370);
             this.hexBox2.TabIndex = 2;
             this.hexBox2.VScrollBarVisible = true;
+            this.hexBox2.ByteProviderWriteFinished += new System.EventHandler(this.hexBox_ByteProviderWriteFinished);
             // 
             // hexBox1
             // 
@@ -1851,6 +1840,7 @@ namespace ChameleonMiniGUI
             this.hexBox1.Size = new System.Drawing.Size(200, 370);
             this.hexBox1.TabIndex = 1;
             this.hexBox1.VScrollBarVisible = true;
+            this.hexBox1.ByteProviderWriteFinished += new System.EventHandler(this.hexBox_ByteProviderWriteFinished);
             // 
             // frm_main
             // 
@@ -2054,7 +2044,6 @@ namespace ChameleonMiniGUI
         private System.Windows.Forms.Label lbl_buttonlong7;
         private System.Windows.Forms.ComboBox cb_buttonlong8;
         private System.Windows.Forms.Label lbl_buttonlong8;
-        private System.Windows.Forms.Button btn_compare;
         private System.Windows.Forms.RadioButton rbtn_bytewidth16;
         private System.Windows.Forms.RadioButton rbtn_bytewidth08;
         private System.Windows.Forms.RadioButton rbtn_bytewidth04;

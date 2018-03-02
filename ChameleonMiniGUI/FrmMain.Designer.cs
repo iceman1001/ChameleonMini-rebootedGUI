@@ -169,6 +169,8 @@ namespace ChameleonMiniGUI
             this.cb_mode8 = new System.Windows.Forms.ComboBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.lbl_hbfilename2 = new System.Windows.Forms.Label();
+            this.lbl_hbfilename1 = new System.Windows.Forms.Label();
             this.rbtn_bytewidth16 = new System.Windows.Forms.RadioButton();
             this.rbtn_bytewidth08 = new System.Windows.Forms.RadioButton();
             this.rbtn_bytewidth04 = new System.Windows.Forms.RadioButton();
@@ -180,10 +182,6 @@ namespace ChameleonMiniGUI
             this.hexBox2 = new Be.Windows.Forms.HexBox();
             this.hexBox1 = new Be.Windows.Forms.HexBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.lbl_hbfilename1 = new System.Windows.Forms.Label();
-            this.lbl_hbfilesize1 = new System.Windows.Forms.Label();
-            this.lbl_hbfilename2 = new System.Windows.Forms.Label();
-            this.lbl_hbfilesize2 = new System.Windows.Forms.Label();
             this.gb_output.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.gb_keepalive.SuspendLayout();
@@ -1717,9 +1715,7 @@ namespace ChameleonMiniGUI
             // tabPage3
             // 
             this.tabPage3.AllowDrop = true;
-            this.tabPage3.Controls.Add(this.lbl_hbfilesize2);
             this.tabPage3.Controls.Add(this.lbl_hbfilename2);
-            this.tabPage3.Controls.Add(this.lbl_hbfilesize1);
             this.tabPage3.Controls.Add(this.lbl_hbfilename1);
             this.tabPage3.Controls.Add(this.rbtn_bytewidth16);
             this.tabPage3.Controls.Add(this.rbtn_bytewidth08);
@@ -1739,6 +1735,24 @@ namespace ChameleonMiniGUI
             this.tabPage3.UseVisualStyleBackColor = true;
             this.tabPage3.DragDrop += new System.Windows.Forms.DragEventHandler(this.tabPage3_DragDrop);
             this.tabPage3.DragEnter += new System.Windows.Forms.DragEventHandler(this.tabPage3_DragEnter);
+            // 
+            // lbl_hbfilename2
+            // 
+            this.lbl_hbfilename2.AutoSize = true;
+            this.lbl_hbfilename2.Location = new System.Drawing.Point(502, 448);
+            this.lbl_hbfilename2.Name = "lbl_hbfilename2";
+            this.lbl_hbfilename2.Size = new System.Drawing.Size(75, 13);
+            this.lbl_hbfilename2.TabIndex = 17;
+            this.lbl_hbfilename2.Text = "Filename: N/A";
+            // 
+            // lbl_hbfilename1
+            // 
+            this.lbl_hbfilename1.AutoSize = true;
+            this.lbl_hbfilename1.Location = new System.Drawing.Point(7, 448);
+            this.lbl_hbfilename1.Name = "lbl_hbfilename1";
+            this.lbl_hbfilename1.Size = new System.Drawing.Size(75, 13);
+            this.lbl_hbfilename1.TabIndex = 15;
+            this.lbl_hbfilename1.Text = "Filename: N/A";
             // 
             // rbtn_bytewidth16
             // 
@@ -1828,12 +1842,15 @@ namespace ChameleonMiniGUI
             // 
             this.hexBox2.ColumnInfoVisible = true;
             this.hexBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.hexBox2.GroupSeparatorVisible = true;
+            this.hexBox2.GroupSize = 8;
             this.hexBox2.LineInfoVisible = true;
             this.hexBox2.Location = new System.Drawing.Point(502, 70);
             this.hexBox2.Name = "hexBox2";
             this.hexBox2.ShadowSelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(60)))), ((int)(((byte)(188)))), ((int)(((byte)(255)))));
-            this.hexBox2.Size = new System.Drawing.Size(200, 370);
+            this.hexBox2.Size = new System.Drawing.Size(488, 370);
             this.hexBox2.TabIndex = 2;
+            this.hexBox2.UseFixedBytesPerLine = true;
             this.hexBox2.VScrollBarVisible = true;
             this.hexBox2.ByteProviderWriteFinished += new System.EventHandler(this.hexBox_ByteProviderWriteFinished);
             // 
@@ -1841,50 +1858,17 @@ namespace ChameleonMiniGUI
             // 
             this.hexBox1.ColumnInfoVisible = true;
             this.hexBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.hexBox1.GroupSeparatorVisible = true;
+            this.hexBox1.GroupSize = 8;
             this.hexBox1.LineInfoVisible = true;
             this.hexBox1.Location = new System.Drawing.Point(7, 70);
             this.hexBox1.Name = "hexBox1";
             this.hexBox1.ShadowSelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(60)))), ((int)(((byte)(188)))), ((int)(((byte)(255)))));
-            this.hexBox1.Size = new System.Drawing.Size(200, 370);
+            this.hexBox1.Size = new System.Drawing.Size(488, 370);
             this.hexBox1.TabIndex = 1;
+            this.hexBox1.UseFixedBytesPerLine = true;
             this.hexBox1.VScrollBarVisible = true;
             this.hexBox1.ByteProviderWriteFinished += new System.EventHandler(this.hexBox_ByteProviderWriteFinished);
-            // 
-            // lbl_hbfilename1
-            // 
-            this.lbl_hbfilename1.AutoSize = true;
-            this.lbl_hbfilename1.Location = new System.Drawing.Point(7, 448);
-            this.lbl_hbfilename1.Name = "lbl_hbfilename1";
-            this.lbl_hbfilename1.Size = new System.Drawing.Size(75, 13);
-            this.lbl_hbfilename1.TabIndex = 15;
-            this.lbl_hbfilename1.Text = "Filename: N/A";
-            // 
-            // lbl_hbfilesize1
-            // 
-            this.lbl_hbfilesize1.AutoSize = true;
-            this.lbl_hbfilesize1.Location = new System.Drawing.Point(7, 465);
-            this.lbl_hbfilesize1.Name = "lbl_hbfilesize1";
-            this.lbl_hbfilesize1.Size = new System.Drawing.Size(70, 13);
-            this.lbl_hbfilesize1.TabIndex = 16;
-            this.lbl_hbfilesize1.Text = "File size: N/A";
-            // 
-            // lbl_hbfilename2
-            // 
-            this.lbl_hbfilename2.AutoSize = true;
-            this.lbl_hbfilename2.Location = new System.Drawing.Point(502, 448);
-            this.lbl_hbfilename2.Name = "lbl_hbfilename2";
-            this.lbl_hbfilename2.Size = new System.Drawing.Size(75, 13);
-            this.lbl_hbfilename2.TabIndex = 17;
-            this.lbl_hbfilename2.Text = "Filename: N/A";
-            // 
-            // lbl_hbfilesize2
-            // 
-            this.lbl_hbfilesize2.AutoSize = true;
-            this.lbl_hbfilesize2.Location = new System.Drawing.Point(502, 465);
-            this.lbl_hbfilesize2.Name = "lbl_hbfilesize2";
-            this.lbl_hbfilesize2.Size = new System.Drawing.Size(70, 13);
-            this.lbl_hbfilesize2.TabIndex = 18;
-            this.lbl_hbfilesize2.Text = "File size: N/A";
             // 
             // frm_main
             // 
@@ -2092,9 +2076,7 @@ namespace ChameleonMiniGUI
         private System.Windows.Forms.RadioButton rbtn_bytewidth08;
         private System.Windows.Forms.RadioButton rbtn_bytewidth04;
         private System.Windows.Forms.Label lbl_bytewidth;
-        private System.Windows.Forms.Label lbl_hbfilesize2;
         private System.Windows.Forms.Label lbl_hbfilename2;
-        private System.Windows.Forms.Label lbl_hbfilesize1;
         private System.Windows.Forms.Label lbl_hbfilename1;
     }
 }

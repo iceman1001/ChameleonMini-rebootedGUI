@@ -662,12 +662,12 @@ namespace ChameleonMiniGUI
                 }
                 else
                 {
-                    FileInfo fi1 = new FileInfo(files[0]);
-                    FileInfo fi2 = new FileInfo(files[1]);
+                    var fi1 = new FileInfo(files[0]);
+                    var fi2 = new FileInfo(files[1]);
 
                     if (fi1.Length != fi2.Length)
                     {
-                        DialogResult dialogResult = MessageBox.Show("The files differ in size. Would you like to open them anyway?", "Different filesize", MessageBoxButtons.YesNo);
+                        var dialogResult = MessageBox.Show("The files differ in size. Would you like to open them anyway?", "Different filesize", MessageBoxButtons.YesNo);
                         if (dialogResult == DialogResult.No)
                         {
                             return;
@@ -678,42 +678,20 @@ namespace ChameleonMiniGUI
                     OpenFile(files[1], hexBox2);
                 }
             }
+            hexBox1.Focus();
         }
 
         private void byteWidthCheckBoxes_CheckedChanged(Object sender, EventArgs e)
         {
-            if (((RadioButton)sender).Checked)
-            {
-                RadioButton rb = (RadioButton)sender;
-                var byteWidthStr = rb.Name.Substring(rb.Name.Length - 2);
-                int bytesPerLine = int.Parse(byteWidthStr) * 4;
-                hexBox1.BytesPerLine = bytesPerLine;
-                hexBox2.BytesPerLine = bytesPerLine;
-                if (bytesPerLine == 4 * 4)
-                {
-                    hexBox1.Size = new System.Drawing.Size(200, 370);
-                    //btn_open2.Location = new System.Drawing.Point(btn_open1.Location.X + 420, btn_open1.Location.Y);
-                    //btn_save2.Location = new System.Drawing.Point(btn_open2.Location.X + 56, btn_open1.Location.Y);
-                    //hexBox2.Location = new System.Drawing.Point(hexBox1.Location.X + 420, hexBox1.Location.Y);
-                    hexBox2.Size = new System.Drawing.Size(200, 370);
-                }
-                else if (bytesPerLine == 4 * 8)
-                {
-                    hexBox1.Size = new System.Drawing.Size(300, 370);
-                    //btn_open2.Location = new System.Drawing.Point(btn_open1.Location.X + 420, btn_open1.Location.Y);
-                    //btn_save2.Location = new System.Drawing.Point(btn_open2.Location.X + 56, btn_open1.Location.Y);
-                    //hexBox2.Location = new System.Drawing.Point(hexBox1.Location.X + 420, hexBox1.Location.Y);
-                    hexBox2.Size = new System.Drawing.Size(300, 370);
-                }
-                else if (bytesPerLine == 4 * 16)
-                {
-                    hexBox1.Size = new System.Drawing.Size(480, 370);
-                    //btn_open2.Location = new System.Drawing.Point(hexBox1.Location.X, hexBox1.Location.Y + 180 + 10);
-                    //btn_save2.Location = new System.Drawing.Point(btn_save1.Location.X, btn_open2.Location.Y);
-                    //hexBox2.Location = new System.Drawing.Point(hexBox1.Location.X, btn_save2.Location.Y + btn_save2.Size.Height + 5);
-                    hexBox2.Size = new System.Drawing.Size(480, 370);
-                }
-            }
+            var rb = sender as RadioButton;
+            if (rb == null) return;
+
+            if (!rb.Checked) return;
+
+            var byteWidthStr = rb.Name.Substring(rb.Name.Length - 2);
+            int bytesPerLine = int.Parse(byteWidthStr);
+            hexBox1.BytesPerLine = bytesPerLine;
+            hexBox2.BytesPerLine = bytesPerLine;
         }
 
         private void hexBox_ByteProviderWriteFinished(object sender, EventArgs e)
@@ -1355,13 +1333,12 @@ namespace ChameleonMiniGUI
 
         void SaveFile(HexBox hexBox)
         {
-            if (hexBox.ByteProvider == null)
-                return;
+            if (hexBox.ByteProvider == null) return;
 
             try
             {
-                DynamicFileByteProvider dynamicFileByteProvider = hexBox.ByteProvider as DynamicFileByteProvider;
-                dynamicFileByteProvider.ApplyChanges();
+                var dynamicFileByteProvider = hexBox.ByteProvider as DynamicFileByteProvider;
+                dynamicFileByteProvider?.ApplyChanges();
             }
             catch (Exception)
             {
@@ -1384,7 +1361,7 @@ namespace ChameleonMiniGUI
             if (CloseFile(hexBox) == DialogResult.Cancel)
                 return;
 
-            FileInfo fi = new FileInfo(fileName);
+            var fi = new FileInfo(fileName);
             if (fi.Length >= 256)
             {
                 rbtn_bytewidth16.Select();
@@ -1394,11 +1371,10 @@ namespace ChameleonMiniGUI
                 rbtn_bytewidth04.Select();
             }
 
-            DynamicFileByteProvider dynamicFileByteProvider;
             try
             {
                 // try to open in write mode
-                dynamicFileByteProvider = new DynamicFileByteProvider(fileName);
+                var dynamicFileByteProvider = new DynamicFileByteProvider(fileName);
                 hexBox.ByteProvider = dynamicFileByteProvider;
 
                 // Display info for the file
@@ -1406,12 +1382,7 @@ namespace ChameleonMiniGUI
                 var hb_filename = FindControls<Label>(Controls, $"lbl_hbfilename{hbIdx}").FirstOrDefault();
                 if (hb_filename != null)
                 {
-                    hb_filename.Text = $"Filename: {fi.Name}";
-                }
-                var hb_filesize = FindControls<Label>(Controls, $"lbl_hbfilesize{hbIdx}").FirstOrDefault();
-                if (hb_filesize != null)
-                {
-                    hb_filesize.Text = $"File size: {fi.Length} bytes";
+                    hb_filename.Text = $"Filename: {fi.Name} | {fi.Length} bytes";
                 }
 
                 // run the comparison automatically
@@ -1463,25 +1434,19 @@ namespace ChameleonMiniGUI
 
         void CleanUp(HexBox hexBox)
         {
-            if (hexBox.ByteProvider != null)
-            {
-                IDisposable byteProvider = hexBox.ByteProvider as IDisposable;
-                if (byteProvider != null)
-                    byteProvider.Dispose();
-                hexBox.ByteProvider = null;
+            if (hexBox.ByteProvider == null) return;
 
-                // Remove the file info
-                var hbIdx = int.Parse(hexBox.Name.Substring(hexBox.Name.Length - 1));
-                var hb_filename = FindControls<Label>(Controls, $"lbl_hbfilename{hbIdx}").FirstOrDefault();
-                if (hb_filename != null)
-                {
-                    hb_filename.Text = "Filename: N/A";
-                }
-                var hb_filesize = FindControls<Label>(Controls, $"lbl_hbfilesize{hbIdx}").FirstOrDefault();
-                if (hb_filesize != null)
-                {
-                    hb_filesize.Text = "File size: N/A";
-                }
+            var byteProvider = hexBox.ByteProvider as IDisposable;
+            byteProvider?.Dispose();
+
+            hexBox.ByteProvider = null;
+
+            // Remove the file info
+            var hbIdx = int.Parse(hexBox.Name.Substring(hexBox.Name.Length - 1));
+            var hb_filename = FindControls<Label>(Controls, $"lbl_hbfilename{hbIdx}").FirstOrDefault();
+            if (hb_filename != null)
+            {
+                hb_filename.Text = "Filename: N/A";
             }
         }
 
@@ -1511,8 +1476,8 @@ namespace ChameleonMiniGUI
             if (hexBox1.ByteProvider.ReadByte(byteIndex) != hexBox2.ByteProvider.ReadByte(byteIndex))
             {
                 //Console.WriteLine("Byte " + i + " is different.");
-                hexBox1.AddHighlight(byteIndex, 1, Color.White, Color.Salmon);
-                hexBox2.AddHighlight(byteIndex, 1, Color.White, Color.Salmon);
+                hexBox1.AddHighlight(byteIndex, 1, Color.Blue, Color.LightGreen);
+                hexBox2.AddHighlight(byteIndex, 1, Color.Red, Color.LightGreen);
             }
         }
 
@@ -1524,8 +1489,7 @@ namespace ChameleonMiniGUI
                 if (c.Visible && c.Bounds.Contains(pos))
                 {
                     child = FindControlAtPoint(c, new Point(pos.X - c.Left, pos.Y - c.Top));
-                    if (child == null) return c;
-                    else return child;
+                    return child ?? c;
                 }
             }
             return null;

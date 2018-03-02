@@ -13,6 +13,8 @@ using System.Management;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Be.Windows.Forms;
+using System.Drawing;
 
 namespace ChameleonMiniGUI
 {
@@ -600,6 +602,125 @@ namespace ChameleonMiniGUI
             }
         }
 
+
+        private void btn_open1_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                var fileName = openFileDialog1.FileName;
+
+                OpenFile(fileName, hexBox1);
+            }
+        }
+
+        private void btn_save1_Click(object sender, EventArgs e)
+        {
+            SaveFile(hexBox1);
+        }
+
+
+        private void btn_open2_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                var fileName = openFileDialog1.FileName;
+
+                OpenFile(fileName, hexBox2);
+            }
+        }
+
+        private void btn_save2_Click(object sender, EventArgs e)
+        {
+            SaveFile(hexBox2);
+        }
+
+        private void tabPage3_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.Copy;
+        }
+
+        private void tabPage3_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+            if ((files != null) && (files.Length > 0))
+            {
+                if (files.Length == 1)
+                {
+                    // Check if dropped to a hexbox
+                    Point clientPoint = tabPage3.PointToClient(new Point(e.X, e.Y));
+                    var dropControl = FindControlAtPoint(tabPage3, clientPoint);
+                    if (dropControl is HexBox)
+                    {
+                        OpenFile(files[0], dropControl as HexBox);
+                    }
+                    else
+                    {
+                        // Open it in the first hexbox
+                        OpenFile(files[0], hexBox1);
+                    }
+                }
+                else
+                {
+                    FileInfo fi1 = new FileInfo(files[0]);
+                    FileInfo fi2 = new FileInfo(files[1]);
+
+                    if (fi1.Length != fi2.Length)
+                    {
+                        DialogResult dialogResult = MessageBox.Show("The files differ in size. Would you like to open them anyway?", "Different filesize", MessageBoxButtons.YesNo);
+                        if (dialogResult == DialogResult.No)
+                        {
+                            return;
+                        }
+                    }
+
+                    OpenFile(files[0], hexBox1);
+                    OpenFile(files[1], hexBox2);
+                }
+            }
+        }
+
+        private void byteWidthCheckBoxes_CheckedChanged(Object sender, EventArgs e)
+        {
+            if (((RadioButton)sender).Checked)
+            {
+                RadioButton rb = (RadioButton)sender;
+                var byteWidthStr = rb.Name.Substring(rb.Name.Length - 2);
+                int bytesPerLine = int.Parse(byteWidthStr) * 4;
+                hexBox1.BytesPerLine = bytesPerLine;
+                hexBox2.BytesPerLine = bytesPerLine;
+                if (bytesPerLine == 4 * 4)
+                {
+                    hexBox1.Size = new System.Drawing.Size(200, 370);
+                    //btn_open2.Location = new System.Drawing.Point(btn_open1.Location.X + 420, btn_open1.Location.Y);
+                    //btn_save2.Location = new System.Drawing.Point(btn_open2.Location.X + 56, btn_open1.Location.Y);
+                    //hexBox2.Location = new System.Drawing.Point(hexBox1.Location.X + 420, hexBox1.Location.Y);
+                    hexBox2.Size = new System.Drawing.Size(200, 370);
+                }
+                else if (bytesPerLine == 4 * 8)
+                {
+                    hexBox1.Size = new System.Drawing.Size(300, 370);
+                    //btn_open2.Location = new System.Drawing.Point(btn_open1.Location.X + 420, btn_open1.Location.Y);
+                    //btn_save2.Location = new System.Drawing.Point(btn_open2.Location.X + 56, btn_open1.Location.Y);
+                    //hexBox2.Location = new System.Drawing.Point(hexBox1.Location.X + 420, hexBox1.Location.Y);
+                    hexBox2.Size = new System.Drawing.Size(300, 370);
+                }
+                else if (bytesPerLine == 4 * 16)
+                {
+                    hexBox1.Size = new System.Drawing.Size(480, 370);
+                    //btn_open2.Location = new System.Drawing.Point(hexBox1.Location.X, hexBox1.Location.Y + 180 + 10);
+                    //btn_save2.Location = new System.Drawing.Point(btn_save1.Location.X, btn_open2.Location.Y);
+                    //hexBox2.Location = new System.Drawing.Point(hexBox1.Location.X, btn_save2.Location.Y + btn_save2.Size.Height + 5);
+                    hexBox2.Size = new System.Drawing.Size(480, 370);
+                }
+            }
+        }
+
+        private void hexBox_ByteProviderWriteFinished(object sender, EventArgs e)
+        {
+            // TODO: Add the index of the written byte to the event and compare only that
+            PerformComparison();
+        }
         #endregion
 
         #region Helper methods
@@ -1230,6 +1351,184 @@ namespace ChameleonMiniGUI
             }
 
             timer1.Start();
+        }
+
+        void SaveFile(HexBox hexBox)
+        {
+            if (hexBox.ByteProvider == null)
+                return;
+
+            try
+            {
+                DynamicFileByteProvider dynamicFileByteProvider = hexBox.ByteProvider as DynamicFileByteProvider;
+                dynamicFileByteProvider.ApplyChanges();
+            }
+            catch (Exception)
+            {
+                var msg = $"[!] Failed to save file{Environment.NewLine}";
+                MessageBox.Show(msg);
+                txt_output.Text += msg;
+            }
+        }
+
+        public void OpenFile(string fileName, HexBox hexBox)
+        {
+            if (!File.Exists(fileName))
+            {
+                var msg = $"[!] Failed to open - File does not exist{Environment.NewLine}";
+                MessageBox.Show(msg);
+                txt_output.Text += msg;
+                return;
+            }
+
+            if (CloseFile(hexBox) == DialogResult.Cancel)
+                return;
+
+            FileInfo fi = new FileInfo(fileName);
+            if (fi.Length >= 256)
+            {
+                rbtn_bytewidth16.Select();
+            }
+            else
+            {
+                rbtn_bytewidth04.Select();
+            }
+
+            DynamicFileByteProvider dynamicFileByteProvider;
+            try
+            {
+                // try to open in write mode
+                dynamicFileByteProvider = new DynamicFileByteProvider(fileName);
+                hexBox.ByteProvider = dynamicFileByteProvider;
+
+                // Display info for the file
+                var hbIdx = int.Parse(hexBox.Name.Substring(hexBox.Name.Length - 1));
+                var hb_filename = FindControls<Label>(Controls, $"lbl_hbfilename{hbIdx}").FirstOrDefault();
+                if (hb_filename != null)
+                {
+                    hb_filename.Text = $"Filename: {fi.Name}";
+                }
+                var hb_filesize = FindControls<Label>(Controls, $"lbl_hbfilesize{hbIdx}").FirstOrDefault();
+                if (hb_filesize != null)
+                {
+                    hb_filesize.Text = $"File size: {fi.Length} bytes";
+                }
+
+                // run the comparison automatically
+                PerformComparison();
+            }
+            catch (IOException) // write mode failed
+            {
+                // file cannot be opened
+                var msg = $"[!] Failed to open file{Environment.NewLine}";
+                MessageBox.Show(msg);
+                txt_output.Text += msg;
+            }
+        }
+
+        DialogResult CloseFile(HexBox hexBox)
+        {
+            if (hexBox.ByteProvider == null)
+                return DialogResult.OK;
+
+            if (hexBox.ByteProvider != null && hexBox.ByteProvider.HasChanges())
+            {
+                DialogResult res = MessageBox.Show("There are unsaved changes. Do you want to save them?",
+                    "File changed",
+                    MessageBoxButtons.YesNoCancel,
+                    MessageBoxIcon.Warning);
+
+                if (res == DialogResult.Yes)
+                {
+                    SaveFile(hexBox);
+                    CleanUp(hexBox);
+                }
+                else if (res == DialogResult.No)
+                {
+                    CleanUp(hexBox);
+                }
+                else if (res == DialogResult.Cancel)
+                {
+                    return res;
+                }
+
+                return res;
+            }
+            else
+            {
+                CleanUp(hexBox);
+                return DialogResult.OK;
+            }
+        }
+
+        void CleanUp(HexBox hexBox)
+        {
+            if (hexBox.ByteProvider != null)
+            {
+                IDisposable byteProvider = hexBox.ByteProvider as IDisposable;
+                if (byteProvider != null)
+                    byteProvider.Dispose();
+                hexBox.ByteProvider = null;
+
+                // Remove the file info
+                var hbIdx = int.Parse(hexBox.Name.Substring(hexBox.Name.Length - 1));
+                var hb_filename = FindControls<Label>(Controls, $"lbl_hbfilename{hbIdx}").FirstOrDefault();
+                if (hb_filename != null)
+                {
+                    hb_filename.Text = "Filename: N/A";
+                }
+                var hb_filesize = FindControls<Label>(Controls, $"lbl_hbfilesize{hbIdx}").FirstOrDefault();
+                if (hb_filesize != null)
+                {
+                    hb_filesize.Text = "File size: N/A";
+                }
+            }
+        }
+
+        private void PerformComparison()
+        {
+            // Clear the last highlights
+            hexBox1.ClearHighlights();
+            hexBox2.ClearHighlights();
+
+            if (hexBox1.ByteProvider != null && hexBox2.ByteProvider != null)
+            {
+                if (hexBox1.ByteProvider.Length == hexBox2.ByteProvider.Length)
+                {
+                    for (int i = 0; i < hexBox1.ByteProvider.Length; i++)
+                    {
+                        CompareByte(i);
+                    }
+
+                    hexBox1.Invalidate();
+                    hexBox2.Invalidate();
+                }
+            }
+        }
+
+        private void CompareByte(int byteIndex)
+        {
+            if (hexBox1.ByteProvider.ReadByte(byteIndex) != hexBox2.ByteProvider.ReadByte(byteIndex))
+            {
+                //Console.WriteLine("Byte " + i + " is different.");
+                hexBox1.AddHighlight(byteIndex, 1, Color.White, Color.Salmon);
+                hexBox2.AddHighlight(byteIndex, 1, Color.White, Color.Salmon);
+            }
+        }
+
+        public static Control FindControlAtPoint(Control container, Point pos)
+        {
+            Control child;
+            foreach (Control c in container.Controls)
+            {
+                if (c.Visible && c.Bounds.Contains(pos))
+                {
+                    child = FindControlAtPoint(c, new Point(pos.X - c.Left, pos.Y - c.Top));
+                    if (child == null) return c;
+                    else return child;
+                }
+            }
+            return null;
         }
         #endregion
     }

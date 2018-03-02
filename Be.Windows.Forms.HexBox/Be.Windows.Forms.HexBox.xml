@@ -306,6 +306,11 @@
             Occurs, when InsertBytes or DeleteBytes method is called.
             </summary>
         </member>
+        <member name="E:Be.Windows.Forms.DynamicByteProvider.WriteFinished">
+            <summary>
+            Occurs after the WriteByte method call
+            </summary>
+        </member>
         <member name="M:Be.Windows.Forms.DynamicByteProvider.ReadByte(System.Int64)">
             <summary>
             Reads a byte from the byte collection.
@@ -393,6 +398,11 @@
         <member name="E:Be.Windows.Forms.DynamicFileByteProvider.Changed">
             <summary>
             See <see cref="E:Be.Windows.Forms.IByteProvider.Changed" /> for more information.
+            </summary>
+        </member>
+        <member name="E:Be.Windows.Forms.DynamicFileByteProvider.WriteFinished">
+            <summary>
+            See <see cref="E:Be.Windows.Forms.IByteProvider.WriteFinished" /> for more information.
             </summary>
         </member>
         <member name="M:Be.Windows.Forms.DynamicFileByteProvider.ReadByte(System.Int64)">
@@ -555,6 +565,11 @@
         <member name="E:Be.Windows.Forms.FileByteProvider.LengthChanged">
             <summary>
             Never used.
+            </summary>
+        </member>
+        <member name="E:Be.Windows.Forms.FileByteProvider.WriteFinished">
+            <summary>
+            Event after the WriteByte method call
             </summary>
         </member>
         <member name="M:Be.Windows.Forms.FileByteProvider.ReadByte(System.Int64)">
@@ -867,17 +882,17 @@
         </member>
         <member name="F:Be.Windows.Forms.HexBox._recBorderLeft">
             <summary>
-            Contains the border´s left shift
+            Contains the border΄s left shift
             </summary>
         </member>
         <member name="F:Be.Windows.Forms.HexBox._recBorderRight">
             <summary>
-            Contains the border´s right shift
+            Contains the border΄s right shift
             </summary>
         </member>
         <member name="F:Be.Windows.Forms.HexBox._recBorderTop">
             <summary>
-            Contains the border´s top shift
+            Contains the border΄s top shift
             </summary>
         </member>
         <member name="F:Be.Windows.Forms.HexBox._recBorderBottom">
@@ -968,6 +983,11 @@
         <member name="E:Be.Windows.Forms.HexBox.ByteProviderChanged">
             <summary>
             Occurs, when the value of ByteProvider property has changed.
+            </summary>
+        </member>
+        <member name="E:Be.Windows.Forms.HexBox.ByteProviderWriteFinished">
+            <summary>
+            Occurs after the WriteByte method call
             </summary>
         </member>
         <member name="E:Be.Windows.Forms.HexBox.SelectionStartChanged">
@@ -1280,7 +1300,7 @@
         </member>
         <member name="P:Be.Windows.Forms.HexBox.BorderStyle">
             <summary>
-            Gets or sets the hex box´s border style.
+            Gets or sets the hex box΄s border style.
             </summary>
         </member>
         <member name="P:Be.Windows.Forms.HexBox.StringViewVisible">
@@ -1413,6 +1433,12 @@
         <member name="M:Be.Windows.Forms.HexBox.OnByteProviderChanged(System.EventArgs)">
             <summary>
             Raises the ByteProviderChanged event.
+            </summary>
+            <param name="e">An EventArgs that contains the event data.</param>
+        </member>
+        <member name="M:Be.Windows.Forms.HexBox.OnByteProviderWriteFinished(System.EventArgs)">
+            <summary>
+            Raises the ByteProviderWriteFinished event.
             </summary>
             <param name="e">An EventArgs that contains the event data.</param>
         </member>
@@ -1711,23 +1737,28 @@
             Occurs, when bytes are changed.
             </summary>
         </member>
+        <member name="E:Be.Windows.Forms.IByteProvider.WriteFinished">
+            <summary>
+            Occurs, after the WriteByte method.
+            </summary>
+        </member>
         <member name="M:Be.Windows.Forms.IByteProvider.SupportsWriteByte">
             <summary>
             Returns a value if the WriteByte methods is supported by the provider.
             </summary>
-            <returns>True, when it´s supported.</returns>
+            <returns>True, when it΄s supported.</returns>
         </member>
         <member name="M:Be.Windows.Forms.IByteProvider.SupportsInsertBytes">
             <summary>
             Returns a value if the InsertBytes methods is supported by the provider.
             </summary>
-            <returns>True, when it´s supported.</returns>
+            <returns>True, when it΄s supported.</returns>
         </member>
         <member name="M:Be.Windows.Forms.IByteProvider.SupportsDeleteBytes">
             <summary>
             Returns a value if the DeleteBytes methods is supported by the provider.
             </summary>
-            <returns>True, when it´s supported.</returns>
+            <returns>True, when it΄s supported.</returns>
         </member>
         <member name="T:Be.Windows.Forms.Properties.Resources">
             <summary>

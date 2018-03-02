@@ -642,11 +642,25 @@ namespace ChameleonMiniGUI
         private void tabPage3_DragDrop(object sender, DragEventArgs e)
         {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-            int fileCount = 0;
 
             if ((files != null) && (files.Length > 0))
             {
-                if (files.Length > 1)
+                if (files.Length == 1)
+                {
+                    // Check if dropped to a hexbox
+                    Point clientPoint = tabPage3.PointToClient(new Point(e.X, e.Y));
+                    var dropControl = FindControlAtPoint(tabPage3, clientPoint);
+                    if (dropControl is HexBox)
+                    {
+                        OpenFile(files[0], dropControl as HexBox);
+                    }
+                    else
+                    {
+                        // Open it in the first hexbox
+                        OpenFile(files[0], hexBox1);
+                    }
+                }
+                else
                 {
                     FileInfo fi1 = new FileInfo(files[0]);
                     FileInfo fi2 = new FileInfo(files[1]);
@@ -659,24 +673,9 @@ namespace ChameleonMiniGUI
                             return;
                         }
                     }
-                }
 
-                // TODO: Should check if files are open instead of closing both files
-                CloseFile(hexBox1);
-                CloseFile(hexBox2);
-
-                foreach (string file in files)
-                {
-                    fileCount++;
-                    switch (fileCount)
-                    {
-                        case 1:
-                            OpenFile(file, hexBox1);
-                            break;
-                        case 2:
-                            OpenFile(file, hexBox2);
-                            break;
-                    }
+                    OpenFile(files[0], hexBox1);
+                    OpenFile(files[1], hexBox2);
                 }
             }
         }
@@ -1515,6 +1514,21 @@ namespace ChameleonMiniGUI
                 hexBox1.AddHighlight(byteIndex, 1, Color.White, Color.Salmon);
                 hexBox2.AddHighlight(byteIndex, 1, Color.White, Color.Salmon);
             }
+        }
+
+        public static Control FindControlAtPoint(Control container, Point pos)
+        {
+            Control child;
+            foreach (Control c in container.Controls)
+            {
+                if (c.Visible && c.Bounds.Contains(pos))
+                {
+                    child = FindControlAtPoint(c, new Point(pos.X - c.Left, pos.Y - c.Top));
+                    if (child == null) return c;
+                    else return child;
+                }
+            }
+            return null;
         }
         #endregion
     }

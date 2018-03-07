@@ -10,9 +10,7 @@ using System.Text.RegularExpressions;
 using System.IO;
 using static System.Diagnostics.Process;
 using System.Management;
-using System.Runtime.InteropServices;
 using System.Collections.Generic;
-using System.Diagnostics;
 using Be.Windows.Forms;
 using System.Drawing;
 
@@ -1027,15 +1025,10 @@ namespace ChameleonMiniGUI
 
         private void RefreshAllSlots()
         {
-            progressBar1.Value = 0;
-
             for (int i = 0; i < 8; i++)
             {
                 RefreshSlot(i);
-                progressBar1.Value = (int)((i + 1) * 12.5);
             }
-
-            progressBar1.Value = 0;
         }
 
         private void RefreshSlot(int slotIndex)
@@ -1360,6 +1353,7 @@ namespace ChameleonMiniGUI
 
             if (CloseFile(hexBox) == DialogResult.Cancel)
                 return;
+
 
             var fi = new FileInfo(fileName);
             if (fi.Length >= 256)

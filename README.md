@@ -17,7 +17,6 @@ This is hosted by me,  feel free to contribute with a donation for hosting costs
 
 
 ## Donate
-<a href='https://pledgie.com/campaigns/35206'><img alt='Click here to lend your support to: Iceman&#x27;s donation fund and make a donation at pledgie.com !' src='https://pledgie.com/campaigns/35206.png?skin_name=chrome' border='0' ></a>
 
 https://paypal.me/iceman1001/ Feel free to donate. All support is welcome.
 

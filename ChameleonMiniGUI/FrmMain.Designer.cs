@@ -30,7 +30,6 @@ namespace ChameleonMiniGUI
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frm_main));
             this.txt_output = new System.Windows.Forms.TextBox();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.gb_output = new System.Windows.Forms.GroupBox();
@@ -210,15 +209,8 @@ namespace ChameleonMiniGUI
             this.txt_output.Multiline = true;
             this.txt_output.Name = "txt_output";
             this.txt_output.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txt_output.Size = new System.Drawing.Size(220, 527);
+            this.txt_output.Size = new System.Drawing.Size(1277, 150);
             this.txt_output.TabIndex = 6;
-            // 
-            // progressBar1
-            // 
-            this.progressBar1.Location = new System.Drawing.Point(12, 535);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(997, 23);
-            this.progressBar1.TabIndex = 1;
             // 
             // openFileDialog1
             // 
@@ -231,9 +223,9 @@ namespace ChameleonMiniGUI
             // gb_output
             // 
             this.gb_output.Controls.Add(this.txt_output);
-            this.gb_output.Location = new System.Drawing.Point(1016, 12);
+            this.gb_output.Location = new System.Drawing.Point(8, 535);
             this.gb_output.Name = "gb_output";
-            this.gb_output.Size = new System.Drawing.Size(226, 546);
+            this.gb_output.Size = new System.Drawing.Size(1283, 169);
             this.gb_output.TabIndex = 7;
             this.gb_output.TabStop = false;
             this.gb_output.Text = "Output";
@@ -247,7 +239,7 @@ namespace ChameleonMiniGUI
             this.tabPage2.Controls.Add(this.gb_rssi);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Size = new System.Drawing.Size(997, 491);
+            this.tabPage2.Size = new System.Drawing.Size(1279, 491);
             this.tabPage2.TabIndex = 3;
             this.tabPage2.Text = "Settings";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -258,7 +250,7 @@ namespace ChameleonMiniGUI
             this.gb_keepalive.Controls.Add(this.txt_interval);
             this.gb_keepalive.Controls.Add(this.lbl_interval);
             this.gb_keepalive.Controls.Add(this.chk_keepalive);
-            this.gb_keepalive.Location = new System.Drawing.Point(521, 42);
+            this.gb_keepalive.Location = new System.Drawing.Point(656, 42);
             this.gb_keepalive.Name = "gb_keepalive";
             this.gb_keepalive.Size = new System.Drawing.Size(308, 115);
             this.gb_keepalive.TabIndex = 4;
@@ -308,7 +300,7 @@ namespace ChameleonMiniGUI
             this.gb_connectionSettings.Controls.Add(this.txt_constatus);
             this.gb_connectionSettings.Controls.Add(this.btn_disconnect);
             this.gb_connectionSettings.Controls.Add(this.btn_connect);
-            this.gb_connectionSettings.Location = new System.Drawing.Point(153, 42);
+            this.gb_connectionSettings.Location = new System.Drawing.Point(288, 42);
             this.gb_connectionSettings.Name = "gb_connectionSettings";
             this.gb_connectionSettings.Size = new System.Drawing.Size(347, 115);
             this.gb_connectionSettings.TabIndex = 3;
@@ -362,7 +354,7 @@ namespace ChameleonMiniGUI
             this.gb_bootloader.Controls.Add(this.lbl_upgrade);
             this.gb_bootloader.Controls.Add(this.btn_bootmode);
             this.gb_bootloader.Controls.Add(this.btn_exitboot);
-            this.gb_bootloader.Location = new System.Drawing.Point(153, 311);
+            this.gb_bootloader.Location = new System.Drawing.Point(288, 311);
             this.gb_bootloader.Name = "gb_bootloader";
             this.gb_bootloader.Size = new System.Drawing.Size(676, 136);
             this.gb_bootloader.TabIndex = 2;
@@ -434,7 +426,7 @@ namespace ChameleonMiniGUI
             this.gb_defaultdownload.Controls.Add(this.lbl_defaultdownload);
             this.gb_defaultdownload.Controls.Add(this.txt_defaultdownload);
             this.gb_defaultdownload.Controls.Add(this.btn_browsedownloads);
-            this.gb_defaultdownload.Location = new System.Drawing.Point(153, 175);
+            this.gb_defaultdownload.Location = new System.Drawing.Point(288, 175);
             this.gb_defaultdownload.Name = "gb_defaultdownload";
             this.gb_defaultdownload.Size = new System.Drawing.Size(347, 115);
             this.gb_defaultdownload.TabIndex = 1;
@@ -472,7 +464,7 @@ namespace ChameleonMiniGUI
             this.gb_rssi.Controls.Add(this.btn_rssirefresh);
             this.gb_rssi.Controls.Add(this.txt_rssi);
             this.gb_rssi.Controls.Add(this.lbl_rssi);
-            this.gb_rssi.Location = new System.Drawing.Point(521, 175);
+            this.gb_rssi.Location = new System.Drawing.Point(656, 175);
             this.gb_rssi.Name = "gb_rssi";
             this.gb_rssi.Size = new System.Drawing.Size(308, 115);
             this.gb_rssi.TabIndex = 0;
@@ -528,7 +520,7 @@ namespace ChameleonMiniGUI
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(997, 491);
+            this.tabPage1.Size = new System.Drawing.Size(1279, 491);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Operation";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -538,7 +530,7 @@ namespace ChameleonMiniGUI
             this.checkBox8.AutoSize = true;
             this.checkBox8.Enabled = false;
             this.checkBox8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox8.Location = new System.Drawing.Point(756, 227);
+            this.checkBox8.Location = new System.Drawing.Point(921, 227);
             this.checkBox8.Name = "checkBox8";
             this.checkBox8.Size = new System.Drawing.Size(59, 17);
             this.checkBox8.TabIndex = 8;
@@ -551,7 +543,7 @@ namespace ChameleonMiniGUI
             this.checkBox7.AutoSize = true;
             this.checkBox7.Enabled = false;
             this.checkBox7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox7.Location = new System.Drawing.Point(509, 227);
+            this.checkBox7.Location = new System.Drawing.Point(651, 227);
             this.checkBox7.Name = "checkBox7";
             this.checkBox7.Size = new System.Drawing.Size(59, 17);
             this.checkBox7.TabIndex = 7;
@@ -564,7 +556,7 @@ namespace ChameleonMiniGUI
             this.checkBox6.AutoSize = true;
             this.checkBox6.Enabled = false;
             this.checkBox6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox6.Location = new System.Drawing.Point(262, 227);
+            this.checkBox6.Location = new System.Drawing.Point(383, 227);
             this.checkBox6.Name = "checkBox6";
             this.checkBox6.Size = new System.Drawing.Size(59, 17);
             this.checkBox6.TabIndex = 6;
@@ -577,7 +569,7 @@ namespace ChameleonMiniGUI
             this.checkBox5.AutoSize = true;
             this.checkBox5.Enabled = false;
             this.checkBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox5.Location = new System.Drawing.Point(15, 227);
+            this.checkBox5.Location = new System.Drawing.Point(116, 227);
             this.checkBox5.Name = "checkBox5";
             this.checkBox5.Size = new System.Drawing.Size(59, 17);
             this.checkBox5.TabIndex = 5;
@@ -590,7 +582,7 @@ namespace ChameleonMiniGUI
             this.checkBox4.AutoSize = true;
             this.checkBox4.Enabled = false;
             this.checkBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox4.Location = new System.Drawing.Point(756, 16);
+            this.checkBox4.Location = new System.Drawing.Point(921, 16);
             this.checkBox4.Name = "checkBox4";
             this.checkBox4.Size = new System.Drawing.Size(59, 17);
             this.checkBox4.TabIndex = 4;
@@ -603,7 +595,7 @@ namespace ChameleonMiniGUI
             this.checkBox3.AutoSize = true;
             this.checkBox3.Enabled = false;
             this.checkBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox3.Location = new System.Drawing.Point(509, 16);
+            this.checkBox3.Location = new System.Drawing.Point(651, 16);
             this.checkBox3.Name = "checkBox3";
             this.checkBox3.Size = new System.Drawing.Size(59, 17);
             this.checkBox3.TabIndex = 3;
@@ -616,7 +608,7 @@ namespace ChameleonMiniGUI
             this.checkBox2.AutoSize = true;
             this.checkBox2.Enabled = false;
             this.checkBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox2.Location = new System.Drawing.Point(262, 16);
+            this.checkBox2.Location = new System.Drawing.Point(383, 16);
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(59, 17);
             this.checkBox2.TabIndex = 2;
@@ -631,7 +623,7 @@ namespace ChameleonMiniGUI
             this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBox1.Enabled = false;
             this.checkBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox1.Location = new System.Drawing.Point(15, 16);
+            this.checkBox1.Location = new System.Drawing.Point(116, 16);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(59, 17);
             this.checkBox1.TabIndex = 1;
@@ -650,16 +642,16 @@ namespace ChameleonMiniGUI
             this.gb_actions.Controls.Add(this.btn_apply);
             this.gb_actions.Controls.Add(this.btn_download);
             this.gb_actions.Controls.Add(this.btn_upload);
-            this.gb_actions.Location = new System.Drawing.Point(6, 424);
+            this.gb_actions.Location = new System.Drawing.Point(107, 424);
             this.gb_actions.Name = "gb_actions";
-            this.gb_actions.Size = new System.Drawing.Size(982, 61);
+            this.gb_actions.Size = new System.Drawing.Size(1055, 61);
             this.gb_actions.TabIndex = 36;
             this.gb_actions.TabStop = false;
             this.gb_actions.Text = "Available Actions";
             // 
             // btn_setactive
             // 
-            this.btn_setactive.Location = new System.Drawing.Point(510, 24);
+            this.btn_setactive.Location = new System.Drawing.Point(522, 24);
             this.btn_setactive.Name = "btn_setactive";
             this.btn_setactive.Size = new System.Drawing.Size(75, 23);
             this.btn_setactive.TabIndex = 14;
@@ -691,7 +683,7 @@ namespace ChameleonMiniGUI
             // 
             // btn_refresh
             // 
-            this.btn_refresh.Location = new System.Drawing.Point(429, 24);
+            this.btn_refresh.Location = new System.Drawing.Point(441, 24);
             this.btn_refresh.Name = "btn_refresh";
             this.btn_refresh.Size = new System.Drawing.Size(75, 23);
             this.btn_refresh.TabIndex = 13;
@@ -701,7 +693,7 @@ namespace ChameleonMiniGUI
             // 
             // btn_clear
             // 
-            this.btn_clear.Location = new System.Drawing.Point(348, 24);
+            this.btn_clear.Location = new System.Drawing.Point(360, 24);
             this.btn_clear.Name = "btn_clear";
             this.btn_clear.Size = new System.Drawing.Size(75, 23);
             this.btn_clear.TabIndex = 12;
@@ -711,7 +703,7 @@ namespace ChameleonMiniGUI
             // 
             // btn_keycalc
             // 
-            this.btn_keycalc.Location = new System.Drawing.Point(591, 24);
+            this.btn_keycalc.Location = new System.Drawing.Point(603, 24);
             this.btn_keycalc.Name = "btn_keycalc";
             this.btn_keycalc.Size = new System.Drawing.Size(75, 23);
             this.btn_keycalc.TabIndex = 15;
@@ -721,7 +713,7 @@ namespace ChameleonMiniGUI
             // 
             // btn_apply
             // 
-            this.btn_apply.Location = new System.Drawing.Point(267, 24);
+            this.btn_apply.Location = new System.Drawing.Point(279, 24);
             this.btn_apply.Name = "btn_apply";
             this.btn_apply.Size = new System.Drawing.Size(75, 23);
             this.btn_apply.TabIndex = 11;
@@ -731,7 +723,7 @@ namespace ChameleonMiniGUI
             // 
             // btn_download
             // 
-            this.btn_download.Location = new System.Drawing.Point(873, 24);
+            this.btn_download.Location = new System.Drawing.Point(939, 24);
             this.btn_download.Name = "btn_download";
             this.btn_download.Size = new System.Drawing.Size(103, 23);
             this.btn_download.TabIndex = 17;
@@ -741,7 +733,7 @@ namespace ChameleonMiniGUI
             // 
             // btn_upload
             // 
-            this.btn_upload.Location = new System.Drawing.Point(764, 24);
+            this.btn_upload.Location = new System.Drawing.Point(830, 24);
             this.btn_upload.Name = "btn_upload";
             this.btn_upload.Size = new System.Drawing.Size(103, 23);
             this.btn_upload.TabIndex = 16;
@@ -761,9 +753,9 @@ namespace ChameleonMiniGUI
             this.gb_tagslot6.Controls.Add(this.lbl_uid6);
             this.gb_tagslot6.Controls.Add(this.lbl_mode6);
             this.gb_tagslot6.Controls.Add(this.cb_mode6);
-            this.gb_tagslot6.Location = new System.Drawing.Point(253, 241);
+            this.gb_tagslot6.Location = new System.Drawing.Point(374, 241);
             this.gb_tagslot6.Name = "gb_tagslot6";
-            this.gb_tagslot6.Size = new System.Drawing.Size(241, 177);
+            this.gb_tagslot6.Size = new System.Drawing.Size(250, 177);
             this.gb_tagslot6.TabIndex = 26;
             this.gb_tagslot6.TabStop = false;
             // 
@@ -880,9 +872,9 @@ namespace ChameleonMiniGUI
             this.gb_tagslot1.Controls.Add(this.lbl_uid1);
             this.gb_tagslot1.Controls.Add(this.lbl_button1);
             this.gb_tagslot1.Controls.Add(this.txt_uid1);
-            this.gb_tagslot1.Location = new System.Drawing.Point(6, 30);
+            this.gb_tagslot1.Location = new System.Drawing.Point(107, 30);
             this.gb_tagslot1.Name = "gb_tagslot1";
-            this.gb_tagslot1.Size = new System.Drawing.Size(241, 177);
+            this.gb_tagslot1.Size = new System.Drawing.Size(250, 177);
             this.gb_tagslot1.TabIndex = 25;
             this.gb_tagslot1.TabStop = false;
             // 
@@ -999,9 +991,9 @@ namespace ChameleonMiniGUI
             this.gb_tagslot2.Controls.Add(this.lbl_uid2);
             this.gb_tagslot2.Controls.Add(this.lbl_mode2);
             this.gb_tagslot2.Controls.Add(this.cb_mode2);
-            this.gb_tagslot2.Location = new System.Drawing.Point(253, 30);
+            this.gb_tagslot2.Location = new System.Drawing.Point(374, 30);
             this.gb_tagslot2.Name = "gb_tagslot2";
-            this.gb_tagslot2.Size = new System.Drawing.Size(241, 177);
+            this.gb_tagslot2.Size = new System.Drawing.Size(250, 177);
             this.gb_tagslot2.TabIndex = 24;
             this.gb_tagslot2.TabStop = false;
             // 
@@ -1118,9 +1110,9 @@ namespace ChameleonMiniGUI
             this.gb_tagslot4.Controls.Add(this.lbl_uid4);
             this.gb_tagslot4.Controls.Add(this.lbl_mode4);
             this.gb_tagslot4.Controls.Add(this.cb_mode4);
-            this.gb_tagslot4.Location = new System.Drawing.Point(747, 30);
+            this.gb_tagslot4.Location = new System.Drawing.Point(912, 30);
             this.gb_tagslot4.Name = "gb_tagslot4";
-            this.gb_tagslot4.Size = new System.Drawing.Size(241, 177);
+            this.gb_tagslot4.Size = new System.Drawing.Size(250, 177);
             this.gb_tagslot4.TabIndex = 23;
             this.gb_tagslot4.TabStop = false;
             // 
@@ -1237,9 +1229,9 @@ namespace ChameleonMiniGUI
             this.gb_tagslot3.Controls.Add(this.lbl_uid3);
             this.gb_tagslot3.Controls.Add(this.lbl_mode3);
             this.gb_tagslot3.Controls.Add(this.cb_mode3);
-            this.gb_tagslot3.Location = new System.Drawing.Point(500, 30);
+            this.gb_tagslot3.Location = new System.Drawing.Point(642, 30);
             this.gb_tagslot3.Name = "gb_tagslot3";
-            this.gb_tagslot3.Size = new System.Drawing.Size(241, 177);
+            this.gb_tagslot3.Size = new System.Drawing.Size(250, 177);
             this.gb_tagslot3.TabIndex = 22;
             this.gb_tagslot3.TabStop = false;
             // 
@@ -1356,9 +1348,9 @@ namespace ChameleonMiniGUI
             this.gb_tagslot5.Controls.Add(this.lbl_uid5);
             this.gb_tagslot5.Controls.Add(this.lbl_mode5);
             this.gb_tagslot5.Controls.Add(this.cb_mode5);
-            this.gb_tagslot5.Location = new System.Drawing.Point(6, 241);
+            this.gb_tagslot5.Location = new System.Drawing.Point(107, 241);
             this.gb_tagslot5.Name = "gb_tagslot5";
-            this.gb_tagslot5.Size = new System.Drawing.Size(241, 177);
+            this.gb_tagslot5.Size = new System.Drawing.Size(250, 177);
             this.gb_tagslot5.TabIndex = 21;
             this.gb_tagslot5.TabStop = false;
             // 
@@ -1475,9 +1467,9 @@ namespace ChameleonMiniGUI
             this.gb_tagslot7.Controls.Add(this.lbl_uid7);
             this.gb_tagslot7.Controls.Add(this.lbl_mode7);
             this.gb_tagslot7.Controls.Add(this.cb_mode7);
-            this.gb_tagslot7.Location = new System.Drawing.Point(500, 241);
+            this.gb_tagslot7.Location = new System.Drawing.Point(642, 241);
             this.gb_tagslot7.Name = "gb_tagslot7";
-            this.gb_tagslot7.Size = new System.Drawing.Size(241, 177);
+            this.gb_tagslot7.Size = new System.Drawing.Size(250, 177);
             this.gb_tagslot7.TabIndex = 27;
             this.gb_tagslot7.TabStop = false;
             // 
@@ -1594,9 +1586,9 @@ namespace ChameleonMiniGUI
             this.gb_tagslot8.Controls.Add(this.lbl_uid8);
             this.gb_tagslot8.Controls.Add(this.lbl_mode8);
             this.gb_tagslot8.Controls.Add(this.cb_mode8);
-            this.gb_tagslot8.Location = new System.Drawing.Point(747, 241);
+            this.gb_tagslot8.Location = new System.Drawing.Point(912, 241);
             this.gb_tagslot8.Name = "gb_tagslot8";
-            this.gb_tagslot8.Size = new System.Drawing.Size(241, 177);
+            this.gb_tagslot8.Size = new System.Drawing.Size(250, 177);
             this.gb_tagslot8.TabIndex = 20;
             this.gb_tagslot8.TabStop = false;
             // 
@@ -1709,7 +1701,7 @@ namespace ChameleonMiniGUI
             this.tabControl1.Location = new System.Drawing.Point(8, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1005, 517);
+            this.tabControl1.Size = new System.Drawing.Size(1287, 517);
             this.tabControl1.TabIndex = 8;
             // 
             // tabPage3
@@ -1729,7 +1721,7 @@ namespace ChameleonMiniGUI
             this.tabPage3.Controls.Add(this.hexBox1);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(997, 491);
+            this.tabPage3.Size = new System.Drawing.Size(1279, 491);
             this.tabPage3.TabIndex = 4;
             this.tabPage3.Text = "Dump Management";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -1739,7 +1731,7 @@ namespace ChameleonMiniGUI
             // lbl_hbfilename2
             // 
             this.lbl_hbfilename2.AutoSize = true;
-            this.lbl_hbfilename2.Location = new System.Drawing.Point(502, 448);
+            this.lbl_hbfilename2.Location = new System.Drawing.Point(640, 467);
             this.lbl_hbfilename2.Name = "lbl_hbfilename2";
             this.lbl_hbfilename2.Size = new System.Drawing.Size(75, 13);
             this.lbl_hbfilename2.TabIndex = 17;
@@ -1748,7 +1740,7 @@ namespace ChameleonMiniGUI
             // lbl_hbfilename1
             // 
             this.lbl_hbfilename1.AutoSize = true;
-            this.lbl_hbfilename1.Location = new System.Drawing.Point(7, 448);
+            this.lbl_hbfilename1.Location = new System.Drawing.Point(4, 467);
             this.lbl_hbfilename1.Name = "lbl_hbfilename1";
             this.lbl_hbfilename1.Size = new System.Drawing.Size(75, 13);
             this.lbl_hbfilename1.TabIndex = 15;
@@ -1800,7 +1792,7 @@ namespace ChameleonMiniGUI
             // 
             // btn_save2
             // 
-            this.btn_save2.Location = new System.Drawing.Point(558, 41);
+            this.btn_save2.Location = new System.Drawing.Point(699, 41);
             this.btn_save2.Name = "btn_save2";
             this.btn_save2.Size = new System.Drawing.Size(50, 23);
             this.btn_save2.TabIndex = 8;
@@ -1810,7 +1802,7 @@ namespace ChameleonMiniGUI
             // 
             // btn_open2
             // 
-            this.btn_open2.Location = new System.Drawing.Point(502, 41);
+            this.btn_open2.Location = new System.Drawing.Point(643, 41);
             this.btn_open2.Name = "btn_open2";
             this.btn_open2.Size = new System.Drawing.Size(50, 23);
             this.btn_open2.TabIndex = 7;
@@ -1845,10 +1837,11 @@ namespace ChameleonMiniGUI
             this.hexBox2.GroupSeparatorVisible = true;
             this.hexBox2.GroupSize = 8;
             this.hexBox2.LineInfoVisible = true;
-            this.hexBox2.Location = new System.Drawing.Point(502, 70);
+            this.hexBox2.Location = new System.Drawing.Point(643, 70);
             this.hexBox2.Name = "hexBox2";
             this.hexBox2.ShadowSelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(60)))), ((int)(((byte)(188)))), ((int)(((byte)(255)))));
-            this.hexBox2.Size = new System.Drawing.Size(488, 370);
+            this.hexBox2.Size = new System.Drawing.Size(630, 387);
+            this.hexBox2.StringViewVisible = true;
             this.hexBox2.TabIndex = 2;
             this.hexBox2.UseFixedBytesPerLine = true;
             this.hexBox2.VScrollBarVisible = true;
@@ -1864,7 +1857,8 @@ namespace ChameleonMiniGUI
             this.hexBox1.Location = new System.Drawing.Point(7, 70);
             this.hexBox1.Name = "hexBox1";
             this.hexBox1.ShadowSelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(60)))), ((int)(((byte)(188)))), ((int)(((byte)(255)))));
-            this.hexBox1.Size = new System.Drawing.Size(488, 370);
+            this.hexBox1.Size = new System.Drawing.Size(630, 387);
+            this.hexBox1.StringViewVisible = true;
             this.hexBox1.TabIndex = 1;
             this.hexBox1.UseFixedBytesPerLine = true;
             this.hexBox1.VScrollBarVisible = true;
@@ -1874,10 +1868,9 @@ namespace ChameleonMiniGUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1254, 570);
+            this.ClientSize = new System.Drawing.Size(1302, 712);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.gb_output);
-            this.Controls.Add(this.progressBar1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -1926,7 +1919,6 @@ namespace ChameleonMiniGUI
 
         #endregion
         private System.Windows.Forms.TextBox txt_output;
-        private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.GroupBox gb_output;

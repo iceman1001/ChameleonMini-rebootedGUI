@@ -13,6 +13,7 @@ using System.Management;
 using System.Collections.Generic;
 using Be.Windows.Forms;
 using System.Drawing;
+using System.Reflection;
 
 namespace ChameleonMiniGUI
 {
@@ -719,6 +720,15 @@ namespace ChameleonMiniGUI
                 }
             }
         }
+        private void tabPage3_Scroll(object sender, ScrollEventArgs e)
+        {
+
+        }
+        private void menuScroll_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            chkSyncScroll.Checked = !chkSyncScroll.Checked;
+        }
+
         #endregion
 
         #region Helper methods
@@ -755,7 +765,10 @@ namespace ChameleonMiniGUI
             {
                 _comport.Close();
             }
-            catch (Exception) { }
+            catch (Exception)
+            {
+                // ignored
+            }
             finally
             {
                 _comport = null;
@@ -764,8 +777,8 @@ namespace ChameleonMiniGUI
             this.Text = "Device disconnected";
 
             txt_constatus.Text = "NOT CONNECTED";
-            txt_constatus.BackColor = System.Drawing.Color.Red;
-            txt_constatus.ForeColor = System.Drawing.Color.White;
+            txt_constatus.BackColor = Color.Red;
+            txt_constatus.ForeColor = Color.White;
             txt_constatus.SelectionStart = 0;
 
             // Disable all tag slots and don't select any tag slot
@@ -794,6 +807,8 @@ namespace ChameleonMiniGUI
             btn_disconnect.Enabled = false;
 
             btn_connect.Enabled = true;
+
+            pb_device.Image = null;
         }
 
         private void DeviceConnected()
@@ -899,6 +914,7 @@ namespace ChameleonMiniGUI
         private void OpenChameleonSerialPort()
         {
             this.Cursor = Cursors.WaitCursor;
+            pb_device.Image = null;
             txt_output.Text = string.Empty;
 
             //var searcher = new ManagementObjectSearcher("select DeviceID from Win32_SerialPort where Description = \"ChameleonMini Virtual Serial Port\"");
@@ -936,6 +952,8 @@ namespace ChameleonMiniGUI
                         txt_output.Text += $"---------------------------------------------------------------{Environment.NewLine}";
                         _current_comport = comPortStr;
                         this.Cursor = Cursors.Default;
+
+                        pb_device.Image = (Bitmap)Properties.Resources.ResourceManager.GetObject("chamRevG1");
                         return;
                     }
 
@@ -948,6 +966,8 @@ namespace ChameleonMiniGUI
                         txt_output.Text += $"---------------------------------------------------------------{Environment.NewLine}";
                         _current_comport = comPortStr;
                         this.Cursor = Cursors.Default;
+
+                        pb_device.Image = (Bitmap)Properties.Resources.ResourceManager.GetObject("chamRevE");
                         return;
                     }
 
@@ -1539,5 +1559,6 @@ namespace ChameleonMiniGUI
             return null;
         }
         #endregion
+
     }
 }

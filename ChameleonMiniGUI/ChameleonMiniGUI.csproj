@@ -112,6 +112,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="XMODEM.cs" />
+    <None Include="Resources\chamRevE.png" />
+    <None Include="Resources\chamRevG1.png" />
     <EmbeddedResource Include="FrmMain.resx">
       <DependentUpon>FrmMain.cs</DependentUpon>
     </EmbeddedResource>

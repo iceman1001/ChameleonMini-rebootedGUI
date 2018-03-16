@@ -181,6 +181,7 @@ namespace ChameleonMiniGUI
             this.hexBox2 = new Be.Windows.Forms.HexBox();
             this.hexBox1 = new Be.Windows.Forms.HexBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.chkSyncScroll = new System.Windows.Forms.CheckBox();
             this.gb_output.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.gb_keepalive.SuspendLayout();
@@ -1707,6 +1708,7 @@ namespace ChameleonMiniGUI
             // tabPage3
             // 
             this.tabPage3.AllowDrop = true;
+            this.tabPage3.Controls.Add(this.chkSyncScroll);
             this.tabPage3.Controls.Add(this.lbl_hbfilename2);
             this.tabPage3.Controls.Add(this.lbl_hbfilename1);
             this.tabPage3.Controls.Add(this.rbtn_bytewidth16);
@@ -1846,6 +1848,7 @@ namespace ChameleonMiniGUI
             this.hexBox2.UseFixedBytesPerLine = true;
             this.hexBox2.VScrollBarVisible = true;
             this.hexBox2.ByteProviderWriteFinished += new System.EventHandler(this.hexBox_ByteProviderWriteFinished);
+            this.hexBox2.VScrollBarChanged += new Be.Windows.Forms.HexBox.VScrollBarChangedEventHandler(this.hexBox2_VScrollBarChanged);
             // 
             // hexBox1
             // 
@@ -1863,6 +1866,17 @@ namespace ChameleonMiniGUI
             this.hexBox1.UseFixedBytesPerLine = true;
             this.hexBox1.VScrollBarVisible = true;
             this.hexBox1.ByteProviderWriteFinished += new System.EventHandler(this.hexBox_ByteProviderWriteFinished);
+            this.hexBox1.VScrollBarChanged += new Be.Windows.Forms.HexBox.VScrollBarChangedEventHandler(this.hexBox1_VScrollBarChanged);
+            // 
+            // chkSyncScroll
+            // 
+            this.chkSyncScroll.AutoSize = true;
+            this.chkSyncScroll.Location = new System.Drawing.Point(277, 12);
+            this.chkSyncScroll.Name = "chkSyncScroll";
+            this.chkSyncScroll.Size = new System.Drawing.Size(125, 17);
+            this.chkSyncScroll.TabIndex = 18;
+            this.chkSyncScroll.Text = "Synchronize scrolling";
+            this.chkSyncScroll.UseVisualStyleBackColor = true;
             // 
             // frm_main
             // 
@@ -2070,5 +2084,6 @@ namespace ChameleonMiniGUI
         private System.Windows.Forms.Label lbl_bytewidth;
         private System.Windows.Forms.Label lbl_hbfilename2;
         private System.Windows.Forms.Label lbl_hbfilename1;
+        private System.Windows.Forms.CheckBox chkSyncScroll;
     }
 }

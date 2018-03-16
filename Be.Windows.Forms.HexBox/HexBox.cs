@@ -1252,13 +1252,15 @@ namespace Be.Windows.Forms
 		/// Contains a state value about Insert or Write mode. When this value is true and the ByteProvider SupportsInsert is true bytes are inserted instead of overridden.
 		/// </summary>
 		bool _insertActive;
-		#endregion
+        #endregion
 
-		#region Events
-		/// <summary>
-		/// Occurs, when the value of InsertActive property has changed.
-		/// </summary>
-		[Description("Occurs, when the value of InsertActive property has changed.")]
+        #region Events
+        public delegate void VScrollBarChangedEventHandler(object sender, VScrollEventArgs args);
+
+        /// <summary>
+        /// Occurs, when the value of InsertActive property has changed.
+        /// </summary>
+        [Description("Occurs, when the value of InsertActive property has changed.")]
 		public event EventHandler InsertActiveChanged;
 		/// <summary>
 		/// Occurs, when the value of ReadOnly property has changed.
@@ -1332,10 +1334,15 @@ namespace Be.Windows.Forms
 		/// </summary>
 		[Description("Occurs, when the value of VScrollBarVisible property has changed.")]
 		public event EventHandler VScrollBarVisibleChanged;
-		/// <summary>
-		/// Occurs, when the value of HexCasing property has changed.
-		/// </summary>
-		[Description("Occurs, when the value of HexCasing property has changed.")]
+        /// <summary>
+        /// Occurs, when the value of the vertical scroll bar has changed.
+        /// </summary>
+        [Description("Occurs, when the value of the vertical scroll bar has changed.")]
+        public event VScrollBarChangedEventHandler VScrollBarChanged;
+        /// <summary>
+        /// Occurs, when the value of HexCasing property has changed.
+        /// </summary>
+        [Description("Occurs, when the value of HexCasing property has changed.")]
 		public event EventHandler HexCasingChanged;
 		/// <summary>
 		/// Occurs, when the value of HorizontalByteCount property has changed.
@@ -1570,13 +1577,14 @@ namespace Be.Windows.Forms
 				return (int)value;
 		}
 
-		void PerformScrollToLine(long pos)
+		public void PerformScrollToLine(long pos)
 		{
 			if (pos < _scrollVmin || pos > _scrollVmax || pos == _scrollVpos)
 				return;
 
 			_scrollVpos = pos;
 
+            OnVScrollBarChanged(new VScrollEventArgs(pos));
 			UpdateVScroll();
 			UpdateVisibilityBytes();
 			UpdateCaret();
@@ -3902,11 +3910,21 @@ namespace Be.Windows.Forms
 				VScrollBarVisibleChanged(this, e);
 		}
 
-		/// <summary>
-		/// Raises the HexCasingChanged event.
-		/// </summary>
-		/// <param name="e">An EventArgs that contains the event data.</param>
-		protected virtual void OnHexCasingChanged(EventArgs e)
+        /// <summary>
+        /// Raises the VScrollBarChanged event.
+        /// </summary>
+        /// <param name="e">An EventArgs that contains the event data.</param>
+        protected virtual void OnVScrollBarChanged(VScrollEventArgs e)
+        {
+            if (VScrollBarChanged != null)
+                VScrollBarChanged(this, e);
+        }
+
+        /// <summary>
+        /// Raises the HexCasingChanged event.
+        /// </summary>
+        /// <param name="e">An EventArgs that contains the event data.</param>
+        protected virtual void OnHexCasingChanged(EventArgs e)
 		{
 			if (HexCasingChanged != null)
 				HexCasingChanged(this, e);
@@ -4072,5 +4090,20 @@ namespace Be.Windows.Forms
                 }));
         }
         #endregion
+    }
+}
+
+public class VScrollEventArgs : EventArgs
+{
+    private readonly long pos;
+
+    public VScrollEventArgs(long pos)
+    {
+        this.pos = pos;
+    }
+
+    public long Pos
+    {
+        get { return this.pos; }
     }
 }

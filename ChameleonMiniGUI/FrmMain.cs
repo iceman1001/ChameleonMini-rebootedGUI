@@ -697,6 +697,28 @@ namespace ChameleonMiniGUI
             // TODO: Add the index of the written byte to the event and compare only that
             PerformComparison();
         }
+
+        private void hexBox1_VScrollBarChanged(object sender, VScrollEventArgs e)
+        {
+            if (chkSyncScroll.Checked)
+            {
+                if (e.Pos != hexBox2.CurrentLine)
+                {
+                    hexBox2.PerformScrollToLine(e.Pos);
+                }
+            }
+        }
+
+        private void hexBox2_VScrollBarChanged(object sender, VScrollEventArgs e)
+        {
+            if (chkSyncScroll.Checked)
+            {
+                if (e.Pos != hexBox1.CurrentLine)
+                {
+                    hexBox1.PerformScrollToLine(e.Pos);
+                }
+            }
+        }
         #endregion
 
         #region Helper methods

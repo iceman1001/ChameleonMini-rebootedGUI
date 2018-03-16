@@ -1045,6 +1045,11 @@
             Occurs, when the value of VScrollBarVisible property has changed.
             </summary>
         </member>
+        <member name="E:Be.Windows.Forms.HexBox.VScrollBarChanged">
+            <summary>
+            Occurs, when the value of the vertical scroll bar has changed.
+            </summary>
+        </member>
         <member name="E:Be.Windows.Forms.HexBox.HexCasingChanged">
             <summary>
             Occurs, when the value of HexCasing property has changed.
@@ -1505,6 +1510,12 @@
         <member name="M:Be.Windows.Forms.HexBox.OnVScrollBarVisibleChanged(System.EventArgs)">
             <summary>
             Raises the VScrollBarVisibleChanged event.
+            </summary>
+            <param name="e">An EventArgs that contains the event data.</param>
+        </member>
+        <member name="M:Be.Windows.Forms.HexBox.OnVScrollBarChanged(VScrollEventArgs)">
+            <summary>
+            Raises the VScrollBarChanged event.
             </summary>
             <param name="e">An EventArgs that contains the event data.</param>
         </member>

@@ -1746,6 +1746,7 @@ namespace ChameleonMiniGUI
             this.tabPage3.Scroll += new System.Windows.Forms.ScrollEventHandler(this.tabPage3_Scroll);
             this.tabPage3.DragDrop += new System.Windows.Forms.DragEventHandler(this.tabPage3_DragDrop);
             this.tabPage3.DragEnter += new System.Windows.Forms.DragEventHandler(this.tabPage3_DragEnter);
+            this.tabPage3.MouseEnter += new System.EventHandler(this.tabPage3_MouseEnter);
             // 
             // chkSyncScroll
             // 
@@ -1876,6 +1877,7 @@ namespace ChameleonMiniGUI
             this.hexBox2.VScrollBarVisible = true;
             this.hexBox2.ByteProviderWriteFinished += new System.EventHandler(this.hexBox_ByteProviderWriteFinished);
             this.hexBox2.VScrollBarChanged += new Be.Windows.Forms.HexBox.VScrollBarChangedEventHandler(this.hexBox2_VScrollBarChanged);
+            this.hexBox2.MouseEnter += new System.EventHandler(this.hexBox2_MouseEnter);
             // 
             // hexBox1
             // 
@@ -1894,6 +1896,7 @@ namespace ChameleonMiniGUI
             this.hexBox1.VScrollBarVisible = true;
             this.hexBox1.ByteProviderWriteFinished += new System.EventHandler(this.hexBox_ByteProviderWriteFinished);
             this.hexBox1.VScrollBarChanged += new Be.Windows.Forms.HexBox.VScrollBarChangedEventHandler(this.hexBox1_VScrollBarChanged);
+            this.hexBox1.MouseEnter += new System.EventHandler(this.hexBox1_MouseEnter);
             // 
             // menuScroll
             // 

@@ -600,8 +600,7 @@ namespace ChameleonMiniGUI
                 MessageBox.Show("Unable to connect to the Chameleon device", "Connection failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
-
+        
         private void btn_open1_Click(object sender, EventArgs e)
         {
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
@@ -616,8 +615,7 @@ namespace ChameleonMiniGUI
         {
             SaveFile(hexBox1);
         }
-
-
+        
         private void btn_open2_Click(object sender, EventArgs e)
         {
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
@@ -724,9 +722,30 @@ namespace ChameleonMiniGUI
         {
 
         }
+        private void tabPage3_MouseEnter(object sender, EventArgs e)
+        {
+            if (!hexBox1.Focused && !hexBox2.Focused)
+            {
+                hexBox1.Focus();
+            }
+        }
+
         private void menuScroll_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
             chkSyncScroll.Checked = !chkSyncScroll.Checked;
+        }
+
+
+        private void hexBox1_MouseEnter(object sender, EventArgs e)
+        {
+            if (!hexBox1.Focused)
+                hexBox1.Focus();
+        }
+
+        private void hexBox2_MouseEnter(object sender, EventArgs e)
+        {
+            if (!hexBox2.Focused)
+                hexBox2.Focus();
         }
 
         #endregion

@@ -3614,7 +3614,7 @@ namespace Be.Windows.Forms
 		/// <returns>the hex string</returns>
 		string ConvertBytesToHex(byte[] data)
 		{
-			StringBuilder sb = new StringBuilder();
+			var sb = new StringBuilder();
 			foreach (byte b in data)
 			{
 				string hex = ConvertByteToHex(b);
@@ -3623,8 +3623,7 @@ namespace Be.Windows.Forms
 			}
 			if (sb.Length > 0)
 				sb.Remove(sb.Length - 1, 1);
-			string result = sb.ToString();
-			return result;
+			return sb.ToString();
 		}
 		/// <summary>
 		/// Converts the byte to a hex string. For example: "10" = "0A";

@@ -1354,16 +1354,25 @@ namespace ChameleonMiniGUI
             if (CloseFile(hexBox) == DialogResult.Cancel)
                 return;
 
-
             var fi = new FileInfo(fileName);
-            if (fi.Length >= 256)
+
+            // iclass dumps should be 8bytes width
+            if (fileName.ToLower().Contains("iclass"))
             {
-                rbtn_bytewidth16.Select();
+                rbtn_bytewidth08.Select();
             }
             else
             {
-                rbtn_bytewidth04.Select();
-            }
+                // generic rule, larger than 256bytes,  16byte width
+                if (fi.Length >= 256)
+                {
+                    rbtn_bytewidth16.Select();
+                }
+                else
+                {
+                    rbtn_bytewidth04.Select();
+                }
+           }
 
             try
             {
@@ -1373,10 +1382,10 @@ namespace ChameleonMiniGUI
 
                 // Display info for the file
                 var hbIdx = int.Parse(hexBox.Name.Substring(hexBox.Name.Length - 1));
-                var hb_filename = FindControls<Label>(Controls, $"lbl_hbfilename{hbIdx}").FirstOrDefault();
-                if (hb_filename != null)
+                var l = FindControls<Label>(Controls, $"lbl_hbfilename{hbIdx}").FirstOrDefault();
+                if (l != null)
                 {
-                    hb_filename.Text = $"Filename: {fi.Name} | {fi.Length} bytes";
+                    l.Text = $"Filename: {fi.Name}  ({fi.Length} bytes)";
                 }
 
                 // run the comparison automatically
@@ -1419,21 +1428,19 @@ namespace ChameleonMiniGUI
 
                 return res;
             }
-            else
-            {
-                CleanUp(hexBox);
-                return DialogResult.OK;
-            }
+
+            CleanUp(hexBox);
+            return DialogResult.OK;
         }
 
         void CleanUp(HexBox hexBox)
         {
-            if (hexBox.ByteProvider == null) return;
-
-            var byteProvider = hexBox.ByteProvider as IDisposable;
-            byteProvider?.Dispose();
-
-            hexBox.ByteProvider = null;
+            if (hexBox.ByteProvider != null)
+            {
+                var byteProvider = hexBox.ByteProvider as IDisposable;
+                byteProvider?.Dispose();
+                hexBox.ByteProvider = null;
+            }
 
             // Remove the file info
             var hbIdx = int.Parse(hexBox.Name.Substring(hexBox.Name.Length - 1));
@@ -1452,16 +1459,37 @@ namespace ChameleonMiniGUI
 
             if (hexBox1.ByteProvider != null && hexBox2.ByteProvider != null)
             {
+
                 if (hexBox1.ByteProvider.Length == hexBox2.ByteProvider.Length)
                 {
                     for (int i = 0; i < hexBox1.ByteProvider.Length; i++)
                     {
                         CompareByte(i);
                     }
-
-                    hexBox1.Invalidate();
-                    hexBox2.Invalidate();
                 }
+                else
+                {
+                    long min_common = 0;
+
+                    if (hexBox1.ByteProvider.Length > hexBox2.ByteProvider.Length)
+                    {
+                        min_common = hexBox2.ByteProvider.Length;
+                        hexBox1.AddHighlight(min_common, hexBox1.ByteProvider.Length- min_common, Color.Blue, Color.LightGreen);
+                    }
+                    else
+                    {
+                        min_common = hexBox1.ByteProvider.Length;
+                        hexBox2.AddHighlight(min_common, hexBox2.ByteProvider.Length- min_common, Color.Red, Color.LightGreen);
+                    }
+                    // if different sized files
+                    for (int i = 0; i < min_common; i++)
+                    {
+                        CompareByte(i);
+                    }
+                }
+
+                hexBox1.Invalidate();
+                hexBox2.Invalidate();
             }
         }
 

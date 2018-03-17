@@ -719,6 +719,11 @@ namespace ChameleonMiniGUI
             }
         }
 
+        private void tabPage3_Scroll(object sender, ScrollEventArgs e)
+        {
+
+        }
+
         private void tabPage3_MouseEnter(object sender, EventArgs e)
         {
             if (!hexBox1.Focused && !hexBox2.Focused)

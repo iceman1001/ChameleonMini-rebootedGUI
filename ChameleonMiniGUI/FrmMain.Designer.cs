@@ -1743,6 +1743,7 @@ namespace ChameleonMiniGUI
             this.tabPage3.TabIndex = 4;
             this.tabPage3.Text = "Dump Management";
             this.tabPage3.UseVisualStyleBackColor = true;
+            this.tabPage3.Scroll += new System.Windows.Forms.ScrollEventHandler(this.tabPage3_Scroll);
             this.tabPage3.DragDrop += new System.Windows.Forms.DragEventHandler(this.tabPage3_DragDrop);
             this.tabPage3.DragEnter += new System.Windows.Forms.DragEventHandler(this.tabPage3_DragEnter);
             this.tabPage3.MouseEnter += new System.EventHandler(this.tabPage3_MouseEnter);

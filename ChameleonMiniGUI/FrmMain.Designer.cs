@@ -28,12 +28,14 @@ namespace ChameleonMiniGUI
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frm_main));
             this.txt_output = new System.Windows.Forms.TextBox();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.gb_output = new System.Windows.Forms.GroupBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.pb_device = new System.Windows.Forms.PictureBox();
             this.gb_keepalive = new System.Windows.Forms.GroupBox();
             this.btn_setInterval = new System.Windows.Forms.Button();
             this.txt_interval = new System.Windows.Forms.TextBox();
@@ -168,6 +170,7 @@ namespace ChameleonMiniGUI
             this.cb_mode8 = new System.Windows.Forms.ComboBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.chkSyncScroll = new System.Windows.Forms.CheckBox();
             this.lbl_hbfilename2 = new System.Windows.Forms.Label();
             this.lbl_hbfilename1 = new System.Windows.Forms.Label();
             this.rbtn_bytewidth16 = new System.Windows.Forms.RadioButton();
@@ -181,9 +184,11 @@ namespace ChameleonMiniGUI
             this.hexBox2 = new Be.Windows.Forms.HexBox();
             this.hexBox1 = new Be.Windows.Forms.HexBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.chkSyncScroll = new System.Windows.Forms.CheckBox();
+            this.menuScroll = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.gb_output.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_device)).BeginInit();
             this.gb_keepalive.SuspendLayout();
             this.gb_connectionSettings.SuspendLayout();
             this.gb_bootloader.SuspendLayout();
@@ -201,6 +206,7 @@ namespace ChameleonMiniGUI
             this.gb_tagslot8.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage3.SuspendLayout();
+            this.menuScroll.SuspendLayout();
             this.SuspendLayout();
             // 
             // txt_output
@@ -233,6 +239,7 @@ namespace ChameleonMiniGUI
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.pb_device);
             this.tabPage2.Controls.Add(this.gb_keepalive);
             this.tabPage2.Controls.Add(this.gb_connectionSettings);
             this.tabPage2.Controls.Add(this.gb_bootloader);
@@ -244,6 +251,14 @@ namespace ChameleonMiniGUI
             this.tabPage2.TabIndex = 3;
             this.tabPage2.Text = "Settings";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // pb_device
+            // 
+            this.pb_device.Location = new System.Drawing.Point(1011, 52);
+            this.pb_device.Name = "pb_device";
+            this.pb_device.Size = new System.Drawing.Size(206, 238);
+            this.pb_device.TabIndex = 5;
+            this.pb_device.TabStop = false;
             // 
             // gb_keepalive
             // 
@@ -1708,6 +1723,7 @@ namespace ChameleonMiniGUI
             // tabPage3
             // 
             this.tabPage3.AllowDrop = true;
+            this.tabPage3.ContextMenuStrip = this.menuScroll;
             this.tabPage3.Controls.Add(this.chkSyncScroll);
             this.tabPage3.Controls.Add(this.lbl_hbfilename2);
             this.tabPage3.Controls.Add(this.lbl_hbfilename1);
@@ -1729,6 +1745,17 @@ namespace ChameleonMiniGUI
             this.tabPage3.UseVisualStyleBackColor = true;
             this.tabPage3.DragDrop += new System.Windows.Forms.DragEventHandler(this.tabPage3_DragDrop);
             this.tabPage3.DragEnter += new System.Windows.Forms.DragEventHandler(this.tabPage3_DragEnter);
+            this.tabPage3.MouseEnter += new System.EventHandler(this.tabPage3_MouseEnter);
+            // 
+            // chkSyncScroll
+            // 
+            this.chkSyncScroll.AutoSize = true;
+            this.chkSyncScroll.Location = new System.Drawing.Point(277, 12);
+            this.chkSyncScroll.Name = "chkSyncScroll";
+            this.chkSyncScroll.Size = new System.Drawing.Size(125, 17);
+            this.chkSyncScroll.TabIndex = 18;
+            this.chkSyncScroll.Text = "Synchronize scrolling";
+            this.chkSyncScroll.UseVisualStyleBackColor = true;
             // 
             // lbl_hbfilename2
             // 
@@ -1849,6 +1876,8 @@ namespace ChameleonMiniGUI
             this.hexBox2.VScrollBarVisible = true;
             this.hexBox2.ByteProviderWriteFinished += new System.EventHandler(this.hexBox_ByteProviderWriteFinished);
             this.hexBox2.VScrollBarChanged += new Be.Windows.Forms.HexBox.VScrollBarChangedEventHandler(this.hexBox2_VScrollBarChanged);
+            this.hexBox2.MouseEnter += new System.EventHandler(this.hexBox2_MouseEnter);
+            this.hexBox2.ToggleSyncScrollPressed += new System.EventHandler(this.toggleSyncScrollPressed);
             // 
             // hexBox1
             // 
@@ -1867,16 +1896,23 @@ namespace ChameleonMiniGUI
             this.hexBox1.VScrollBarVisible = true;
             this.hexBox1.ByteProviderWriteFinished += new System.EventHandler(this.hexBox_ByteProviderWriteFinished);
             this.hexBox1.VScrollBarChanged += new Be.Windows.Forms.HexBox.VScrollBarChangedEventHandler(this.hexBox1_VScrollBarChanged);
+            this.hexBox1.MouseEnter += new System.EventHandler(this.hexBox1_MouseEnter);
+            this.hexBox1.ToggleSyncScrollPressed += new System.EventHandler(this.toggleSyncScrollPressed);
             // 
-            // chkSyncScroll
+            // menuScroll
             // 
-            this.chkSyncScroll.AutoSize = true;
-            this.chkSyncScroll.Location = new System.Drawing.Point(277, 12);
-            this.chkSyncScroll.Name = "chkSyncScroll";
-            this.chkSyncScroll.Size = new System.Drawing.Size(125, 17);
-            this.chkSyncScroll.TabIndex = 18;
-            this.chkSyncScroll.Text = "Synchronize scrolling";
-            this.chkSyncScroll.UseVisualStyleBackColor = true;
+            this.menuScroll.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem1});
+            this.menuScroll.Name = "menuScroll";
+            this.menuScroll.Size = new System.Drawing.Size(170, 26);
+            this.menuScroll.Text = "toggle sync scroll";
+            this.menuScroll.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuScroll_ItemClicked);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(169, 22);
+            this.toolStripMenuItem1.Text = "Toggle sync scroll";
             // 
             // frm_main
             // 
@@ -1895,6 +1931,7 @@ namespace ChameleonMiniGUI
             this.gb_output.ResumeLayout(false);
             this.gb_output.PerformLayout();
             this.tabPage2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pb_device)).EndInit();
             this.gb_keepalive.ResumeLayout(false);
             this.gb_keepalive.PerformLayout();
             this.gb_connectionSettings.ResumeLayout(false);
@@ -1927,6 +1964,7 @@ namespace ChameleonMiniGUI
             this.tabControl1.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
+            this.menuScroll.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -2085,5 +2123,8 @@ namespace ChameleonMiniGUI
         private System.Windows.Forms.Label lbl_hbfilename2;
         private System.Windows.Forms.Label lbl_hbfilename1;
         private System.Windows.Forms.CheckBox chkSyncScroll;
+        private System.Windows.Forms.PictureBox pb_device;
+        private System.Windows.Forms.ContextMenuStrip menuScroll;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
     }
 }

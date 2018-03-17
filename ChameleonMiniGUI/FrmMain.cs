@@ -13,6 +13,7 @@ using System.Management;
 using System.Collections.Generic;
 using Be.Windows.Forms;
 using System.Drawing;
+using System.Reflection;
 
 namespace ChameleonMiniGUI
 {
@@ -599,8 +600,7 @@ namespace ChameleonMiniGUI
                 MessageBox.Show("Unable to connect to the Chameleon device", "Connection failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
-
+        
         private void btn_open1_Click(object sender, EventArgs e)
         {
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
@@ -615,8 +615,7 @@ namespace ChameleonMiniGUI
         {
             SaveFile(hexBox1);
         }
-
-
+        
         private void btn_open2_Click(object sender, EventArgs e)
         {
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
@@ -719,6 +718,37 @@ namespace ChameleonMiniGUI
                 }
             }
         }
+
+        private void tabPage3_MouseEnter(object sender, EventArgs e)
+        {
+            if (!hexBox1.Focused && !hexBox2.Focused)
+            {
+                hexBox1.Focus();
+            }
+        }
+
+        private void menuScroll_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            chkSyncScroll.Checked = !chkSyncScroll.Checked;
+        }
+
+        private void toggleSyncScrollPressed(object sender, EventArgs e)
+        {
+            chkSyncScroll.Checked = !chkSyncScroll.Checked;
+        }
+
+        private void hexBox1_MouseEnter(object sender, EventArgs e)
+        {
+            if (!hexBox1.Focused)
+                hexBox1.Focus();
+        }
+
+        private void hexBox2_MouseEnter(object sender, EventArgs e)
+        {
+            if (!hexBox2.Focused)
+                hexBox2.Focus();
+        }
+
         #endregion
 
         #region Helper methods
@@ -755,7 +785,10 @@ namespace ChameleonMiniGUI
             {
                 _comport.Close();
             }
-            catch (Exception) { }
+            catch (Exception)
+            {
+                // ignored
+            }
             finally
             {
                 _comport = null;
@@ -764,8 +797,8 @@ namespace ChameleonMiniGUI
             this.Text = "Device disconnected";
 
             txt_constatus.Text = "NOT CONNECTED";
-            txt_constatus.BackColor = System.Drawing.Color.Red;
-            txt_constatus.ForeColor = System.Drawing.Color.White;
+            txt_constatus.BackColor = Color.Red;
+            txt_constatus.ForeColor = Color.White;
             txt_constatus.SelectionStart = 0;
 
             // Disable all tag slots and don't select any tag slot
@@ -794,6 +827,8 @@ namespace ChameleonMiniGUI
             btn_disconnect.Enabled = false;
 
             btn_connect.Enabled = true;
+
+            pb_device.Image = null;
         }
 
         private void DeviceConnected()
@@ -899,6 +934,7 @@ namespace ChameleonMiniGUI
         private void OpenChameleonSerialPort()
         {
             this.Cursor = Cursors.WaitCursor;
+            pb_device.Image = null;
             txt_output.Text = string.Empty;
 
             //var searcher = new ManagementObjectSearcher("select DeviceID from Win32_SerialPort where Description = \"ChameleonMini Virtual Serial Port\"");
@@ -936,6 +972,8 @@ namespace ChameleonMiniGUI
                         txt_output.Text += $"---------------------------------------------------------------{Environment.NewLine}";
                         _current_comport = comPortStr;
                         this.Cursor = Cursors.Default;
+
+                        pb_device.Image = (Bitmap)Properties.Resources.ResourceManager.GetObject("chamRevG1");
                         return;
                     }
 
@@ -948,6 +986,8 @@ namespace ChameleonMiniGUI
                         txt_output.Text += $"---------------------------------------------------------------{Environment.NewLine}";
                         _current_comport = comPortStr;
                         this.Cursor = Cursors.Default;
+
+                        pb_device.Image = (Bitmap)Properties.Resources.ResourceManager.GetObject("chamRevE");
                         return;
                     }
 
@@ -1539,5 +1579,6 @@ namespace ChameleonMiniGUI
             return null;
         }
         #endregion
+
     }
 }

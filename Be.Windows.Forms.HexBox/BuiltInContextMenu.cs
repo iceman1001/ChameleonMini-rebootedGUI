@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
@@ -37,6 +37,10 @@ namespace Be.Windows.Forms
         /// Contains the "Select All"-ToolStripMenuItem object.
         /// </summary>
         ToolStripMenuItem _selectAllToolStripMenuItem;
+        /// <summary>
+        /// Contains the "Select All"-ToolStripMenuItem object.
+        /// </summary>
+        ToolStripMenuItem _toggleSyncScrollToolStripMenuItem;
         /// <summary>
         /// Initializes a new instance of BuildInContextMenu class.
         /// </summary>
@@ -77,6 +81,12 @@ namespace Be.Windows.Forms
 
                 _selectAllToolStripMenuItem = new ToolStripMenuItem(SelectAllMenuItemTextInternal, SelectAllMenuItemImage, new EventHandler(SelectAllMenuItem_Click));
                 cms.Items.Add(_selectAllToolStripMenuItem);
+
+                cms.Items.Add(new ToolStripSeparator());
+
+                _toggleSyncScrollToolStripMenuItem = new ToolStripMenuItem(ToggleSyncScrollMenuItemTextInternal, ToggleSyncScrollMenuItemImage, new EventHandler(ToggleSyncScrollMenuItem_Click));
+                cms.Items.Add(_toggleSyncScrollToolStripMenuItem);
+
                 cms.Opening += new CancelEventHandler(BuildInContextMenuStrip_Opening);
 
                 _contextMenuStrip = cms;
@@ -98,6 +108,7 @@ namespace Be.Windows.Forms
             _copyToolStripMenuItem.Enabled = this._hexBox.CanCopy();
             _pasteToolStripMenuItem.Enabled = this._hexBox.CanPaste();
             _selectAllToolStripMenuItem.Enabled = this._hexBox.CanSelectAll();
+            _toggleSyncScrollToolStripMenuItem.Enabled = true;
         }
         /// <summary>
         /// The handler for the "Cut"-Click event
@@ -123,6 +134,12 @@ namespace Be.Windows.Forms
         /// <param name="sender">the sender object</param>
         /// <param name="e">the event data</param>
         void SelectAllMenuItem_Click(object sender, EventArgs e) { this._hexBox.SelectAll(); }
+        /// <summary>
+        /// The handler for the "Toggle Sync Scroll"-Click event
+        /// </summary>
+        /// <param name="sender">the sender object</param>
+        /// <param name="e">the event data</param>
+        void ToggleSyncScrollMenuItem_Click(object sender, EventArgs e) { this._hexBox.ToggleSyncScroll(); }
         /// <summary>
         /// Gets or sets the custom text of the "Copy" ContextMenuStrip item.
         /// </summary>
@@ -163,6 +180,18 @@ namespace Be.Windows.Forms
             set { _selectAllMenuItemText = value; }
         } string _selectAllMenuItemText = null;
 
+
+        /// <summary>
+        /// Gets or sets the custom text of the "Toggle Sync Scroll" ContextMenuStrip item.
+        /// </summary>
+        [Category("BuiltIn-ContextMenu"), DefaultValue(null), Localizable(true)]
+        public string ToggleSyncScrollMenuItemText
+        {
+            get { return _toggleSyncScrollMenuItemText; }
+            set { _toggleSyncScrollMenuItemText = value; }
+        }
+        string _toggleSyncScrollMenuItemText = null;
+
         /// <summary>
         /// Gets the text of the "Cut" ContextMenuStrip item.
         /// </summary>
@@ -179,6 +208,10 @@ namespace Be.Windows.Forms
         /// Gets the text of the "Select All" ContextMenuStrip item.
         /// </summary>
         internal string SelectAllMenuItemTextInternal { get { return !string.IsNullOrEmpty(SelectAllMenuItemText) ? SelectAllMenuItemText : "SelectAll"; } }
+        /// <summary>
+        /// Gets the text of the "Toggle Sync Scroll" ContextMenuStrip item.
+        /// </summary>
+        internal string ToggleSyncScrollMenuItemTextInternal { get { return !string.IsNullOrEmpty(ToggleSyncScrollMenuItemText) ? ToggleSyncScrollMenuItemText : "Toggle Sync Scroll"; } }
 
         /// <summary>
         /// Gets or sets the image of the "Cut" ContextMenuStrip item.
@@ -216,5 +249,15 @@ namespace Be.Windows.Forms
             get { return _selectAllMenuItemImage; }
             set { _selectAllMenuItemImage = value; }
         } Image _selectAllMenuItemImage = null;
+        /// <summary>
+        /// Gets or sets the image of the "Toggle Sync Scroll" ContextMenuStrip item.
+        /// </summary>
+        [Category("BuiltIn-ContextMenu"), DefaultValue(null)]
+        public Image ToggleSyncScrollMenuItemImage
+        {
+            get { return _toggleSyncScrollMenuItemImage; }
+            set { _toggleSyncScrollMenuItemImage = value; }
+        }
+        Image _toggleSyncScrollMenuItemImage = null;
     }
 }

@@ -1452,11 +1452,14 @@ namespace ChameleonMiniGUI
                 var l = FindControls<Label>(Controls, $"lbl_hbfilename{hbIdx}").FirstOrDefault();
                 if (l != null)
                 {
-                    l.Text = $"Filename: {fi.Name}  ({fi.Length} bytes)";
+                    l.Text = $"{fi.Name} ({fi.Length} bytes)";
                 }
 
                 // run the comparison automatically
                 PerformComparison();
+
+                var msg = $"[!] Loaded '{fi.Name}' {Environment.NewLine}";
+                txt_output.Text += msg;
             }
             catch (IOException) // write mode failed
             {
@@ -1514,7 +1517,7 @@ namespace ChameleonMiniGUI
             var hb_filename = FindControls<Label>(Controls, $"lbl_hbfilename{hbIdx}").FirstOrDefault();
             if (hb_filename != null)
             {
-                hb_filename.Text = "Filename: N/A";
+                hb_filename.Text = "N/A";
             }
         }
 

@@ -170,6 +170,8 @@ namespace ChameleonMiniGUI
             this.cb_mode8 = new System.Windows.Forms.ComboBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.menuScroll = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.chkSyncScroll = new System.Windows.Forms.CheckBox();
             this.lbl_hbfilename2 = new System.Windows.Forms.Label();
             this.lbl_hbfilename1 = new System.Windows.Forms.Label();
@@ -184,8 +186,6 @@ namespace ChameleonMiniGUI
             this.hexBox2 = new Be.Windows.Forms.HexBox();
             this.hexBox1 = new Be.Windows.Forms.HexBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.menuScroll = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.gb_output.SuspendLayout();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pb_device)).BeginInit();
@@ -1748,6 +1748,21 @@ namespace ChameleonMiniGUI
             this.tabPage3.DragEnter += new System.Windows.Forms.DragEventHandler(this.tabPage3_DragEnter);
             this.tabPage3.MouseEnter += new System.EventHandler(this.tabPage3_MouseEnter);
             // 
+            // menuScroll
+            // 
+            this.menuScroll.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem1});
+            this.menuScroll.Name = "menuScroll";
+            this.menuScroll.Size = new System.Drawing.Size(170, 26);
+            this.menuScroll.Text = "toggle sync scroll";
+            this.menuScroll.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuScroll_ItemClicked);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(169, 22);
+            this.toolStripMenuItem1.Text = "Toggle sync scroll";
+            // 
             // chkSyncScroll
             // 
             this.chkSyncScroll.AutoSize = true;
@@ -1761,20 +1776,22 @@ namespace ChameleonMiniGUI
             // lbl_hbfilename2
             // 
             this.lbl_hbfilename2.AutoSize = true;
+            this.lbl_hbfilename2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_hbfilename2.Location = new System.Drawing.Point(640, 467);
             this.lbl_hbfilename2.Name = "lbl_hbfilename2";
-            this.lbl_hbfilename2.Size = new System.Drawing.Size(75, 13);
+            this.lbl_hbfilename2.Size = new System.Drawing.Size(30, 13);
             this.lbl_hbfilename2.TabIndex = 17;
-            this.lbl_hbfilename2.Text = "Filename: N/A";
+            this.lbl_hbfilename2.Text = "N/A";
             // 
             // lbl_hbfilename1
             // 
             this.lbl_hbfilename1.AutoSize = true;
+            this.lbl_hbfilename1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_hbfilename1.Location = new System.Drawing.Point(4, 467);
             this.lbl_hbfilename1.Name = "lbl_hbfilename1";
-            this.lbl_hbfilename1.Size = new System.Drawing.Size(75, 13);
+            this.lbl_hbfilename1.Size = new System.Drawing.Size(30, 13);
             this.lbl_hbfilename1.TabIndex = 15;
-            this.lbl_hbfilename1.Text = "Filename: N/A";
+            this.lbl_hbfilename1.Text = "N/A";
             // 
             // rbtn_bytewidth16
             // 
@@ -1877,8 +1894,8 @@ namespace ChameleonMiniGUI
             this.hexBox2.VScrollBarVisible = true;
             this.hexBox2.ByteProviderWriteFinished += new System.EventHandler(this.hexBox_ByteProviderWriteFinished);
             this.hexBox2.VScrollBarChanged += new Be.Windows.Forms.HexBox.VScrollBarChangedEventHandler(this.hexBox2_VScrollBarChanged);
-            this.hexBox2.MouseEnter += new System.EventHandler(this.hexBox2_MouseEnter);
             this.hexBox2.ToggleSyncScrollPressed += new System.EventHandler(this.toggleSyncScrollPressed);
+            this.hexBox2.MouseEnter += new System.EventHandler(this.hexBox2_MouseEnter);
             // 
             // hexBox1
             // 
@@ -1897,23 +1914,8 @@ namespace ChameleonMiniGUI
             this.hexBox1.VScrollBarVisible = true;
             this.hexBox1.ByteProviderWriteFinished += new System.EventHandler(this.hexBox_ByteProviderWriteFinished);
             this.hexBox1.VScrollBarChanged += new Be.Windows.Forms.HexBox.VScrollBarChangedEventHandler(this.hexBox1_VScrollBarChanged);
-            this.hexBox1.MouseEnter += new System.EventHandler(this.hexBox1_MouseEnter);
             this.hexBox1.ToggleSyncScrollPressed += new System.EventHandler(this.toggleSyncScrollPressed);
-            // 
-            // menuScroll
-            // 
-            this.menuScroll.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem1});
-            this.menuScroll.Name = "menuScroll";
-            this.menuScroll.Size = new System.Drawing.Size(170, 26);
-            this.menuScroll.Text = "toggle sync scroll";
-            this.menuScroll.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuScroll_ItemClicked);
-            // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(169, 22);
-            this.toolStripMenuItem1.Text = "Toggle sync scroll";
+            this.hexBox1.MouseEnter += new System.EventHandler(this.hexBox1_MouseEnter);
             // 
             // frm_main
             // 

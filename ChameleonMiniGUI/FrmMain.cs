@@ -801,6 +801,9 @@ namespace ChameleonMiniGUI
 
             this.Text = "Device disconnected";
 
+            pb_device.Image = pb_device.InitialImage;
+            FirmwareVersion = string.Empty;
+
             txt_constatus.Text = "NOT CONNECTED";
             txt_constatus.BackColor = Color.Red;
             txt_constatus.ForeColor = Color.White;
@@ -832,8 +835,6 @@ namespace ChameleonMiniGUI
             btn_disconnect.Enabled = false;
 
             btn_connect.Enabled = true;
-
-            pb_device.Image = null;
         }
 
         private void DeviceConnected()
@@ -939,14 +940,15 @@ namespace ChameleonMiniGUI
         private void OpenChameleonSerialPort()
         {
             this.Cursor = Cursors.WaitCursor;
-            pb_device.Image = null;
+            pb_device.Image = pb_device.InitialImage;
             txt_output.Text = string.Empty;
 
             //var searcher = new ManagementObjectSearcher("select DeviceID from Win32_SerialPort where Description = \"ChameleonMini Virtual Serial Port\"");
-            var searcher = new ManagementObjectSearcher("select Name,DeviceID from Win32_SerialPort ");
+            var searcher = new ManagementObjectSearcher("select Name,DeviceID,PNPDeviceID from Win32_SerialPort ");
             foreach (var obj in searcher.Get())
             {
                 var comPortStr = obj["DeviceID"].ToString();
+                var pnpId = obj["PNPDeviceID"].ToString();
 
                 _comport = new SerialPort(comPortStr, 115200)
                 {
@@ -967,18 +969,28 @@ namespace ChameleonMiniGUI
 
                 if (_comport.IsOpen)
                 {
+                    if (pnpId.Contains("VID_03EB&PID_2044"))
+                    {
+                        // revE
+                        _deviceIdentification = "Firmware RevE rebooted";
+                        pb_device.Image = (Bitmap)Properties.Resources.ResourceManager.GetObject("chamRevE");
+                    }
+                    else
+                    {
+                        // revG
+                        _deviceIdentification = "Firmware Official";
+                        pb_device.Image = (Bitmap)Properties.Resources.ResourceManager.GetObject("chamRevG1");
+                    }
+
                     // try without the "MY" extension first
                     FirmwareVersion = SendCommand("VERSION?") as string;
                     if (!string.IsNullOrEmpty(_firmwareVersion) && _firmwareVersion.Contains("Chameleon"))
                     {
                         _cmdExtension = string.Empty;
-                        _deviceIdentification = "Firmware Official";
                         txt_output.Text = $"Success{Environment.NewLine}Found Chameleon Mini device {comPortStr} with {_deviceIdentification} installed{Environment.NewLine}";
                         txt_output.Text += $"---------------------------------------------------------------{Environment.NewLine}";
                         _current_comport = comPortStr;
                         this.Cursor = Cursors.Default;
-
-                        pb_device.Image = (Bitmap)Properties.Resources.ResourceManager.GetObject("chamRevG1");
                         return;
                     }
 
@@ -986,13 +998,11 @@ namespace ChameleonMiniGUI
                     if (!string.IsNullOrEmpty(_firmwareVersion) && _firmwareVersion.Contains("Chameleon"))
                     {
                         _cmdExtension = "MY";
-                        _deviceIdentification = "Firmware RevE rebooted";
                         txt_output.Text = $"Success{Environment.NewLine}Found Chameleon Mini device {comPortStr} with {_deviceIdentification} installed{Environment.NewLine}";
                         txt_output.Text += $"---------------------------------------------------------------{Environment.NewLine}";
                         _current_comport = comPortStr;
                         this.Cursor = Cursors.Default;
 
-                        pb_device.Image = (Bitmap)Properties.Resources.ResourceManager.GetObject("chamRevE");
                         return;
                     }
 

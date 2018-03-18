@@ -35,7 +35,6 @@ namespace ChameleonMiniGUI
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.gb_output = new System.Windows.Forms.GroupBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.pb_device = new System.Windows.Forms.PictureBox();
             this.gb_keepalive = new System.Windows.Forms.GroupBox();
             this.btn_setInterval = new System.Windows.Forms.Button();
             this.txt_interval = new System.Windows.Forms.TextBox();
@@ -186,9 +185,9 @@ namespace ChameleonMiniGUI
             this.hexBox2 = new Be.Windows.Forms.HexBox();
             this.hexBox1 = new Be.Windows.Forms.HexBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.pb_device = new System.Windows.Forms.PictureBox();
             this.gb_output.SuspendLayout();
             this.tabPage2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pb_device)).BeginInit();
             this.gb_keepalive.SuspendLayout();
             this.gb_connectionSettings.SuspendLayout();
             this.gb_bootloader.SuspendLayout();
@@ -207,6 +206,7 @@ namespace ChameleonMiniGUI
             this.tabControl1.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.menuScroll.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_device)).BeginInit();
             this.SuspendLayout();
             // 
             // txt_output
@@ -239,7 +239,6 @@ namespace ChameleonMiniGUI
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.pb_device);
             this.tabPage2.Controls.Add(this.gb_keepalive);
             this.tabPage2.Controls.Add(this.gb_connectionSettings);
             this.tabPage2.Controls.Add(this.gb_bootloader);
@@ -252,23 +251,15 @@ namespace ChameleonMiniGUI
             this.tabPage2.Text = "Settings";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // pb_device
-            // 
-            this.pb_device.Location = new System.Drawing.Point(1011, 52);
-            this.pb_device.Name = "pb_device";
-            this.pb_device.Size = new System.Drawing.Size(206, 238);
-            this.pb_device.TabIndex = 5;
-            this.pb_device.TabStop = false;
-            // 
             // gb_keepalive
             // 
             this.gb_keepalive.Controls.Add(this.btn_setInterval);
             this.gb_keepalive.Controls.Add(this.txt_interval);
             this.gb_keepalive.Controls.Add(this.lbl_interval);
             this.gb_keepalive.Controls.Add(this.chk_keepalive);
-            this.gb_keepalive.Location = new System.Drawing.Point(656, 42);
+            this.gb_keepalive.Location = new System.Drawing.Point(717, 27);
             this.gb_keepalive.Name = "gb_keepalive";
-            this.gb_keepalive.Size = new System.Drawing.Size(308, 115);
+            this.gb_keepalive.Size = new System.Drawing.Size(261, 166);
             this.gb_keepalive.TabIndex = 4;
             this.gb_keepalive.TabStop = false;
             this.gb_keepalive.Text = "Keep Alive";
@@ -276,7 +267,7 @@ namespace ChameleonMiniGUI
             // btn_setInterval
             // 
             this.btn_setInterval.Enabled = false;
-            this.btn_setInterval.Location = new System.Drawing.Point(212, 62);
+            this.btn_setInterval.Location = new System.Drawing.Point(99, 111);
             this.btn_setInterval.Name = "btn_setInterval";
             this.btn_setInterval.Size = new System.Drawing.Size(69, 30);
             this.btn_setInterval.TabIndex = 3;
@@ -286,7 +277,7 @@ namespace ChameleonMiniGUI
             // 
             // txt_interval
             // 
-            this.txt_interval.Location = new System.Drawing.Point(37, 68);
+            this.txt_interval.Location = new System.Drawing.Point(29, 68);
             this.txt_interval.Name = "txt_interval";
             this.txt_interval.Size = new System.Drawing.Size(69, 20);
             this.txt_interval.TabIndex = 2;
@@ -294,7 +285,7 @@ namespace ChameleonMiniGUI
             // lbl_interval
             // 
             this.lbl_interval.AutoSize = true;
-            this.lbl_interval.Location = new System.Drawing.Point(113, 71);
+            this.lbl_interval.Location = new System.Drawing.Point(104, 71);
             this.lbl_interval.Name = "lbl_interval";
             this.lbl_interval.Size = new System.Drawing.Size(64, 13);
             this.lbl_interval.TabIndex = 1;
@@ -303,7 +294,7 @@ namespace ChameleonMiniGUI
             // chk_keepalive
             // 
             this.chk_keepalive.AutoSize = true;
-            this.chk_keepalive.Location = new System.Drawing.Point(37, 33);
+            this.chk_keepalive.Location = new System.Drawing.Point(29, 33);
             this.chk_keepalive.Name = "chk_keepalive";
             this.chk_keepalive.Size = new System.Drawing.Size(209, 17);
             this.chk_keepalive.TabIndex = 0;
@@ -312,13 +303,14 @@ namespace ChameleonMiniGUI
             // 
             // gb_connectionSettings
             // 
+            this.gb_connectionSettings.Controls.Add(this.pb_device);
             this.gb_connectionSettings.Controls.Add(this.tb_firmware);
             this.gb_connectionSettings.Controls.Add(this.txt_constatus);
             this.gb_connectionSettings.Controls.Add(this.btn_disconnect);
             this.gb_connectionSettings.Controls.Add(this.btn_connect);
-            this.gb_connectionSettings.Location = new System.Drawing.Point(288, 42);
+            this.gb_connectionSettings.Location = new System.Drawing.Point(210, 24);
             this.gb_connectionSettings.Name = "gb_connectionSettings";
-            this.gb_connectionSettings.Size = new System.Drawing.Size(347, 115);
+            this.gb_connectionSettings.Size = new System.Drawing.Size(478, 169);
             this.gb_connectionSettings.TabIndex = 3;
             this.gb_connectionSettings.TabStop = false;
             this.gb_connectionSettings.Text = "Connection status";
@@ -326,7 +318,7 @@ namespace ChameleonMiniGUI
             // tb_firmware
             // 
             this.tb_firmware.Enabled = false;
-            this.tb_firmware.Location = new System.Drawing.Point(44, 70);
+            this.tb_firmware.Location = new System.Drawing.Point(188, 94);
             this.tb_firmware.Name = "tb_firmware";
             this.tb_firmware.ReadOnly = true;
             this.tb_firmware.Size = new System.Drawing.Size(165, 20);
@@ -334,7 +326,7 @@ namespace ChameleonMiniGUI
             // 
             // txt_constatus
             // 
-            this.txt_constatus.Location = new System.Drawing.Point(44, 30);
+            this.txt_constatus.Location = new System.Drawing.Point(188, 54);
             this.txt_constatus.Name = "txt_constatus";
             this.txt_constatus.ReadOnly = true;
             this.txt_constatus.Size = new System.Drawing.Size(129, 20);
@@ -344,7 +336,7 @@ namespace ChameleonMiniGUI
             // btn_disconnect
             // 
             this.btn_disconnect.Enabled = false;
-            this.btn_disconnect.Location = new System.Drawing.Point(229, 64);
+            this.btn_disconnect.Location = new System.Drawing.Point(373, 88);
             this.btn_disconnect.Name = "btn_disconnect";
             this.btn_disconnect.Size = new System.Drawing.Size(75, 30);
             this.btn_disconnect.TabIndex = 1;
@@ -354,7 +346,7 @@ namespace ChameleonMiniGUI
             // 
             // btn_connect
             // 
-            this.btn_connect.Location = new System.Drawing.Point(229, 26);
+            this.btn_connect.Location = new System.Drawing.Point(373, 50);
             this.btn_connect.Name = "btn_connect";
             this.btn_connect.Size = new System.Drawing.Size(75, 30);
             this.btn_connect.TabIndex = 0;
@@ -370,9 +362,9 @@ namespace ChameleonMiniGUI
             this.gb_bootloader.Controls.Add(this.lbl_upgrade);
             this.gb_bootloader.Controls.Add(this.btn_bootmode);
             this.gb_bootloader.Controls.Add(this.btn_exitboot);
-            this.gb_bootloader.Location = new System.Drawing.Point(288, 311);
+            this.gb_bootloader.Location = new System.Drawing.Point(210, 330);
             this.gb_bootloader.Name = "gb_bootloader";
-            this.gb_bootloader.Size = new System.Drawing.Size(676, 136);
+            this.gb_bootloader.Size = new System.Drawing.Size(768, 136);
             this.gb_bootloader.TabIndex = 2;
             this.gb_bootloader.TabStop = false;
             this.gb_bootloader.Text = "Reset && Bootloader options";
@@ -380,7 +372,7 @@ namespace ChameleonMiniGUI
             // lbl_defaults
             // 
             this.lbl_defaults.AutoSize = true;
-            this.lbl_defaults.Location = new System.Drawing.Point(141, 93);
+            this.lbl_defaults.Location = new System.Drawing.Point(197, 93);
             this.lbl_defaults.Name = "lbl_defaults";
             this.lbl_defaults.Size = new System.Drawing.Size(472, 13);
             this.lbl_defaults.TabIndex = 10;
@@ -390,7 +382,7 @@ namespace ChameleonMiniGUI
             // lbl_reset
             // 
             this.lbl_reset.AutoSize = true;
-            this.lbl_reset.Location = new System.Drawing.Point(141, 35);
+            this.lbl_reset.Location = new System.Drawing.Point(197, 35);
             this.lbl_reset.Name = "lbl_reset";
             this.lbl_reset.Size = new System.Drawing.Size(331, 13);
             this.lbl_reset.TabIndex = 9;
@@ -399,7 +391,7 @@ namespace ChameleonMiniGUI
             // btn_reset
             // 
             this.btn_reset.Enabled = false;
-            this.btn_reset.Location = new System.Drawing.Point(44, 30);
+            this.btn_reset.Location = new System.Drawing.Point(83, 30);
             this.btn_reset.Name = "btn_reset";
             this.btn_reset.Size = new System.Drawing.Size(82, 23);
             this.btn_reset.TabIndex = 8;
@@ -410,7 +402,7 @@ namespace ChameleonMiniGUI
             // lbl_upgrade
             // 
             this.lbl_upgrade.AutoSize = true;
-            this.lbl_upgrade.Location = new System.Drawing.Point(141, 64);
+            this.lbl_upgrade.Location = new System.Drawing.Point(197, 64);
             this.lbl_upgrade.Name = "lbl_upgrade";
             this.lbl_upgrade.Size = new System.Drawing.Size(266, 13);
             this.lbl_upgrade.TabIndex = 7;
@@ -419,7 +411,7 @@ namespace ChameleonMiniGUI
             // btn_bootmode
             // 
             this.btn_bootmode.Enabled = false;
-            this.btn_bootmode.Location = new System.Drawing.Point(44, 59);
+            this.btn_bootmode.Location = new System.Drawing.Point(83, 59);
             this.btn_bootmode.Name = "btn_bootmode";
             this.btn_bootmode.Size = new System.Drawing.Size(82, 23);
             this.btn_bootmode.TabIndex = 6;
@@ -429,7 +421,7 @@ namespace ChameleonMiniGUI
             // 
             // btn_exitboot
             // 
-            this.btn_exitboot.Location = new System.Drawing.Point(44, 88);
+            this.btn_exitboot.Location = new System.Drawing.Point(83, 88);
             this.btn_exitboot.Name = "btn_exitboot";
             this.btn_exitboot.Size = new System.Drawing.Size(82, 23);
             this.btn_exitboot.TabIndex = 5;
@@ -442,9 +434,9 @@ namespace ChameleonMiniGUI
             this.gb_defaultdownload.Controls.Add(this.lbl_defaultdownload);
             this.gb_defaultdownload.Controls.Add(this.txt_defaultdownload);
             this.gb_defaultdownload.Controls.Add(this.btn_browsedownloads);
-            this.gb_defaultdownload.Location = new System.Drawing.Point(288, 175);
+            this.gb_defaultdownload.Location = new System.Drawing.Point(210, 205);
             this.gb_defaultdownload.Name = "gb_defaultdownload";
-            this.gb_defaultdownload.Size = new System.Drawing.Size(347, 115);
+            this.gb_defaultdownload.Size = new System.Drawing.Size(429, 115);
             this.gb_defaultdownload.TabIndex = 1;
             this.gb_defaultdownload.TabStop = false;
             this.gb_defaultdownload.Text = "Download Location";
@@ -452,7 +444,7 @@ namespace ChameleonMiniGUI
             // lbl_defaultdownload
             // 
             this.lbl_defaultdownload.AutoSize = true;
-            this.lbl_defaultdownload.Location = new System.Drawing.Point(13, 27);
+            this.lbl_defaultdownload.Location = new System.Drawing.Point(13, 33);
             this.lbl_defaultdownload.Name = "lbl_defaultdownload";
             this.lbl_defaultdownload.Size = new System.Drawing.Size(267, 13);
             this.lbl_defaultdownload.TabIndex = 2;
@@ -460,14 +452,14 @@ namespace ChameleonMiniGUI
             // 
             // txt_defaultdownload
             // 
-            this.txt_defaultdownload.Location = new System.Drawing.Point(16, 51);
+            this.txt_defaultdownload.Location = new System.Drawing.Point(16, 57);
             this.txt_defaultdownload.Name = "txt_defaultdownload";
-            this.txt_defaultdownload.Size = new System.Drawing.Size(317, 20);
+            this.txt_defaultdownload.Size = new System.Drawing.Size(337, 20);
             this.txt_defaultdownload.TabIndex = 1;
             // 
             // btn_browsedownloads
             // 
-            this.btn_browsedownloads.Location = new System.Drawing.Point(300, 77);
+            this.btn_browsedownloads.Location = new System.Drawing.Point(373, 55);
             this.btn_browsedownloads.Name = "btn_browsedownloads";
             this.btn_browsedownloads.Size = new System.Drawing.Size(33, 23);
             this.btn_browsedownloads.TabIndex = 0;
@@ -480,7 +472,7 @@ namespace ChameleonMiniGUI
             this.gb_rssi.Controls.Add(this.btn_rssirefresh);
             this.gb_rssi.Controls.Add(this.txt_rssi);
             this.gb_rssi.Controls.Add(this.lbl_rssi);
-            this.gb_rssi.Location = new System.Drawing.Point(656, 175);
+            this.gb_rssi.Location = new System.Drawing.Point(670, 205);
             this.gb_rssi.Name = "gb_rssi";
             this.gb_rssi.Size = new System.Drawing.Size(308, 115);
             this.gb_rssi.TabIndex = 0;
@@ -490,7 +482,7 @@ namespace ChameleonMiniGUI
             // btn_rssirefresh
             // 
             this.btn_rssirefresh.Enabled = false;
-            this.btn_rssirefresh.Location = new System.Drawing.Point(212, 51);
+            this.btn_rssirefresh.Location = new System.Drawing.Point(199, 51);
             this.btn_rssirefresh.Name = "btn_rssirefresh";
             this.btn_rssirefresh.Size = new System.Drawing.Size(69, 30);
             this.btn_rssirefresh.TabIndex = 2;
@@ -500,7 +492,7 @@ namespace ChameleonMiniGUI
             // 
             // txt_rssi
             // 
-            this.txt_rssi.Location = new System.Drawing.Point(37, 61);
+            this.txt_rssi.Location = new System.Drawing.Point(47, 61);
             this.txt_rssi.Name = "txt_rssi";
             this.txt_rssi.Size = new System.Drawing.Size(100, 20);
             this.txt_rssi.TabIndex = 1;
@@ -508,7 +500,7 @@ namespace ChameleonMiniGUI
             // lbl_rssi
             // 
             this.lbl_rssi.AutoSize = true;
-            this.lbl_rssi.Location = new System.Drawing.Point(34, 38);
+            this.lbl_rssi.Location = new System.Drawing.Point(44, 38);
             this.lbl_rssi.Name = "lbl_rssi";
             this.lbl_rssi.Size = new System.Drawing.Size(69, 13);
             this.lbl_rssi.TabIndex = 0;
@@ -1753,14 +1745,14 @@ namespace ChameleonMiniGUI
             this.menuScroll.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem1});
             this.menuScroll.Name = "menuScroll";
-            this.menuScroll.Size = new System.Drawing.Size(170, 26);
+            this.menuScroll.Size = new System.Drawing.Size(169, 26);
             this.menuScroll.Text = "toggle sync scroll";
             this.menuScroll.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuScroll_ItemClicked);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(169, 22);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(168, 22);
             this.toolStripMenuItem1.Text = "Toggle sync scroll";
             // 
             // chkSyncScroll
@@ -1917,6 +1909,18 @@ namespace ChameleonMiniGUI
             this.hexBox1.ToggleSyncScrollPressed += new System.EventHandler(this.toggleSyncScrollPressed);
             this.hexBox1.MouseEnter += new System.EventHandler(this.hexBox1_MouseEnter);
             // 
+            // pb_device
+            // 
+            this.pb_device.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pb_device.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pb_device.Image = global::ChameleonMiniGUI.Properties.Resources.usb_warning;
+            this.pb_device.InitialImage = global::ChameleonMiniGUI.Properties.Resources.usb_warning;
+            this.pb_device.Location = new System.Drawing.Point(25, 27);
+            this.pb_device.Name = "pb_device";
+            this.pb_device.Size = new System.Drawing.Size(128, 128);
+            this.pb_device.TabIndex = 5;
+            this.pb_device.TabStop = false;
+            // 
             // frm_main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1934,7 +1938,6 @@ namespace ChameleonMiniGUI
             this.gb_output.ResumeLayout(false);
             this.gb_output.PerformLayout();
             this.tabPage2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pb_device)).EndInit();
             this.gb_keepalive.ResumeLayout(false);
             this.gb_keepalive.PerformLayout();
             this.gb_connectionSettings.ResumeLayout(false);
@@ -1968,6 +1971,7 @@ namespace ChameleonMiniGUI
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
             this.menuScroll.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pb_device)).EndInit();
             this.ResumeLayout(false);
 
         }

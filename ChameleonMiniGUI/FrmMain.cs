@@ -718,10 +718,12 @@ namespace ChameleonMiniGUI
                 }
             }
         }
+
         private void tabPage3_Scroll(object sender, ScrollEventArgs e)
         {
 
         }
+
         private void tabPage3_MouseEnter(object sender, EventArgs e)
         {
             if (!hexBox1.Focused && !hexBox2.Focused)
@@ -735,6 +737,10 @@ namespace ChameleonMiniGUI
             chkSyncScroll.Checked = !chkSyncScroll.Checked;
         }
 
+        private void toggleSyncScrollPressed(object sender, EventArgs e)
+        {
+            chkSyncScroll.Checked = !chkSyncScroll.Checked;
+        }
 
         private void hexBox1_MouseEnter(object sender, EventArgs e)
         {

@@ -1878,6 +1878,7 @@ namespace ChameleonMiniGUI
             this.hexBox2.ByteProviderWriteFinished += new System.EventHandler(this.hexBox_ByteProviderWriteFinished);
             this.hexBox2.VScrollBarChanged += new Be.Windows.Forms.HexBox.VScrollBarChangedEventHandler(this.hexBox2_VScrollBarChanged);
             this.hexBox2.MouseEnter += new System.EventHandler(this.hexBox2_MouseEnter);
+            this.hexBox2.ToggleSyncScrollPressed += new System.EventHandler(this.toggleSyncScrollPressed);
             // 
             // hexBox1
             // 
@@ -1897,6 +1898,7 @@ namespace ChameleonMiniGUI
             this.hexBox1.ByteProviderWriteFinished += new System.EventHandler(this.hexBox_ByteProviderWriteFinished);
             this.hexBox1.VScrollBarChanged += new Be.Windows.Forms.HexBox.VScrollBarChangedEventHandler(this.hexBox1_VScrollBarChanged);
             this.hexBox1.MouseEnter += new System.EventHandler(this.hexBox1_MouseEnter);
+            this.hexBox1.ToggleSyncScrollPressed += new System.EventHandler(this.toggleSyncScrollPressed);
             // 
             // menuScroll
             // 

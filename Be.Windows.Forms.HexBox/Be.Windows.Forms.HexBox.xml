@@ -39,6 +39,11 @@
             Contains the "Select All"-ToolStripMenuItem object.
             </summary>
         </member>
+        <member name="F:Be.Windows.Forms.BuiltInContextMenu._toggleSyncScrollToolStripMenuItem">
+            <summary>
+            Contains the "Select All"-ToolStripMenuItem object.
+            </summary>
+        </member>
         <member name="M:Be.Windows.Forms.BuiltInContextMenu.#ctor(Be.Windows.Forms.HexBox)">
             <summary>
             Initializes a new instance of BuildInContextMenu class.
@@ -92,6 +97,13 @@
             <param name="sender">the sender object</param>
             <param name="e">the event data</param>
         </member>
+        <member name="M:Be.Windows.Forms.BuiltInContextMenu.ToggleSyncScrollMenuItem_Click(System.Object,System.EventArgs)">
+            <summary>
+            The handler for the "Toggle Sync Scroll"-Click event
+            </summary>
+            <param name="sender">the sender object</param>
+            <param name="e">the event data</param>
+        </member>
         <member name="P:Be.Windows.Forms.BuiltInContextMenu.CopyMenuItemText">
             <summary>
             Gets or sets the custom text of the "Copy" ContextMenuStrip item.
@@ -110,6 +122,11 @@
         <member name="P:Be.Windows.Forms.BuiltInContextMenu.SelectAllMenuItemText">
             <summary>
             Gets or sets the custom text of the "Select All" ContextMenuStrip item.
+            </summary>
+        </member>
+        <member name="P:Be.Windows.Forms.BuiltInContextMenu.ToggleSyncScrollMenuItemText">
+            <summary>
+            Gets or sets the custom text of the "Toggle Sync Scroll" ContextMenuStrip item.
             </summary>
         </member>
         <member name="P:Be.Windows.Forms.BuiltInContextMenu.CutMenuItemTextInternal">
@@ -132,6 +149,11 @@
             Gets the text of the "Select All" ContextMenuStrip item.
             </summary>
         </member>
+        <member name="P:Be.Windows.Forms.BuiltInContextMenu.ToggleSyncScrollMenuItemTextInternal">
+            <summary>
+            Gets the text of the "Toggle Sync Scroll" ContextMenuStrip item.
+            </summary>
+        </member>
         <member name="P:Be.Windows.Forms.BuiltInContextMenu.CutMenuItemImage">
             <summary>
             Gets or sets the image of the "Cut" ContextMenuStrip item.
@@ -150,6 +172,11 @@
         <member name="P:Be.Windows.Forms.BuiltInContextMenu.SelectAllMenuItemImage">
             <summary>
             Gets or sets the image of the "Select All" ContextMenuStrip item.
+            </summary>
+        </member>
+        <member name="P:Be.Windows.Forms.BuiltInContextMenu.ToggleSyncScrollMenuItemImage">
+            <summary>
+            Gets or sets the image of the "Toggle Sync Scroll" ContextMenuStrip item.
             </summary>
         </member>
         <member name="T:Be.Windows.Forms.ByteCollection">
@@ -1050,6 +1077,11 @@
             Occurs, when the value of the vertical scroll bar has changed.
             </summary>
         </member>
+        <member name="E:Be.Windows.Forms.HexBox.ToggleSyncScrollPressed">
+            <summary>
+            Occurs, when the toggle sync scroll menu item is clicked.
+            </summary>
+        </member>
         <member name="E:Be.Windows.Forms.HexBox.HexCasingChanged">
             <summary>
             Occurs, when the value of HexCasing property has changed.
@@ -1115,6 +1147,11 @@
             Scrolls the specific byte into view
             </summary>
             <param name="index">the index of the byte</param>
+        </member>
+        <member name="M:Be.Windows.Forms.HexBox.ToggleSyncScroll">
+            <summary>
+            Sends the toggle sync scroll event.
+            </summary>
         </member>
         <member name="M:Be.Windows.Forms.HexBox.CanSelectAll">
             <summary>

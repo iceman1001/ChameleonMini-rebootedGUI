@@ -1340,6 +1340,11 @@ namespace Be.Windows.Forms
         [Description("Occurs, when the value of the vertical scroll bar has changed.")]
         public event VScrollBarChangedEventHandler VScrollBarChanged;
         /// <summary>
+        /// Occurs, when the toggle sync scroll menu item is clicked.
+        /// </summary>
+        [Description("Occurs, when the toggle sync scroll menu item is clicked.")]
+        public event EventHandler ToggleSyncScrollPressed;
+        /// <summary>
         /// Occurs, when the value of HexCasing property has changed.
         /// </summary>
         [Description("Occurs, when the value of HexCasing property has changed.")]
@@ -1676,7 +1681,16 @@ namespace Be.Windows.Forms
 				PerformScrollThumpPosition(line);
 			}
 		}
-		#endregion
+
+        /// <summary>
+        /// Sends the toggle sync scroll event.
+        /// </summary>
+        public void ToggleSyncScroll()
+        {
+            if (ToggleSyncScrollPressed != null)
+                ToggleSyncScrollPressed(this, EventArgs.Empty);
+        }
+        #endregion
 
         #region Highlight methods
 

@@ -975,7 +975,7 @@ namespace ChameleonMiniGUI
                         _deviceIdentification = "Firmware RevE rebooted";
                         pb_device.Image = (Bitmap)Properties.Resources.ResourceManager.GetObject("chamRevE");
                     }
-                    else
+                    else if ( pnpId.Contains("VID_16D0_04B2"))
                     {
                         // revG
                         _deviceIdentification = "Firmware Official";

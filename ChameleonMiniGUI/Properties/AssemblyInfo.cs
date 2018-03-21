@@ -6,9 +6,9 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("ChameleonMini GUI (iceman)")]
-[assembly: AssemblyDescription("GUI for Chameleon Mini - Rebooted  Rev E")]
+[assembly: AssemblyDescription("GUI for Chameleon Mini - Rebooted  RevE or RevG")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("IceSQL AB")]
 [assembly: AssemblyProduct("ChameleonMini GUI")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("iceman")]

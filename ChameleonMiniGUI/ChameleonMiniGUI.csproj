@@ -111,7 +111,15 @@
     <Compile Include="Attacks\MfKeyAttacks.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="MultiLanguage.cs" />
     <Compile Include="XMODEM.cs" />
+    <Content Include="Languages\Svenska.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Languages\English.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Properties\DataSources\MultiLanguage.datasource" />
     <None Include="Resources\usb-warning.jpg" />
     <None Include="Resources\chamRevE.png" />
     <None Include="Resources\chamRevG1.png" />

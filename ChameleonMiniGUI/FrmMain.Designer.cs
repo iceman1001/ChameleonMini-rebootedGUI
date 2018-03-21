@@ -34,6 +34,8 @@ namespace ChameleonMiniGUI
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.gb_output = new System.Windows.Forms.GroupBox();
+            this.cb_languages = new System.Windows.Forms.ComboBox();
+            this.bsLanguages = new System.Windows.Forms.BindingSource(this.components);
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.gb_keepalive = new System.Windows.Forms.GroupBox();
             this.btn_setInterval = new System.Windows.Forms.Button();
@@ -41,6 +43,7 @@ namespace ChameleonMiniGUI
             this.lbl_interval = new System.Windows.Forms.Label();
             this.chk_keepalive = new System.Windows.Forms.CheckBox();
             this.gb_connectionSettings = new System.Windows.Forms.GroupBox();
+            this.pb_device = new System.Windows.Forms.PictureBox();
             this.tb_firmware = new System.Windows.Forms.TextBox();
             this.txt_constatus = new System.Windows.Forms.TextBox();
             this.btn_disconnect = new System.Windows.Forms.Button();
@@ -185,11 +188,13 @@ namespace ChameleonMiniGUI
             this.hexBox2 = new Be.Windows.Forms.HexBox();
             this.hexBox1 = new Be.Windows.Forms.HexBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.pb_device = new System.Windows.Forms.PictureBox();
+            this.gb_language = new System.Windows.Forms.GroupBox();
             this.gb_output.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bsLanguages)).BeginInit();
             this.tabPage2.SuspendLayout();
             this.gb_keepalive.SuspendLayout();
             this.gb_connectionSettings.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_device)).BeginInit();
             this.gb_bootloader.SuspendLayout();
             this.gb_defaultdownload.SuspendLayout();
             this.gb_rssi.SuspendLayout();
@@ -206,7 +211,7 @@ namespace ChameleonMiniGUI
             this.tabControl1.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.menuScroll.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pb_device)).BeginInit();
+            this.gb_language.SuspendLayout();
             this.SuspendLayout();
             // 
             // txt_output
@@ -237,8 +242,19 @@ namespace ChameleonMiniGUI
             this.gb_output.TabStop = false;
             this.gb_output.Text = "Output";
             // 
+            // cb_languages
+            // 
+            this.cb_languages.DataSource = this.bsLanguages;
+            this.cb_languages.FormattingEnabled = true;
+            this.cb_languages.Location = new System.Drawing.Point(27, 33);
+            this.cb_languages.Name = "cb_languages";
+            this.cb_languages.Size = new System.Drawing.Size(121, 21);
+            this.cb_languages.TabIndex = 7;
+            this.cb_languages.SelectedIndexChanged += new System.EventHandler(this.cb_languages_SelectedIndexChanged);
+            // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.gb_language);
             this.tabPage2.Controls.Add(this.gb_keepalive);
             this.tabPage2.Controls.Add(this.gb_connectionSettings);
             this.tabPage2.Controls.Add(this.gb_bootloader);
@@ -257,7 +273,7 @@ namespace ChameleonMiniGUI
             this.gb_keepalive.Controls.Add(this.txt_interval);
             this.gb_keepalive.Controls.Add(this.lbl_interval);
             this.gb_keepalive.Controls.Add(this.chk_keepalive);
-            this.gb_keepalive.Location = new System.Drawing.Point(717, 27);
+            this.gb_keepalive.Location = new System.Drawing.Point(717, 24);
             this.gb_keepalive.Name = "gb_keepalive";
             this.gb_keepalive.Size = new System.Drawing.Size(261, 166);
             this.gb_keepalive.TabIndex = 4;
@@ -267,7 +283,7 @@ namespace ChameleonMiniGUI
             // btn_setInterval
             // 
             this.btn_setInterval.Enabled = false;
-            this.btn_setInterval.Location = new System.Drawing.Point(99, 111);
+            this.btn_setInterval.Location = new System.Drawing.Point(31, 106);
             this.btn_setInterval.Name = "btn_setInterval";
             this.btn_setInterval.Size = new System.Drawing.Size(69, 30);
             this.btn_setInterval.TabIndex = 3;
@@ -310,10 +326,22 @@ namespace ChameleonMiniGUI
             this.gb_connectionSettings.Controls.Add(this.btn_connect);
             this.gb_connectionSettings.Location = new System.Drawing.Point(210, 24);
             this.gb_connectionSettings.Name = "gb_connectionSettings";
-            this.gb_connectionSettings.Size = new System.Drawing.Size(478, 169);
+            this.gb_connectionSettings.Size = new System.Drawing.Size(478, 166);
             this.gb_connectionSettings.TabIndex = 3;
             this.gb_connectionSettings.TabStop = false;
             this.gb_connectionSettings.Text = "Connection status";
+            // 
+            // pb_device
+            // 
+            this.pb_device.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pb_device.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pb_device.Image = global::ChameleonMiniGUI.Properties.Resources.usb_warning;
+            this.pb_device.InitialImage = global::ChameleonMiniGUI.Properties.Resources.usb_warning;
+            this.pb_device.Location = new System.Drawing.Point(25, 27);
+            this.pb_device.Name = "pb_device";
+            this.pb_device.Size = new System.Drawing.Size(128, 128);
+            this.pb_device.TabIndex = 5;
+            this.pb_device.TabStop = false;
             // 
             // tb_firmware
             // 
@@ -1735,7 +1763,6 @@ namespace ChameleonMiniGUI
             this.tabPage3.TabIndex = 4;
             this.tabPage3.Text = "Dump Management";
             this.tabPage3.UseVisualStyleBackColor = true;
-            this.tabPage3.Scroll += new System.Windows.Forms.ScrollEventHandler(this.tabPage3_Scroll);
             this.tabPage3.DragDrop += new System.Windows.Forms.DragEventHandler(this.tabPage3_DragDrop);
             this.tabPage3.DragEnter += new System.Windows.Forms.DragEventHandler(this.tabPage3_DragEnter);
             this.tabPage3.MouseEnter += new System.EventHandler(this.tabPage3_MouseEnter);
@@ -1745,14 +1772,14 @@ namespace ChameleonMiniGUI
             this.menuScroll.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem1});
             this.menuScroll.Name = "menuScroll";
-            this.menuScroll.Size = new System.Drawing.Size(169, 26);
+            this.menuScroll.Size = new System.Drawing.Size(170, 26);
             this.menuScroll.Text = "toggle sync scroll";
             this.menuScroll.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuScroll_ItemClicked);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(168, 22);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(169, 22);
             this.toolStripMenuItem1.Text = "Toggle sync scroll";
             // 
             // chkSyncScroll
@@ -1909,17 +1936,15 @@ namespace ChameleonMiniGUI
             this.hexBox1.ToggleSyncScrollPressed += new System.EventHandler(this.toggleSyncScrollPressed);
             this.hexBox1.MouseEnter += new System.EventHandler(this.hexBox1_MouseEnter);
             // 
-            // pb_device
+            // gb_language
             // 
-            this.pb_device.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pb_device.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pb_device.Image = global::ChameleonMiniGUI.Properties.Resources.usb_warning;
-            this.pb_device.InitialImage = global::ChameleonMiniGUI.Properties.Resources.usb_warning;
-            this.pb_device.Location = new System.Drawing.Point(25, 27);
-            this.pb_device.Name = "pb_device";
-            this.pb_device.Size = new System.Drawing.Size(128, 128);
-            this.pb_device.TabIndex = 5;
-            this.pb_device.TabStop = false;
+            this.gb_language.Controls.Add(this.cb_languages);
+            this.gb_language.Location = new System.Drawing.Point(1007, 24);
+            this.gb_language.Name = "gb_language";
+            this.gb_language.Size = new System.Drawing.Size(176, 166);
+            this.gb_language.TabIndex = 8;
+            this.gb_language.TabStop = false;
+            this.gb_language.Text = "Language";
             // 
             // frm_main
             // 
@@ -1937,11 +1962,13 @@ namespace ChameleonMiniGUI
             this.Load += new System.EventHandler(this.frm_main_Load);
             this.gb_output.ResumeLayout(false);
             this.gb_output.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bsLanguages)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.gb_keepalive.ResumeLayout(false);
             this.gb_keepalive.PerformLayout();
             this.gb_connectionSettings.ResumeLayout(false);
             this.gb_connectionSettings.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_device)).EndInit();
             this.gb_bootloader.ResumeLayout(false);
             this.gb_bootloader.PerformLayout();
             this.gb_defaultdownload.ResumeLayout(false);
@@ -1971,7 +1998,7 @@ namespace ChameleonMiniGUI
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
             this.menuScroll.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pb_device)).EndInit();
+            this.gb_language.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -2133,5 +2160,8 @@ namespace ChameleonMiniGUI
         private System.Windows.Forms.PictureBox pb_device;
         private System.Windows.Forms.ContextMenuStrip menuScroll;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ComboBox cb_languages;
+        private System.Windows.Forms.BindingSource bsLanguages;
+        private System.Windows.Forms.GroupBox gb_language;
     }
 }

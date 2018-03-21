@@ -137,6 +137,17 @@ namespace ChameleonMiniGUI
                 lockFlag = false;
             }
 
+            var t = new Templating();
+            var templates = t.GetTemplates();
+            if (templates.Any())
+            {
+                lockFlag = true;
+                bsTemplates.DataSource = templates;
+                cb_templateA.DisplayMember = "Key";
+                cb_templateA.ValueMember = "Value";
+                lockFlag = false;
+            }
+
         }
 
         private void frm_main_FormClosed(object sender, FormClosedEventArgs e)
@@ -183,6 +194,27 @@ namespace ChameleonMiniGUI
                 Properties.Settings.Default.Language = o.Value;
                 Properties.Settings.Default.Save();
             }
+        }
+
+        private void cb_templateA_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lockFlag)
+                return;
+
+            var c = (ComboBox) sender;
+
+            if (c?.SelectedItem == null) return;
+            if (c.SelectedIndex == 0)
+            {
+                PerformComparison();
+                return;
+            }
+
+            var o = (KeyValuePair<string, string>)c.SelectedItem;
+
+            var t = new Templating();
+            t.LoadTemplate(hexBox1, o.Value);
+            t.LoadTemplate(hexBox2, o.Value);
         }
 
         private void btn_apply_Click(object sender, EventArgs e)

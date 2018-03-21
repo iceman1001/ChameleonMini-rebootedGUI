@@ -37,6 +37,7 @@ namespace ChameleonMiniGUI
             this.cb_languages = new System.Windows.Forms.ComboBox();
             this.bsLanguages = new System.Windows.Forms.BindingSource(this.components);
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.gb_language = new System.Windows.Forms.GroupBox();
             this.gb_keepalive = new System.Windows.Forms.GroupBox();
             this.btn_setInterval = new System.Windows.Forms.Button();
             this.txt_interval = new System.Windows.Forms.TextBox();
@@ -174,6 +175,7 @@ namespace ChameleonMiniGUI
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.menuScroll = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.cb_templateA = new System.Windows.Forms.ComboBox();
             this.chkSyncScroll = new System.Windows.Forms.CheckBox();
             this.lbl_hbfilename2 = new System.Windows.Forms.Label();
             this.lbl_hbfilename1 = new System.Windows.Forms.Label();
@@ -188,10 +190,11 @@ namespace ChameleonMiniGUI
             this.hexBox2 = new Be.Windows.Forms.HexBox();
             this.hexBox1 = new Be.Windows.Forms.HexBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.gb_language = new System.Windows.Forms.GroupBox();
+            this.bsTemplates = new System.Windows.Forms.BindingSource(this.components);
             this.gb_output.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bsLanguages)).BeginInit();
             this.tabPage2.SuspendLayout();
+            this.gb_language.SuspendLayout();
             this.gb_keepalive.SuspendLayout();
             this.gb_connectionSettings.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pb_device)).BeginInit();
@@ -211,7 +214,7 @@ namespace ChameleonMiniGUI
             this.tabControl1.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.menuScroll.SuspendLayout();
-            this.gb_language.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bsTemplates)).BeginInit();
             this.SuspendLayout();
             // 
             // txt_output
@@ -266,6 +269,16 @@ namespace ChameleonMiniGUI
             this.tabPage2.TabIndex = 3;
             this.tabPage2.Text = "Settings";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // gb_language
+            // 
+            this.gb_language.Controls.Add(this.cb_languages);
+            this.gb_language.Location = new System.Drawing.Point(1007, 24);
+            this.gb_language.Name = "gb_language";
+            this.gb_language.Size = new System.Drawing.Size(176, 166);
+            this.gb_language.TabIndex = 8;
+            this.gb_language.TabStop = false;
+            this.gb_language.Text = "Language";
             // 
             // gb_keepalive
             // 
@@ -1744,6 +1757,7 @@ namespace ChameleonMiniGUI
             // 
             this.tabPage3.AllowDrop = true;
             this.tabPage3.ContextMenuStrip = this.menuScroll;
+            this.tabPage3.Controls.Add(this.cb_templateA);
             this.tabPage3.Controls.Add(this.chkSyncScroll);
             this.tabPage3.Controls.Add(this.lbl_hbfilename2);
             this.tabPage3.Controls.Add(this.lbl_hbfilename1);
@@ -1781,6 +1795,16 @@ namespace ChameleonMiniGUI
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(169, 22);
             this.toolStripMenuItem1.Text = "Toggle sync scroll";
+            // 
+            // cb_templateA
+            // 
+            this.cb_templateA.DataSource = this.bsTemplates;
+            this.cb_templateA.FormattingEnabled = true;
+            this.cb_templateA.Location = new System.Drawing.Point(1152, 10);
+            this.cb_templateA.Name = "cb_templateA";
+            this.cb_templateA.Size = new System.Drawing.Size(121, 21);
+            this.cb_templateA.TabIndex = 20;
+            this.cb_templateA.SelectedIndexChanged += new System.EventHandler(this.cb_templateA_SelectedIndexChanged);
             // 
             // chkSyncScroll
             // 
@@ -1936,16 +1960,6 @@ namespace ChameleonMiniGUI
             this.hexBox1.ToggleSyncScrollPressed += new System.EventHandler(this.toggleSyncScrollPressed);
             this.hexBox1.MouseEnter += new System.EventHandler(this.hexBox1_MouseEnter);
             // 
-            // gb_language
-            // 
-            this.gb_language.Controls.Add(this.cb_languages);
-            this.gb_language.Location = new System.Drawing.Point(1007, 24);
-            this.gb_language.Name = "gb_language";
-            this.gb_language.Size = new System.Drawing.Size(176, 166);
-            this.gb_language.TabIndex = 8;
-            this.gb_language.TabStop = false;
-            this.gb_language.Text = "Language";
-            // 
             // frm_main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1964,6 +1978,7 @@ namespace ChameleonMiniGUI
             this.gb_output.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bsLanguages)).EndInit();
             this.tabPage2.ResumeLayout(false);
+            this.gb_language.ResumeLayout(false);
             this.gb_keepalive.ResumeLayout(false);
             this.gb_keepalive.PerformLayout();
             this.gb_connectionSettings.ResumeLayout(false);
@@ -1998,7 +2013,7 @@ namespace ChameleonMiniGUI
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
             this.menuScroll.ResumeLayout(false);
-            this.gb_language.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.bsTemplates)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -2163,5 +2178,7 @@ namespace ChameleonMiniGUI
         private System.Windows.Forms.ComboBox cb_languages;
         private System.Windows.Forms.BindingSource bsLanguages;
         private System.Windows.Forms.GroupBox gb_language;
+        private System.Windows.Forms.ComboBox cb_templateA;
+        private System.Windows.Forms.BindingSource bsTemplates;
     }
 }

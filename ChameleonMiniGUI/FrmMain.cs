@@ -32,6 +32,7 @@ namespace ChameleonMiniGUI
         private string _deviceIdentification;
         private string _firmwareVersion;
 
+        private bool lockFlag = false;
         public string FirmwareVersion
         {
             get { return _firmwareVersion; }
@@ -45,13 +46,13 @@ namespace ChameleonMiniGUI
         public frm_main()
         {
             InitializeComponent();
-
-            txt_output.SelectionStart = 0;
         }
 
         #region Event Handlers
         private void frm_main_Load(object sender, EventArgs e)
         {
+            txt_output.SelectionStart = 0;
+
             // Find the COM port of the Chameleon (wait reply of VERSIONMY? from every available port)
             //ConnectToChameleon();
             OpenChameleonSerialPort();
@@ -103,6 +104,50 @@ namespace ChameleonMiniGUI
                 // should be a setting aswell 
                 txt_interval.Text = "2000";
             }
+
+
+            var ml = new MultiLanguage();
+            var languages = ml.GetLanguages();
+            if (languages.Any())
+            {
+                lockFlag = true;
+                bsLanguages.DataSource = languages;
+                cb_languages.DisplayMember = "Key";
+                cb_languages.ValueMember = "Value";
+                lockFlag = false;
+            }
+
+
+            // load prefered language
+            var lang = Properties.Settings.Default.Language;
+            if (!string.IsNullOrWhiteSpace(lang))
+            {
+                ml.LoadLanguage(this.Controls, lang);
+
+                // select lang in combobox
+                lockFlag = true;
+                foreach (KeyValuePair<string, string> i in cb_languages.Items)
+                {                                  
+                    if (i.Value == lang)
+                    {
+                        cb_languages.SelectedItem = i;
+                        break;
+                    }
+                }
+                lockFlag = false;
+            }
+
+            var t = new Templating();
+            var templates = t.GetTemplates();
+            if (templates.Any())
+            {
+                lockFlag = true;
+                bsTemplates.DataSource = templates;
+                cb_templateA.DisplayMember = "Key";
+                cb_templateA.ValueMember = "Value";
+                lockFlag = false;
+            }
+
         }
 
         private void frm_main_FormClosed(object sender, FormClosedEventArgs e)
@@ -128,6 +173,48 @@ namespace ChameleonMiniGUI
                     Properties.Settings.Default.Save();
                 }
             }
+        }
+
+        private void cb_languages_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lockFlag)
+                return;
+
+            // load language
+            if (cb_languages?.SelectedItem == null) return;
+
+            var o = (KeyValuePair<string, string>) cb_languages.SelectedItem ;
+
+            var ml = new MultiLanguage();
+            ml.LoadLanguage(this.Controls, o.Value);
+
+            // Save language
+            if (!string.IsNullOrEmpty(o.Value))
+            {
+                Properties.Settings.Default.Language = o.Value;
+                Properties.Settings.Default.Save();
+            }
+        }
+
+        private void cb_templateA_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lockFlag)
+                return;
+
+            var c = (ComboBox) sender;
+
+            if (c?.SelectedItem == null) return;
+            if (c.SelectedIndex == 0)
+            {
+                PerformComparison();
+                return;
+            }
+
+            var o = (KeyValuePair<string, string>)c.SelectedItem;
+
+            var t = new Templating();
+            t.LoadTemplate(hexBox1, o.Value);
+            t.LoadTemplate(hexBox2, o.Value);
         }
 
         private void btn_apply_Click(object sender, EventArgs e)
@@ -719,11 +806,6 @@ namespace ChameleonMiniGUI
             }
         }
 
-        private void tabPage3_Scroll(object sender, ScrollEventArgs e)
-        {
-
-        }
-
         private void tabPage3_MouseEnter(object sender, EventArgs e)
         {
             if (!hexBox1.Focused && !hexBox2.Focused)
@@ -975,7 +1057,7 @@ namespace ChameleonMiniGUI
                         _deviceIdentification = "Firmware RevE rebooted";
                         pb_device.Image = (Bitmap)Properties.Resources.ResourceManager.GetObject("chamRevE");
                     }
-                    else
+                    else if ( pnpId.Contains("VID_16D0_04B2"))
                     {
                         // revG
                         _deviceIdentification = "Firmware Official";
@@ -1597,6 +1679,5 @@ namespace ChameleonMiniGUI
             return null;
         }
         #endregion
-
     }
 }

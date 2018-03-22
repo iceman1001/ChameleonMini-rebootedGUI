@@ -85,7 +85,7 @@ namespace ChameleonMiniGUI
             if (!di.Exists)
                 return dic;
 
-            var files = di.GetFiles("*.txt");
+            var files = di.GetFiles("*.txt").OrderBy(i =>i.Name);
             if (!files.Any()) return dic;
 
             dic.Add("Not selected", "----------");

@@ -38,6 +38,7 @@ namespace ChameleonMiniGUI
             this.bsLanguages = new System.Windows.Forms.BindingSource(this.components);
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.gb_language = new System.Windows.Forms.GroupBox();
+            this.btnStartlocation = new System.Windows.Forms.Button();
             this.gb_keepalive = new System.Windows.Forms.GroupBox();
             this.btn_setInterval = new System.Windows.Forms.Button();
             this.txt_interval = new System.Windows.Forms.TextBox();
@@ -272,6 +273,7 @@ namespace ChameleonMiniGUI
             // 
             // gb_language
             // 
+            this.gb_language.Controls.Add(this.btnStartlocation);
             this.gb_language.Controls.Add(this.cb_languages);
             this.gb_language.Location = new System.Drawing.Point(919, 200);
             this.gb_language.Name = "gb_language";
@@ -279,6 +281,16 @@ namespace ChameleonMiniGUI
             this.gb_language.TabIndex = 8;
             this.gb_language.TabStop = false;
             this.gb_language.Text = "Language";
+            // 
+            // btnStartlocation
+            // 
+            this.btnStartlocation.Location = new System.Drawing.Point(27, 76);
+            this.btnStartlocation.Name = "btnStartlocation";
+            this.btnStartlocation.Size = new System.Drawing.Size(121, 23);
+            this.btnStartlocation.TabIndex = 8;
+            this.btnStartlocation.Text = "open location";
+            this.btnStartlocation.UseVisualStyleBackColor = true;
+            this.btnStartlocation.Click += new System.EventHandler(this.btnStartlocation_Click);
             // 
             // gb_keepalive
             // 
@@ -1786,21 +1798,21 @@ namespace ChameleonMiniGUI
             this.menuScroll.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem1});
             this.menuScroll.Name = "menuScroll";
-            this.menuScroll.Size = new System.Drawing.Size(169, 26);
+            this.menuScroll.Size = new System.Drawing.Size(170, 26);
             this.menuScroll.Text = "toggle sync scroll";
             this.menuScroll.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuScroll_ItemClicked);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(168, 22);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(169, 22);
             this.toolStripMenuItem1.Text = "Toggle sync scroll";
             // 
             // cb_templateA
             // 
             this.cb_templateA.DataSource = this.bsTemplates;
             this.cb_templateA.FormattingEnabled = true;
-            this.cb_templateA.Location = new System.Drawing.Point(1152, 10);
+            this.cb_templateA.Location = new System.Drawing.Point(417, 10);
             this.cb_templateA.Name = "cb_templateA";
             this.cb_templateA.Size = new System.Drawing.Size(121, 21);
             this.cb_templateA.TabIndex = 20;
@@ -2180,5 +2192,6 @@ namespace ChameleonMiniGUI
         private System.Windows.Forms.GroupBox gb_language;
         private System.Windows.Forms.ComboBox cb_templateA;
         private System.Windows.Forms.BindingSource bsTemplates;
+        private System.Windows.Forms.Button btnStartlocation;
     }
 }

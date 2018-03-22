@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace ChameleonMiniGUI
@@ -100,7 +101,7 @@ namespace ChameleonMiniGUI
             if (!di.Exists)
                 return dic;
 
-            foreach (var f in di.GetFiles("*.txt"))
+            foreach (var f in di.GetFiles("*.txt").OrderBy( i =>i.Name))
             {                 
                 dic.Add( f.Name.Replace(f.Extension,"") , f.Name);
             }

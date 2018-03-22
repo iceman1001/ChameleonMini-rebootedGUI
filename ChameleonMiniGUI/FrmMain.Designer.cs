@@ -281,7 +281,7 @@ namespace ChameleonMiniGUI
             this.gb_language.Size = new System.Drawing.Size(179, 120);
             this.gb_language.TabIndex = 8;
             this.gb_language.TabStop = false;
-            this.gb_language.Text = "Language";
+            this.gb_language.Text = "Languages && Templates";
             // 
             // btnStartlocation
             // 

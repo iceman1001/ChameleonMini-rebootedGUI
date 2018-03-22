@@ -353,7 +353,7 @@ namespace ChameleonMiniGUI
                     var dumpFilename = openFileDialog1.FileName;
 
                     // Load the dump
-                    LoadDump(dumpFilename);
+                    UploadDump(dumpFilename);
 
                     // Refresh slot
                     RefreshSlot(tagslotIndex - 1);
@@ -401,7 +401,7 @@ namespace ChameleonMiniGUI
                         dumpFilename = !dumpFilename.ToLower().Contains(".bin") ? dumpFilename + ".bin" : dumpFilename;
 
                         // Save the dump
-                        SaveDump(dumpFilename);
+                        DownloadAndSaveDump(dumpFilename);
                     }
 
                     break; // no need to check the others
@@ -414,7 +414,7 @@ namespace ChameleonMiniGUI
                     if (!string.IsNullOrEmpty(uid))
                     {
                         var varFullDownloadPath = Path.Combine(downloadPath, uid + ".bin");
-                        SaveDump(varFullDownloadPath);
+                        DownloadAndSaveDump(varFullDownloadPath);
                     }
                 }
             }
@@ -1310,7 +1310,7 @@ namespace ChameleonMiniGUI
             return null;
         }
 
-        internal void LoadDump(string filename)
+        internal void UploadDump(string filename)
         {
             // Load the file into a memory block
             var bytes = ReadFileIntoByteArray(filename);
@@ -1339,7 +1339,7 @@ namespace ChameleonMiniGUI
             }
         }
 
-        internal void SaveDump(string filename)
+        internal void DownloadAndSaveDump(string filename)
         {
             // Set up an XMODEM object
             var xmodem = new XMODEM(_comport, XMODEM.Variants.XModemChecksum);

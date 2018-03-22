@@ -38,6 +38,7 @@ namespace ChameleonMiniGUI
             this.bsLanguages = new System.Windows.Forms.BindingSource(this.components);
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.gb_language = new System.Windows.Forms.GroupBox();
+            this.btnStartlocation = new System.Windows.Forms.Button();
             this.gb_keepalive = new System.Windows.Forms.GroupBox();
             this.btn_setInterval = new System.Windows.Forms.Button();
             this.txt_interval = new System.Windows.Forms.TextBox();
@@ -191,7 +192,6 @@ namespace ChameleonMiniGUI
             this.hexBox2 = new Be.Windows.Forms.HexBox();
             this.hexBox1 = new Be.Windows.Forms.HexBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.btnStartlocation = new System.Windows.Forms.Button();
             this.gb_output.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bsLanguages)).BeginInit();
             this.tabPage2.SuspendLayout();
@@ -281,6 +281,16 @@ namespace ChameleonMiniGUI
             this.gb_language.TabIndex = 8;
             this.gb_language.TabStop = false;
             this.gb_language.Text = "Language";
+            // 
+            // btnStartlocation
+            // 
+            this.btnStartlocation.Location = new System.Drawing.Point(27, 76);
+            this.btnStartlocation.Name = "btnStartlocation";
+            this.btnStartlocation.Size = new System.Drawing.Size(121, 23);
+            this.btnStartlocation.TabIndex = 8;
+            this.btnStartlocation.Text = "open location";
+            this.btnStartlocation.UseVisualStyleBackColor = true;
+            this.btnStartlocation.Click += new System.EventHandler(this.btnStartlocation_Click);
             // 
             // gb_keepalive
             // 
@@ -1802,7 +1812,7 @@ namespace ChameleonMiniGUI
             // 
             this.cb_templateA.DataSource = this.bsTemplates;
             this.cb_templateA.FormattingEnabled = true;
-            this.cb_templateA.Location = new System.Drawing.Point(1152, 10);
+            this.cb_templateA.Location = new System.Drawing.Point(417, 10);
             this.cb_templateA.Name = "cb_templateA";
             this.cb_templateA.Size = new System.Drawing.Size(121, 21);
             this.cb_templateA.TabIndex = 20;
@@ -1961,16 +1971,6 @@ namespace ChameleonMiniGUI
             this.hexBox1.VScrollBarChanged += new Be.Windows.Forms.HexBox.VScrollBarChangedEventHandler(this.hexBox1_VScrollBarChanged);
             this.hexBox1.ToggleSyncScrollPressed += new System.EventHandler(this.toggleSyncScrollPressed);
             this.hexBox1.MouseEnter += new System.EventHandler(this.hexBox1_MouseEnter);
-            // 
-            // btnStartlocation
-            // 
-            this.btnStartlocation.Location = new System.Drawing.Point(27, 76);
-            this.btnStartlocation.Name = "btnStartlocation";
-            this.btnStartlocation.Size = new System.Drawing.Size(121, 23);
-            this.btnStartlocation.TabIndex = 8;
-            this.btnStartlocation.Text = "open location";
-            this.btnStartlocation.UseVisualStyleBackColor = true;
-            this.btnStartlocation.Click += new System.EventHandler(this.btnStartlocation_Click);
             // 
             // frm_main
             // 

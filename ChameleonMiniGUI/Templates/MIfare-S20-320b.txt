@@ -1,0 +1,28 @@
+﻿#
+# this CSV file defines a color template for a binary file.
+#
+# This file targets:   Mifare Classic mini s20 , 320b,  4 byte UID
+# 
+# 2018, iceman
+# block 0
+0; 4; Turquoise; gray; UID
+4; 1; white; gray; BCC
+(0*64) + 48; 6; yellow; gray; KEY A
+(0*64)+ 48+ 6; 4; red; gray; ACCESS Bytes
+(0*64) + 48+10; 6; blue; gray; KEY A
+# block 1
+(1*64) + 48; 6; yellow; gray; KEY A
+(1*64)+ 48+ 6; 4; red; gray; ACCESS Bytes
+(1*64) + 48 +10; 6; blue; gray; KEY B
+# block 2
+(2*64) + 48; 6; yellow; gray; KEY A
+(2*64)+ 48+ 6; 4; red; gray; ACCESS Bytes
+(2*64) + 48 +10; 6; blue; gray; KEY B
+# block 3
+(3*64) + 48; 6; yellow; gray; KEY A
+(3*64)+ 48+ 6; 4; red; gray; ACCESS Bytes
+(3*64) + 48 +10; 6; blue; gray; KEY B
+# block 4
+(4*64) + 48; 6; yellow; gray; KEY A
+(4*64)+ 48+ 6; 4; red; gray; ACCESS Bytes
+(4*64) + 48 +10; 6; blue; gray; KEY B

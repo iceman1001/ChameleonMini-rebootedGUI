@@ -732,32 +732,15 @@ namespace ChameleonMiniGUI
                 if (files.Length == 1)
                 {
                     // Check if dropped to a hexbox
-                    Point clientPoint = tabPage3.PointToClient(new Point(e.X, e.Y));
+                    var clientPoint = tabPage3.PointToClient(new Point(e.X, e.Y));
                     var dropControl = FindControlAtPoint(tabPage3, clientPoint);
-                    if (dropControl is HexBox)
-                    {
-                        OpenFile(files[0], dropControl as HexBox);
-                    }
-                    else
-                    {
-                        // Open it in the first hexbox
-                        OpenFile(files[0], hexBox1);
-                    }
+
+                    HexBox hb = (dropControl is HexBox) ? (HexBox) dropControl : hexBox1;
+
+                    OpenFile(files[0], hb);
                 }
                 else
                 {
-                    var fi1 = new FileInfo(files[0]);
-                    var fi2 = new FileInfo(files[1]);
-
-                    if (fi1.Length != fi2.Length)
-                    {
-                        var dialogResult = MessageBox.Show("The files differ in size. Would you like to open them anyway?", "Different filesize", MessageBoxButtons.YesNo);
-                        if (dialogResult == DialogResult.No)
-                        {
-                            return;
-                        }
-                    }
-
                     OpenFile(files[0], hexBox1);
                     OpenFile(files[1], hexBox2);
                 }
@@ -773,9 +756,7 @@ namespace ChameleonMiniGUI
             if (!rb.Checked) return;
 
             var byteWidthStr = rb.Name.Substring(rb.Name.Length - 2);
-            int bytesPerLine = int.Parse(byteWidthStr);
-            hexBox1.BytesPerLine = bytesPerLine;
-            hexBox2.BytesPerLine = bytesPerLine;
+            ApplyByteWidthChange(byteWidthStr);
         }
 
         private void hexBox_ByteProviderWriteFinished(object sender, EventArgs e)
@@ -840,6 +821,21 @@ namespace ChameleonMiniGUI
 
         #region Helper methods
 
+        private void ApplyByteWidthChange(int width)
+        {
+            hexBox1.BytesPerLine = width;
+            hexBox2.BytesPerLine = width;
+        }
+
+        private void ApplyByteWidthChange(string width_str)
+        {
+            int width;
+            if (!int.TryParse(width_str, out width))
+            {
+                width = 16;
+            }
+            ApplyByteWidthChange(width);
+        }
         private void DisplayText()
         {
             var ident = string.Empty;
@@ -1026,7 +1022,7 @@ namespace ChameleonMiniGUI
             txt_output.Text = string.Empty;
 
             //var searcher = new ManagementObjectSearcher("select DeviceID from Win32_SerialPort where Description = \"ChameleonMini Virtual Serial Port\"");
-            var searcher = new ManagementObjectSearcher("select Name,DeviceID,PNPDeviceID from Win32_SerialPort ");
+            var searcher = new ManagementObjectSearcher("select Name, DeviceID, PNPDeviceID from Win32_SerialPort ");
             foreach (var obj in searcher.Get())
             {
                 var comPortStr = obj["DeviceID"].ToString();
@@ -1518,25 +1514,28 @@ namespace ChameleonMiniGUI
             // iclass dumps should be 8bytes width
             if (fileName.ToLower().Contains("iclass"))
             {
-                rbtn_bytewidth08.Select();
+                ApplyByteWidthChange(8);
             }
             else
             {
                 // generic rule, larger than 256bytes,  16byte width
                 if (fi.Length >= 256)
                 {
-                    rbtn_bytewidth16.Select();
+                    ApplyByteWidthChange(16);
                 }
                 else
                 {
-                    rbtn_bytewidth04.Select();
+                    ApplyByteWidthChange(4);
                 }
            }
 
             try
             {
+                CleanUpHexBox(hexBox);
+
+
                 // try to open in write mode
-                var dynamicFileByteProvider = new DynamicFileByteProvider(fileName);
+                var dynamicFileByteProvider = new DynamicFileByteProvider( fi.Open(FileMode.Open, FileAccess.ReadWrite) );
                 hexBox.ByteProvider = dynamicFileByteProvider;
 
                 // Display info for the file
@@ -1547,16 +1546,21 @@ namespace ChameleonMiniGUI
                     l.Text = $"{fi.Name} ({fi.Length} bytes)";
                 }
 
+                // reset template dropdown.
+                lockFlag = true;
+                cb_templateA.SelectedIndex = 0;
+                lockFlag = false;
+
                 // run the comparison automatically
                 PerformComparison();
 
                 var msg = $"[!] Loaded '{fi.Name}' {Environment.NewLine}";
                 txt_output.Text += msg;
             }
-            catch (IOException) // write mode failed
+            catch (IOException ex) // write mode failed
             {
                 // file cannot be opened
-                var msg = $"[!] Failed to open file{Environment.NewLine}";
+                var msg = $"[!] Failed to open file{Environment.NewLine}{ex.Message}{Environment.NewLine}";
                 MessageBox.Show(msg);
                 txt_output.Text += msg;
             }
@@ -1595,22 +1599,26 @@ namespace ChameleonMiniGUI
             return DialogResult.OK;
         }
 
-        void CleanUp(HexBox hexBox)
+        void CleanUp(HexBox b)
         {
-            if (hexBox.ByteProvider != null)
-            {
-                var byteProvider = hexBox.ByteProvider as IDisposable;
-                byteProvider?.Dispose();
-                hexBox.ByteProvider = null;
-            }
+            CleanUpHexBox(b);
 
             // Remove the file info
-            var hbIdx = int.Parse(hexBox.Name.Substring(hexBox.Name.Length - 1));
+            var hbIdx = int.Parse(b.Name.Substring(b.Name.Length - 1));
             var hb_filename = FindControls<Label>(Controls, $"lbl_hbfilename{hbIdx}").FirstOrDefault();
             if (hb_filename != null)
             {
                 hb_filename.Text = "N/A";
             }
+        }
+
+        void CleanUpHexBox(HexBox b)
+        {
+            if (b.ByteProvider == null) return;
+
+            var byteProvider = b.ByteProvider as IDisposable;
+            byteProvider?.Dispose();
+            b.ByteProvider = null;
         }
 
         private void PerformComparison()

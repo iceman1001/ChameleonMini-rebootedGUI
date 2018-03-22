@@ -130,6 +130,9 @@
     <Content Include="Templates\MIfare-S50-1k.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Templates\Ultralight-EV1-164B.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>    
     <None Include="packages.config" />
     <None Include="Properties\DataSources\MultiLanguage.datasource" />
     <None Include="Resources\usb-warning.jpg" />

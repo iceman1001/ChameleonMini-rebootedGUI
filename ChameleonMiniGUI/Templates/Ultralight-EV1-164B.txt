@@ -1,0 +1,17 @@
+#
+# this CSV file defines a color template for a binary file.
+#
+# This file targets:   Mifare Ultralight EV1, 164B, 7 byte UID
+# 
+# 2018, bogito
+#
+0; 3; Turquoise; gray; UID
+0*4+3; 1; white; gray; BCC0
+1*4; 4; Turquoise; gray; UID
+2*4; 1; white; gray; BCC1
+2*4+2; 2; red; gray; Lock Bytes
+3*4; 4; pink; gray; OTP
+36*4; 3; red; gray; Lock Bytes
+37*4; 8; green; gray; CFG
+39*4; 4; yellow; gray; PWD
+40*4; 2; blue; gray; PACK

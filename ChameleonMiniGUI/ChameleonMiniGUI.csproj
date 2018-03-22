@@ -118,6 +118,9 @@
     <Compile Include="MultiLanguage.cs" />
     <Compile Include="Templating.cs" />
     <Compile Include="XMODEM.cs" />
+    <Content Include="Languages\Greek.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>    
     <Content Include="Languages\Svenska.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -127,6 +130,9 @@
     <Content Include="Templates\MIfare-S50-1k.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Templates\Ultralight-EV1-164B.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>    
     <None Include="packages.config" />
     <None Include="Properties\DataSources\MultiLanguage.datasource" />
     <None Include="Resources\usb-warning.jpg" />

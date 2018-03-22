@@ -1649,10 +1649,10 @@ namespace ChameleonMiniGUI
                         CompareByte(i);
                     }
                 }
-
-                hexBox1.Invalidate();
-                hexBox2.Invalidate();
             }
+
+            hexBox1.Invalidate();
+            hexBox2.Invalidate();
         }
 
         private void CompareByte(int byteIndex)

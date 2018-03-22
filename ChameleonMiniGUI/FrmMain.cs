@@ -967,54 +967,6 @@ namespace ChameleonMiniGUI
             this.Cursor = Cursors.Default;
         }
 
-        /*
-        private void ConnectToChameleon()
-        {
-            var portNames = SerialPort.GetPortNames();
-
-            foreach (string port in portNames)
-            {
-                _comport = new SerialPort(port, 115200);
-
-                _comport.ReadTimeout = 4000;
-                _comport.WriteTimeout = 6000;
-
-                try
-                {
-                    _comport.Open();
-
-                    if (_comport.IsOpen)
-                    {
-                        // try without the "MY" extension first
-                        string version = SendCommand("VERSION?") as string;
-                        if (!string.IsNullOrEmpty(version) && version.Contains("Chameleon"))
-                        {
-                            _cmdExtension = "";
-                            break;
-                        }
-
-                        version = SendCommand("VERSIONMY?") as string;
-                        if (!string.IsNullOrEmpty(version) && version.Contains("Chameleon"))
-                        {
-                            _cmdExtension = "MY";
-                            break;
-                        }
-                    }
-                }
-                catch (Exception)
-                {
-                    Console.WriteLine("Problem with: " + port);
-                    _comport = null;
-                }
-            }
-
-            if (_comport != null && _comport.IsOpen)
-            {
-                this.Text = "Device connected";
-            }
-        }
-        */
-
         private void OpenChameleonSerialPort()
         {
             this.Cursor = Cursors.WaitCursor;

@@ -829,7 +829,7 @@ namespace ChameleonMiniGUI
 
         private void btnStartlocation_Click(object sender, EventArgs e)
         {
-            Start(Application.StartupPath);
+            Start(Path.Combine(Application.StartupPath, "Languages"));
         }
         #endregion
 

@@ -191,6 +191,7 @@ namespace ChameleonMiniGUI
             this.hexBox2 = new Be.Windows.Forms.HexBox();
             this.hexBox1 = new Be.Windows.Forms.HexBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.btnStartlocation = new System.Windows.Forms.Button();
             this.gb_output.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bsLanguages)).BeginInit();
             this.tabPage2.SuspendLayout();
@@ -272,6 +273,7 @@ namespace ChameleonMiniGUI
             // 
             // gb_language
             // 
+            this.gb_language.Controls.Add(this.btnStartlocation);
             this.gb_language.Controls.Add(this.cb_languages);
             this.gb_language.Location = new System.Drawing.Point(919, 200);
             this.gb_language.Name = "gb_language";
@@ -1786,14 +1788,14 @@ namespace ChameleonMiniGUI
             this.menuScroll.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem1});
             this.menuScroll.Name = "menuScroll";
-            this.menuScroll.Size = new System.Drawing.Size(169, 26);
+            this.menuScroll.Size = new System.Drawing.Size(170, 26);
             this.menuScroll.Text = "toggle sync scroll";
             this.menuScroll.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuScroll_ItemClicked);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(168, 22);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(169, 22);
             this.toolStripMenuItem1.Text = "Toggle sync scroll";
             // 
             // cb_templateA
@@ -1959,6 +1961,16 @@ namespace ChameleonMiniGUI
             this.hexBox1.VScrollBarChanged += new Be.Windows.Forms.HexBox.VScrollBarChangedEventHandler(this.hexBox1_VScrollBarChanged);
             this.hexBox1.ToggleSyncScrollPressed += new System.EventHandler(this.toggleSyncScrollPressed);
             this.hexBox1.MouseEnter += new System.EventHandler(this.hexBox1_MouseEnter);
+            // 
+            // btnStartlocation
+            // 
+            this.btnStartlocation.Location = new System.Drawing.Point(27, 76);
+            this.btnStartlocation.Name = "btnStartlocation";
+            this.btnStartlocation.Size = new System.Drawing.Size(121, 23);
+            this.btnStartlocation.TabIndex = 8;
+            this.btnStartlocation.Text = "open location";
+            this.btnStartlocation.UseVisualStyleBackColor = true;
+            this.btnStartlocation.Click += new System.EventHandler(this.btnStartlocation_Click);
             // 
             // frm_main
             // 
@@ -2180,5 +2192,6 @@ namespace ChameleonMiniGUI
         private System.Windows.Forms.GroupBox gb_language;
         private System.Windows.Forms.ComboBox cb_templateA;
         private System.Windows.Forms.BindingSource bsTemplates;
+        private System.Windows.Forms.Button btnStartlocation;
     }
 }

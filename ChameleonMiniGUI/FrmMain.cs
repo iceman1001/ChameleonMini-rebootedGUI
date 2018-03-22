@@ -11,6 +11,7 @@ using System.IO;
 using static System.Diagnostics.Process;
 using System.Management;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Be.Windows.Forms;
 using System.Drawing;
 using System.Reflection;
@@ -1639,5 +1640,10 @@ namespace ChameleonMiniGUI
             return null;
         }
         #endregion
+
+        private void btnStartlocation_Click(object sender, EventArgs e)
+        {
+           Process.Start(Application.StartupPath);
+        }
     }
 }

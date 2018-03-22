@@ -311,13 +311,21 @@ namespace ChameleonMiniGUI
                 var flashFileName = ConfigurationManager.AppSettings["FLASH_BINARY"];
                 var eepromFileName = ConfigurationManager.AppSettings["EEPROM_BINARY"];
 
-                var fullBootloaderPath = Path.Combine(bootloaderPath, bootloaderFileName);
-                var fullFlashBinaryPath = Path.Combine(bootloaderPath, flashFileName);
-                var fullEepromBinaryPath = Path.Combine(bootloaderPath, eepromFileName);
+                var fullpath = Path.Combine(Application.StartupPath, bootloaderPath);
 
-                if (File.Exists(fullBootloaderPath) && File.Exists(fullFlashBinaryPath) && File.Exists(fullEepromBinaryPath))
+                var flasher = Path.Combine(fullpath, bootloaderFileName);
+                var firmware = Path.Combine(fullpath, flashFileName);
+                var eeprom = Path.Combine(fullpath, eepromFileName);
+
+                if (File.Exists(flasher) && File.Exists(firmware) && File.Exists(eeprom))
                 {
-                    Start(fullBootloaderPath);
+                    var ps = new ProcessStartInfo
+                    {
+                        UseShellExecute = true,
+                        WorkingDirectory = fullpath,
+                        FileName = flasher
+                    };
+                    Start(ps);
                     failed = false;
                 }
                 else
@@ -325,9 +333,10 @@ namespace ChameleonMiniGUI
                     MessageBox.Show("Unable to find all the required files to exit the boot mode", "Exit Boot Mode failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 //
+                Console.WriteLine(ex.Message);
             }
 
             if (failed)
@@ -818,6 +827,10 @@ namespace ChameleonMiniGUI
                 hexBox2.Focus();
         }
 
+        private void btnStartlocation_Click(object sender, EventArgs e)
+        {
+            Start(Application.StartupPath);
+        }
         #endregion
 
         #region Helper methods
@@ -1640,10 +1653,5 @@ namespace ChameleonMiniGUI
             return null;
         }
         #endregion
-
-        private void btnStartlocation_Click(object sender, EventArgs e)
-        {
-           Process.Start(Application.StartupPath);
-        }
     }
 }

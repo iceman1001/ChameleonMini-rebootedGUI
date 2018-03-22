@@ -92,3 +92,4 @@ lbl_buttonlong6.Text=KnappLång
 lbl_buttonlong7.Text=KnappLång
 lbl_buttonlong8.Text=KnappLång
 btnStartlocation.Text=Öppna folder
+lbl_template.Text=Mall:

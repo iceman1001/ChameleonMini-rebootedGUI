@@ -92,3 +92,4 @@ gb_rssi.Text=RSSI电压
 tabPage2.Text=设置
 gb_output.Text=output
 gb_language.Text=语言设置
+lbl_template.Text=Template:

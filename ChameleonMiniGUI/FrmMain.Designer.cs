@@ -176,6 +176,7 @@ namespace ChameleonMiniGUI
             this.menuScroll = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.cb_templateA = new System.Windows.Forms.ComboBox();
+            this.bsTemplates = new System.Windows.Forms.BindingSource(this.components);
             this.chkSyncScroll = new System.Windows.Forms.CheckBox();
             this.lbl_hbfilename2 = new System.Windows.Forms.Label();
             this.lbl_hbfilename1 = new System.Windows.Forms.Label();
@@ -190,7 +191,6 @@ namespace ChameleonMiniGUI
             this.hexBox2 = new Be.Windows.Forms.HexBox();
             this.hexBox1 = new Be.Windows.Forms.HexBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.bsTemplates = new System.Windows.Forms.BindingSource(this.components);
             this.gb_output.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bsLanguages)).BeginInit();
             this.tabPage2.SuspendLayout();
@@ -249,7 +249,7 @@ namespace ChameleonMiniGUI
             // 
             this.cb_languages.DataSource = this.bsLanguages;
             this.cb_languages.FormattingEnabled = true;
-            this.cb_languages.Location = new System.Drawing.Point(27, 33);
+            this.cb_languages.Location = new System.Drawing.Point(27, 49);
             this.cb_languages.Name = "cb_languages";
             this.cb_languages.Size = new System.Drawing.Size(121, 21);
             this.cb_languages.TabIndex = 7;
@@ -273,9 +273,9 @@ namespace ChameleonMiniGUI
             // gb_language
             // 
             this.gb_language.Controls.Add(this.cb_languages);
-            this.gb_language.Location = new System.Drawing.Point(1007, 24);
+            this.gb_language.Location = new System.Drawing.Point(919, 200);
             this.gb_language.Name = "gb_language";
-            this.gb_language.Size = new System.Drawing.Size(176, 166);
+            this.gb_language.Size = new System.Drawing.Size(179, 120);
             this.gb_language.TabIndex = 8;
             this.gb_language.TabStop = false;
             this.gb_language.Text = "Language";
@@ -286,9 +286,9 @@ namespace ChameleonMiniGUI
             this.gb_keepalive.Controls.Add(this.txt_interval);
             this.gb_keepalive.Controls.Add(this.lbl_interval);
             this.gb_keepalive.Controls.Add(this.chk_keepalive);
-            this.gb_keepalive.Location = new System.Drawing.Point(717, 24);
+            this.gb_keepalive.Location = new System.Drawing.Point(674, 18);
             this.gb_keepalive.Name = "gb_keepalive";
-            this.gb_keepalive.Size = new System.Drawing.Size(261, 166);
+            this.gb_keepalive.Size = new System.Drawing.Size(424, 166);
             this.gb_keepalive.TabIndex = 4;
             this.gb_keepalive.TabStop = false;
             this.gb_keepalive.Text = "Keep Alive";
@@ -296,9 +296,9 @@ namespace ChameleonMiniGUI
             // btn_setInterval
             // 
             this.btn_setInterval.Enabled = false;
-            this.btn_setInterval.Location = new System.Drawing.Point(31, 106);
+            this.btn_setInterval.Location = new System.Drawing.Point(260, 88);
             this.btn_setInterval.Name = "btn_setInterval";
-            this.btn_setInterval.Size = new System.Drawing.Size(69, 30);
+            this.btn_setInterval.Size = new System.Drawing.Size(97, 30);
             this.btn_setInterval.TabIndex = 3;
             this.btn_setInterval.Text = "Set";
             this.btn_setInterval.UseVisualStyleBackColor = true;
@@ -306,7 +306,7 @@ namespace ChameleonMiniGUI
             // 
             // txt_interval
             // 
-            this.txt_interval.Location = new System.Drawing.Point(29, 68);
+            this.txt_interval.Location = new System.Drawing.Point(25, 94);
             this.txt_interval.Name = "txt_interval";
             this.txt_interval.Size = new System.Drawing.Size(69, 20);
             this.txt_interval.TabIndex = 2;
@@ -314,7 +314,7 @@ namespace ChameleonMiniGUI
             // lbl_interval
             // 
             this.lbl_interval.AutoSize = true;
-            this.lbl_interval.Location = new System.Drawing.Point(104, 71);
+            this.lbl_interval.Location = new System.Drawing.Point(100, 97);
             this.lbl_interval.Name = "lbl_interval";
             this.lbl_interval.Size = new System.Drawing.Size(64, 13);
             this.lbl_interval.TabIndex = 1;
@@ -323,7 +323,7 @@ namespace ChameleonMiniGUI
             // chk_keepalive
             // 
             this.chk_keepalive.AutoSize = true;
-            this.chk_keepalive.Location = new System.Drawing.Point(29, 33);
+            this.chk_keepalive.Location = new System.Drawing.Point(25, 42);
             this.chk_keepalive.Name = "chk_keepalive";
             this.chk_keepalive.Size = new System.Drawing.Size(209, 17);
             this.chk_keepalive.TabIndex = 0;
@@ -337,9 +337,9 @@ namespace ChameleonMiniGUI
             this.gb_connectionSettings.Controls.Add(this.txt_constatus);
             this.gb_connectionSettings.Controls.Add(this.btn_disconnect);
             this.gb_connectionSettings.Controls.Add(this.btn_connect);
-            this.gb_connectionSettings.Location = new System.Drawing.Point(210, 24);
+            this.gb_connectionSettings.Location = new System.Drawing.Point(167, 18);
             this.gb_connectionSettings.Name = "gb_connectionSettings";
-            this.gb_connectionSettings.Size = new System.Drawing.Size(478, 166);
+            this.gb_connectionSettings.Size = new System.Drawing.Size(481, 166);
             this.gb_connectionSettings.TabIndex = 3;
             this.gb_connectionSettings.TabStop = false;
             this.gb_connectionSettings.Text = "Connection status";
@@ -379,7 +379,7 @@ namespace ChameleonMiniGUI
             this.btn_disconnect.Enabled = false;
             this.btn_disconnect.Location = new System.Drawing.Point(373, 88);
             this.btn_disconnect.Name = "btn_disconnect";
-            this.btn_disconnect.Size = new System.Drawing.Size(75, 30);
+            this.btn_disconnect.Size = new System.Drawing.Size(85, 30);
             this.btn_disconnect.TabIndex = 1;
             this.btn_disconnect.Text = "Disconnect";
             this.btn_disconnect.UseVisualStyleBackColor = true;
@@ -389,7 +389,7 @@ namespace ChameleonMiniGUI
             // 
             this.btn_connect.Location = new System.Drawing.Point(373, 50);
             this.btn_connect.Name = "btn_connect";
-            this.btn_connect.Size = new System.Drawing.Size(75, 30);
+            this.btn_connect.Size = new System.Drawing.Size(85, 30);
             this.btn_connect.TabIndex = 0;
             this.btn_connect.Text = "Connect";
             this.btn_connect.UseVisualStyleBackColor = true;
@@ -403,9 +403,9 @@ namespace ChameleonMiniGUI
             this.gb_bootloader.Controls.Add(this.lbl_upgrade);
             this.gb_bootloader.Controls.Add(this.btn_bootmode);
             this.gb_bootloader.Controls.Add(this.btn_exitboot);
-            this.gb_bootloader.Location = new System.Drawing.Point(210, 330);
+            this.gb_bootloader.Location = new System.Drawing.Point(167, 335);
             this.gb_bootloader.Name = "gb_bootloader";
-            this.gb_bootloader.Size = new System.Drawing.Size(768, 136);
+            this.gb_bootloader.Size = new System.Drawing.Size(931, 136);
             this.gb_bootloader.TabIndex = 2;
             this.gb_bootloader.TabStop = false;
             this.gb_bootloader.Text = "Reset && Bootloader options";
@@ -413,7 +413,7 @@ namespace ChameleonMiniGUI
             // lbl_defaults
             // 
             this.lbl_defaults.AutoSize = true;
-            this.lbl_defaults.Location = new System.Drawing.Point(197, 93);
+            this.lbl_defaults.Location = new System.Drawing.Point(245, 95);
             this.lbl_defaults.Name = "lbl_defaults";
             this.lbl_defaults.Size = new System.Drawing.Size(472, 13);
             this.lbl_defaults.TabIndex = 10;
@@ -423,7 +423,7 @@ namespace ChameleonMiniGUI
             // lbl_reset
             // 
             this.lbl_reset.AutoSize = true;
-            this.lbl_reset.Location = new System.Drawing.Point(197, 35);
+            this.lbl_reset.Location = new System.Drawing.Point(245, 37);
             this.lbl_reset.Name = "lbl_reset";
             this.lbl_reset.Size = new System.Drawing.Size(331, 13);
             this.lbl_reset.TabIndex = 9;
@@ -432,9 +432,9 @@ namespace ChameleonMiniGUI
             // btn_reset
             // 
             this.btn_reset.Enabled = false;
-            this.btn_reset.Location = new System.Drawing.Point(83, 30);
+            this.btn_reset.Location = new System.Drawing.Point(75, 32);
             this.btn_reset.Name = "btn_reset";
-            this.btn_reset.Size = new System.Drawing.Size(82, 23);
+            this.btn_reset.Size = new System.Drawing.Size(135, 23);
             this.btn_reset.TabIndex = 8;
             this.btn_reset.Text = "Reset";
             this.btn_reset.UseVisualStyleBackColor = true;
@@ -443,7 +443,7 @@ namespace ChameleonMiniGUI
             // lbl_upgrade
             // 
             this.lbl_upgrade.AutoSize = true;
-            this.lbl_upgrade.Location = new System.Drawing.Point(197, 64);
+            this.lbl_upgrade.Location = new System.Drawing.Point(245, 66);
             this.lbl_upgrade.Name = "lbl_upgrade";
             this.lbl_upgrade.Size = new System.Drawing.Size(266, 13);
             this.lbl_upgrade.TabIndex = 7;
@@ -452,9 +452,9 @@ namespace ChameleonMiniGUI
             // btn_bootmode
             // 
             this.btn_bootmode.Enabled = false;
-            this.btn_bootmode.Location = new System.Drawing.Point(83, 59);
+            this.btn_bootmode.Location = new System.Drawing.Point(75, 61);
             this.btn_bootmode.Name = "btn_bootmode";
-            this.btn_bootmode.Size = new System.Drawing.Size(82, 23);
+            this.btn_bootmode.Size = new System.Drawing.Size(135, 23);
             this.btn_bootmode.TabIndex = 6;
             this.btn_bootmode.Text = "Upgrade";
             this.btn_bootmode.UseVisualStyleBackColor = true;
@@ -462,9 +462,9 @@ namespace ChameleonMiniGUI
             // 
             // btn_exitboot
             // 
-            this.btn_exitboot.Location = new System.Drawing.Point(83, 88);
+            this.btn_exitboot.Location = new System.Drawing.Point(75, 90);
             this.btn_exitboot.Name = "btn_exitboot";
-            this.btn_exitboot.Size = new System.Drawing.Size(82, 23);
+            this.btn_exitboot.Size = new System.Drawing.Size(135, 23);
             this.btn_exitboot.TabIndex = 5;
             this.btn_exitboot.Text = "Load Defaults";
             this.btn_exitboot.UseVisualStyleBackColor = true;
@@ -475,9 +475,9 @@ namespace ChameleonMiniGUI
             this.gb_defaultdownload.Controls.Add(this.lbl_defaultdownload);
             this.gb_defaultdownload.Controls.Add(this.txt_defaultdownload);
             this.gb_defaultdownload.Controls.Add(this.btn_browsedownloads);
-            this.gb_defaultdownload.Location = new System.Drawing.Point(210, 205);
+            this.gb_defaultdownload.Location = new System.Drawing.Point(167, 200);
             this.gb_defaultdownload.Name = "gb_defaultdownload";
-            this.gb_defaultdownload.Size = new System.Drawing.Size(429, 115);
+            this.gb_defaultdownload.Size = new System.Drawing.Size(434, 120);
             this.gb_defaultdownload.TabIndex = 1;
             this.gb_defaultdownload.TabStop = false;
             this.gb_defaultdownload.Text = "Download Location";
@@ -485,7 +485,7 @@ namespace ChameleonMiniGUI
             // lbl_defaultdownload
             // 
             this.lbl_defaultdownload.AutoSize = true;
-            this.lbl_defaultdownload.Location = new System.Drawing.Point(13, 33);
+            this.lbl_defaultdownload.Location = new System.Drawing.Point(15, 33);
             this.lbl_defaultdownload.Name = "lbl_defaultdownload";
             this.lbl_defaultdownload.Size = new System.Drawing.Size(267, 13);
             this.lbl_defaultdownload.TabIndex = 2;
@@ -493,14 +493,14 @@ namespace ChameleonMiniGUI
             // 
             // txt_defaultdownload
             // 
-            this.txt_defaultdownload.Location = new System.Drawing.Point(16, 57);
+            this.txt_defaultdownload.Location = new System.Drawing.Point(18, 65);
             this.txt_defaultdownload.Name = "txt_defaultdownload";
             this.txt_defaultdownload.Size = new System.Drawing.Size(337, 20);
             this.txt_defaultdownload.TabIndex = 1;
             // 
             // btn_browsedownloads
             // 
-            this.btn_browsedownloads.Location = new System.Drawing.Point(373, 55);
+            this.btn_browsedownloads.Location = new System.Drawing.Point(375, 63);
             this.btn_browsedownloads.Name = "btn_browsedownloads";
             this.btn_browsedownloads.Size = new System.Drawing.Size(33, 23);
             this.btn_browsedownloads.TabIndex = 0;
@@ -513,9 +513,9 @@ namespace ChameleonMiniGUI
             this.gb_rssi.Controls.Add(this.btn_rssirefresh);
             this.gb_rssi.Controls.Add(this.txt_rssi);
             this.gb_rssi.Controls.Add(this.lbl_rssi);
-            this.gb_rssi.Location = new System.Drawing.Point(670, 205);
+            this.gb_rssi.Location = new System.Drawing.Point(621, 200);
             this.gb_rssi.Name = "gb_rssi";
-            this.gb_rssi.Size = new System.Drawing.Size(308, 115);
+            this.gb_rssi.Size = new System.Drawing.Size(278, 120);
             this.gb_rssi.TabIndex = 0;
             this.gb_rssi.TabStop = false;
             this.gb_rssi.Text = "RSSI Voltage";
@@ -523,9 +523,9 @@ namespace ChameleonMiniGUI
             // btn_rssirefresh
             // 
             this.btn_rssirefresh.Enabled = false;
-            this.btn_rssirefresh.Location = new System.Drawing.Point(199, 51);
+            this.btn_rssirefresh.Location = new System.Drawing.Point(167, 51);
             this.btn_rssirefresh.Name = "btn_rssirefresh";
-            this.btn_rssirefresh.Size = new System.Drawing.Size(69, 30);
+            this.btn_rssirefresh.Size = new System.Drawing.Size(83, 30);
             this.btn_rssirefresh.TabIndex = 2;
             this.btn_rssirefresh.Text = "Refresh";
             this.btn_rssirefresh.UseVisualStyleBackColor = true;
@@ -533,15 +533,15 @@ namespace ChameleonMiniGUI
             // 
             // txt_rssi
             // 
-            this.txt_rssi.Location = new System.Drawing.Point(47, 61);
+            this.txt_rssi.Location = new System.Drawing.Point(21, 57);
             this.txt_rssi.Name = "txt_rssi";
-            this.txt_rssi.Size = new System.Drawing.Size(100, 20);
+            this.txt_rssi.Size = new System.Drawing.Size(114, 20);
             this.txt_rssi.TabIndex = 1;
             // 
             // lbl_rssi
             // 
             this.lbl_rssi.AutoSize = true;
-            this.lbl_rssi.Location = new System.Drawing.Point(44, 38);
+            this.lbl_rssi.Location = new System.Drawing.Point(18, 35);
             this.lbl_rssi.Name = "lbl_rssi";
             this.lbl_rssi.Size = new System.Drawing.Size(69, 13);
             this.lbl_rssi.TabIndex = 0;
@@ -579,7 +579,7 @@ namespace ChameleonMiniGUI
             this.checkBox8.AutoSize = true;
             this.checkBox8.Enabled = false;
             this.checkBox8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox8.Location = new System.Drawing.Point(921, 227);
+            this.checkBox8.Location = new System.Drawing.Point(926, 227);
             this.checkBox8.Name = "checkBox8";
             this.checkBox8.Size = new System.Drawing.Size(59, 17);
             this.checkBox8.TabIndex = 8;
@@ -592,7 +592,7 @@ namespace ChameleonMiniGUI
             this.checkBox7.AutoSize = true;
             this.checkBox7.Enabled = false;
             this.checkBox7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox7.Location = new System.Drawing.Point(651, 227);
+            this.checkBox7.Location = new System.Drawing.Point(652, 227);
             this.checkBox7.Name = "checkBox7";
             this.checkBox7.Size = new System.Drawing.Size(59, 17);
             this.checkBox7.TabIndex = 7;
@@ -605,7 +605,7 @@ namespace ChameleonMiniGUI
             this.checkBox6.AutoSize = true;
             this.checkBox6.Enabled = false;
             this.checkBox6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox6.Location = new System.Drawing.Point(383, 227);
+            this.checkBox6.Location = new System.Drawing.Point(378, 227);
             this.checkBox6.Name = "checkBox6";
             this.checkBox6.Size = new System.Drawing.Size(59, 17);
             this.checkBox6.TabIndex = 6;
@@ -618,7 +618,7 @@ namespace ChameleonMiniGUI
             this.checkBox5.AutoSize = true;
             this.checkBox5.Enabled = false;
             this.checkBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox5.Location = new System.Drawing.Point(116, 227);
+            this.checkBox5.Location = new System.Drawing.Point(104, 227);
             this.checkBox5.Name = "checkBox5";
             this.checkBox5.Size = new System.Drawing.Size(59, 17);
             this.checkBox5.TabIndex = 5;
@@ -631,7 +631,7 @@ namespace ChameleonMiniGUI
             this.checkBox4.AutoSize = true;
             this.checkBox4.Enabled = false;
             this.checkBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox4.Location = new System.Drawing.Point(921, 16);
+            this.checkBox4.Location = new System.Drawing.Point(926, 16);
             this.checkBox4.Name = "checkBox4";
             this.checkBox4.Size = new System.Drawing.Size(59, 17);
             this.checkBox4.TabIndex = 4;
@@ -644,7 +644,7 @@ namespace ChameleonMiniGUI
             this.checkBox3.AutoSize = true;
             this.checkBox3.Enabled = false;
             this.checkBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox3.Location = new System.Drawing.Point(651, 16);
+            this.checkBox3.Location = new System.Drawing.Point(652, 16);
             this.checkBox3.Name = "checkBox3";
             this.checkBox3.Size = new System.Drawing.Size(59, 17);
             this.checkBox3.TabIndex = 3;
@@ -657,7 +657,7 @@ namespace ChameleonMiniGUI
             this.checkBox2.AutoSize = true;
             this.checkBox2.Enabled = false;
             this.checkBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox2.Location = new System.Drawing.Point(383, 16);
+            this.checkBox2.Location = new System.Drawing.Point(378, 16);
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(59, 17);
             this.checkBox2.TabIndex = 2;
@@ -672,7 +672,7 @@ namespace ChameleonMiniGUI
             this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBox1.Enabled = false;
             this.checkBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox1.Location = new System.Drawing.Point(116, 16);
+            this.checkBox1.Location = new System.Drawing.Point(104, 16);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(59, 17);
             this.checkBox1.TabIndex = 1;
@@ -691,18 +691,18 @@ namespace ChameleonMiniGUI
             this.gb_actions.Controls.Add(this.btn_apply);
             this.gb_actions.Controls.Add(this.btn_download);
             this.gb_actions.Controls.Add(this.btn_upload);
-            this.gb_actions.Location = new System.Drawing.Point(107, 424);
+            this.gb_actions.Location = new System.Drawing.Point(95, 424);
             this.gb_actions.Name = "gb_actions";
-            this.gb_actions.Size = new System.Drawing.Size(1055, 61);
+            this.gb_actions.Size = new System.Drawing.Size(1082, 61);
             this.gb_actions.TabIndex = 36;
             this.gb_actions.TabStop = false;
             this.gb_actions.Text = "Available Actions";
             // 
             // btn_setactive
             // 
-            this.btn_setactive.Location = new System.Drawing.Point(522, 24);
+            this.btn_setactive.Location = new System.Drawing.Point(577, 24);
             this.btn_setactive.Name = "btn_setactive";
-            this.btn_setactive.Size = new System.Drawing.Size(75, 23);
+            this.btn_setactive.Size = new System.Drawing.Size(86, 23);
             this.btn_setactive.TabIndex = 14;
             this.btn_setactive.Text = "Set Active";
             this.btn_setactive.UseVisualStyleBackColor = true;
@@ -711,9 +711,9 @@ namespace ChameleonMiniGUI
             // btn_selectnone
             // 
             this.btn_selectnone.Enabled = false;
-            this.btn_selectnone.Location = new System.Drawing.Point(90, 24);
+            this.btn_selectnone.Location = new System.Drawing.Point(110, 24);
             this.btn_selectnone.Name = "btn_selectnone";
-            this.btn_selectnone.Size = new System.Drawing.Size(75, 23);
+            this.btn_selectnone.Size = new System.Drawing.Size(95, 23);
             this.btn_selectnone.TabIndex = 10;
             this.btn_selectnone.Text = "Select None";
             this.btn_selectnone.UseVisualStyleBackColor = true;
@@ -724,7 +724,7 @@ namespace ChameleonMiniGUI
             this.btn_selectall.Enabled = false;
             this.btn_selectall.Location = new System.Drawing.Point(9, 24);
             this.btn_selectall.Name = "btn_selectall";
-            this.btn_selectall.Size = new System.Drawing.Size(75, 23);
+            this.btn_selectall.Size = new System.Drawing.Size(95, 23);
             this.btn_selectall.TabIndex = 9;
             this.btn_selectall.Text = "Select All";
             this.btn_selectall.UseVisualStyleBackColor = true;
@@ -732,9 +732,9 @@ namespace ChameleonMiniGUI
             // 
             // btn_refresh
             // 
-            this.btn_refresh.Location = new System.Drawing.Point(441, 24);
+            this.btn_refresh.Location = new System.Drawing.Point(485, 24);
             this.btn_refresh.Name = "btn_refresh";
-            this.btn_refresh.Size = new System.Drawing.Size(75, 23);
+            this.btn_refresh.Size = new System.Drawing.Size(86, 23);
             this.btn_refresh.TabIndex = 13;
             this.btn_refresh.Text = "Refresh";
             this.btn_refresh.UseVisualStyleBackColor = true;
@@ -742,9 +742,9 @@ namespace ChameleonMiniGUI
             // 
             // btn_clear
             // 
-            this.btn_clear.Location = new System.Drawing.Point(360, 24);
+            this.btn_clear.Location = new System.Drawing.Point(393, 24);
             this.btn_clear.Name = "btn_clear";
-            this.btn_clear.Size = new System.Drawing.Size(75, 23);
+            this.btn_clear.Size = new System.Drawing.Size(86, 23);
             this.btn_clear.TabIndex = 12;
             this.btn_clear.Text = "Clear";
             this.btn_clear.UseVisualStyleBackColor = true;
@@ -752,9 +752,9 @@ namespace ChameleonMiniGUI
             // 
             // btn_keycalc
             // 
-            this.btn_keycalc.Location = new System.Drawing.Point(603, 24);
+            this.btn_keycalc.Location = new System.Drawing.Point(669, 24);
             this.btn_keycalc.Name = "btn_keycalc";
-            this.btn_keycalc.Size = new System.Drawing.Size(75, 23);
+            this.btn_keycalc.Size = new System.Drawing.Size(86, 23);
             this.btn_keycalc.TabIndex = 15;
             this.btn_keycalc.Text = "mfkey32";
             this.btn_keycalc.UseVisualStyleBackColor = true;
@@ -762,9 +762,9 @@ namespace ChameleonMiniGUI
             // 
             // btn_apply
             // 
-            this.btn_apply.Location = new System.Drawing.Point(279, 24);
+            this.btn_apply.Location = new System.Drawing.Point(301, 24);
             this.btn_apply.Name = "btn_apply";
-            this.btn_apply.Size = new System.Drawing.Size(75, 23);
+            this.btn_apply.Size = new System.Drawing.Size(86, 23);
             this.btn_apply.TabIndex = 11;
             this.btn_apply.Text = "Apply";
             this.btn_apply.UseVisualStyleBackColor = true;
@@ -772,7 +772,7 @@ namespace ChameleonMiniGUI
             // 
             // btn_download
             // 
-            this.btn_download.Location = new System.Drawing.Point(939, 24);
+            this.btn_download.Location = new System.Drawing.Point(973, 24);
             this.btn_download.Name = "btn_download";
             this.btn_download.Size = new System.Drawing.Size(103, 23);
             this.btn_download.TabIndex = 17;
@@ -782,7 +782,7 @@ namespace ChameleonMiniGUI
             // 
             // btn_upload
             // 
-            this.btn_upload.Location = new System.Drawing.Point(830, 24);
+            this.btn_upload.Location = new System.Drawing.Point(864, 24);
             this.btn_upload.Name = "btn_upload";
             this.btn_upload.Size = new System.Drawing.Size(103, 23);
             this.btn_upload.TabIndex = 16;
@@ -802,9 +802,9 @@ namespace ChameleonMiniGUI
             this.gb_tagslot6.Controls.Add(this.lbl_uid6);
             this.gb_tagslot6.Controls.Add(this.lbl_mode6);
             this.gb_tagslot6.Controls.Add(this.cb_mode6);
-            this.gb_tagslot6.Location = new System.Drawing.Point(374, 241);
+            this.gb_tagslot6.Location = new System.Drawing.Point(369, 241);
             this.gb_tagslot6.Name = "gb_tagslot6";
-            this.gb_tagslot6.Size = new System.Drawing.Size(250, 177);
+            this.gb_tagslot6.Size = new System.Drawing.Size(260, 177);
             this.gb_tagslot6.TabIndex = 26;
             this.gb_tagslot6.TabStop = false;
             // 
@@ -816,7 +816,7 @@ namespace ChameleonMiniGUI
             "SWITCHCARD",
             "RANDOM_UID",
             "CLOSED"});
-            this.cb_buttonlong6.Location = new System.Drawing.Point(62, 116);
+            this.cb_buttonlong6.Location = new System.Drawing.Point(79, 116);
             this.cb_buttonlong6.Name = "cb_buttonlong6";
             this.cb_buttonlong6.Size = new System.Drawing.Size(175, 21);
             this.cb_buttonlong6.TabIndex = 19;
@@ -832,7 +832,7 @@ namespace ChameleonMiniGUI
             // 
             // txt_size6
             // 
-            this.txt_size6.Location = new System.Drawing.Point(62, 147);
+            this.txt_size6.Location = new System.Drawing.Point(79, 147);
             this.txt_size6.Name = "txt_size6";
             this.txt_size6.ReadOnly = true;
             this.txt_size6.Size = new System.Drawing.Size(175, 20);
@@ -855,7 +855,7 @@ namespace ChameleonMiniGUI
             "SWITCHCARD",
             "RANDOM_UID",
             "CLOSED"});
-            this.cb_button6.Location = new System.Drawing.Point(62, 83);
+            this.cb_button6.Location = new System.Drawing.Point(79, 83);
             this.cb_button6.Name = "cb_button6";
             this.cb_button6.Size = new System.Drawing.Size(175, 21);
             this.cb_button6.TabIndex = 5;
@@ -871,7 +871,7 @@ namespace ChameleonMiniGUI
             // 
             // txt_uid6
             // 
-            this.txt_uid6.Location = new System.Drawing.Point(62, 51);
+            this.txt_uid6.Location = new System.Drawing.Point(79, 51);
             this.txt_uid6.Name = "txt_uid6";
             this.txt_uid6.Size = new System.Drawing.Size(175, 20);
             this.txt_uid6.TabIndex = 3;
@@ -904,7 +904,7 @@ namespace ChameleonMiniGUI
             "MF_ULTRALIGHT",
             "MF_DETECTION",
             "CLOSED"});
-            this.cb_mode6.Location = new System.Drawing.Point(62, 19);
+            this.cb_mode6.Location = new System.Drawing.Point(79, 19);
             this.cb_mode6.Name = "cb_mode6";
             this.cb_mode6.Size = new System.Drawing.Size(175, 21);
             this.cb_mode6.TabIndex = 0;
@@ -921,9 +921,9 @@ namespace ChameleonMiniGUI
             this.gb_tagslot1.Controls.Add(this.lbl_uid1);
             this.gb_tagslot1.Controls.Add(this.lbl_button1);
             this.gb_tagslot1.Controls.Add(this.txt_uid1);
-            this.gb_tagslot1.Location = new System.Drawing.Point(107, 30);
+            this.gb_tagslot1.Location = new System.Drawing.Point(95, 30);
             this.gb_tagslot1.Name = "gb_tagslot1";
-            this.gb_tagslot1.Size = new System.Drawing.Size(250, 177);
+            this.gb_tagslot1.Size = new System.Drawing.Size(260, 177);
             this.gb_tagslot1.TabIndex = 25;
             this.gb_tagslot1.TabStop = false;
             // 
@@ -935,7 +935,7 @@ namespace ChameleonMiniGUI
             "SWITCHCARD",
             "RANDOM_UID",
             "CLOSED"});
-            this.cb_buttonlong1.Location = new System.Drawing.Point(60, 115);
+            this.cb_buttonlong1.Location = new System.Drawing.Point(79, 115);
             this.cb_buttonlong1.Name = "cb_buttonlong1";
             this.cb_buttonlong1.Size = new System.Drawing.Size(175, 21);
             this.cb_buttonlong1.TabIndex = 11;
@@ -968,14 +968,14 @@ namespace ChameleonMiniGUI
             "MF_ULTRALIGHT",
             "MF_DETECTION",
             "CLOSED"});
-            this.cb_mode1.Location = new System.Drawing.Point(60, 18);
+            this.cb_mode1.Location = new System.Drawing.Point(79, 18);
             this.cb_mode1.Name = "cb_mode1";
             this.cb_mode1.Size = new System.Drawing.Size(175, 21);
             this.cb_mode1.TabIndex = 0;
             // 
             // txt_size1
             // 
-            this.txt_size1.Location = new System.Drawing.Point(60, 147);
+            this.txt_size1.Location = new System.Drawing.Point(79, 147);
             this.txt_size1.Name = "txt_size1";
             this.txt_size1.ReadOnly = true;
             this.txt_size1.Size = new System.Drawing.Size(175, 20);
@@ -998,7 +998,7 @@ namespace ChameleonMiniGUI
             "SWITCHCARD",
             "RANDOM_UID",
             "CLOSED"});
-            this.cb_button1.Location = new System.Drawing.Point(60, 82);
+            this.cb_button1.Location = new System.Drawing.Point(79, 82);
             this.cb_button1.Name = "cb_button1";
             this.cb_button1.Size = new System.Drawing.Size(175, 21);
             this.cb_button1.TabIndex = 5;
@@ -1023,7 +1023,7 @@ namespace ChameleonMiniGUI
             // 
             // txt_uid1
             // 
-            this.txt_uid1.Location = new System.Drawing.Point(60, 50);
+            this.txt_uid1.Location = new System.Drawing.Point(79, 50);
             this.txt_uid1.Name = "txt_uid1";
             this.txt_uid1.Size = new System.Drawing.Size(175, 20);
             this.txt_uid1.TabIndex = 3;
@@ -1040,9 +1040,9 @@ namespace ChameleonMiniGUI
             this.gb_tagslot2.Controls.Add(this.lbl_uid2);
             this.gb_tagslot2.Controls.Add(this.lbl_mode2);
             this.gb_tagslot2.Controls.Add(this.cb_mode2);
-            this.gb_tagslot2.Location = new System.Drawing.Point(374, 30);
+            this.gb_tagslot2.Location = new System.Drawing.Point(369, 30);
             this.gb_tagslot2.Name = "gb_tagslot2";
-            this.gb_tagslot2.Size = new System.Drawing.Size(250, 177);
+            this.gb_tagslot2.Size = new System.Drawing.Size(260, 177);
             this.gb_tagslot2.TabIndex = 24;
             this.gb_tagslot2.TabStop = false;
             // 
@@ -1054,7 +1054,7 @@ namespace ChameleonMiniGUI
             "SWITCHCARD",
             "RANDOM_UID",
             "CLOSED"});
-            this.cb_buttonlong2.Location = new System.Drawing.Point(62, 115);
+            this.cb_buttonlong2.Location = new System.Drawing.Point(79, 115);
             this.cb_buttonlong2.Name = "cb_buttonlong2";
             this.cb_buttonlong2.Size = new System.Drawing.Size(175, 21);
             this.cb_buttonlong2.TabIndex = 13;
@@ -1070,7 +1070,7 @@ namespace ChameleonMiniGUI
             // 
             // txt_size2
             // 
-            this.txt_size2.Location = new System.Drawing.Point(62, 146);
+            this.txt_size2.Location = new System.Drawing.Point(79, 146);
             this.txt_size2.Name = "txt_size2";
             this.txt_size2.ReadOnly = true;
             this.txt_size2.Size = new System.Drawing.Size(175, 20);
@@ -1093,7 +1093,7 @@ namespace ChameleonMiniGUI
             "SWITCHCARD",
             "RANDOM_UID",
             "CLOSED"});
-            this.cb_button2.Location = new System.Drawing.Point(62, 83);
+            this.cb_button2.Location = new System.Drawing.Point(79, 83);
             this.cb_button2.Name = "cb_button2";
             this.cb_button2.Size = new System.Drawing.Size(175, 21);
             this.cb_button2.TabIndex = 5;
@@ -1109,7 +1109,7 @@ namespace ChameleonMiniGUI
             // 
             // txt_uid2
             // 
-            this.txt_uid2.Location = new System.Drawing.Point(62, 51);
+            this.txt_uid2.Location = new System.Drawing.Point(79, 51);
             this.txt_uid2.Name = "txt_uid2";
             this.txt_uid2.Size = new System.Drawing.Size(175, 20);
             this.txt_uid2.TabIndex = 3;
@@ -1142,7 +1142,7 @@ namespace ChameleonMiniGUI
             "MF_ULTRALIGHT",
             "MF_DETECTION",
             "CLOSED"});
-            this.cb_mode2.Location = new System.Drawing.Point(62, 19);
+            this.cb_mode2.Location = new System.Drawing.Point(79, 19);
             this.cb_mode2.Name = "cb_mode2";
             this.cb_mode2.Size = new System.Drawing.Size(175, 21);
             this.cb_mode2.TabIndex = 0;
@@ -1159,9 +1159,9 @@ namespace ChameleonMiniGUI
             this.gb_tagslot4.Controls.Add(this.lbl_uid4);
             this.gb_tagslot4.Controls.Add(this.lbl_mode4);
             this.gb_tagslot4.Controls.Add(this.cb_mode4);
-            this.gb_tagslot4.Location = new System.Drawing.Point(912, 30);
+            this.gb_tagslot4.Location = new System.Drawing.Point(917, 30);
             this.gb_tagslot4.Name = "gb_tagslot4";
-            this.gb_tagslot4.Size = new System.Drawing.Size(250, 177);
+            this.gb_tagslot4.Size = new System.Drawing.Size(260, 177);
             this.gb_tagslot4.TabIndex = 23;
             this.gb_tagslot4.TabStop = false;
             // 
@@ -1173,7 +1173,7 @@ namespace ChameleonMiniGUI
             "SWITCHCARD",
             "RANDOM_UID",
             "CLOSED"});
-            this.cb_buttonlong4.Location = new System.Drawing.Point(62, 115);
+            this.cb_buttonlong4.Location = new System.Drawing.Point(79, 115);
             this.cb_buttonlong4.Name = "cb_buttonlong4";
             this.cb_buttonlong4.Size = new System.Drawing.Size(175, 21);
             this.cb_buttonlong4.TabIndex = 15;
@@ -1189,7 +1189,7 @@ namespace ChameleonMiniGUI
             // 
             // txt_size4
             // 
-            this.txt_size4.Location = new System.Drawing.Point(62, 146);
+            this.txt_size4.Location = new System.Drawing.Point(79, 146);
             this.txt_size4.Name = "txt_size4";
             this.txt_size4.ReadOnly = true;
             this.txt_size4.Size = new System.Drawing.Size(175, 20);
@@ -1212,7 +1212,7 @@ namespace ChameleonMiniGUI
             "SWITCHCARD",
             "RANDOM_UID",
             "CLOSED"});
-            this.cb_button4.Location = new System.Drawing.Point(62, 83);
+            this.cb_button4.Location = new System.Drawing.Point(79, 83);
             this.cb_button4.Name = "cb_button4";
             this.cb_button4.Size = new System.Drawing.Size(175, 21);
             this.cb_button4.TabIndex = 5;
@@ -1228,7 +1228,7 @@ namespace ChameleonMiniGUI
             // 
             // txt_uid4
             // 
-            this.txt_uid4.Location = new System.Drawing.Point(62, 51);
+            this.txt_uid4.Location = new System.Drawing.Point(79, 51);
             this.txt_uid4.Name = "txt_uid4";
             this.txt_uid4.Size = new System.Drawing.Size(175, 20);
             this.txt_uid4.TabIndex = 3;
@@ -1261,7 +1261,7 @@ namespace ChameleonMiniGUI
             "MF_ULTRALIGHT",
             "MF_DETECTION",
             "CLOSED"});
-            this.cb_mode4.Location = new System.Drawing.Point(62, 19);
+            this.cb_mode4.Location = new System.Drawing.Point(79, 19);
             this.cb_mode4.Name = "cb_mode4";
             this.cb_mode4.Size = new System.Drawing.Size(175, 21);
             this.cb_mode4.TabIndex = 0;
@@ -1278,9 +1278,9 @@ namespace ChameleonMiniGUI
             this.gb_tagslot3.Controls.Add(this.lbl_uid3);
             this.gb_tagslot3.Controls.Add(this.lbl_mode3);
             this.gb_tagslot3.Controls.Add(this.cb_mode3);
-            this.gb_tagslot3.Location = new System.Drawing.Point(642, 30);
+            this.gb_tagslot3.Location = new System.Drawing.Point(643, 30);
             this.gb_tagslot3.Name = "gb_tagslot3";
-            this.gb_tagslot3.Size = new System.Drawing.Size(250, 177);
+            this.gb_tagslot3.Size = new System.Drawing.Size(260, 177);
             this.gb_tagslot3.TabIndex = 22;
             this.gb_tagslot3.TabStop = false;
             // 
@@ -1292,7 +1292,7 @@ namespace ChameleonMiniGUI
             "SWITCHCARD",
             "RANDOM_UID",
             "CLOSED"});
-            this.cb_buttonlong3.Location = new System.Drawing.Point(62, 115);
+            this.cb_buttonlong3.Location = new System.Drawing.Point(79, 114);
             this.cb_buttonlong3.Name = "cb_buttonlong3";
             this.cb_buttonlong3.Size = new System.Drawing.Size(175, 21);
             this.cb_buttonlong3.TabIndex = 15;
@@ -1308,7 +1308,7 @@ namespace ChameleonMiniGUI
             // 
             // txt_size3
             // 
-            this.txt_size3.Location = new System.Drawing.Point(63, 147);
+            this.txt_size3.Location = new System.Drawing.Point(80, 146);
             this.txt_size3.Name = "txt_size3";
             this.txt_size3.ReadOnly = true;
             this.txt_size3.Size = new System.Drawing.Size(175, 20);
@@ -1331,7 +1331,7 @@ namespace ChameleonMiniGUI
             "SWITCHCARD",
             "RANDOM_UID",
             "CLOSED"});
-            this.cb_button3.Location = new System.Drawing.Point(62, 83);
+            this.cb_button3.Location = new System.Drawing.Point(79, 82);
             this.cb_button3.Name = "cb_button3";
             this.cb_button3.Size = new System.Drawing.Size(175, 21);
             this.cb_button3.TabIndex = 5;
@@ -1347,7 +1347,7 @@ namespace ChameleonMiniGUI
             // 
             // txt_uid3
             // 
-            this.txt_uid3.Location = new System.Drawing.Point(62, 51);
+            this.txt_uid3.Location = new System.Drawing.Point(79, 50);
             this.txt_uid3.Name = "txt_uid3";
             this.txt_uid3.Size = new System.Drawing.Size(175, 20);
             this.txt_uid3.TabIndex = 3;
@@ -1380,7 +1380,7 @@ namespace ChameleonMiniGUI
             "MF_ULTRALIGHT",
             "MF_DETECTION",
             "CLOSED"});
-            this.cb_mode3.Location = new System.Drawing.Point(62, 19);
+            this.cb_mode3.Location = new System.Drawing.Point(79, 18);
             this.cb_mode3.Name = "cb_mode3";
             this.cb_mode3.Size = new System.Drawing.Size(175, 21);
             this.cb_mode3.TabIndex = 0;
@@ -1397,9 +1397,9 @@ namespace ChameleonMiniGUI
             this.gb_tagslot5.Controls.Add(this.lbl_uid5);
             this.gb_tagslot5.Controls.Add(this.lbl_mode5);
             this.gb_tagslot5.Controls.Add(this.cb_mode5);
-            this.gb_tagslot5.Location = new System.Drawing.Point(107, 241);
+            this.gb_tagslot5.Location = new System.Drawing.Point(95, 241);
             this.gb_tagslot5.Name = "gb_tagslot5";
-            this.gb_tagslot5.Size = new System.Drawing.Size(250, 177);
+            this.gb_tagslot5.Size = new System.Drawing.Size(260, 177);
             this.gb_tagslot5.TabIndex = 21;
             this.gb_tagslot5.TabStop = false;
             // 
@@ -1411,7 +1411,7 @@ namespace ChameleonMiniGUI
             "SWITCHCARD",
             "RANDOM_UID",
             "CLOSED"});
-            this.cb_buttonlong5.Location = new System.Drawing.Point(62, 116);
+            this.cb_buttonlong5.Location = new System.Drawing.Point(79, 116);
             this.cb_buttonlong5.Name = "cb_buttonlong5";
             this.cb_buttonlong5.Size = new System.Drawing.Size(175, 21);
             this.cb_buttonlong5.TabIndex = 17;
@@ -1427,7 +1427,7 @@ namespace ChameleonMiniGUI
             // 
             // txt_size5
             // 
-            this.txt_size5.Location = new System.Drawing.Point(62, 147);
+            this.txt_size5.Location = new System.Drawing.Point(79, 147);
             this.txt_size5.Name = "txt_size5";
             this.txt_size5.ReadOnly = true;
             this.txt_size5.Size = new System.Drawing.Size(175, 20);
@@ -1450,7 +1450,7 @@ namespace ChameleonMiniGUI
             "SWITCHCARD",
             "RANDOM_UID",
             "CLOSED"});
-            this.cb_button5.Location = new System.Drawing.Point(62, 83);
+            this.cb_button5.Location = new System.Drawing.Point(79, 83);
             this.cb_button5.Name = "cb_button5";
             this.cb_button5.Size = new System.Drawing.Size(175, 21);
             this.cb_button5.TabIndex = 5;
@@ -1466,7 +1466,7 @@ namespace ChameleonMiniGUI
             // 
             // txt_uid5
             // 
-            this.txt_uid5.Location = new System.Drawing.Point(62, 51);
+            this.txt_uid5.Location = new System.Drawing.Point(79, 51);
             this.txt_uid5.Name = "txt_uid5";
             this.txt_uid5.Size = new System.Drawing.Size(175, 20);
             this.txt_uid5.TabIndex = 3;
@@ -1499,7 +1499,7 @@ namespace ChameleonMiniGUI
             "MF_ULTRALIGHT",
             "MF_DETECTION",
             "CLOSED"});
-            this.cb_mode5.Location = new System.Drawing.Point(62, 19);
+            this.cb_mode5.Location = new System.Drawing.Point(79, 19);
             this.cb_mode5.Name = "cb_mode5";
             this.cb_mode5.Size = new System.Drawing.Size(175, 21);
             this.cb_mode5.TabIndex = 0;
@@ -1516,9 +1516,9 @@ namespace ChameleonMiniGUI
             this.gb_tagslot7.Controls.Add(this.lbl_uid7);
             this.gb_tagslot7.Controls.Add(this.lbl_mode7);
             this.gb_tagslot7.Controls.Add(this.cb_mode7);
-            this.gb_tagslot7.Location = new System.Drawing.Point(642, 241);
+            this.gb_tagslot7.Location = new System.Drawing.Point(643, 241);
             this.gb_tagslot7.Name = "gb_tagslot7";
-            this.gb_tagslot7.Size = new System.Drawing.Size(250, 177);
+            this.gb_tagslot7.Size = new System.Drawing.Size(260, 177);
             this.gb_tagslot7.TabIndex = 27;
             this.gb_tagslot7.TabStop = false;
             // 
@@ -1530,7 +1530,7 @@ namespace ChameleonMiniGUI
             "SWITCHCARD",
             "RANDOM_UID",
             "CLOSED"});
-            this.cb_buttonlong7.Location = new System.Drawing.Point(62, 116);
+            this.cb_buttonlong7.Location = new System.Drawing.Point(79, 116);
             this.cb_buttonlong7.Name = "cb_buttonlong7";
             this.cb_buttonlong7.Size = new System.Drawing.Size(175, 21);
             this.cb_buttonlong7.TabIndex = 19;
@@ -1546,7 +1546,7 @@ namespace ChameleonMiniGUI
             // 
             // txt_size7
             // 
-            this.txt_size7.Location = new System.Drawing.Point(62, 147);
+            this.txt_size7.Location = new System.Drawing.Point(79, 147);
             this.txt_size7.Name = "txt_size7";
             this.txt_size7.ReadOnly = true;
             this.txt_size7.Size = new System.Drawing.Size(175, 20);
@@ -1569,7 +1569,7 @@ namespace ChameleonMiniGUI
             "SWITCHCARD",
             "RANDOM_UID",
             "CLOSED"});
-            this.cb_button7.Location = new System.Drawing.Point(62, 83);
+            this.cb_button7.Location = new System.Drawing.Point(79, 83);
             this.cb_button7.Name = "cb_button7";
             this.cb_button7.Size = new System.Drawing.Size(175, 21);
             this.cb_button7.TabIndex = 5;
@@ -1585,7 +1585,7 @@ namespace ChameleonMiniGUI
             // 
             // txt_uid7
             // 
-            this.txt_uid7.Location = new System.Drawing.Point(62, 51);
+            this.txt_uid7.Location = new System.Drawing.Point(79, 51);
             this.txt_uid7.Name = "txt_uid7";
             this.txt_uid7.Size = new System.Drawing.Size(175, 20);
             this.txt_uid7.TabIndex = 3;
@@ -1618,7 +1618,7 @@ namespace ChameleonMiniGUI
             "MF_ULTRALIGHT",
             "MF_DETECTION",
             "CLOSED"});
-            this.cb_mode7.Location = new System.Drawing.Point(62, 19);
+            this.cb_mode7.Location = new System.Drawing.Point(79, 19);
             this.cb_mode7.Name = "cb_mode7";
             this.cb_mode7.Size = new System.Drawing.Size(175, 21);
             this.cb_mode7.TabIndex = 0;
@@ -1635,9 +1635,9 @@ namespace ChameleonMiniGUI
             this.gb_tagslot8.Controls.Add(this.lbl_uid8);
             this.gb_tagslot8.Controls.Add(this.lbl_mode8);
             this.gb_tagslot8.Controls.Add(this.cb_mode8);
-            this.gb_tagslot8.Location = new System.Drawing.Point(912, 241);
+            this.gb_tagslot8.Location = new System.Drawing.Point(917, 241);
             this.gb_tagslot8.Name = "gb_tagslot8";
-            this.gb_tagslot8.Size = new System.Drawing.Size(250, 177);
+            this.gb_tagslot8.Size = new System.Drawing.Size(260, 177);
             this.gb_tagslot8.TabIndex = 20;
             this.gb_tagslot8.TabStop = false;
             // 
@@ -1649,7 +1649,7 @@ namespace ChameleonMiniGUI
             "SWITCHCARD",
             "RANDOM_UID",
             "CLOSED"});
-            this.cb_buttonlong8.Location = new System.Drawing.Point(62, 116);
+            this.cb_buttonlong8.Location = new System.Drawing.Point(79, 116);
             this.cb_buttonlong8.Name = "cb_buttonlong8";
             this.cb_buttonlong8.Size = new System.Drawing.Size(175, 21);
             this.cb_buttonlong8.TabIndex = 19;
@@ -1665,7 +1665,7 @@ namespace ChameleonMiniGUI
             // 
             // txt_size8
             // 
-            this.txt_size8.Location = new System.Drawing.Point(62, 147);
+            this.txt_size8.Location = new System.Drawing.Point(79, 147);
             this.txt_size8.Name = "txt_size8";
             this.txt_size8.ReadOnly = true;
             this.txt_size8.Size = new System.Drawing.Size(175, 20);
@@ -1688,7 +1688,7 @@ namespace ChameleonMiniGUI
             "SWITCHCARD",
             "RANDOM_UID",
             "CLOSED"});
-            this.cb_button8.Location = new System.Drawing.Point(62, 83);
+            this.cb_button8.Location = new System.Drawing.Point(79, 83);
             this.cb_button8.Name = "cb_button8";
             this.cb_button8.Size = new System.Drawing.Size(175, 21);
             this.cb_button8.TabIndex = 5;
@@ -1704,7 +1704,7 @@ namespace ChameleonMiniGUI
             // 
             // txt_uid8
             // 
-            this.txt_uid8.Location = new System.Drawing.Point(62, 51);
+            this.txt_uid8.Location = new System.Drawing.Point(79, 51);
             this.txt_uid8.Name = "txt_uid8";
             this.txt_uid8.Size = new System.Drawing.Size(175, 20);
             this.txt_uid8.TabIndex = 3;
@@ -1737,7 +1737,7 @@ namespace ChameleonMiniGUI
             "MF_ULTRALIGHT",
             "MF_DETECTION",
             "CLOSED"});
-            this.cb_mode8.Location = new System.Drawing.Point(62, 19);
+            this.cb_mode8.Location = new System.Drawing.Point(79, 19);
             this.cb_mode8.Name = "cb_mode8";
             this.cb_mode8.Size = new System.Drawing.Size(175, 21);
             this.cb_mode8.TabIndex = 0;
@@ -1786,14 +1786,14 @@ namespace ChameleonMiniGUI
             this.menuScroll.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem1});
             this.menuScroll.Name = "menuScroll";
-            this.menuScroll.Size = new System.Drawing.Size(170, 26);
+            this.menuScroll.Size = new System.Drawing.Size(169, 26);
             this.menuScroll.Text = "toggle sync scroll";
             this.menuScroll.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuScroll_ItemClicked);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(169, 22);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(168, 22);
             this.toolStripMenuItem1.Text = "Toggle sync scroll";
             // 
             // cb_templateA
@@ -1882,9 +1882,9 @@ namespace ChameleonMiniGUI
             // 
             // btn_save2
             // 
-            this.btn_save2.Location = new System.Drawing.Point(699, 41);
+            this.btn_save2.Location = new System.Drawing.Point(729, 41);
             this.btn_save2.Name = "btn_save2";
-            this.btn_save2.Size = new System.Drawing.Size(50, 23);
+            this.btn_save2.Size = new System.Drawing.Size(80, 23);
             this.btn_save2.TabIndex = 8;
             this.btn_save2.Text = "Save";
             this.btn_save2.UseVisualStyleBackColor = true;
@@ -1894,7 +1894,7 @@ namespace ChameleonMiniGUI
             // 
             this.btn_open2.Location = new System.Drawing.Point(643, 41);
             this.btn_open2.Name = "btn_open2";
-            this.btn_open2.Size = new System.Drawing.Size(50, 23);
+            this.btn_open2.Size = new System.Drawing.Size(80, 23);
             this.btn_open2.TabIndex = 7;
             this.btn_open2.Text = "Open";
             this.btn_open2.UseVisualStyleBackColor = true;
@@ -1902,9 +1902,9 @@ namespace ChameleonMiniGUI
             // 
             // btn_save1
             // 
-            this.btn_save1.Location = new System.Drawing.Point(63, 41);
+            this.btn_save1.Location = new System.Drawing.Point(93, 41);
             this.btn_save1.Name = "btn_save1";
-            this.btn_save1.Size = new System.Drawing.Size(50, 23);
+            this.btn_save1.Size = new System.Drawing.Size(80, 23);
             this.btn_save1.TabIndex = 6;
             this.btn_save1.Text = "Save";
             this.btn_save1.UseVisualStyleBackColor = true;
@@ -1914,7 +1914,7 @@ namespace ChameleonMiniGUI
             // 
             this.btn_open1.Location = new System.Drawing.Point(7, 41);
             this.btn_open1.Name = "btn_open1";
-            this.btn_open1.Size = new System.Drawing.Size(50, 23);
+            this.btn_open1.Size = new System.Drawing.Size(80, 23);
             this.btn_open1.TabIndex = 5;
             this.btn_open1.Text = "Open";
             this.btn_open1.UseVisualStyleBackColor = true;

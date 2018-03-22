@@ -118,6 +118,9 @@
     <Compile Include="MultiLanguage.cs" />
     <Compile Include="Templating.cs" />
     <Compile Include="XMODEM.cs" />
+    <Content Include="Languages\Greek.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>    
     <Content Include="Languages\Svenska.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

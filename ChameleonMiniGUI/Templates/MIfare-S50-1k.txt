@@ -5,68 +5,68 @@
 # 
 # 2018, iceman
 # block 0
-0; 4; Turquoise; gray; UID
-4; 1; white; gray; BCC
-(0*64) + 48; 6; yellow; gray; KEY A
-(0*64)+ 48+ 6; 4; red; gray; ACCESS Bytes
-(0*64) + 48+10; 6; blue; gray; KEY A
+0; 4; Turquoise; DarkGray; UID
+4; 1; white; DarkGray; BCC
+(0*64) + 48; 6; yellow; DarkGray; KEY A
+(0*64)+ 48+ 6; 4; darkred; DarkGray; ACCESS Bytes
+(0*64) + 48+10; 6; blue; DarkGray; KEY B
 # block 1
-(1*64) + 48; 6; yellow; gray; KEY A
-(1*64)+ 48+ 6; 4; red; gray; ACCESS Bytes
-(1*64) + 48 +10; 6; blue; gray; KEY B
+(1*64) + 48; 6; yellow; DarkGray; KEY A
+(1*64)+ 48+ 6; 4; darkred; DarkGray; ACCESS Bytes
+(1*64) + 48 +10; 6; blue; DarkGray; KEY B
 # block 2
-(2*64) + 48; 6; yellow; gray; KEY A
-(2*64)+ 48+ 6; 4; red; gray; ACCESS Bytes
-(2*64) + 48 +10; 6; blue; gray; KEY B
+(2*64) + 48; 6; yellow; DarkGray; KEY A
+(2*64)+ 48+ 6; 4; darkred; DarkGray; ACCESS Bytes
+(2*64) + 48 +10; 6; blue; DarkGray; KEY B
 # block 3
-(3*64) + 48; 6; yellow; gray; KEY A
-(3*64)+ 48+ 6; 4; red; gray; ACCESS Bytes
-(3*64) + 48 +10; 6; blue; gray; KEY B
+(3*64) + 48; 6; yellow; DarkGray; KEY A
+(3*64)+ 48+ 6; 4; darkred; DarkGray; ACCESS Bytes
+(3*64) + 48 +10; 6; blue; DarkGray; KEY B
 # block 4
-(4*64) + 48; 6; yellow; gray; KEY A
-(4*64)+ 48+ 6; 4; red; gray; ACCESS Bytes
-(4*64) + 48 +10; 6; blue; gray; KEY B
+(4*64) + 48; 6; yellow; DarkGray; KEY A
+(4*64)+ 48+ 6; 4; darkred; DarkGray; ACCESS Bytes
+(4*64) + 48 +10; 6; blue; DarkGray; KEY B
 # block 5
-(5*64) + 48; 6; yellow; gray; KEY A
-(5*64)+ 48+ 6; 4; red; gray; ACCESS Bytes
-(5*64) + 48 +10; 6; blue; gray; KEY B
+(5*64) + 48; 6; yellow; DarkGray; KEY A
+(5*64)+ 48+ 6; 4; darkred; DarkGray; ACCESS Bytes
+(5*64) + 48 +10; 6; blue; DarkGray; KEY B
 # block 6
-(6*64) + 48; 6; yellow; gray; KEY A
-(6*64)+ 48+ 6; 4; red; gray; ACCESS Bytes
-(6*64) + 48 +10; 6; blue; gray; KEY B
+(6*64) + 48; 6; yellow; DarkGray; KEY A
+(6*64)+ 48+ 6; 4; darkred; DarkGray; ACCESS Bytes
+(6*64) + 48 +10; 6; blue; DarkGray; KEY B
 # block 7
-(7*64) + 48; 6; yellow; gray; KEY A
-(7*64)+ 48+ 6; 4; red; gray; ACCESS Bytes
-(7*64) + 48 +10; 6; blue; gray; KEY B
+(7*64) + 48; 6; yellow; DarkGray; KEY A
+(7*64)+ 48+ 6; 4; darkred; DarkGray; ACCESS Bytes
+(7*64) + 48 +10; 6; blue; DarkGray; KEY B
 # block 8
-(8*64) + 48; 6; yellow; gray; KEY A
-(8*64)+ 48+ 6; 4; red; gray; ACCESS Bytes
-(8*64) + 48 +10; 6; blue; gray; KEY B
+(8*64) + 48; 6; yellow; DarkGray; KEY A
+(8*64)+ 48+ 6; 4; darkred; DarkGray; ACCESS Bytes
+(8*64) + 48 +10; 6; blue; DarkGray; KEY B
 # block 9
-(9*64) + 48; 6; yellow; gray; KEY A
-(9*64)+ 48+ 6; 4; red; gray; ACCESS Bytes
-(9*64) + 48 +10; 6; blue; gray; KEY B
+(9*64) + 48; 6; yellow; DarkGray; KEY A
+(9*64)+ 48+ 6; 4; darkred; DarkGray; ACCESS Bytes
+(9*64) + 48 +10; 6; blue; DarkGray; KEY B
 # block 10
-(10*64) + 48; 6; yellow; gray; KEY A
-(10*64)+ 48+ 6; 4; red; gray; ACCESS Bytes
-(10*64) + 48 +10; 6; blue; gray; KEY B
+(10*64) + 48; 6; yellow; DarkGray; KEY A
+(10*64)+ 48+ 6; 4; darkred; DarkGray; ACCESS Bytes
+(10*64) + 48 +10; 6; blue; DarkGray; KEY B
 # block 11
-(11*64) + 48; 6; yellow; gray; KEY A
-(11*64)+ 48+ 6; 4; red; gray; ACCESS Bytes
-(11*64) + 48 +10; 6; blue; gray; KEY B
+(11*64) + 48; 6; yellow; DarkGray; KEY A
+(11*64)+ 48+ 6; 4; darkred; DarkGray; ACCESS Bytes
+(11*64) + 48 +10; 6; blue; DarkGray; KEY B
 # block 12
-(12*64) + 48; 6; yellow; gray; KEY A
-(12*64)+ 48+ 6; 4; red; gray; ACCESS Bytes
-(12*64) + 48 +10; 6; blue; gray; KEY B
+(12*64) + 48; 6; yellow; DarkGray; KEY A
+(12*64)+ 48+ 6; 4;darkred; DarkGray; ACCESS Bytes
+(12*64) + 48 +10; 6; blue; DarkGray; KEY B
 # block 13
-(13*64) + 48; 6; yellow; gray; KEY A
-(13*64)+ 48+ 6; 4; red; gray; ACCESS Bytes
-(13*64) + 48 +10; 6; blue; gray; KEY B
+(13*64) + 48; 6; yellow; DarkGray; KEY A
+(13*64)+ 48+ 6; 4;darkred; DarkGray; ACCESS Bytes
+(13*64) + 48 +10; 6; blue; DarkGray; KEY B
 # block 14
-(14*64) + 48; 6; yellow; gray; KEY A
-(14*64)+ 48+ 6; 4; red; gray; ACCESS Bytes
-(14*64) + 48 +10; 6; blue; gray; KEY B
+(14*64) + 48; 6; yellow; DarkGray; KEY A
+(14*64)+ 48+ 6; 4;darkred; DarkGray; ACCESS Bytes
+(14*64) + 48 +10; 6; blue; DarkGray; KEY B
 # block 15
-(15*64) + 48; 6; yellow; gray; KEY A
-(15*64)+ 48+ 6; 4; red; gray; ACCESS Bytes
-(15*64) + 48 +10; 6; blue; gray; KEY B
+(15*64) + 48; 6; yellow; DarkGray; KEY A
+(15*64)+ 48+ 6; 4;darkred; DarkGray; ACCESS Bytes
+(15*64) + 48 +10; 6; blue; DarkGray; KEY B

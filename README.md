@@ -7,10 +7,11 @@ A windows based GUI for the ChameleonMini device. It supports all the official R
 
 ## Windows GUI - click once deployment
 For those who can't compile this project there is a click-once deployment installation located here.
+
 [(http://www.icesql.se/download/ChameleonMiniGUI/publish.htm)](http://www.icesql.se/download/ChameleonMiniGUI/publish.htm)
 
-pre-requsites
-* dot.net 4.5.2
+prerequisite
+* dot.net 4.6.1
 * Application needs full rights.
 
 This is hosted by me,  feel free to contribute with a donation for hosting costs.

@@ -113,12 +113,18 @@
     </Compile>
     <Compile Include="Comparers\KeyComparer.cs" />
     <Compile Include="Attacks\MfKeyAttacks.cs" />
+    <Compile Include="Legend\IlegendItem.cs" />
+    <Compile Include="Legend\Legend.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MultiLanguage.cs" />
     <Compile Include="Templating.cs" />
+    <Compile Include="ThreadHelperClass.cs" />
     <Compile Include="XMODEM.cs" />
     <Content Include="Languages\Chinese.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Languages\Français.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Languages\Greek.txt">

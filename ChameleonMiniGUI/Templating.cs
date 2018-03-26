@@ -18,7 +18,7 @@ namespace ChameleonMiniGUI
             DirectoryPath = Path.Combine(Application.StartupPath, "Templates");
         }
 
-        public void LoadTemplate(HexBox hb, string template)
+        public void LoadTemplate(HexBox hb, string template, List<IlegendItem> legendItems )
         {
             if (hb.ByteProvider == null) return;
 
@@ -27,6 +27,9 @@ namespace ChameleonMiniGUI
             var fn = Path.Combine(DirectoryPath, template);
             if (!File.Exists(fn))
                 return;
+
+            if (legendItems == null)
+                legendItems = new List<IlegendItem>();
 
             var strings = File.ReadAllLines(fn);
 
@@ -69,6 +72,18 @@ namespace ChameleonMiniGUI
                         continue;
 
                     hb.AddHighlight(startpos, length, fgc, bgc);
+
+                    var item = new LegendItem
+                    {
+                        BackGroundColor = bg,
+                        ForeGroundColor = fg,
+                        Description = desc
+                    };
+
+                    var exists = legendItems.Any(a => a.BackGroundColor == bg && a.ForeGroundColor == fg && a.Description == desc);
+                    if (!exists )                    
+                        legendItems.Add(item);                  
+                    
                 }
                 catch (Exception ex)
                 {

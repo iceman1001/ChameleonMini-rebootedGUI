@@ -36,7 +36,7 @@ namespace ChameleonMiniGUI
             this.gb_output = new System.Windows.Forms.GroupBox();
             this.cb_languages = new System.Windows.Forms.ComboBox();
             this.bsLanguages = new System.Windows.Forms.BindingSource(this.components);
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tpSettings = new System.Windows.Forms.TabPage();
             this.gb_language = new System.Windows.Forms.GroupBox();
             this.btnStartlocation = new System.Windows.Forms.Button();
             this.gb_keepalive = new System.Windows.Forms.GroupBox();
@@ -65,7 +65,7 @@ namespace ChameleonMiniGUI
             this.btn_rssirefresh = new System.Windows.Forms.Button();
             this.txt_rssi = new System.Windows.Forms.TextBox();
             this.lbl_rssi = new System.Windows.Forms.Label();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tpOperation = new System.Windows.Forms.TabPage();
             this.checkBox8 = new System.Windows.Forms.CheckBox();
             this.checkBox7 = new System.Windows.Forms.CheckBox();
             this.checkBox6 = new System.Windows.Forms.CheckBox();
@@ -173,9 +173,10 @@ namespace ChameleonMiniGUI
             this.lbl_mode8 = new System.Windows.Forms.Label();
             this.cb_mode8 = new System.Windows.Forms.ComboBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.tpDump = new System.Windows.Forms.TabPage();
             this.menuScroll = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.lbl_template = new System.Windows.Forms.Label();
             this.cb_templateA = new System.Windows.Forms.ComboBox();
             this.bsTemplates = new System.Windows.Forms.BindingSource(this.components);
             this.chkSyncScroll = new System.Windows.Forms.CheckBox();
@@ -191,11 +192,23 @@ namespace ChameleonMiniGUI
             this.btn_open1 = new System.Windows.Forms.Button();
             this.hexBox2 = new Be.Windows.Forms.HexBox();
             this.hexBox1 = new Be.Windows.Forms.HexBox();
+            this.tpSerial = new System.Windows.Forms.TabPage();
+            this.btnClearCmd = new System.Windows.Forms.Button();
+            this.tbSerialCmd = new System.Windows.Forms.TextBox();
+            this.tbSerialOutput = new System.Windows.Forms.TextBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.lbl_template = new System.Windows.Forms.Label();
+            this.lbl_serial_help = new System.Windows.Forms.Label();
+            this.lbl_serial_help_revg = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.linkRevE = new System.Windows.Forms.LinkLabel();
+            this.linkRevG = new System.Windows.Forms.LinkLabel();
+            this.menuClear = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsmi_clear = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_copy = new System.Windows.Forms.ToolStripMenuItem();
             this.gb_output.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bsLanguages)).BeginInit();
-            this.tabPage2.SuspendLayout();
+            this.tpSettings.SuspendLayout();
             this.gb_language.SuspendLayout();
             this.gb_keepalive.SuspendLayout();
             this.gb_connectionSettings.SuspendLayout();
@@ -203,7 +216,7 @@ namespace ChameleonMiniGUI
             this.gb_bootloader.SuspendLayout();
             this.gb_defaultdownload.SuspendLayout();
             this.gb_rssi.SuspendLayout();
-            this.tabPage1.SuspendLayout();
+            this.tpOperation.SuspendLayout();
             this.gb_actions.SuspendLayout();
             this.gb_tagslot6.SuspendLayout();
             this.gb_tagslot1.SuspendLayout();
@@ -214,9 +227,13 @@ namespace ChameleonMiniGUI
             this.gb_tagslot7.SuspendLayout();
             this.gb_tagslot8.SuspendLayout();
             this.tabControl1.SuspendLayout();
-            this.tabPage3.SuspendLayout();
+            this.tpDump.SuspendLayout();
             this.menuScroll.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bsTemplates)).BeginInit();
+            this.tpSerial.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.menuClear.SuspendLayout();
             this.SuspendLayout();
             // 
             // txt_output
@@ -257,20 +274,20 @@ namespace ChameleonMiniGUI
             this.cb_languages.TabIndex = 7;
             this.cb_languages.SelectedIndexChanged += new System.EventHandler(this.cb_languages_SelectedIndexChanged);
             // 
-            // tabPage2
+            // tpSettings
             // 
-            this.tabPage2.Controls.Add(this.gb_language);
-            this.tabPage2.Controls.Add(this.gb_keepalive);
-            this.tabPage2.Controls.Add(this.gb_connectionSettings);
-            this.tabPage2.Controls.Add(this.gb_bootloader);
-            this.tabPage2.Controls.Add(this.gb_defaultdownload);
-            this.tabPage2.Controls.Add(this.gb_rssi);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Size = new System.Drawing.Size(1279, 491);
-            this.tabPage2.TabIndex = 3;
-            this.tabPage2.Text = "Settings";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.tpSettings.Controls.Add(this.gb_language);
+            this.tpSettings.Controls.Add(this.gb_keepalive);
+            this.tpSettings.Controls.Add(this.gb_connectionSettings);
+            this.tpSettings.Controls.Add(this.gb_bootloader);
+            this.tpSettings.Controls.Add(this.gb_defaultdownload);
+            this.tpSettings.Controls.Add(this.gb_rssi);
+            this.tpSettings.Location = new System.Drawing.Point(4, 22);
+            this.tpSettings.Name = "tpSettings";
+            this.tpSettings.Size = new System.Drawing.Size(1279, 491);
+            this.tpSettings.TabIndex = 3;
+            this.tpSettings.Text = "Settings";
+            this.tpSettings.UseVisualStyleBackColor = true;
             // 
             // gb_language
             // 
@@ -560,32 +577,32 @@ namespace ChameleonMiniGUI
             this.lbl_rssi.TabIndex = 0;
             this.lbl_rssi.Text = "Current RSSI";
             // 
-            // tabPage1
+            // tpOperation
             // 
-            this.tabPage1.Controls.Add(this.checkBox8);
-            this.tabPage1.Controls.Add(this.checkBox7);
-            this.tabPage1.Controls.Add(this.checkBox6);
-            this.tabPage1.Controls.Add(this.checkBox5);
-            this.tabPage1.Controls.Add(this.checkBox4);
-            this.tabPage1.Controls.Add(this.checkBox3);
-            this.tabPage1.Controls.Add(this.checkBox2);
-            this.tabPage1.Controls.Add(this.checkBox1);
-            this.tabPage1.Controls.Add(this.gb_actions);
-            this.tabPage1.Controls.Add(this.gb_tagslot6);
-            this.tabPage1.Controls.Add(this.gb_tagslot1);
-            this.tabPage1.Controls.Add(this.gb_tagslot2);
-            this.tabPage1.Controls.Add(this.gb_tagslot4);
-            this.tabPage1.Controls.Add(this.gb_tagslot3);
-            this.tabPage1.Controls.Add(this.gb_tagslot5);
-            this.tabPage1.Controls.Add(this.gb_tagslot7);
-            this.tabPage1.Controls.Add(this.gb_tagslot8);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1279, 491);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Operation";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.tpOperation.Controls.Add(this.checkBox8);
+            this.tpOperation.Controls.Add(this.checkBox7);
+            this.tpOperation.Controls.Add(this.checkBox6);
+            this.tpOperation.Controls.Add(this.checkBox5);
+            this.tpOperation.Controls.Add(this.checkBox4);
+            this.tpOperation.Controls.Add(this.checkBox3);
+            this.tpOperation.Controls.Add(this.checkBox2);
+            this.tpOperation.Controls.Add(this.checkBox1);
+            this.tpOperation.Controls.Add(this.gb_actions);
+            this.tpOperation.Controls.Add(this.gb_tagslot6);
+            this.tpOperation.Controls.Add(this.gb_tagslot1);
+            this.tpOperation.Controls.Add(this.gb_tagslot2);
+            this.tpOperation.Controls.Add(this.gb_tagslot4);
+            this.tpOperation.Controls.Add(this.gb_tagslot3);
+            this.tpOperation.Controls.Add(this.gb_tagslot5);
+            this.tpOperation.Controls.Add(this.gb_tagslot7);
+            this.tpOperation.Controls.Add(this.gb_tagslot8);
+            this.tpOperation.Location = new System.Drawing.Point(4, 22);
+            this.tpOperation.Name = "tpOperation";
+            this.tpOperation.Padding = new System.Windows.Forms.Padding(3);
+            this.tpOperation.Size = new System.Drawing.Size(1279, 491);
+            this.tpOperation.TabIndex = 0;
+            this.tpOperation.Text = "Operation";
+            this.tpOperation.UseVisualStyleBackColor = true;
             // 
             // checkBox8
             // 
@@ -723,6 +740,7 @@ namespace ChameleonMiniGUI
             // 
             // btn_selectnone
             // 
+            this.btn_selectnone.AutoSize = true;
             this.btn_selectnone.Enabled = false;
             this.btn_selectnone.Location = new System.Drawing.Point(110, 24);
             this.btn_selectnone.Name = "btn_selectnone";
@@ -734,6 +752,7 @@ namespace ChameleonMiniGUI
             // 
             // btn_selectall
             // 
+            this.btn_selectall.AutoSize = true;
             this.btn_selectall.Enabled = false;
             this.btn_selectall.Location = new System.Drawing.Point(9, 24);
             this.btn_selectall.Name = "btn_selectall";
@@ -1757,58 +1776,68 @@ namespace ChameleonMiniGUI
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage3);
-            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tpOperation);
+            this.tabControl1.Controls.Add(this.tpDump);
+            this.tabControl1.Controls.Add(this.tpSerial);
+            this.tabControl1.Controls.Add(this.tpSettings);
             this.tabControl1.Location = new System.Drawing.Point(8, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(1287, 517);
             this.tabControl1.TabIndex = 8;
             // 
-            // tabPage3
+            // tpDump
             // 
-            this.tabPage3.AllowDrop = true;
-            this.tabPage3.ContextMenuStrip = this.menuScroll;
-            this.tabPage3.Controls.Add(this.lbl_template);
-            this.tabPage3.Controls.Add(this.cb_templateA);
-            this.tabPage3.Controls.Add(this.chkSyncScroll);
-            this.tabPage3.Controls.Add(this.lbl_hbfilename2);
-            this.tabPage3.Controls.Add(this.lbl_hbfilename1);
-            this.tabPage3.Controls.Add(this.rbtn_bytewidth16);
-            this.tabPage3.Controls.Add(this.rbtn_bytewidth08);
-            this.tabPage3.Controls.Add(this.rbtn_bytewidth04);
-            this.tabPage3.Controls.Add(this.lbl_bytewidth);
-            this.tabPage3.Controls.Add(this.btn_save2);
-            this.tabPage3.Controls.Add(this.btn_open2);
-            this.tabPage3.Controls.Add(this.btn_save1);
-            this.tabPage3.Controls.Add(this.btn_open1);
-            this.tabPage3.Controls.Add(this.hexBox2);
-            this.tabPage3.Controls.Add(this.hexBox1);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(1279, 491);
-            this.tabPage3.TabIndex = 4;
-            this.tabPage3.Text = "Dump Management";
-            this.tabPage3.UseVisualStyleBackColor = true;
-            this.tabPage3.DragDrop += new System.Windows.Forms.DragEventHandler(this.tabPage3_DragDrop);
-            this.tabPage3.DragEnter += new System.Windows.Forms.DragEventHandler(this.tabPage3_DragEnter);
-            this.tabPage3.MouseEnter += new System.EventHandler(this.tabPage3_MouseEnter);
+            this.tpDump.AllowDrop = true;
+            this.tpDump.ContextMenuStrip = this.menuScroll;
+            this.tpDump.Controls.Add(this.lbl_template);
+            this.tpDump.Controls.Add(this.cb_templateA);
+            this.tpDump.Controls.Add(this.chkSyncScroll);
+            this.tpDump.Controls.Add(this.lbl_hbfilename2);
+            this.tpDump.Controls.Add(this.lbl_hbfilename1);
+            this.tpDump.Controls.Add(this.rbtn_bytewidth16);
+            this.tpDump.Controls.Add(this.rbtn_bytewidth08);
+            this.tpDump.Controls.Add(this.rbtn_bytewidth04);
+            this.tpDump.Controls.Add(this.lbl_bytewidth);
+            this.tpDump.Controls.Add(this.btn_save2);
+            this.tpDump.Controls.Add(this.btn_open2);
+            this.tpDump.Controls.Add(this.btn_save1);
+            this.tpDump.Controls.Add(this.btn_open1);
+            this.tpDump.Controls.Add(this.hexBox2);
+            this.tpDump.Controls.Add(this.hexBox1);
+            this.tpDump.Location = new System.Drawing.Point(4, 22);
+            this.tpDump.Name = "tpDump";
+            this.tpDump.Size = new System.Drawing.Size(1279, 491);
+            this.tpDump.TabIndex = 4;
+            this.tpDump.Text = "Dump Management";
+            this.tpDump.UseVisualStyleBackColor = true;
+            this.tpDump.DragDrop += new System.Windows.Forms.DragEventHandler(this.tabPage3_DragDrop);
+            this.tpDump.DragEnter += new System.Windows.Forms.DragEventHandler(this.tabPage3_DragEnter);
+            this.tpDump.MouseEnter += new System.EventHandler(this.tabPage3_MouseEnter);
             // 
             // menuScroll
             // 
             this.menuScroll.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem1});
             this.menuScroll.Name = "menuScroll";
-            this.menuScroll.Size = new System.Drawing.Size(169, 26);
+            this.menuScroll.Size = new System.Drawing.Size(170, 26);
             this.menuScroll.Text = "toggle sync scroll";
             this.menuScroll.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuScroll_ItemClicked);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(168, 22);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(169, 22);
             this.toolStripMenuItem1.Text = "Toggle sync scroll";
+            // 
+            // lbl_template
+            // 
+            this.lbl_template.AutoSize = true;
+            this.lbl_template.Location = new System.Drawing.Point(435, 13);
+            this.lbl_template.Name = "lbl_template";
+            this.lbl_template.Size = new System.Drawing.Size(54, 13);
+            this.lbl_template.TabIndex = 21;
+            this.lbl_template.Text = "Template:";
             // 
             // cb_templateA
             // 
@@ -1952,7 +1981,7 @@ namespace ChameleonMiniGUI
             this.hexBox2.ByteProviderWriteFinished += new System.EventHandler(this.hexBox_ByteProviderWriteFinished);
             this.hexBox2.VScrollBarChanged += new Be.Windows.Forms.HexBox.VScrollBarChangedEventHandler(this.hexBox2_VScrollBarChanged);
             this.hexBox2.ToggleSyncScrollPressed += new System.EventHandler(this.toggleSyncScrollPressed);
-            this.hexBox2.MouseEnter += new System.EventHandler(this.hexBox2_MouseEnter);
+            this.hexBox2.MouseEnter += new System.EventHandler(this.hexBox_MouseEnter);
             // 
             // hexBox1
             // 
@@ -1972,16 +2001,133 @@ namespace ChameleonMiniGUI
             this.hexBox1.ByteProviderWriteFinished += new System.EventHandler(this.hexBox_ByteProviderWriteFinished);
             this.hexBox1.VScrollBarChanged += new Be.Windows.Forms.HexBox.VScrollBarChangedEventHandler(this.hexBox1_VScrollBarChanged);
             this.hexBox1.ToggleSyncScrollPressed += new System.EventHandler(this.toggleSyncScrollPressed);
-            this.hexBox1.MouseEnter += new System.EventHandler(this.hexBox1_MouseEnter);
+            this.hexBox1.MouseEnter += new System.EventHandler(this.hexBox_MouseEnter);
             // 
-            // lbl_template
+            // tpSerial
             // 
-            this.lbl_template.AutoSize = true;
-            this.lbl_template.Location = new System.Drawing.Point(435, 13);
-            this.lbl_template.Name = "lbl_template";
-            this.lbl_template.Size = new System.Drawing.Size(54, 13);
-            this.lbl_template.TabIndex = 21;
-            this.lbl_template.Text = "Template:";
+            this.tpSerial.Controls.Add(this.groupBox2);
+            this.tpSerial.Controls.Add(this.groupBox1);
+            this.tpSerial.Controls.Add(this.btnClearCmd);
+            this.tpSerial.Controls.Add(this.tbSerialCmd);
+            this.tpSerial.Controls.Add(this.tbSerialOutput);
+            this.tpSerial.Location = new System.Drawing.Point(4, 22);
+            this.tpSerial.Name = "tpSerial";
+            this.tpSerial.Padding = new System.Windows.Forms.Padding(3);
+            this.tpSerial.Size = new System.Drawing.Size(1279, 491);
+            this.tpSerial.TabIndex = 5;
+            this.tpSerial.Text = "Serial";
+            this.tpSerial.UseVisualStyleBackColor = true;
+            // 
+            // btnClearCmd
+            // 
+            this.btnClearCmd.Location = new System.Drawing.Point(542, 40);
+            this.btnClearCmd.Name = "btnClearCmd";
+            this.btnClearCmd.Size = new System.Drawing.Size(75, 23);
+            this.btnClearCmd.TabIndex = 2;
+            this.btnClearCmd.Text = "clear";
+            this.btnClearCmd.UseVisualStyleBackColor = true;
+            this.btnClearCmd.Click += new System.EventHandler(this.btnClearCmd_Click);
+            // 
+            // tbSerialCmd
+            // 
+            this.tbSerialCmd.Location = new System.Drawing.Point(48, 42);
+            this.tbSerialCmd.Name = "tbSerialCmd";
+            this.tbSerialCmd.Size = new System.Drawing.Size(270, 20);
+            this.tbSerialCmd.TabIndex = 1;
+            this.tbSerialCmd.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbSerialCmd_KeyPress);
+            // 
+            // tbSerialOutput
+            // 
+            this.tbSerialOutput.ContextMenuStrip = this.menuClear;
+            this.tbSerialOutput.Location = new System.Drawing.Point(48, 92);
+            this.tbSerialOutput.Multiline = true;
+            this.tbSerialOutput.Name = "tbSerialOutput";
+            this.tbSerialOutput.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.tbSerialOutput.Size = new System.Drawing.Size(569, 380);
+            this.tbSerialOutput.TabIndex = 0;
+            // 
+            // lbl_serial_help
+            // 
+            this.lbl_serial_help.AutoSize = true;
+            this.lbl_serial_help.Location = new System.Drawing.Point(15, 44);
+            this.lbl_serial_help.Name = "lbl_serial_help";
+            this.lbl_serial_help.Size = new System.Drawing.Size(35, 13);
+            this.lbl_serial_help.TabIndex = 3;
+            this.lbl_serial_help.Text = "label1";
+            // 
+            // lbl_serial_help_revg
+            // 
+            this.lbl_serial_help_revg.AutoSize = true;
+            this.lbl_serial_help_revg.Location = new System.Drawing.Point(15, 44);
+            this.lbl_serial_help_revg.Name = "lbl_serial_help_revg";
+            this.lbl_serial_help_revg.Size = new System.Drawing.Size(35, 13);
+            this.lbl_serial_help_revg.TabIndex = 6;
+            this.lbl_serial_help_revg.Text = "label1";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.linkRevE);
+            this.groupBox1.Controls.Add(this.lbl_serial_help);
+            this.groupBox1.Location = new System.Drawing.Point(677, 23);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(180, 449);
+            this.groupBox1.TabIndex = 7;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Rev E Rebooted";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.linkRevG);
+            this.groupBox2.Controls.Add(this.lbl_serial_help_revg);
+            this.groupBox2.Location = new System.Drawing.Point(892, 23);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(180, 449);
+            this.groupBox2.TabIndex = 4;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Rev G";
+            // 
+            // linkRevE
+            // 
+            this.linkRevE.AutoSize = true;
+            this.linkRevE.Location = new System.Drawing.Point(15, 22);
+            this.linkRevE.Name = "linkRevE";
+            this.linkRevE.Size = new System.Drawing.Size(104, 13);
+            this.linkRevE.TabIndex = 4;
+            this.linkRevE.TabStop = true;
+            this.linkRevE.Text = "Rev E Wiki Terminal";
+            this.linkRevE.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkRevE_LinkClicked);
+            // 
+            // linkRevG
+            // 
+            this.linkRevG.AutoSize = true;
+            this.linkRevG.Location = new System.Drawing.Point(15, 22);
+            this.linkRevG.Name = "linkRevG";
+            this.linkRevG.Size = new System.Drawing.Size(105, 13);
+            this.linkRevG.TabIndex = 7;
+            this.linkRevG.TabStop = true;
+            this.linkRevG.Text = "Rev G Wiki Terminal";
+            this.linkRevG.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkRevG_LinkClicked);
+            // 
+            // menuClear
+            // 
+            this.menuClear.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmi_clear,
+            this.tsmi_copy});
+            this.menuClear.Name = "menuClear";
+            this.menuClear.Size = new System.Drawing.Size(153, 70);
+            this.menuClear.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuClear_ItemClicked);
+            // 
+            // tsmi_clear
+            // 
+            this.tsmi_clear.Name = "tsmi_clear";
+            this.tsmi_clear.Size = new System.Drawing.Size(152, 22);
+            this.tsmi_clear.Text = "Clear";
+            // 
+            // tsmi_copy
+            // 
+            this.tsmi_copy.Name = "tsmi_copy";
+            this.tsmi_copy.Size = new System.Drawing.Size(152, 22);
+            this.tsmi_copy.Text = "Copy";
             // 
             // frm_main
             // 
@@ -2000,7 +2146,7 @@ namespace ChameleonMiniGUI
             this.gb_output.ResumeLayout(false);
             this.gb_output.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bsLanguages)).EndInit();
-            this.tabPage2.ResumeLayout(false);
+            this.tpSettings.ResumeLayout(false);
             this.gb_language.ResumeLayout(false);
             this.gb_keepalive.ResumeLayout(false);
             this.gb_keepalive.PerformLayout();
@@ -2013,9 +2159,10 @@ namespace ChameleonMiniGUI
             this.gb_defaultdownload.PerformLayout();
             this.gb_rssi.ResumeLayout(false);
             this.gb_rssi.PerformLayout();
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
+            this.tpOperation.ResumeLayout(false);
+            this.tpOperation.PerformLayout();
             this.gb_actions.ResumeLayout(false);
+            this.gb_actions.PerformLayout();
             this.gb_tagslot6.ResumeLayout(false);
             this.gb_tagslot6.PerformLayout();
             this.gb_tagslot1.ResumeLayout(false);
@@ -2033,10 +2180,17 @@ namespace ChameleonMiniGUI
             this.gb_tagslot8.ResumeLayout(false);
             this.gb_tagslot8.PerformLayout();
             this.tabControl1.ResumeLayout(false);
-            this.tabPage3.ResumeLayout(false);
-            this.tabPage3.PerformLayout();
+            this.tpDump.ResumeLayout(false);
+            this.tpDump.PerformLayout();
             this.menuScroll.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.bsTemplates)).EndInit();
+            this.tpSerial.ResumeLayout(false);
+            this.tpSerial.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            this.menuClear.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -2046,7 +2200,7 @@ namespace ChameleonMiniGUI
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.GroupBox gb_output;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage tpSettings;
         private System.Windows.Forms.GroupBox gb_defaultdownload;
         private System.Windows.Forms.Label lbl_defaultdownload;
         private System.Windows.Forms.TextBox txt_defaultdownload;
@@ -2055,7 +2209,7 @@ namespace ChameleonMiniGUI
         private System.Windows.Forms.Button btn_rssirefresh;
         private System.Windows.Forms.TextBox txt_rssi;
         private System.Windows.Forms.Label lbl_rssi;
-        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tpOperation;
         private System.Windows.Forms.CheckBox checkBox8;
         private System.Windows.Forms.CheckBox checkBox7;
         private System.Windows.Forms.CheckBox checkBox6;
@@ -2165,7 +2319,7 @@ namespace ChameleonMiniGUI
         private System.Windows.Forms.Button btn_disconnect;
         private System.Windows.Forms.Button btn_connect;
         private System.Windows.Forms.TextBox tb_firmware;
-        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.TabPage tpDump;
         private Be.Windows.Forms.HexBox hexBox2;
         private Be.Windows.Forms.HexBox hexBox1;
         private System.Windows.Forms.Button btn_save2;
@@ -2205,5 +2359,18 @@ namespace ChameleonMiniGUI
         private System.Windows.Forms.BindingSource bsTemplates;
         private System.Windows.Forms.Button btnStartlocation;
         private System.Windows.Forms.Label lbl_template;
+        private System.Windows.Forms.TabPage tpSerial;
+        private System.Windows.Forms.TextBox tbSerialOutput;
+        private System.Windows.Forms.TextBox tbSerialCmd;
+        private System.Windows.Forms.Button btnClearCmd;
+        private System.Windows.Forms.Label lbl_serial_help;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Label lbl_serial_help_revg;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.LinkLabel linkRevE;
+        private System.Windows.Forms.LinkLabel linkRevG;
+        private System.Windows.Forms.ContextMenuStrip menuClear;
+        private System.Windows.Forms.ToolStripMenuItem tsmi_clear;
+        private System.Windows.Forms.ToolStripMenuItem tsmi_copy;
     }
 }

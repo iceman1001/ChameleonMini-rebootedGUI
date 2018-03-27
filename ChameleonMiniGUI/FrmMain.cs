@@ -285,8 +285,8 @@ namespace ChameleonMiniGUI
                 var cb_buttonlong = FindControls<ComboBox>(Controls, $"cb_buttonlong{tagslotIndex}").FirstOrDefault();
                 if (cb_buttonlong != null)
                 {
-                    //BUTTONLONGMY=cb_buttonMode.SelectedItem
-                    SendCommandWithoutResult($"BUTTONLONG{_cmdExtension}={cb_buttonlong.SelectedItem}");
+                    //BUTTON_LONGMY=cb_buttonMode.SelectedItem
+                    SendCommandWithoutResult($"BUTTON_LONG{_cmdExtension}={cb_buttonlong.SelectedItem}");
                 }
 
                 // Set the UID
@@ -517,7 +517,7 @@ namespace ChameleonMiniGUI
                     var cb_buttonlong = FindControls<ComboBox>(Controls, $"cb_buttonlong{tagslotIndex}").FirstOrDefault();
                     if (cb_buttonlong != null)
                     {
-                        SendCommandWithoutResult($"BUTTONLONG{_cmdExtension}={cb_buttonlong.Items[0]}");
+                        SendCommandWithoutResult($"BUTTON_LONG{_cmdExtension}={cb_buttonlong.Items[0]}");
                     }
 
                     SendCommandWithoutResult($"UID{_cmdExtension}=?");
@@ -1309,8 +1309,8 @@ namespace ChameleonMiniGUI
                 }
             }
 
-            //BUTTONLONGMY? -> RETURNS THE MODE OF THE BUTTON LONG
-            var slotButtonLongMode = SendCommand($"BUTTONLONG{_cmdExtension}?").ToString();
+            //BUTTON_LONGMY? -> RETURNS THE MODE OF THE BUTTON LONG
+            var slotButtonLongMode = SendCommand($"BUTTON_LONG{_cmdExtension}?").ToString();
             if (IsButtonModeValid(slotButtonLongMode))
             {
                 // set the combobox value of the i+1 cb_buttonlong
@@ -1389,7 +1389,7 @@ namespace ChameleonMiniGUI
             }
 
             // Get button long modes
-            var buttonLongModesStr = SendCommand($"BUTTONLONG{_cmdExtension}").ToString();
+            var buttonLongModesStr = SendCommand($"BUTTON_LONG{_cmdExtension}").ToString();
             if (string.IsNullOrEmpty(buttonLongModesStr)) return;
 
             // split by comma

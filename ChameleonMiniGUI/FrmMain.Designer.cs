@@ -2048,6 +2048,7 @@ namespace ChameleonMiniGUI
             this.btnSerialSend.TabIndex = 3;
             this.btnSerialSend.Text = "Send";
             this.btnSerialSend.UseVisualStyleBackColor = true;
+            this.btnSerialSend.Click += new System.EventHandler(this.btnSerialSend_Click);
             // 
             // tbSerialCmd
             // 

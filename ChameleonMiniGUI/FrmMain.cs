@@ -869,26 +869,66 @@ namespace ChameleonMiniGUI
             tbSerialOutput.Text = string.Empty;
         }
 
-        private async void tbSerialCmd_KeyPress(object sender, KeyPressEventArgs e)
+        private void linkRevE_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            linkRevE.LinkVisited = true;
+
+            Start("https://github.com/iceman1001/ChameleonMini-rebooted/wiki/Terminal-Commands");
+        }
+
+        private void linkRevG_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+
+            linkRevG.LinkVisited = true;
+            Start("https://rawgit.com/emsec/ChameleonMini/master/Doc/Doxygen/html/_page__command_line.html");
+        }
+        private void menuClear_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+            if (e.ClickedItem.Name == "tsmi_copy")
+            {
+                Clipboard.SetText(tbSerialOutput.Text);
+            }
+
+            if (e.ClickedItem.Name == "tsmi_clear")
+            {
+                tbSerialOutput.Text = string.Empty;
+            }
+        }
+
+        private void tbSerialCmd_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar != (char)Keys.Return) return;
 
             var tb = (TextBox)sender;
-            if (string.IsNullOrWhiteSpace(tb.Text)) return;
-
             var cmd = tb.Text.Trim();
-            var prompt = "->>";
+            if (string.IsNullOrWhiteSpace(cmd)) return;
 
-            tbSerialOutput.Text += $"{Environment.NewLine}{prompt} {cmd}";
-
-            //determine if command has return data? 
-            object res = await SendCommand_ICE(cmd);
-            tbSerialOutput.Text += $"{Environment.NewLine}{res}";
+            Send(cmd);
         }
+        private void btnSerialSend_Click(object sender, EventArgs e)
+        {
+            var cmd = tbSerialCmd.Text.Trim();
+            if (string.IsNullOrWhiteSpace(cmd)) return;
+
+            Send(cmd);
+        }
+
 
         #endregion
 
         #region Helper methods
+
+        private async void Send(string cmd)
+        {
+            var prompt = "--> ";
+
+            tbSerialOutput.Text += $"{Environment.NewLine}{prompt}{cmd}";
+
+            //determine if command has return data? 
+            var res = await SendCommand_ICE(cmd);
+            tbSerialOutput.Text += $"{Environment.NewLine}{res}";
+        }
 
         private void ApplyByteWidthChange(int width)
         {
@@ -1102,7 +1142,7 @@ namespace ChameleonMiniGUI
                     if (!string.IsNullOrEmpty(_firmwareVersion) && _firmwareVersion.Contains("Chameleon"))
                     {
                         _cmdExtension = string.Empty;
-                        txt_output.Text = $"Success{Environment.NewLine}Found Chameleon Mini device {comPortStr} with {_deviceIdentification} installed{Environment.NewLine}";
+                        txt_output.Text = $"Success, found Chameleon Mini device on '{comPortStr}' with {_deviceIdentification} installed{Environment.NewLine}";
                         _current_comport = comPortStr;
                         this.Cursor = Cursors.Default;
                         return;
@@ -1112,7 +1152,7 @@ namespace ChameleonMiniGUI
                     if (!string.IsNullOrEmpty(_firmwareVersion) && _firmwareVersion.Contains("Chameleon"))
                     {
                         _cmdExtension = "MY";
-                        txt_output.Text = $"Success{Environment.NewLine}Found Chameleon Mini device {comPortStr} with {_deviceIdentification} installed{Environment.NewLine}";
+                        txt_output.Text = $"Success, found Chameleon Mini device on '{comPortStr}' with {_deviceIdentification} installed{Environment.NewLine}";
                         _current_comport = comPortStr;
                         this.Cursor = Cursors.Default;
                         return;
@@ -1120,7 +1160,7 @@ namespace ChameleonMiniGUI
 
                     // wrong comport.
                     _comport.Close();
-                    txt_output.Text += $"Didn't find a Chameleon on {comPortStr}{Environment.NewLine}";
+                    txt_output.Text += $"Didn't find a Chameleon on '{comPortStr}'{Environment.NewLine}";
                 }
             }
             _current_comport = string.Empty;
@@ -1791,33 +1831,8 @@ namespace ChameleonMiniGUI
             foreach (Control child in c.Controls)
                 ApplyAll(child, action);
         }
-        private void linkRevE_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            linkRevE.LinkVisited = true;
-            
-            Start("https://github.com/iceman1001/ChameleonMini-rebooted/wiki/Terminal-Commands");
-        }
-
-        private void linkRevG_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-
-            linkRevG.LinkVisited = true;
-            Start("https://rawgit.com/emsec/ChameleonMini/master/Doc/Doxygen/html/_page__command_line.html");
-        }
-        private void menuClear_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
-            if (e.ClickedItem.Name == "tsmi_copy")
-            {
-                Clipboard.SetText( tbSerialOutput.Text);
-            }
-
-            if (e.ClickedItem.Name == "tsmi_clear")
-            {
-                tbSerialOutput.Text = string.Empty;
-            }
-        }
 
         #endregion
+
     }
 }

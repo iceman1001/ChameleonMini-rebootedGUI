@@ -193,19 +193,19 @@ namespace ChameleonMiniGUI
             this.hexBox2 = new Be.Windows.Forms.HexBox();
             this.hexBox1 = new Be.Windows.Forms.HexBox();
             this.tpSerial = new System.Windows.Forms.TabPage();
-            this.btnClearCmd = new System.Windows.Forms.Button();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.tbSerialCmd = new System.Windows.Forms.TextBox();
+            this.btnClearCmd = new System.Windows.Forms.Button();
             this.tbSerialOutput = new System.Windows.Forms.TextBox();
-            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.lbl_serial_help = new System.Windows.Forms.Label();
-            this.lbl_serial_help_revg = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.linkRevE = new System.Windows.Forms.LinkLabel();
-            this.linkRevG = new System.Windows.Forms.LinkLabel();
             this.menuClear = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_clear = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_copy = new System.Windows.Forms.ToolStripMenuItem();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.linkRevG = new System.Windows.Forms.LinkLabel();
+            this.linkRevE = new System.Windows.Forms.LinkLabel();
+            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.tbSerialHelp = new System.Windows.Forms.TextBox();
             this.gb_output.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bsLanguages)).BeginInit();
             this.tpSettings.SuspendLayout();
@@ -231,9 +231,10 @@ namespace ChameleonMiniGUI
             this.menuScroll.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bsTemplates)).BeginInit();
             this.tpSerial.SuspendLayout();
-            this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
+            this.flowLayoutPanel1.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.menuClear.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // txt_output
@@ -2005,11 +2006,7 @@ namespace ChameleonMiniGUI
             // 
             // tpSerial
             // 
-            this.tpSerial.Controls.Add(this.groupBox2);
-            this.tpSerial.Controls.Add(this.groupBox1);
-            this.tpSerial.Controls.Add(this.btnClearCmd);
-            this.tpSerial.Controls.Add(this.tbSerialCmd);
-            this.tpSerial.Controls.Add(this.tbSerialOutput);
+            this.tpSerial.Controls.Add(this.flowLayoutPanel1);
             this.tpSerial.Location = new System.Drawing.Point(4, 22);
             this.tpSerial.Name = "tpSerial";
             this.tpSerial.Padding = new System.Windows.Forms.Padding(3);
@@ -2018,95 +2015,57 @@ namespace ChameleonMiniGUI
             this.tpSerial.Text = "Serial";
             this.tpSerial.UseVisualStyleBackColor = true;
             // 
-            // btnClearCmd
+            // flowLayoutPanel1
             // 
-            this.btnClearCmd.Location = new System.Drawing.Point(542, 40);
-            this.btnClearCmd.Name = "btnClearCmd";
-            this.btnClearCmd.Size = new System.Drawing.Size(75, 23);
-            this.btnClearCmd.TabIndex = 2;
-            this.btnClearCmd.Text = "clear";
-            this.btnClearCmd.UseVisualStyleBackColor = true;
-            this.btnClearCmd.Click += new System.EventHandler(this.btnClearCmd_Click);
+            this.flowLayoutPanel1.Controls.Add(this.groupBox3);
+            this.flowLayoutPanel1.Controls.Add(this.groupBox1);
+            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(10);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(1273, 485);
+            this.flowLayoutPanel1.TabIndex = 9;
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.tbSerialCmd);
+            this.groupBox3.Controls.Add(this.btnClearCmd);
+            this.groupBox3.Controls.Add(this.tbSerialOutput);
+            this.groupBox3.Location = new System.Drawing.Point(13, 13);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(653, 449);
+            this.groupBox3.TabIndex = 8;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Serial interface";
             // 
             // tbSerialCmd
             // 
-            this.tbSerialCmd.Location = new System.Drawing.Point(48, 42);
+            this.tbSerialCmd.Location = new System.Drawing.Point(14, 34);
             this.tbSerialCmd.Name = "tbSerialCmd";
             this.tbSerialCmd.Size = new System.Drawing.Size(270, 20);
             this.tbSerialCmd.TabIndex = 1;
             this.tbSerialCmd.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbSerialCmd_KeyPress);
             // 
+            // btnClearCmd
+            // 
+            this.btnClearCmd.Location = new System.Drawing.Point(556, 22);
+            this.btnClearCmd.Name = "btnClearCmd";
+            this.btnClearCmd.Size = new System.Drawing.Size(75, 32);
+            this.btnClearCmd.TabIndex = 2;
+            this.btnClearCmd.Text = "clear";
+            this.btnClearCmd.UseVisualStyleBackColor = true;
+            this.btnClearCmd.Click += new System.EventHandler(this.btnClearCmd_Click);
+            // 
             // tbSerialOutput
             // 
             this.tbSerialOutput.ContextMenuStrip = this.menuClear;
-            this.tbSerialOutput.Location = new System.Drawing.Point(48, 92);
+            this.tbSerialOutput.Location = new System.Drawing.Point(14, 71);
+            this.tbSerialOutput.Margin = new System.Windows.Forms.Padding(10);
             this.tbSerialOutput.Multiline = true;
             this.tbSerialOutput.Name = "tbSerialOutput";
             this.tbSerialOutput.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.tbSerialOutput.Size = new System.Drawing.Size(569, 380);
+            this.tbSerialOutput.Size = new System.Drawing.Size(617, 349);
             this.tbSerialOutput.TabIndex = 0;
-            // 
-            // lbl_serial_help
-            // 
-            this.lbl_serial_help.AutoSize = true;
-            this.lbl_serial_help.Location = new System.Drawing.Point(15, 44);
-            this.lbl_serial_help.Name = "lbl_serial_help";
-            this.lbl_serial_help.Size = new System.Drawing.Size(35, 13);
-            this.lbl_serial_help.TabIndex = 3;
-            this.lbl_serial_help.Text = "label1";
-            // 
-            // lbl_serial_help_revg
-            // 
-            this.lbl_serial_help_revg.AutoSize = true;
-            this.lbl_serial_help_revg.Location = new System.Drawing.Point(15, 44);
-            this.lbl_serial_help_revg.Name = "lbl_serial_help_revg";
-            this.lbl_serial_help_revg.Size = new System.Drawing.Size(35, 13);
-            this.lbl_serial_help_revg.TabIndex = 6;
-            this.lbl_serial_help_revg.Text = "label1";
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.linkRevE);
-            this.groupBox1.Controls.Add(this.lbl_serial_help);
-            this.groupBox1.Location = new System.Drawing.Point(677, 23);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(180, 449);
-            this.groupBox1.TabIndex = 7;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Rev E Rebooted";
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.linkRevG);
-            this.groupBox2.Controls.Add(this.lbl_serial_help_revg);
-            this.groupBox2.Location = new System.Drawing.Point(892, 23);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(180, 449);
-            this.groupBox2.TabIndex = 4;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Rev G";
-            // 
-            // linkRevE
-            // 
-            this.linkRevE.AutoSize = true;
-            this.linkRevE.Location = new System.Drawing.Point(15, 22);
-            this.linkRevE.Name = "linkRevE";
-            this.linkRevE.Size = new System.Drawing.Size(104, 13);
-            this.linkRevE.TabIndex = 4;
-            this.linkRevE.TabStop = true;
-            this.linkRevE.Text = "Rev E Wiki Terminal";
-            this.linkRevE.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkRevE_LinkClicked);
-            // 
-            // linkRevG
-            // 
-            this.linkRevG.AutoSize = true;
-            this.linkRevG.Location = new System.Drawing.Point(15, 22);
-            this.linkRevG.Name = "linkRevG";
-            this.linkRevG.Size = new System.Drawing.Size(105, 13);
-            this.linkRevG.TabIndex = 7;
-            this.linkRevG.TabStop = true;
-            this.linkRevG.Text = "Rev G Wiki Terminal";
-            this.linkRevG.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkRevG_LinkClicked);
             // 
             // menuClear
             // 
@@ -2114,20 +2073,64 @@ namespace ChameleonMiniGUI
             this.tsmi_clear,
             this.tsmi_copy});
             this.menuClear.Name = "menuClear";
-            this.menuClear.Size = new System.Drawing.Size(153, 70);
+            this.menuClear.Size = new System.Drawing.Size(103, 48);
             this.menuClear.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuClear_ItemClicked);
             // 
             // tsmi_clear
             // 
             this.tsmi_clear.Name = "tsmi_clear";
-            this.tsmi_clear.Size = new System.Drawing.Size(152, 22);
+            this.tsmi_clear.Size = new System.Drawing.Size(102, 22);
             this.tsmi_clear.Text = "Clear";
             // 
             // tsmi_copy
             // 
             this.tsmi_copy.Name = "tsmi_copy";
-            this.tsmi_copy.Size = new System.Drawing.Size(152, 22);
+            this.tsmi_copy.Size = new System.Drawing.Size(102, 22);
             this.tsmi_copy.Text = "Copy";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.tbSerialHelp);
+            this.groupBox1.Controls.Add(this.linkRevG);
+            this.groupBox1.Controls.Add(this.linkRevE);
+            this.groupBox1.Location = new System.Drawing.Point(672, 13);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(169, 449);
+            this.groupBox1.TabIndex = 7;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Available commands";
+            // 
+            // linkRevG
+            // 
+            this.linkRevG.AutoSize = true;
+            this.linkRevG.Location = new System.Drawing.Point(14, 44);
+            this.linkRevG.Name = "linkRevG";
+            this.linkRevG.Size = new System.Drawing.Size(97, 13);
+            this.linkRevG.TabIndex = 7;
+            this.linkRevG.TabStop = true;
+            this.linkRevG.Text = "Official Rev G Wiki";
+            this.linkRevG.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkRevG_LinkClicked);
+            // 
+            // linkRevE
+            // 
+            this.linkRevE.AutoSize = true;
+            this.linkRevE.Location = new System.Drawing.Point(14, 22);
+            this.linkRevE.Name = "linkRevE";
+            this.linkRevE.Size = new System.Drawing.Size(106, 13);
+            this.linkRevE.TabIndex = 4;
+            this.linkRevE.TabStop = true;
+            this.linkRevE.Text = "Rev E rebooted Wiki";
+            this.linkRevE.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkRevE_LinkClicked);
+            // 
+            // tbSerialHelp
+            // 
+            this.tbSerialHelp.BackColor = System.Drawing.SystemColors.Window;
+            this.tbSerialHelp.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbSerialHelp.Location = new System.Drawing.Point(17, 71);
+            this.tbSerialHelp.Multiline = true;
+            this.tbSerialHelp.Name = "tbSerialHelp";
+            this.tbSerialHelp.Size = new System.Drawing.Size(137, 349);
+            this.tbSerialHelp.TabIndex = 8;
             // 
             // frm_main
             // 
@@ -2185,12 +2188,12 @@ namespace ChameleonMiniGUI
             this.menuScroll.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.bsTemplates)).EndInit();
             this.tpSerial.ResumeLayout(false);
-            this.tpSerial.PerformLayout();
+            this.flowLayoutPanel1.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
+            this.menuClear.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            this.menuClear.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -2363,14 +2366,14 @@ namespace ChameleonMiniGUI
         private System.Windows.Forms.TextBox tbSerialOutput;
         private System.Windows.Forms.TextBox tbSerialCmd;
         private System.Windows.Forms.Button btnClearCmd;
-        private System.Windows.Forms.Label lbl_serial_help;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Label lbl_serial_help_revg;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.LinkLabel linkRevE;
         private System.Windows.Forms.LinkLabel linkRevG;
         private System.Windows.Forms.ContextMenuStrip menuClear;
         private System.Windows.Forms.ToolStripMenuItem tsmi_clear;
         private System.Windows.Forms.ToolStripMenuItem tsmi_copy;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private System.Windows.Forms.TextBox tbSerialHelp;
     }
 }

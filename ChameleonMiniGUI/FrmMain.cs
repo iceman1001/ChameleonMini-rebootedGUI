@@ -21,14 +21,14 @@ namespace ChameleonMiniGUI
 {
     public partial class frm_main : Form
     {
-        private SerialPort _comport = null;
-        private string[] _modesArray = null;
-        private string[] _buttonModesArray = null;
-        private string[] _buttonLongModesArray = null;
+        private SerialPort _comport;
+        private string[] _modesArray;
+        private string[] _buttonModesArray;
+        private string[] _buttonLongModesArray;
         private string _cmdExtension = "MY";
         private System.Windows.Forms.Timer timer1;
-        private bool isConnected = false;
-        private bool disconnectPressed = false;
+        private bool isConnected;
+        private bool disconnectPressed;
 
         private string _current_comport = string.Empty;
         private string _deviceIdentification;
@@ -45,9 +45,13 @@ namespace ChameleonMiniGUI
             }
         }
 
+        private List<string> AvailableCommands { get; set; }
+
         public frm_main()
         {
             InitializeComponent();
+
+            AvailableCommands = new List<string>();
         }
 
         #region Event Handlers
@@ -68,6 +72,9 @@ namespace ChameleonMiniGUI
 
                 // Refresh all
                 RefreshAllSlots();
+
+                GetAvailableCommands();
+                InitHelp();
             }
 
             // Select no tag slot
@@ -81,17 +88,21 @@ namespace ChameleonMiniGUI
 
             // Initialize timer
             InitTimer();
-
-            // set helptext
-            InitHelp();
         }
 
         private void InitHelp()
         {
-            var nl = Environment.NewLine;
-            lbl_serial_help.Text = $"VERSIONMY{nl}CONFIGMY{nl}UIDMY{nl}READONLYMY{nl}UPLOADMY{nl}DOWNLOADMY{nl}RESETMY{nl}UPGRADEMY{nl}MEMSIZEMY{nl}UIDSIZEMY{nl}BUTTONMY{nl}SETTINGMY{nl}CLEARMY{nl}HELPMY{nl}RSSIMY{nl}DETECTIONMY";
-
-            lbl_serial_help_revg.Text = "N/A";
+            if ( !AvailableCommands.Any())
+            {
+                tbSerialHelp.Text = "N/A";
+            }
+            else
+            {
+                var txt = string.Empty;
+                var nl = Environment.NewLine;
+                txt = AvailableCommands.Aggregate(txt, (current, c) => current + $"* {c}{nl}");
+                tbSerialHelp.Text = txt.Replace("*", "\u2022");
+            }
         }
 
         private void LoadSettings()
@@ -229,6 +240,8 @@ namespace ChameleonMiniGUI
             var t = new Templating();
             t.LoadTemplate(hexBox1, o.Value, items);
             t.LoadTemplate(hexBox2, o.Value, items);
+
+
         }
 
         private void btn_apply_Click(object sender, EventArgs e)
@@ -571,7 +584,12 @@ namespace ChameleonMiniGUI
                 if (!disconnectPressed)
                 {
                     // try to connect
-                    OpenChameleonSerialPort();
+                    OpenChameleonSerialPort();                    
+                    if (_comport != null && _comport.IsOpen)
+                        return;
+
+                    GetAvailableCommands();
+                    InitHelp();
                 }
             }
         }
@@ -708,7 +726,11 @@ namespace ChameleonMiniGUI
             if (_comport == null || !_comport.IsOpen)
             {
                 MessageBox.Show("Unable to connect to the Chameleon device", "Connection failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
+
+            GetAvailableCommands();
+            InitHelp();
         }
 
         private void btn_open1_Click(object sender, EventArgs e)
@@ -996,14 +1018,11 @@ namespace ChameleonMiniGUI
             }
 
             txt_constatus.Text = "CONNECTED!";
-            txt_constatus.BackColor = System.Drawing.Color.Green;
-            txt_constatus.ForeColor = System.Drawing.Color.White;
+            txt_constatus.BackColor = Color.Green;
+            txt_constatus.ForeColor = Color.White;
             txt_constatus.SelectionLength = 0;
 
-            if (_modesArray == null || _modesArray.Length == 0)
-            {
-                GetSupportedModes();
-            }
+            GetSupportedModes();
 
             RefreshAllSlots();
 
@@ -1124,6 +1143,7 @@ namespace ChameleonMiniGUI
             catch (Exception)
             { }
         }
+
         private object SendCommand(string cmdText)
         {
             if (string.IsNullOrWhiteSpace(cmdText)) return string.Empty;
@@ -1162,6 +1182,7 @@ namespace ChameleonMiniGUI
                 return string.Empty;
             }
         }
+
         private async Task<object> SendCommand_ICE(string cmdText)
         {
             if (string.IsNullOrWhiteSpace(cmdText)) return string.Empty;
@@ -1381,6 +1402,23 @@ namespace ChameleonMiniGUI
                 cb.Items.Clear();
                 cb.Items.AddRange(_buttonLongModesArray);
             }
+        }
+
+        private void GetAvailableCommands()
+        {
+            var cmd = $"HELP{_cmdExtension}";
+            var result = SendCommand(cmd).ToString();
+
+            if (string.IsNullOrEmpty(result))
+                return;
+            
+            // split by comma
+            var helpArray = result.Split(',');
+            if (!helpArray.Any()) return;
+
+            // Set 
+            AvailableCommands.Clear();
+            AvailableCommands.AddRange(helpArray);            
         }
 
         private static byte[] ReadFileIntoByteArray(string filename)

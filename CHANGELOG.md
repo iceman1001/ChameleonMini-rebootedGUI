@@ -6,6 +6,7 @@ This project uses the changelog in accordance with [keepchangelog](http://keepac
 - Memory dump color templates (@iceman)
 - Multilanguage support (@iceman)
 - Locked scrolling of dumpfiles
+- Serial interface tab, (@iceman) 
 
 ## [1.0.0.8] - 2018-03-16
 ### Added

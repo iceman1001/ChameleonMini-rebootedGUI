@@ -93,3 +93,9 @@ lbl_buttonlong7.Text=Btn Long
 lbl_buttonlong8.Text=Btn Long
 btnStartlocation.Text=Open location
 lbl_template.Text=Template
+#
+# tab Serial
+#
+gbAvailableCmds.Text=Available commands
+gbSerial_interface.Text=Serial interface
+btnClearCmd.Text=Clear

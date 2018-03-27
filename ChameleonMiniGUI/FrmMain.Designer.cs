@@ -194,18 +194,18 @@ namespace ChameleonMiniGUI
             this.hexBox1 = new Be.Windows.Forms.HexBox();
             this.tpSerial = new System.Windows.Forms.TabPage();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.gbSerial_interface = new System.Windows.Forms.GroupBox();
             this.tbSerialCmd = new System.Windows.Forms.TextBox();
             this.btnClearCmd = new System.Windows.Forms.Button();
             this.tbSerialOutput = new System.Windows.Forms.TextBox();
             this.menuClear = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_clear = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_copy = new System.Windows.Forms.ToolStripMenuItem();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.gbAvailableCmds = new System.Windows.Forms.GroupBox();
+            this.tbSerialHelp = new System.Windows.Forms.TextBox();
             this.linkRevG = new System.Windows.Forms.LinkLabel();
             this.linkRevE = new System.Windows.Forms.LinkLabel();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.tbSerialHelp = new System.Windows.Forms.TextBox();
             this.gb_output.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bsLanguages)).BeginInit();
             this.tpSettings.SuspendLayout();
@@ -232,9 +232,9 @@ namespace ChameleonMiniGUI
             ((System.ComponentModel.ISupportInitialize)(this.bsTemplates)).BeginInit();
             this.tpSerial.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
-            this.groupBox3.SuspendLayout();
+            this.gbSerial_interface.SuspendLayout();
             this.menuClear.SuspendLayout();
-            this.groupBox1.SuspendLayout();
+            this.gbAvailableCmds.SuspendLayout();
             this.SuspendLayout();
             // 
             // txt_output
@@ -2017,8 +2017,8 @@ namespace ChameleonMiniGUI
             // 
             // flowLayoutPanel1
             // 
-            this.flowLayoutPanel1.Controls.Add(this.groupBox3);
-            this.flowLayoutPanel1.Controls.Add(this.groupBox1);
+            this.flowLayoutPanel1.Controls.Add(this.gbSerial_interface);
+            this.flowLayoutPanel1.Controls.Add(this.gbAvailableCmds);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
@@ -2026,17 +2026,17 @@ namespace ChameleonMiniGUI
             this.flowLayoutPanel1.Size = new System.Drawing.Size(1273, 485);
             this.flowLayoutPanel1.TabIndex = 9;
             // 
-            // groupBox3
+            // gbSerial_interface
             // 
-            this.groupBox3.Controls.Add(this.tbSerialCmd);
-            this.groupBox3.Controls.Add(this.btnClearCmd);
-            this.groupBox3.Controls.Add(this.tbSerialOutput);
-            this.groupBox3.Location = new System.Drawing.Point(13, 13);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(653, 449);
-            this.groupBox3.TabIndex = 8;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Serial interface";
+            this.gbSerial_interface.Controls.Add(this.tbSerialCmd);
+            this.gbSerial_interface.Controls.Add(this.btnClearCmd);
+            this.gbSerial_interface.Controls.Add(this.tbSerialOutput);
+            this.gbSerial_interface.Location = new System.Drawing.Point(13, 13);
+            this.gbSerial_interface.Name = "gbSerial_interface";
+            this.gbSerial_interface.Size = new System.Drawing.Size(653, 449);
+            this.gbSerial_interface.TabIndex = 8;
+            this.gbSerial_interface.TabStop = false;
+            this.gbSerial_interface.Text = "Serial interface";
             // 
             // tbSerialCmd
             // 
@@ -2088,17 +2088,27 @@ namespace ChameleonMiniGUI
             this.tsmi_copy.Size = new System.Drawing.Size(102, 22);
             this.tsmi_copy.Text = "Copy";
             // 
-            // groupBox1
+            // gbAvailableCmds
             // 
-            this.groupBox1.Controls.Add(this.tbSerialHelp);
-            this.groupBox1.Controls.Add(this.linkRevG);
-            this.groupBox1.Controls.Add(this.linkRevE);
-            this.groupBox1.Location = new System.Drawing.Point(672, 13);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(169, 449);
-            this.groupBox1.TabIndex = 7;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Available commands";
+            this.gbAvailableCmds.Controls.Add(this.tbSerialHelp);
+            this.gbAvailableCmds.Controls.Add(this.linkRevG);
+            this.gbAvailableCmds.Controls.Add(this.linkRevE);
+            this.gbAvailableCmds.Location = new System.Drawing.Point(672, 13);
+            this.gbAvailableCmds.Name = "gbAvailableCmds";
+            this.gbAvailableCmds.Size = new System.Drawing.Size(169, 449);
+            this.gbAvailableCmds.TabIndex = 7;
+            this.gbAvailableCmds.TabStop = false;
+            this.gbAvailableCmds.Text = "Available commands";
+            // 
+            // tbSerialHelp
+            // 
+            this.tbSerialHelp.BackColor = System.Drawing.SystemColors.Window;
+            this.tbSerialHelp.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbSerialHelp.Location = new System.Drawing.Point(17, 71);
+            this.tbSerialHelp.Multiline = true;
+            this.tbSerialHelp.Name = "tbSerialHelp";
+            this.tbSerialHelp.Size = new System.Drawing.Size(137, 349);
+            this.tbSerialHelp.TabIndex = 8;
             // 
             // linkRevG
             // 
@@ -2122,16 +2132,6 @@ namespace ChameleonMiniGUI
             this.linkRevE.Text = "Rev E rebooted Wiki";
             this.linkRevE.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkRevE_LinkClicked);
             // 
-            // tbSerialHelp
-            // 
-            this.tbSerialHelp.BackColor = System.Drawing.SystemColors.Window;
-            this.tbSerialHelp.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.tbSerialHelp.Location = new System.Drawing.Point(17, 71);
-            this.tbSerialHelp.Multiline = true;
-            this.tbSerialHelp.Name = "tbSerialHelp";
-            this.tbSerialHelp.Size = new System.Drawing.Size(137, 349);
-            this.tbSerialHelp.TabIndex = 8;
-            // 
             // frm_main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2143,7 +2143,6 @@ namespace ChameleonMiniGUI
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "frm_main";
-            this.Text = "Device disconnected";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frm_main_FormClosed);
             this.Load += new System.EventHandler(this.frm_main_Load);
             this.gb_output.ResumeLayout(false);
@@ -2189,11 +2188,11 @@ namespace ChameleonMiniGUI
             ((System.ComponentModel.ISupportInitialize)(this.bsTemplates)).EndInit();
             this.tpSerial.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
+            this.gbSerial_interface.ResumeLayout(false);
+            this.gbSerial_interface.PerformLayout();
             this.menuClear.ResumeLayout(false);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.gbAvailableCmds.ResumeLayout(false);
+            this.gbAvailableCmds.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -2366,13 +2365,13 @@ namespace ChameleonMiniGUI
         private System.Windows.Forms.TextBox tbSerialOutput;
         private System.Windows.Forms.TextBox tbSerialCmd;
         private System.Windows.Forms.Button btnClearCmd;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox gbAvailableCmds;
         private System.Windows.Forms.LinkLabel linkRevE;
         private System.Windows.Forms.LinkLabel linkRevG;
         private System.Windows.Forms.ContextMenuStrip menuClear;
         private System.Windows.Forms.ToolStripMenuItem tsmi_clear;
         private System.Windows.Forms.ToolStripMenuItem tsmi_copy;
-        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.GroupBox gbSerial_interface;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.TextBox tbSerialHelp;
     }

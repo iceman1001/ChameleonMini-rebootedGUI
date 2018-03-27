@@ -93,3 +93,9 @@ lbl_buttonlong7.Text=Κουμπί παρατετ.
 lbl_buttonlong8.Text=Κουμπί παρατετ.
 btnStartlocation.Text=Άνοιγμα τοποθεσίας
 lbl_template.Text=Θέμα
+#
+# tab Serial
+#
+gbAvailableCmds.Text=Available commands
+gbSerial_interface.Text=Serial interface
+btnClearCmd.Text=Clear

@@ -93,3 +93,9 @@ lbl_buttonlong7.Text=KnappLång
 lbl_buttonlong8.Text=KnappLång
 btnStartlocation.Text=Öppna folder
 lbl_template.Text=Mall
+#
+# tab Serial
+#
+gbAvailableCmds.Text=Tillgängliga kommandon
+gbSerial_interface.Text=Serial interface
+btnClearCmd.Text=Töm

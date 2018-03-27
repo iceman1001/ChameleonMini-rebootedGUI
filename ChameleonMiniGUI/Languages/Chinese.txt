@@ -93,3 +93,9 @@ tabPage2.Text=设置
 gb_output.Text=output
 gb_language.Text=语言设置
 lbl_template.Text=Template
+#
+# tab Serial
+#
+gbAvailableCmds.Text=Available commands
+gbSerial_interface.Text=Serial interface
+btnClearCmd.Text=Clear

@@ -99,3 +99,4 @@ lbl_template.Text=Mall
 gbAvailableCmds.Text=Tillgängliga kommandon
 gbSerial_interface.Text=Serial interface
 btnClearCmd.Text=Töm
+btnSerialSend.Text=Skicka

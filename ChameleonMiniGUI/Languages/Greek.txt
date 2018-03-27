@@ -99,3 +99,4 @@ lbl_template.Text=Θέμα
 gbAvailableCmds.Text=Available commands
 gbSerial_interface.Text=Serial interface
 btnClearCmd.Text=Clear
+btnSerialSend.Text=Send

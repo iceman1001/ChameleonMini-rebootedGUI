@@ -99,3 +99,4 @@ lbl_template.Text=Template
 gbAvailableCmds.Text=Commandes disponibles
 gbSerial_interface.Text=interface série
 btnClearCmd.Text=Effacer
+btnSerialSend.Text=Send

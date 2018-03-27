@@ -195,6 +195,7 @@ namespace ChameleonMiniGUI
             this.tpSerial = new System.Windows.Forms.TabPage();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.gbSerial_interface = new System.Windows.Forms.GroupBox();
+            this.btnSerialSend = new System.Windows.Forms.Button();
             this.tbSerialCmd = new System.Windows.Forms.TextBox();
             this.btnClearCmd = new System.Windows.Forms.Button();
             this.tbSerialOutput = new System.Windows.Forms.TextBox();
@@ -2028,6 +2029,7 @@ namespace ChameleonMiniGUI
             // 
             // gbSerial_interface
             // 
+            this.gbSerial_interface.Controls.Add(this.btnSerialSend);
             this.gbSerial_interface.Controls.Add(this.tbSerialCmd);
             this.gbSerial_interface.Controls.Add(this.btnClearCmd);
             this.gbSerial_interface.Controls.Add(this.tbSerialOutput);
@@ -2038,21 +2040,30 @@ namespace ChameleonMiniGUI
             this.gbSerial_interface.TabStop = false;
             this.gbSerial_interface.Text = "Serial interface";
             // 
+            // btnSerialSend
+            // 
+            this.btnSerialSend.Location = new System.Drawing.Point(253, 39);
+            this.btnSerialSend.Name = "btnSerialSend";
+            this.btnSerialSend.Size = new System.Drawing.Size(75, 23);
+            this.btnSerialSend.TabIndex = 3;
+            this.btnSerialSend.Text = "Send";
+            this.btnSerialSend.UseVisualStyleBackColor = true;
+            // 
             // tbSerialCmd
             // 
-            this.tbSerialCmd.Location = new System.Drawing.Point(14, 34);
+            this.tbSerialCmd.Location = new System.Drawing.Point(14, 41);
             this.tbSerialCmd.Name = "tbSerialCmd";
-            this.tbSerialCmd.Size = new System.Drawing.Size(270, 20);
+            this.tbSerialCmd.Size = new System.Drawing.Size(229, 20);
             this.tbSerialCmd.TabIndex = 1;
             this.tbSerialCmd.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbSerialCmd_KeyPress);
             // 
             // btnClearCmd
             // 
-            this.btnClearCmd.Location = new System.Drawing.Point(556, 22);
+            this.btnClearCmd.Location = new System.Drawing.Point(556, 39);
             this.btnClearCmd.Name = "btnClearCmd";
-            this.btnClearCmd.Size = new System.Drawing.Size(75, 32);
+            this.btnClearCmd.Size = new System.Drawing.Size(75, 23);
             this.btnClearCmd.TabIndex = 2;
-            this.btnClearCmd.Text = "clear";
+            this.btnClearCmd.Text = "Clear";
             this.btnClearCmd.UseVisualStyleBackColor = true;
             this.btnClearCmd.Click += new System.EventHandler(this.btnClearCmd_Click);
             // 
@@ -2374,5 +2385,6 @@ namespace ChameleonMiniGUI
         private System.Windows.Forms.GroupBox gbSerial_interface;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.TextBox tbSerialHelp;
+        private System.Windows.Forms.Button btnSerialSend;
     }
 }

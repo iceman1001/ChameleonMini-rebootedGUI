@@ -96,7 +96,7 @@ lbl_template.Text=Θέμα
 #
 # tab Serial
 #
-gbAvailableCmds.Text=Available commands
-gbSerial_interface.Text=Serial interface
-btnClearCmd.Text=Clear
-btnSerialSend.Text=Send
+gbAvailableCmds.Text=Διαθέσιμες εντολές
+gbSerial_interface.Text=Σειριακή διεπαφή
+btnClearCmd.Text=Καθαρισμός
+btnSerialSend.Text=Αποστολή

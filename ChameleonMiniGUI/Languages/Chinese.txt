@@ -90,7 +90,7 @@ btn_rssirefresh.Text=刷新
 lbl_rssi.Text=当前RSSI（天线电压）
 gb_rssi.Text=RSSI电压
 tabPage2.Text=设置
-gb_output.Text=output
+gb_output.Text=输出
 gb_language.Text=语言设置
 lbl_template.Text=Template
 #

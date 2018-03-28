@@ -7,22 +7,27 @@
 # block 0
 0; 4; Turquoise; DarkGray; UID
 4; 1; white; DarkGray; BCC
-(0*64) + 48; 6; yellow; DarkGray; KEY A
-(0*64)+ 48+ 6; 4; darkred; DarkGray; ACCESS Bytes
-(0*64) + 48+10; 6; blue; DarkGray; KEY A
+(0*64) + 48; 6; yellow; DarkGray; Key A
+(0*64)+ 48+ 6; 3; darkred; DarkGray; Access bytes
+(0*64)+ 48+ 9; 1; Aquamarine; DarkGray; GDC byte
+(0*64) + 48+10; 6; blue; DarkGray; Key B
 # block 1
-(1*64) + 48; 6; yellow; DarkGray; KEY A
-(1*64)+ 48+ 6; 4; darkred; DarkGray; ACCESS Bytes
-(1*64) + 48 +10; 6; blue; DarkGray; KEY B
+(1*64) + 48; 6; yellow; DarkGray; Key A
+(1*64)+ 48+ 6; 3; darkred; DarkGray; Access bytes
+(1*64)+ 48+ 9; 1; Aquamarine; DarkGray; GDC byte
+(1*64) + 48 +10; 6; blue; DarkGray; Key B
 # block 2
-(2*64) + 48; 6; yellow; DarkGray; KEY A
-(2*64)+ 48+ 6; 4; darkred; DarkGray; ACCESS Bytes
-(2*64) + 48 +10; 6; blue; DarkGray; KEY B
+(2*64) + 48; 6; yellow; DarkGray; Key A
+(2*64)+ 48+ 6; 3; darkred; DarkGray; Access bytes
+(2*64)+ 48+ 9; 1; Aquamarine; DarkGray; GDC byte
+(2*64) + 48 +10; 6; blue; DarkGray; Key B
 # block 3
-(3*64) + 48; 6; yellow; DarkGray; KEY A
-(3*64)+ 48+ 6; 4; darkred; DarkGray; ACCESS Bytes
-(3*64) + 48 +10; 6; blue; DarkGray; KEY B
+(3*64) + 48; 6; yellow; DarkGray; Key A
+(3*64)+ 48+ 6; 3; darkred; DarkGray; Access bytes
+(3*64)+ 48+ 9; 1; Aquamarine; DarkGray; GDC byte
+(3*64) + 48 +10; 6; blue; DarkGray; Key B
 # block 4
-(4*64) + 48; 6; yellow; DarkGray; KEY A
-(4*64)+ 48+ 6; 4; darkred; DarkGray; ACCESS Bytes
-(4*64) + 48 +10; 6; blue; DarkGray; KEY B
+(4*64) + 48; 6; yellow; DarkGray; Key A
+(4*64)+ 48+ 6; 3; darkred; DarkGray; Access bytes
+(4*64)+ 48+ 9; 1; Aquamarine; DarkGray; GDC byte
+(4*64) + 48 +10; 6; blue; DarkGray; Key B

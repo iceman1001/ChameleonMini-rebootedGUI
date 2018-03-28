@@ -33,7 +33,6 @@ namespace ChameleonMiniGUI
             Legendfont = SystemFonts.DefaultFont;
             LegendBackColor1 = Color.White;
             LegendBorderColor = Color.DarkGray;
-
         }
 
         public void AddLegend(Graphics g, List<IlegendItem> list)

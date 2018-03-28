@@ -44,22 +44,21 @@ namespace ChameleonMiniGUI
         private void Updatelegend()
         {
             flpLegend.Controls.Clear();
-            if (Items != null)
+            if (Items == null) return;
+
+            foreach (var item in Items)
             {
-                foreach (var item in Items)
+                var o = new Label
                 {
-                    var o = new Label
-                    {
-                        BackColor = Color.FromName(item.BackGroundColor),
-                        ForeColor = Color.FromName(item.ForeGroundColor),
-                        Text = item.Description,
-                        TextAlign = ContentAlignment.MiddleLeft,
-                        Margin = new Padding(0, 1, 1, 0)
-                    };
-                    flpLegend.Controls.Add(o);
-                }
-                flpLegend.Height = flpLegend.Height + 40;
+                    BackColor = Color.FromName(item.BackGroundColor),
+                    ForeColor = Color.FromName(item.ForeGroundColor),
+                    Text = item.Description,
+                    TextAlign = ContentAlignment.MiddleLeft,
+                    Margin = new Padding(0, 1, 1, 0)
+                };
+                flpLegend.Controls.Add(o);
             }
+            flpLegend.Height = flpLegend.Height + 40;
         }
 
         private void button1_Click(object sender, EventArgs e)

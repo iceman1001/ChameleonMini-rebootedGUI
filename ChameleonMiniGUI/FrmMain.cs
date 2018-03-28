@@ -230,6 +230,7 @@ namespace ChameleonMiniGUI
             if (c?.SelectedItem == null) return;
             if (c.SelectedIndex == 0)
             {
+                ucLegend1.Items = null;
                 PerformComparison();
                 return;
             }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -24,10 +24,7 @@ namespace ChameleonMiniGUI
             get { return _items; }
             set {
                 _items = value;
-                if (value != null)
-                {
-                    Updatelegend();
-                }
+                Updatelegend();
             }
         }
 
@@ -47,18 +44,21 @@ namespace ChameleonMiniGUI
         private void Updatelegend()
         {
             flpLegend.Controls.Clear();
-
-            foreach (var item in Items)
+            if (Items != null)
             {
-                var o = new Label
+                foreach (var item in Items)
                 {
-                    BackColor = Color.FromName(item.BackGroundColor),
-                    ForeColor = Color.FromName(item.ForeGroundColor),
-                    Text = item.Description,
-                    TextAlign = ContentAlignment.MiddleLeft,
-                    Margin = new Padding(0,1,1,0)
-                };
-                flpLegend.Controls.Add(o);
+                    var o = new Label
+                    {
+                        BackColor = Color.FromName(item.BackGroundColor),
+                        ForeColor = Color.FromName(item.ForeGroundColor),
+                        Text = item.Description,
+                        TextAlign = ContentAlignment.MiddleLeft,
+                        Margin = new Padding(0, 1, 1, 0)
+                    };
+                    flpLegend.Controls.Add(o);
+                }
+                flpLegend.Height = flpLegend.Height + 40;
             }
         }
 

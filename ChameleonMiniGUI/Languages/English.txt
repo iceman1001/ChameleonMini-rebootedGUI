@@ -7,7 +7,7 @@ checkBox3.Text=Slot 3
 checkBox2.Text=Slot 2
 checkBox1.Text=Slot 1
 btn_setactive.Text=Set Active
-btn_selectnone.Text=Select None
+btn_selectnone.Text=Unselect All
 btn_selectall.Text=Select All
 btn_refresh.Text=Refresh
 btn_clear.Text=Clear
@@ -55,7 +55,7 @@ lbl_hbfilename1.Text=N/A
 rbtn_bytewidth16.Text=16-byte
 rbtn_bytewidth08.Text=8-byte
 rbtn_bytewidth04.Text=4-byte
-lbl_bytewidth.Text=Byte width:
+lbl_bytewidth.Text=Byte width
 btn_save2.Text=Save
 btn_open2.Text=Open
 btn_save1.Text=Save
@@ -92,4 +92,11 @@ lbl_buttonlong6.Text=Btn Long
 lbl_buttonlong7.Text=Btn Long
 lbl_buttonlong8.Text=Btn Long
 btnStartlocation.Text=Open location
-lbl_template.Text=Template:
+lbl_template.Text=Template
+#
+# tab Serial
+#
+gbAvailableCmds.Text=Available commands
+gbSerial_interface.Text=Serial interface
+btnClearCmd.Text=Clear
+btnSerialSend.Text=Send

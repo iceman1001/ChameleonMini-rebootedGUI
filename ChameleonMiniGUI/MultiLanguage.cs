@@ -80,6 +80,8 @@ namespace ChameleonMiniGUI
             foreach (var line in strings)
             {
                 if (string.IsNullOrWhiteSpace(line)) continue;
+                // skip comments
+                if (line.StartsWith("#")) continue;
 
                 var property = line.Split('.');
                 var values = line.Split('=');

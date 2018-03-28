@@ -7,13 +7,23 @@ A windows based GUI for the ChameleonMini device. It supports all the official R
 
 ## Windows GUI - click once deployment
 For those who can't compile this project there is a click-once deployment installation located here.
+
 [(http://www.icesql.se/download/ChameleonMiniGUI/publish.htm)](http://www.icesql.se/download/ChameleonMiniGUI/publish.htm)
 
-pre-requsites
-* dot.net 4.5.2
+prerequisite
+* dot.net 4.6.1
 * Application needs full rights.
 
 This is hosted by me,  feel free to contribute with a donation for hosting costs.
+
+## Screenshots
+![chameleon1](https://user-images.githubusercontent.com/34060135/37828799-90af7bba-2e94-11e8-98d2-d832ddfd720d.jpg)
+
+![chameleon2a](https://user-images.githubusercontent.com/34060135/37828802-9261fd02-2e94-11e8-8e30-b4b075d51043.jpg)
+
+![chameleon2b](https://user-images.githubusercontent.com/34060135/37828804-942a1a3e-2e94-11e8-895c-339078081a95.jpg)
+
+![chameleon3](https://user-images.githubusercontent.com/34060135/37828807-95be31e6-2e94-11e8-8bcd-e8a35ecd1cde.jpg)
 
 
 ## Donate
@@ -27,4 +37,6 @@ monereo:  43mNJLpgBVaTvyZmX9ajcohpvVkaRy1kbZPm8tqAb7itZgfuYecgkRF36rXrKFUkwEGeZe
 ## Perpetual glory!
 
 A list of those who contributed to this repo in order to make it work. The community owns you all a deep and sincere thank you.
--  @bogiton
+- @bogiton 
+- @kevin2008-01 (italien translations)
+- @proxgrind (chinese translations)

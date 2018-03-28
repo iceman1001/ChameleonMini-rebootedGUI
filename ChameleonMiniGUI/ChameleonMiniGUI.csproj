@@ -32,7 +32,7 @@
     <SuiteName>The rebooted suite</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>20</ApplicationRevision>
+    <ApplicationRevision>25</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -113,12 +113,24 @@
     </Compile>
     <Compile Include="Comparers\KeyComparer.cs" />
     <Compile Include="Attacks\MfKeyAttacks.cs" />
+    <Compile Include="Legend\IlegendItem.cs" />
+    <Compile Include="Legend\Legend.cs" />
+    <Compile Include="Legend\UcLegend.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Legend\UcLegend.Designer.cs">
+      <DependentUpon>UcLegend.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MultiLanguage.cs" />
     <Compile Include="Templating.cs" />
+    <Compile Include="ThreadHelperClass.cs" />
     <Compile Include="XMODEM.cs" />
     <Content Include="Languages\Chinese.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Languages\Français.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Languages\Greek.txt">
@@ -146,6 +158,10 @@
     <None Include="Resources\chamRevG1.png" />
     <EmbeddedResource Include="FrmMain.resx">
       <DependentUpon>FrmMain.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Legend\UcLegend.resx">
+      <DependentUpon>UcLegend.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

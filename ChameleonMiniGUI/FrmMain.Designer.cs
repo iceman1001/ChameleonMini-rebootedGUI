@@ -176,6 +176,7 @@ namespace ChameleonMiniGUI
             this.tpDump = new System.Windows.Forms.TabPage();
             this.menuScroll = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.ucLegend1 = new ChameleonMiniGUI.UcLegend();
             this.lbl_template = new System.Windows.Forms.Label();
             this.cb_templateA = new System.Windows.Forms.ComboBox();
             this.bsTemplates = new System.Windows.Forms.BindingSource(this.components);
@@ -1792,6 +1793,7 @@ namespace ChameleonMiniGUI
             // 
             this.tpDump.AllowDrop = true;
             this.tpDump.ContextMenuStrip = this.menuScroll;
+            this.tpDump.Controls.Add(this.ucLegend1);
             this.tpDump.Controls.Add(this.lbl_template);
             this.tpDump.Controls.Add(this.cb_templateA);
             this.tpDump.Controls.Add(this.chkSyncScroll);
@@ -1831,6 +1833,16 @@ namespace ChameleonMiniGUI
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(169, 22);
             this.toolStripMenuItem1.Text = "Toggle sync scroll";
+            // 
+            // ucLegend1
+            // 
+            this.ucLegend1.AutoSize = true;
+            this.ucLegend1.Items = ((System.Collections.Generic.List<ChameleonMiniGUI.IlegendItem>)(resources.GetObject("ucLegend1.Items")));
+            this.ucLegend1.Location = new System.Drawing.Point(923, 3);
+            this.ucLegend1.Name = "ucLegend1";
+            this.ucLegend1.Size = new System.Drawing.Size(292, 150);
+            this.ucLegend1.TabIndex = 22;
+            this.ucLegend1.Title = "Legend";
             // 
             // lbl_template
             // 
@@ -2387,5 +2399,6 @@ namespace ChameleonMiniGUI
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.TextBox tbSerialHelp;
         private System.Windows.Forms.Button btnSerialSend;
+        private UcLegend ucLegend1;
     }
 }

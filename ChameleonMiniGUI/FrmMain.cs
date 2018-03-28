@@ -241,6 +241,7 @@ namespace ChameleonMiniGUI
             t.LoadTemplate(hexBox1, o.Value, items);
             t.LoadTemplate(hexBox2, o.Value, items);
 
+            ucLegend1.Items = items;
 
         }
 
@@ -1833,6 +1834,5 @@ namespace ChameleonMiniGUI
         }
 
         #endregion
-
     }
 }

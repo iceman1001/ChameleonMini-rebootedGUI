@@ -1837,10 +1837,13 @@ namespace ChameleonMiniGUI
             // ucLegend1
             // 
             this.ucLegend1.AutoSize = true;
-            this.ucLegend1.Items = ((System.Collections.Generic.List<ChameleonMiniGUI.IlegendItem>)(resources.GetObject("ucLegend1.Items")));
+            this.ucLegend1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.ucLegend1.Expanded = false;
+            this.ucLegend1.Items = null;
             this.ucLegend1.Location = new System.Drawing.Point(923, 3);
+            this.ucLegend1.MaximumSize = new System.Drawing.Size(180, 300);
             this.ucLegend1.Name = "ucLegend1";
-            this.ucLegend1.Size = new System.Drawing.Size(292, 150);
+            this.ucLegend1.Size = new System.Drawing.Size(180, 42);
             this.ucLegend1.TabIndex = 22;
             this.ucLegend1.Title = "Legend";
             // 

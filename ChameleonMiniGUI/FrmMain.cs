@@ -959,26 +959,10 @@ namespace ChameleonMiniGUI
 
         private void SetCheckBox(bool value)
         {
-            // 
-            var tid = Stopwatch.StartNew();
             foreach (var cb in FindControls<CheckBox>(Controls, "checkBox"))
             {
                 cb.Checked = value;
             }
-            tid.Stop();
-
-            Console.WriteLine($"FindControl Ticks: {tid.ElapsedTicks}");
-
-            tid.Restart();
-            ApplyAll(this, c => {
-                    var o = (CheckBox)c;
-                    if (o.Name.StartsWith("checkBox"))
-                        o.Checked = value;
-                }
-            );
-            tid.Stop();
-            Console.WriteLine($"ApplyAll Ticks: {tid.ElapsedTicks}");
-
         }
 
         private int GetNumberOfChecked()

@@ -38,6 +38,6 @@ monereo:  43mNJLpgBVaTvyZmX9ajcohpvVkaRy1kbZPm8tqAb7itZgfuYecgkRF36rXrKFUkwEGeZe
 
 A list of those who contributed to this repo in order to make it work. The community owns you all a deep and sincere thank you.
 - @bogiton 
-- @kevin2008-01 (italien translations)
+- @kevin2008-01 (French translations)
 - @proxgrind (chinese translations)
 - @asper (italian translations)

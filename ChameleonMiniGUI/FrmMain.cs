@@ -1434,16 +1434,30 @@ namespace ChameleonMiniGUI
             var buttonLongModesStr = SendCommand($"BUTTON_LONG{_cmdExtension}").ToString();
             if (string.IsNullOrEmpty(buttonLongModesStr)) return;
 
+            if (buttonLongModesStr.ToLower().StartsWith("200"))
+            {
+                // disable all dropdowns
+                foreach (var cb in FindControls<ComboBox>(Controls, "cb_buttonlong"))
+                {
+                    cb.Items.Clear();
+                    cb.Enabled = false;
+                }
+            }
+            else
+            {
             // split by comma
             _buttonLongModesArray = buttonLongModesStr.Split(',');
+
             if (!_buttonLongModesArray.Any()) return;
 
             // populate all dropdowns
             foreach (var cb in FindControls<ComboBox>(Controls, "cb_buttonlong"))
             {
+                    cb.Enabled = true;
                 cb.Items.Clear();
                 cb.Items.AddRange(_buttonLongModesArray);
             }
+        }
         }
 
         private void GetAvailableCommands()

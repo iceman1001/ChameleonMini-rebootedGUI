@@ -565,8 +565,8 @@ namespace ChameleonMiniGUI
             if (_comport != null)
             {
                 // Check if keep alive is set
-                if (chk_keepalive.Checked)
-                {
+                if (!chk_keepalive.Checked) return;
+
                     var version = SendCommand($"VERSION{_cmdExtension}?").ToString();
                     if (!string.IsNullOrEmpty(version))
                     {
@@ -577,7 +577,6 @@ namespace ChameleonMiniGUI
                         DeviceDisconnected();
                     }
                 }
-            }
             else
             {
                 DeviceDisconnected();
@@ -587,11 +586,10 @@ namespace ChameleonMiniGUI
                 {
                     // try to connect
                     OpenChameleonSerialPort();                    
-                    if (_comport != null && _comport.IsOpen)
+                    if (_comport == null || !_comport.IsOpen)
                         return;
 
-                    GetAvailableCommands();
-                    InitHelp();
+                    DeviceConnected();
                 }
             }
         }
@@ -1024,6 +1022,11 @@ namespace ChameleonMiniGUI
             btn_disconnect.Enabled = false;
 
             btn_connect.Enabled = true;
+
+            // tab Serial
+            btnSerialSend.Enabled = false;
+            tbSerialCmd.Enabled = false;
+            tbSerialHelp.Text = "N/A";
         }
 
         private void DeviceConnected()
@@ -1071,6 +1074,12 @@ namespace ChameleonMiniGUI
             btn_disconnect.Enabled = true;
 
             btn_connect.Enabled = false;
+
+            // tab Serial
+            btnSerialSend.Enabled = true;
+            tbSerialCmd.Enabled = true;
+            GetAvailableCommands();
+            InitHelp();
 
             this.Cursor = Cursors.Default;
         }
@@ -1573,7 +1582,7 @@ namespace ChameleonMiniGUI
         {
             int tickInterval = 0;
             timer1 = new System.Windows.Forms.Timer();
-            timer1.Tick += new EventHandler(timer1_Tick);
+            timer1.Tick += timer1_Tick;
 
             int.TryParse(txt_interval.Text, out tickInterval);
 

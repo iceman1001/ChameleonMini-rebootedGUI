@@ -1633,18 +1633,18 @@ namespace ChameleonMiniGUI
             // iclass dumps should be 8bytes width
             if (fileName.ToLower().Contains("iclass"))
             {
-                ApplyByteWidthChange(8);
+                rbtn_bytewidth08.Checked = true;
             }
             else
             {
                 // generic rule, larger than 256bytes,  16byte width
                 if (fi.Length >= 256)
                 {
-                    ApplyByteWidthChange(16);
+                    rbtn_bytewidth16.Checked = true;
                 }
                 else
                 {
-                    ApplyByteWidthChange(4);
+                    rbtn_bytewidth04.Checked = true;
                 }
             }
 

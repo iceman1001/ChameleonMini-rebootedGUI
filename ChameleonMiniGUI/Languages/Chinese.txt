@@ -100,3 +100,10 @@ gbAvailableCmds.Text=Available commands
 gbSerial_interface.Text=Serial interface
 btnClearCmd.Text=Clear
 btnSerialSend.Text=Send
+#
+# tab Dumpmanagement context menu
+#
+toolStripMenuItem1.Text=左右同步
+toolStripMenuItem2.Text=Close All
+btn_close1.Text=Close
+btn_close2.Text=Close

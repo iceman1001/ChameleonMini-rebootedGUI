@@ -842,7 +842,15 @@ namespace ChameleonMiniGUI
 
         private void menuScroll_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-            chkSyncScroll.Checked = !chkSyncScroll.Checked;
+            if (e.ClickedItem.Name == "toolStripMenuItem1")
+            {
+                chkSyncScroll.Checked = !chkSyncScroll.Checked;
+            }
+            else if (e.ClickedItem.Name == "toolStripMenuItem2")
+            {
+                CloseFile(hexBox1);
+                CloseFile(hexBox2);
+            }
         }
 
         private void toggleSyncScrollPressed(object sender, EventArgs e)
@@ -912,6 +920,15 @@ namespace ChameleonMiniGUI
             if (string.IsNullOrWhiteSpace(cmd)) return;
 
             Send(cmd);
+        }
+
+        private void btn_close1_Click(object sender, EventArgs e)
+        {
+            CloseFile(hexBox1);
+        }
+        private void btn_close2_Click(object sender, EventArgs e)
+        {
+            CloseFile(hexBox2);
         }
 
 
@@ -1602,14 +1619,19 @@ namespace ChameleonMiniGUI
         {
             if (hexBox.ByteProvider == null) return;
 
+            var idx = int.Parse(hexBox.Name.Substring(hexBox.Name.Length - 1));
+            var l = FindControls<Label>(Controls, $"lbl_hbfilename{idx}").FirstOrDefault();
+
             try
             {
                 var dynamicFileByteProvider = hexBox.ByteProvider as DynamicFileByteProvider;
                 dynamicFileByteProvider?.ApplyChanges();
+
+                txt_output.Text += $"[+] Saved file {l?.Text}{Environment.NewLine}";
             }
             catch (Exception)
             {
-                var msg = $"[!] Failed to save file{Environment.NewLine}";
+                var msg = $"[!] Failed to save file {l?.Text}{Environment.NewLine}";
                 MessageBox.Show(msg);
                 txt_output.Text += msg;
             }
@@ -1706,14 +1728,8 @@ namespace ChameleonMiniGUI
                 {
                     CleanUp(hexBox);
                 }
-                else if (res == DialogResult.Cancel)
-                {
-                    return res;
-                }
-
                 return res;
             }
-
             CleanUp(hexBox);
             return DialogResult.OK;
         }
@@ -1724,10 +1740,11 @@ namespace ChameleonMiniGUI
 
             // Remove the file info
             var hbIdx = int.Parse(b.Name.Substring(b.Name.Length - 1));
-            var hb_filename = FindControls<Label>(Controls, $"lbl_hbfilename{hbIdx}").FirstOrDefault();
-            if (hb_filename != null)
+            var l = FindControls<Label>(Controls, $"lbl_hbfilename{hbIdx}").FirstOrDefault();
+            if (l != null)
             {
-                hb_filename.Text = "N/A";
+                txt_output.Text += $"[+] Closed file {l.Text}{Environment.NewLine}";
+                l.Text = "N/A";
             }
         }
 

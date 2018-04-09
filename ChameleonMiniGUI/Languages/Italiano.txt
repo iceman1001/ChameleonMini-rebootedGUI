@@ -100,3 +100,10 @@ gbAvailableCmds.Text=Comandi disponibili
 gbSerial_interface.Text=Interfaccia Seriale
 btnClearCmd.Text=Pulisci
 btnSerialSend.Text=Invia
+#
+# tab Dumpmanagement context menu
+#
+toolStripMenuItem1.Text=Sincronizza scrolling
+toolStripMenuItem2.Text=Close All
+btn_close1.Text=Close
+btn_close2.Text=Close

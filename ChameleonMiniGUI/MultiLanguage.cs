@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -14,6 +15,25 @@ namespace ChameleonMiniGUI
         public MultiLanguage ()
         {
             DirectoryPath = Path.Combine(Application.StartupPath, "Languages");
+        }
+
+        private static IEnumerable<T> FindToolStrips<T>(ICollection ctrls) where T : ToolStrip
+        {
+            var list = new List<T>();
+
+            // make sure we have controls to search for.
+            if (ctrls == null || ctrls.Count == 0) return list;
+
+            foreach (Control c in ctrls)
+            {
+                if (c.HasChildren)
+                    list.AddRange(FindToolStrips<T>(c.Controls));
+
+                if ( c.ContextMenuStrip != null )
+                    list.Add(c.ContextMenuStrip as T);
+            }
+
+            return list;
         }
 
         private static IEnumerable<T> FindControls<T>(ICollection ctrls) where T : Control
@@ -30,7 +50,7 @@ namespace ChameleonMiniGUI
                     list.AddRange(FindControls<T>(c.Controls));
                 }
 
-                if (!string.IsNullOrWhiteSpace(c.Text))
+                if ( !string.IsNullOrWhiteSpace(c.Text))
                     list.Add(c as T);
             }
 
@@ -53,7 +73,7 @@ namespace ChameleonMiniGUI
                     list.AddRange(FindControls<T>(cb.Controls, searchname));
                 }
 
-                if (cb.Name.StartsWith(searchname))
+                if (cb.Name.ToLowerInvariant().StartsWith(searchname))
                     list.Add(cb as T);
             }
 
@@ -86,12 +106,22 @@ namespace ChameleonMiniGUI
                 var property = line.Split('.');
                 var values = line.Split('=');
                 var txt = values[1];
-                var propertyname = property[0];
+                var propertyname = property[0].ToLowerInvariant();
 
-                var list = FindControls<Control>(ctrls, propertyname);
-                foreach (var i in list)
+                var list_ctrls = FindControls<Control>(ctrls, propertyname);
+                foreach (var i in list_ctrls)
                 {
                     i.Text = txt;
+                }
+
+                var list_items = FindToolStrips<ToolStrip>(ctrls);
+                foreach (var i in list_items)
+                {
+                    foreach(ToolStripMenuItem j in i.Items)
+                    {
+                        if (j.Name.ToLowerInvariant().StartsWith(propertyname)) 
+                            j.Text = txt;
+                    }
                 }
             }
         }

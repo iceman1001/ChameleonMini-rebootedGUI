@@ -100,3 +100,10 @@ gbAvailableCmds.Text=Διαθέσιμες εντολές
 gbSerial_interface.Text=Σειριακή διεπαφή
 btnClearCmd.Text=Καθαρισμός
 btnSerialSend.Text=Αποστολή
+#
+# tab Dumpmanagement context menu
+#
+toolStripMenuItem1.Text=Συγχρονισμός Κύλισης
+toolStripMenuItem2.Text=Close All
+btn_close1.Text=Close
+btn_close2.Text=Close

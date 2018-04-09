@@ -100,3 +100,10 @@ gbAvailableCmds.Text=Tillgängliga kommandon
 gbSerial_interface.Text=Serial interface
 btnClearCmd.Text=Töm
 btnSerialSend.Text=Skicka
+#
+# tab Dumpmanagement context menu
+#
+toolStripMenuItem1.Text=Synkronisera scrollning
+toolStripMenuItem2.Text=Stäng alla
+btn_close1.Text=Stäng
+btn_close2.Text=Stäng

@@ -254,11 +254,11 @@ namespace ChameleonMiniGUI
             // 
             // openFileDialog1
             // 
-            this.openFileDialog1.Filter = "Dump files| *.bin; *.dump; *.mdf; *.hex";
+            this.openFileDialog1.Filter = "Dump files| *.bin; *.dump; *.mfd; *.hex";
             // 
             // saveFileDialog1
             // 
-            this.saveFileDialog1.Filter = "Dump files| *.bin; *.dump; *.mdf; *.hex";
+            this.saveFileDialog1.Filter = "Dump files| *.bin; *.dump; *.mfd; *.hex";
             // 
             // gb_output
             // 
@@ -1831,7 +1831,6 @@ namespace ChameleonMiniGUI
             this.toolStripMenuItem2});
             this.menuScroll.Name = "menuScroll";
             this.menuScroll.Size = new System.Drawing.Size(172, 48);
-            //this.menuScroll.Text = "toggle sync scroll";
             this.menuScroll.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuScroll_ItemClicked);
             // 
             // toolStripMenuItem1

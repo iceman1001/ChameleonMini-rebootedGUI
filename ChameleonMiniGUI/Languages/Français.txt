@@ -1,4 +1,4 @@
-rcheckBox8.Text=Tag 8
+checkBox8.Text=Tag 8
 checkBox7.Text=Tag 7
 checkBox6.Text=Tag 6
 checkBox5.Text=Tag 5

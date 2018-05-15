@@ -210,7 +210,10 @@ namespace ChameleonMiniGUI
             this.tbSerialHelp = new System.Windows.Forms.TextBox();
             this.linkRevG = new System.Windows.Forms.LinkLabel();
             this.linkRevE = new System.Windows.Forms.LinkLabel();
+            this.tpUtils = new System.Windows.Forms.TabPage();
+            this.ucExplorer1 = new ChameleonMiniGUI.UcExplorer();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
             this.gb_output.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bsLanguages)).BeginInit();
             this.tpSettings.SuspendLayout();
@@ -240,6 +243,7 @@ namespace ChameleonMiniGUI
             this.gbSerial_interface.SuspendLayout();
             this.menuClear.SuspendLayout();
             this.gbAvailableCmds.SuspendLayout();
+            this.tpUtils.SuspendLayout();
             this.SuspendLayout();
             // 
             // txt_output
@@ -1784,6 +1788,7 @@ namespace ChameleonMiniGUI
             // 
             this.tabControl1.Controls.Add(this.tpOperation);
             this.tabControl1.Controls.Add(this.tpDump);
+            this.tabControl1.Controls.Add(this.tpUtils);
             this.tabControl1.Controls.Add(this.tpSerial);
             this.tabControl1.Controls.Add(this.tpSettings);
             this.tabControl1.Location = new System.Drawing.Point(8, 12);
@@ -1893,7 +1898,7 @@ namespace ChameleonMiniGUI
             this.cb_templateA.FormattingEnabled = true;
             this.cb_templateA.Location = new System.Drawing.Point(495, 10);
             this.cb_templateA.Name = "cb_templateA";
-            this.cb_templateA.Size = new System.Drawing.Size(121, 21);
+            this.cb_templateA.Size = new System.Drawing.Size(151, 21);
             this.cb_templateA.TabIndex = 20;
             this.cb_templateA.SelectedIndexChanged += new System.EventHandler(this.cb_templateA_SelectedIndexChanged);
             // 
@@ -2190,6 +2195,28 @@ namespace ChameleonMiniGUI
             this.linkRevE.Text = "Rev E rebooted Wiki";
             this.linkRevE.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkRevE_LinkClicked);
             // 
+            // tpUtils
+            // 
+            this.tpUtils.Controls.Add(this.ucExplorer1);
+            this.tpUtils.Location = new System.Drawing.Point(4, 22);
+            this.tpUtils.Name = "tpUtils";
+            this.tpUtils.Padding = new System.Windows.Forms.Padding(3);
+            this.tpUtils.Size = new System.Drawing.Size(1279, 491);
+            this.tpUtils.TabIndex = 6;
+            this.tpUtils.Text = "Utils";
+            this.tpUtils.UseVisualStyleBackColor = true;
+            // 
+            // ucExplorer1
+            // 
+            this.ucExplorer1.Location = new System.Drawing.Point(52, 48);
+            this.ucExplorer1.Name = "ucExplorer1";
+            this.ucExplorer1.Size = new System.Drawing.Size(730, 366);
+            this.ucExplorer1.TabIndex = 0;
+            // 
+            // openFileDialog2
+            // 
+            this.openFileDialog2.FileName = "openFileDialog2";
+            // 
             // frm_main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2251,6 +2278,7 @@ namespace ChameleonMiniGUI
             this.menuClear.ResumeLayout(false);
             this.gbAvailableCmds.ResumeLayout(false);
             this.gbAvailableCmds.PerformLayout();
+            this.tpUtils.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -2437,5 +2465,8 @@ namespace ChameleonMiniGUI
         private System.Windows.Forms.Button btn_close2;
         private System.Windows.Forms.Button btn_close1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
+        private System.Windows.Forms.TabPage tpUtils;
+        private System.Windows.Forms.OpenFileDialog openFileDialog2;
+        private UcExplorer ucExplorer1;
     }
 }

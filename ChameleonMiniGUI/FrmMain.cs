@@ -1652,6 +1652,11 @@ namespace ChameleonMiniGUI
 
             var fi = new FileInfo(fileName);
 
+            //
+            rbtn_bytewidth04.Checked = false;
+            rbtn_bytewidth08.Checked = false;
+            rbtn_bytewidth16.Checked = false;
+
             // iclass dumps should be 8bytes width
             if (fileName.ToLower().Contains("iclass"))
             {

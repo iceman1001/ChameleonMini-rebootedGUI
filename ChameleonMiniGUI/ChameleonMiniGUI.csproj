@@ -22,7 +22,7 @@
     <UpdateInterval>7</UpdateInterval>
     <UpdateIntervalUnits>Days</UpdateIntervalUnits>
     <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
+    <UpdateRequired>true</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>http://www.icesql.se/download/ChameleonMiniGUI/</InstallUrl>
     <SupportUrl>https://github.com/iceman1001/ChameleonMini-rebootedGUI/issues</SupportUrl>
@@ -30,9 +30,10 @@
     <ProductName>Chameleon Mini Rebooted GUI</ProductName>
     <PublisherName>Christian Herrmann</PublisherName>
     <SuiteName>The rebooted suite</SuiteName>
+    <MinimumRequiredVersion>1.1.0.7</MinimumRequiredVersion>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>3</ApplicationRevision>
+    <ApplicationRevision>8</ApplicationRevision>
     <ApplicationVersion>1.1.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -126,6 +127,12 @@
     <Compile Include="MultiLanguage.cs" />
     <Compile Include="Templating.cs" />
     <Compile Include="ThreadHelperClass.cs" />
+    <Compile Include="UcExplorer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UcExplorer.Designer.cs">
+      <DependentUpon>UcExplorer.cs</DependentUpon>
+    </Compile>
     <Compile Include="XMODEM.cs" />
     <Content Include="Languages\Chinese.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -145,17 +152,28 @@
     <Content Include="Languages\English.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Templates\LegoDimension.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Templates\MIfare-S20-320b.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Templates\MIfare-S50-1k.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Templates\Ultralight-EV1-164B.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Templates\Ultralight-EV1-48b.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\VingCard EV1-48b  %28pm3%29.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <EmbeddedResource Include="UcExplorer.resx">
+      <DependentUpon>UcExplorer.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
-    <None Include="Properties\DataSources\MultiLanguage.datasource" />
     <None Include="Resources\usb-warning.jpg" />
     <None Include="Resources\chamRevE.png" />
     <None Include="Resources\chamRevG1.png" />
@@ -224,6 +242,9 @@
       <Project>{958af723-58d7-4d0d-bd67-e230c95401b6}</Project>
       <Name>Crapto1</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\DataSources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

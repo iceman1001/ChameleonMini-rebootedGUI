@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Configuration;
 using System.Linq;
@@ -50,6 +50,9 @@ namespace ChameleonMiniGUI
         public frm_main()
         {
             InitializeComponent();
+
+            // 
+            this.Text = "Chameleon Mini GUI - iceman edition 冰人";
 
             AvailableCommands = new List<string>();
         }

@@ -22,6 +22,7 @@ namespace ChameleonMiniGUI
         public UInt32 ar1;
         public UInt64 key;
         public byte Sector;
+        public byte Block;
         public byte KeyType;
         public bool Found;
     }
@@ -134,20 +135,36 @@ namespace ChameleonMiniGUI
             if (!Crc.CheckCrc14443(Crc.CRC16_14443_A, bytes, 210))
                 return show_all;
 
+            /*
+            * Data layout
+            * first 16byte is Sector0, Block0
+            * 
+            * then comes items of 16bytes length
+            *   0           auth cmd  (0x60 or 0x61)
+                1           blocknumber  (0 - 0x7F)
+                2,3         crc 2bytes
+                4,5,6,7     NT
+                8,9,10,11   NR
+                12,13,14,15 AR
+            */
+
+            var uid = ToUInt32(bytes, 0);
 
             var myKeys = new List<MyKey>();
 
             // Copy nonce - data into object and list
             for (int i = 0; i < 12; i++)
             {
-                var mykey = new MyKey();
-                mykey.UID = ToUInt32(bytes, 0);
-                mykey.KeyType = bytes[(i + 1) * 16];
-                mykey.Sector = bytes[(i + 1) * 16 + 1];
-
-                mykey.nt0 = ToUInt32(bytes, (i + 1) * 16 + 4);
-                mykey.nr0 = ToUInt32(bytes, (i + 1) * 16 + 8);
-                mykey.ar0 = ToUInt32(bytes, (i + 1) * 16 + 12);
+                var mykey = new MyKey
+                {
+                    UID = uid,
+                    KeyType = bytes[(i + 1) * 16],
+                    Block = bytes[(i + 1) * 16 + 1],                   
+                    nt0 = ToUInt32(bytes, (i + 1) * 16 + 4),
+                    nr0 = ToUInt32(bytes, (i + 1) * 16 + 8),
+                    ar0 = ToUInt32(bytes, (i + 1) * 16 + 12)
+                };
+                mykey.Sector = ToSector(mykey.Block);
 
                 // skip sectors with 0xFF
                 if ( mykey.Sector != 0xFF)
@@ -162,22 +179,33 @@ namespace ChameleonMiniGUI
             return show_all;
         }
 
+        public static byte ToSector(byte block)
+        {
+            // 32 first sectors has 4blocks
+            if (block < 128)
+                return  (byte)(block/4);
+            
+            // above 32, they have 16blocks
+            return (byte)(32 + (block - 128)/16);
+        }
+
         private static string KeyWorker(List<MyKey> keys)
         {
             var ret_mes = string.Empty;
 
             foreach (var item in keys)
             {
-                Debug.WriteLine($"{item.Sector}");
-
                 if (item.Found) continue;
 
                 var keytype = (item.KeyType == 0x60) ? "A" : "B";
 
                 var subs =
                     keys.Where(
-                        i => i.KeyType == item.KeyType && i.Sector == item.Sector && item.nr0 != i.nr0 && !i.Found)
+                        i => i.KeyType == item.KeyType && i.Block == item.Block && item.nr0 != i.nr0 && !i.Found)
                         .ToList();
+
+                if ( !subs.Any())
+                    continue;
 
                 Debug.WriteLine($"{item.Sector} - {keytype} | {subs.Count}");
 
@@ -185,22 +213,16 @@ namespace ChameleonMiniGUI
                 {
                     if (bar.Found) return;
 
-                    item.Found = mfkey32_moebius(item.UID, item.nt0, bar.nt0, item.nr0, item.ar0, bar.nr0, bar.ar0,
-                        out item.key);
+                    item.Found = mfkey32_moebius(item.UID, item.nt0, bar.nt0, item.nr0, item.ar0, bar.nr0, bar.ar0, out item.key);
                     if (item.Found)
                     {
-                        var s = $"[S{item.Sector}] Key{keytype} [{item.key:x12}] {Environment.NewLine}";
+                        var s = $"[S{item.Sector} / B{item.Block}] Key{keytype} [{item.key:x12}]";
                         Debug.WriteLine(s);
-                        ret_mes += s;
+                        ret_mes += $"{s}{Environment.NewLine}";
 
                         bar.Found = true;
                         bar.key = item.key;
                     }
-                    else
-                    {
-                        Debug.WriteLine($"{bar.Sector}");
-                    }
-
                     //Dispatcher.BeginInvoke();
                 } );
             }

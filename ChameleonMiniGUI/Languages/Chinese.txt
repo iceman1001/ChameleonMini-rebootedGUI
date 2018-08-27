@@ -92,18 +92,18 @@ gb_rssi.Text=RSSI电压
 tabPage2.Text=设置
 gb_output.Text=输出
 gb_language.Text=语言设置
-lbl_template.Text=Template
+lbl_template.Text=模板
 #
 # tab Serial
 #
-gbAvailableCmds.Text=Available commands
-gbSerial_interface.Text=Serial interface
-btnClearCmd.Text=Clear
-btnSerialSend.Text=Send
+gbAvailableCmds.Text=可用命令
+gbSerial_interface.Text=串口指令
+btnClearCmd.Text=清除
+btnSerialSend.Text=发送
 #
 # tab Dumpmanagement context menu
 #
 toolStripMenuItem1.Text=左右同步
-toolStripMenuItem2.Text=Close All
-btn_close1.Text=Close
-btn_close2.Text=Close
+toolStripMenuItem2.Text=关闭全部
+btn_close1.Text=关闭
+btn_close2.Text=关闭

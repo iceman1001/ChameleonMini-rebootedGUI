@@ -11,7 +11,7 @@ For those who can't compile this project there is a click-once deployment instal
 [(http://www.icesql.se/download/ChameleonMiniGUI/publish.htm)](http://www.icesql.se/download/ChameleonMiniGUI/publish.htm)
 
 prerequisite
-* dot.net 4.6.1
+* dot.net 4.6.2
 * Application needs full rights.
 
 This is hosted by me,  feel free to contribute with a donation for hosting costs.

@@ -1,0 +1,38 @@
+﻿#
+# this CSV file defines a color template for a binary file.
+#
+# This file targets:  Mifare Classic mini s20 , 320b, 4 byte UID
+# 
+# 2018, hiwanz
+# block 0
+0; 4; DeepPink; Black; UID
+4; 1; DeepSkyBlue; Black; BCC
+5; 48; White; black; Text
+(0*64) + 48; 6; Orange; Black; Key A
+(0*64)+ 48+ 6; 3; Red; Black; Access bytes
+(0*64)+ 48+ 9; 1; Aquamarine; Black; GDC byte
+(0*64) + 48+10; 6; SkyBlue; Black; Key B
+# block 1
+(1*64); 48; White; black; Text
+(1*64) + 48; 6; Orange; Black; Key A
+(1*64)+ 48+ 6; 3; Red; Black; Access bytes
+(1*64)+ 48+ 9; 1; Aquamarine; Black; GDC byte
+(1*64) + 48 +10; 6; SkyBlue; Black; Key B
+# block 2
+(2*64); 48; White; black; Text
+(2*64) + 48; 6; Orange; Black; Key A
+(2*64)+ 48+ 6; 3; Red; Black; Access bytes
+(2*64)+ 48+ 9; 1; Aquamarine; Black; GDC byte
+(2*64) + 48 +10; 6; SkyBlue; Black; Key B
+# block 3
+(3*64); 48; White; black; Text
+(3*64) + 48; 6; Orange; Black; Key A
+(3*64)+ 48+ 6; 3; Red; Black; Access bytes
+(3*64)+ 48+ 9; 1; Aquamarine; Black; GDC byte
+(3*64) + 48 +10; 6; SkyBlue; Black; Key B
+# block 4
+(4*64); 48; White; black; Text
+(4*64) + 48; 6; Orange; Black; Key A
+(4*64)+ 48+ 6; 3; Red; Black; Access bytes
+(4*64)+ 48+ 9; 1; Aquamarine; Black; GDC byte
+(4*64) + 48 +10; 6; SkyBlue; Black; Key B

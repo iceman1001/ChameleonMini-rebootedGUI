@@ -94,6 +94,7 @@ gb_output.Text=输出
 gb_language.Text=语言设置
 lbl_template.Text=模板
 tpSerial.Text=串口
+tpUtils.Text=工具
 #
 # tab Serial
 #

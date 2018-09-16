@@ -388,8 +388,8 @@ namespace ChameleonMiniGUI
             // 
             this.pb_device.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pb_device.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pb_device.Image = global::ChameleonMiniGUI.Properties.Resources.usb_warning;
-            this.pb_device.InitialImage = global::ChameleonMiniGUI.Properties.Resources.usb_warning;
+            this.pb_device.Image = global::ChameleonMiniGUI.Properties.Resources.usbWarning;
+            this.pb_device.InitialImage = global::ChameleonMiniGUI.Properties.Resources.usbWarning;
             this.pb_device.Location = new System.Drawing.Point(25, 27);
             this.pb_device.Name = "pb_device";
             this.pb_device.Size = new System.Drawing.Size(128, 128);

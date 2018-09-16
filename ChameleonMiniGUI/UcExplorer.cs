@@ -27,8 +27,28 @@ namespace ChameleonMiniGUI
 
         private void SetTreeView()
         {
+            treeView1.ImageList = TreeImages;
             GetLogicalDrives(treeView1);
             SetContextMenu();
+        }
+
+        private static ImageList _treeImagelist;
+        private static ImageList TreeImages
+        {
+            get
+            {
+                if (_treeImagelist == null)
+                {
+                    _treeImagelist =new ImageList();
+                    _treeImagelist.Images.Add("Harddrive", Properties.Resources.hardDrive);
+                    _treeImagelist.Images.Add("CDrom", Properties.Resources.cdrom);
+                    _treeImagelist.Images.Add("Networkdrive", Properties.Resources.networkDrive);
+                    _treeImagelist.Images.Add("Folderopen", Properties.Resources.folderOpen);
+                    _treeImagelist.Images.Add("Folderclose", Properties.Resources.folderClose);
+                    _treeImagelist.Images.Add("Warning", Properties.Resources.warning);
+                }
+                return _treeImagelist;
+            }
         }
 
         private void PopulateDirectories_recursive(DirectoryInfo[] dirs, TreeNode parent)
@@ -40,7 +60,8 @@ namespace ChameleonMiniGUI
                 node = new TreeNode(dir.Name, 0, 0)
                 {
                     Tag = dir,
-                    ImageKey = "folder"
+                    ImageIndex = 3,
+                    SelectedImageIndex = 4                    
                 };
                 try
                 {
@@ -52,8 +73,8 @@ namespace ChameleonMiniGUI
                 }
                 catch (UnauthorizedAccessException uae)
                 {
-                    node.ImageIndex = 12;
-                    node.SelectedImageIndex = 12;
+                    node.ImageIndex = 5;
+                    node.SelectedImageIndex = 5;
                 }
                 finally
                 {
@@ -68,11 +89,11 @@ namespace ChameleonMiniGUI
                 return; 
 
             var di = new DirectoryInfo(name);
-            var node = new TreeNode(di.Name, 2, 2) { Tag = di };
+            var node = new TreeNode(di.Name, 3, 4) { Tag = di };
 
             //
             if ( di.GetDirectories().Any() )
-                node.Nodes.Add(null, "...", 0, 0);
+                node.Nodes.Add(null, "...", 5, 5);
 
             parent.Nodes.Add(node);
         }
@@ -92,24 +113,31 @@ namespace ChameleonMiniGUI
             {
                 var di = new DriveInfo(drive);
                 int image;
+                int selectectimage;
                 switch (di.DriveType)
                 {
                     case DriveType.CDRom:
-                        continue;
+                        image = 1;
+                        selectectimage = 1;
+                        break;
                     case DriveType.Network:
-                        image = 6;
+                        image = 2;
+                        selectectimage = 2;
                         break;
                     case DriveType.NoRootDirectory:
-                        image = 8;
+                        image = 4;
+                        selectectimage = 3;
                         break;
                     case DriveType.Unknown:
-                        image = 8;
+                        image = 5;
+                        selectectimage = 5;
                         break;
                     default:
-                        image = 2;
+                        image = 0;
+                        selectectimage = 0;
                         break;
                 }
-                var node = new TreeNode(drive.Substring(0, 1), image, image) {Tag = di};
+                var node = new TreeNode(drive.Substring(0, 1), image, selectectimage) {Tag = di};
 
                 if (di.IsReady)
                 {
@@ -192,7 +220,7 @@ namespace ChameleonMiniGUI
                     foreach (string dir in dirs)
                     {
                         var di = new DirectoryInfo(dir);
-                        var node = new TreeNode(di.Name, 0, 1);
+                        var node = new TreeNode(di.Name, 4, 3);
 
                         try
                         {
@@ -201,13 +229,13 @@ namespace ChameleonMiniGUI
 
                             //if the directory has sub directories add the place holder
                             if (di.GetDirectories().Any())
-                                node.Nodes.Add(null, "...", 0, 0);
+                                node.Nodes.Add(null, "...", 4, 3);
                         }
                         catch (UnauthorizedAccessException)
                         {
                             //display a locked folder icon
-                            node.ImageIndex = 12;
-                            node.SelectedImageIndex = 12;
+                            node.ImageIndex = 4;
+                            node.SelectedImageIndex = 4;
                         }
                         catch (Exception ex)
                         {

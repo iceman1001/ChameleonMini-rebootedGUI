@@ -137,6 +137,9 @@
     <Content Include="Languages\Chinese.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Languages\Dutch.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Languages\Français.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -152,6 +155,12 @@
     <Content Include="Languages\English.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\cdrom.ico" />
+    <None Include="Resources\folder-close.ico" />
+    <None Include="Resources\folder-open.ico" />
+    <None Include="Resources\hard-drive.ico" />
+    <None Include="Resources\network-drive.ico" />
+    <None Include="Resources\warning.ico" />
     <Content Include="Templates\MIfare-S20-320b-Black.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

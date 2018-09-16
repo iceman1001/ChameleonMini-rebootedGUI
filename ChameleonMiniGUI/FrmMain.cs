@@ -51,8 +51,9 @@ namespace ChameleonMiniGUI
         {
             InitializeComponent();
 
+            var software_version = Properties.Settings.Default.version;
             // 
-            this.Text = "Chameleon Mini GUI - iceman edition 冰人";
+            this.Text = $"Chameleon Mini GUI - {software_version} - iceman edition 冰人";
 
             AvailableCommands = new List<string>();
         }

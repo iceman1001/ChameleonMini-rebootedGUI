@@ -125,7 +125,7 @@ namespace ChameleonMiniGUI
         {
             var show_all = "";
             if (!bytes.Any())
-                return show_all;
+                return $"No data found on device{Environment.NewLine}";
 
            
             // Decrypt data,  with key 123321,  length 208
@@ -133,7 +133,7 @@ namespace ChameleonMiniGUI
 
             // validate CRC is ok.  (length 210,  since two last bytes is crc)
             if (!Crc.CheckCrc14443(Crc.CRC16_14443_A, bytes, 210))
-                return show_all;
+                return $"Data failed CRC check{Environment.NewLine}";
 
             /*
             * Data layout

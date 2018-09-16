@@ -476,12 +476,13 @@ namespace ChameleonMiniGUI
                 txt_output.Text += $"[Tag slot {tagslotIndex}]{Environment.NewLine}";
 
                 //SETTINGMY=tagslotIndex-1
-                SendCommandWithoutResult($"SETTING{_cmdExtension}=" + (tagslotIndex - 1));
+                SendCommandWithoutResult($"SETTING{_cmdExtension}={tagslotIndex - 1}");
 
                 var data = SendCommand($"DETECTION{_cmdExtension}?") as byte[];
 
                 var result = MfKeyAttacks.Attack(data);
-
+                if (string.IsNullOrWhiteSpace(result))
+                    result = $"mfkey32 attack failed, no keys found{Environment.NewLine}";
                 txt_output.Text += result;
             }
             this.Cursor = Cursors.Default;

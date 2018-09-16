@@ -214,6 +214,7 @@ namespace ChameleonMiniGUI
             this.ucExplorer1 = new ChameleonMiniGUI.UcExplorer();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
+            this.label1 = new System.Windows.Forms.Label();
             this.gb_output.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bsLanguages)).BeginInit();
             this.tpSettings.SuspendLayout();
@@ -372,6 +373,7 @@ namespace ChameleonMiniGUI
             // 
             // gb_connectionSettings
             // 
+            this.gb_connectionSettings.Controls.Add(this.label1);
             this.gb_connectionSettings.Controls.Add(this.pb_device);
             this.gb_connectionSettings.Controls.Add(this.tb_firmware);
             this.gb_connectionSettings.Controls.Add(this.txt_constatus);
@@ -408,6 +410,7 @@ namespace ChameleonMiniGUI
             // txt_constatus
             // 
             this.txt_constatus.Location = new System.Drawing.Point(188, 54);
+            this.txt_constatus.Margin = new System.Windows.Forms.Padding(8);
             this.txt_constatus.Name = "txt_constatus";
             this.txt_constatus.ReadOnly = true;
             this.txt_constatus.Size = new System.Drawing.Size(129, 20);
@@ -2217,6 +2220,15 @@ namespace ChameleonMiniGUI
             // 
             this.openFileDialog2.FileName = "openFileDialog2";
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(167, 119);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(86, 13);
+            this.label1.TabIndex = 7;
+            this.label1.Text = "Firmware version";
+            // 
             // frm_main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2468,5 +2480,6 @@ namespace ChameleonMiniGUI
         private System.Windows.Forms.TabPage tpUtils;
         private System.Windows.Forms.OpenFileDialog openFileDialog2;
         private UcExplorer ucExplorer1;
+        private System.Windows.Forms.Label label1;
     }
 }

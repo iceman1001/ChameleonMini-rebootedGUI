@@ -3,6 +3,7 @@ All notable changes to this project will be documented in this file.
 This project uses the changelog in accordance with [keepchangelog](http://keepachangelog.com/). Please use this to write notable changes, which is not the same as git commit log...
 
 ## [unreleased][unreleased]
+- Dark themed templates (@hiwanz)
 - Memory dump color templates (@iceman)
 - Multilanguage support (@iceman)
 - Locked scrolling of dumpfiles

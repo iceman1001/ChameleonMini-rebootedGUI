@@ -250,10 +250,6 @@
       <Project>{26c5f25f-b450-4caf-ad8b-b8d11ae73457}</Project>
       <Name>Be.Windows.Forms.HexBox</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Crapto1\Crapto1.vcxproj">
-      <Project>{958af723-58d7-4d0d-bd67-e230c95401b6}</Project>
-      <Name>Crapto1</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\DataSources\" />

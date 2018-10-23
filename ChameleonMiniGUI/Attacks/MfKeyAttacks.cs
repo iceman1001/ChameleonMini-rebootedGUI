@@ -1,3 +1,4 @@
+using Crapto1Sharp;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -56,12 +57,6 @@ namespace ChameleonMiniGUI
 
     public partial class MfKeyAttacks
     {
-        [DllImport("Crapto1.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern bool mfkey32(UInt32 cuid, UInt32 nt, UInt32 nt1, UInt32 nr0, UInt32 ar0, UInt32 nr1, UInt32 ar1, out UInt64 key64);
-
-        [DllImport("Crapto1.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern bool mfkey32_moebius(UInt32 cuid, UInt32 nt, UInt32 nt1, UInt32 nr0, UInt32 ar0, UInt32 nr1, UInt32 ar1, out UInt64 key64);
-
         public MfKeyAttacks()
         {
         }
@@ -89,8 +84,8 @@ namespace ChameleonMiniGUI
                 nr1 = 0xC52077E2,
                 ar1 = 0x837AC61A
             };
-
-            t.Found = mfkey32_moebius(t.UID, t.nt0, t.nt1, t.nr0, t.ar0, t.nr1, t.ar1, out t.key);
+            t.key = MfKey.MfKey32(t.UID, t.nt0, t.nr0, t.ar0, t.nt1, t.nr1, t.ar1);
+            t.Found = t.key != ulong.MaxValue;
             if (t.Found && t.key == 0xa0a1a2a3a4a5)
             {
                 var s = $"[S{t.Sector}/B%d] Type {t.KeyType} Key found [{t.key:x12}] {Environment.NewLine} ";
@@ -193,38 +188,30 @@ namespace ChameleonMiniGUI
         {
             var ret_mes = string.Empty;
 
-            foreach (var item in keys)
+            foreach (var group in keys.GroupBy(k => new { k.UID, k.Sector, k.Block, k.KeyType }))
             {
-                if (item.Found) continue;
-
-                var keytype = (item.KeyType == 0x60) ? "A" : "B";
-
-                var subs =
-                    keys.Where(
-                        i => i.KeyType == item.KeyType && i.Block == item.Block && item.nr0 != i.nr0 && !i.Found)
-                        .ToList();
-
-                if ( !subs.Any())
-                    continue;
-
-                Debug.WriteLine($"{item.Sector} - {keytype} | {subs.Count}");
-
-                Parallel.ForEach(subs, bar =>
+                var list = group.Select(k => new Nonce()
                 {
-                    if (bar.Found) return;
+                    Nt = k.nt0,
+                    Nr = k.nr0,
+                    Ar = k.ar0
+                }).ToList();
 
-                    item.Found = mfkey32_moebius(item.UID, item.nt0, bar.nt0, item.nr0, item.ar0, bar.nr0, bar.ar0, out item.key);
-                    if (item.Found)
+                var keyType = (group.Key.KeyType == 0x60) ? "A" : "B";
+                Debug.WriteLine($"{group.Key.Sector} - {keyType} | {list.Count}");
+
+                var key = MfKey.MfKey32(group.Key.UID, list);
+                if (key != ulong.MaxValue)
+                {
+                    foreach (var item in group)
                     {
-                        var s = $"[S{item.Sector} / B{item.Block}] Key{keytype} [{item.key:x12}]";
-                        Debug.WriteLine(s);
-                        ret_mes += $"{s}{Environment.NewLine}";
-
-                        bar.Found = true;
-                        bar.key = item.key;
+                        item.Found = true;
+                        item.key = key;
                     }
-                    //Dispatcher.BeginInvoke();
-                } );
+                    var s = $"[S{group.Key.Sector} / B{group.Key.Block}] Key{keyType} [{key:x12}]";
+                    Debug.WriteLine(s);
+                    ret_mes += $"{s}{Environment.NewLine}";
+                }
             }
             return ret_mes;
         }

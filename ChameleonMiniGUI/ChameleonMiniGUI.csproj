@@ -84,6 +84,9 @@
     <ApplicationIcon>chameleon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Crapto1Sharp, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Crapto1Sharp.1.2.0\lib\net45\Crapto1Sharp.dll</HintPath>
+    </Reference>
     <Reference Include="DynamicExpresso.Core, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DynamicExpresso.Core.2.0.0\lib\net461\DynamicExpresso.Core.dll</HintPath>
       <Private>True</Private>

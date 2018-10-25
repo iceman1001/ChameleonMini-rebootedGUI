@@ -197,6 +197,9 @@ namespace ChameleonMiniGUI
                     Ar = k.ar0
                 }).ToList();
 
+                if (list.Count < 2)
+                    continue;
+
                 var keyType = (group.Key.KeyType == 0x60) ? "A" : "B";
                 Debug.WriteLine($"{group.Key.Sector} - {keyType} | {list.Count}");
 

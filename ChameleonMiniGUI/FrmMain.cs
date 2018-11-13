@@ -467,25 +467,25 @@ namespace ChameleonMiniGUI
             this.Cursor = Cursors.WaitCursor;
 
             // Get all selected indices
-            foreach (var cb in FindControls<CheckBox>(Controls, "checkBox"))
+            var results = FindControls<CheckBox>(Controls, "checkBox").Where(cb => cb.Checked).Select(cb =>
             {
-                if (!cb.Checked) continue;
-
                 var tagslotIndex = int.Parse(cb.Name.Substring(cb.Name.Length - 1));
-                if (tagslotIndex <= 0) return;
-
-                txt_output.Text += $"[Tag slot {tagslotIndex}]{Environment.NewLine}";
 
                 //SETTINGMY=tagslotIndex-1
                 SendCommandWithoutResult($"SETTING{_cmdExtension}={tagslotIndex - 1}");
 
                 var data = SendCommand($"DETECTION{_cmdExtension}?") as byte[];
-
-                var result = MfKeyAttacks.Attack(data);
+                return new KeyValuePair<int, byte[]>(tagslotIndex, data);
+            }).AsParallel().Select(pair =>
+            {
+                var result = MfKeyAttacks.Attack(pair.Value);
                 if (string.IsNullOrWhiteSpace(result))
                     result = $"mfkey32 attack failed, no keys found{Environment.NewLine}";
-                txt_output.Text += result;
-            }
+
+                result = $"[Tag slot {pair.Key}]{Environment.NewLine}" + result;
+                return result;
+            });
+            txt_output.AppendText(string.Join(string.Empty, results));
             this.Cursor = Cursors.Default;
         }
 

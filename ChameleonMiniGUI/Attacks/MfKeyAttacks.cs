@@ -1,5 +1,6 @@
 using Crapto1Sharp;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -116,7 +117,7 @@ namespace ChameleonMiniGUI
             return BitConverter.ToUInt32(data, offset);
         }
 
-        public static string Attack(byte[] bytes )
+        public static string Attack(byte[] bytes)
         {
             var show_all = "";
             if (!bytes.Any())
@@ -186,9 +187,8 @@ namespace ChameleonMiniGUI
 
         private static string KeyWorker(List<MyKey> keys)
         {
-            var ret_mes = string.Empty;
-
-            foreach (var group in keys.GroupBy(k => new { k.UID, k.Sector, k.Block, k.KeyType }))
+            var groups = keys.GroupBy(k => new { k.UID, k.Sector, k.Block, k.KeyType });
+            var results = groups.AsParallel().Select(group =>
             {
                 var list = group.Select(k => new Nonce()
                 {
@@ -198,7 +198,7 @@ namespace ChameleonMiniGUI
                 }).ToList();
 
                 if (list.Count < 2)
-                    continue;
+                    return null;
 
                 var keyType = (group.Key.KeyType == 0x60) ? "A" : "B";
                 Debug.WriteLine($"{group.Key.Sector} - {keyType} | {list.Count}");
@@ -213,10 +213,12 @@ namespace ChameleonMiniGUI
                     }
                     var s = $"[S{group.Key.Sector} / B{group.Key.Block}] Key{keyType} [{key:x12}]";
                     Debug.WriteLine(s);
-                    ret_mes += $"{s}{Environment.NewLine}";
+                    return s;
                 }
-            }
-            return ret_mes;
+                return null;
+            }).Where(r => r != null).ToList();
+            results.Add(string.Empty);
+            return string.Join(Environment.NewLine, results);
         }
 
         // Takes encrypted data from device,  decodes it, and puts the decoded data back to same array.

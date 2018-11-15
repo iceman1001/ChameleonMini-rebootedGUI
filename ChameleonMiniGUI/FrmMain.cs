@@ -467,24 +467,30 @@ namespace ChameleonMiniGUI
             this.Cursor = Cursors.WaitCursor;
 
             // Get all selected indices
-            var results = FindControls<CheckBox>(Controls, "checkBox").Where(cb => cb.Checked).Select(cb =>
-            {
-                var tagslotIndex = int.Parse(cb.Name.Substring(cb.Name.Length - 1));
+            var results = FindControls<CheckBox>(Controls, "checkBox")
+                .Where(cb => cb.Checked)
+                .Select(cb =>
+                {
+                    var tagslotIndex = int.Parse(cb.Name.Substring(cb.Name.Length - 1));
 
-                //SETTINGMY=tagslotIndex-1
-                SendCommandWithoutResult($"SETTING{_cmdExtension}={tagslotIndex - 1}");
+                    //SETTINGMY=tagslotIndex-1
+                    SendCommandWithoutResult($"SETTING{_cmdExtension}={tagslotIndex - 1}");
 
-                var data = SendCommand($"DETECTION{_cmdExtension}?") as byte[];
-                return new KeyValuePair<int, byte[]>(tagslotIndex, data);
-            }).AsParallel().Select(pair =>
-            {
-                var result = MfKeyAttacks.Attack(pair.Value);
-                if (string.IsNullOrWhiteSpace(result))
-                    result = $"mfkey32 attack failed, no keys found{Environment.NewLine}";
+                    var data = SendCommand($"DETECTION{_cmdExtension}?") as byte[];
+                    return new KeyValuePair<int, byte[]>(tagslotIndex, data);
+                })
+                .OrderBy(pair => pair.Key)
+                .AsParallel()
+                .AsOrdered()
+                .Select(pair =>
+                {
+                    var result = MfKeyAttacks.Attack(pair.Value);
+                    if (string.IsNullOrWhiteSpace(result))
+                        result = $"mfkey32 attack failed, no keys found{Environment.NewLine}";
 
-                result = $"[Tag slot {pair.Key}]{Environment.NewLine}" + result;
-                return result;
-            });
+                    result = $"[Tag slot {pair.Key}]{Environment.NewLine}" + result;
+                    return result;
+                });
             txt_output.AppendText(string.Join(string.Empty, results));
             this.Cursor = Cursors.Default;
         }

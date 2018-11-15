@@ -187,36 +187,41 @@ namespace ChameleonMiniGUI
 
         private static string KeyWorker(List<MyKey> keys)
         {
-            var groups = keys.GroupBy(k => new { k.UID, k.Sector, k.Block, k.KeyType });
-            var results = groups.AsParallel().Select(group =>
-            {
-                var list = group.Select(k => new Nonce()
+            var results = keys
+                .GroupBy(k => new { k.UID, k.Sector, k.Block, k.KeyType })
+                .AsParallel()
+                .AsOrdered()
+                .Select(group =>
                 {
-                    Nt = k.nt0,
-                    Nr = k.nr0,
-                    Ar = k.ar0
-                }).ToList();
-
-                if (list.Count < 2)
-                    return null;
-
-                var keyType = (group.Key.KeyType == 0x60) ? "A" : "B";
-                Debug.WriteLine($"{group.Key.Sector} - {keyType} | {list.Count}");
-
-                var key = MfKey.MfKey32(group.Key.UID, list);
-                if (key != ulong.MaxValue)
-                {
-                    foreach (var item in group)
+                    var list = group.Select(k => new Nonce()
                     {
-                        item.Found = true;
-                        item.key = key;
+                        Nt = k.nt0,
+                        Nr = k.nr0,
+                        Ar = k.ar0
+                    }).ToList();
+
+                    if (list.Count < 2)
+                        return null;
+
+                    var keyType = (group.Key.KeyType == 0x60) ? "A" : "B";
+                    Debug.WriteLine($"{group.Key.Sector} - {keyType} | {list.Count}");
+
+                    var key = MfKey.MfKey32(group.Key.UID, list);
+                    if (key != ulong.MaxValue)
+                    {
+                        foreach (var item in group)
+                        {
+                            item.Found = true;
+                            item.key = key;
+                        }
+                        var s = $"[S{group.Key.Sector} / B{group.Key.Block}] Key{keyType} [{key:x12}]";
+                        Debug.WriteLine(s);
+                        return s;
                     }
-                    var s = $"[S{group.Key.Sector} / B{group.Key.Block}] Key{keyType} [{key:x12}]";
-                    Debug.WriteLine(s);
-                    return s;
-                }
-                return null;
-            }).Where(r => r != null).ToList();
+                    return null;
+                })
+                .Where(r => r != null)
+                .ToList();
             results.Add(string.Empty);
             return string.Join(Environment.NewLine, results);
         }

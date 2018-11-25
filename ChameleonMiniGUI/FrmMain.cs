@@ -467,25 +467,31 @@ namespace ChameleonMiniGUI
             this.Cursor = Cursors.WaitCursor;
 
             // Get all selected indices
-            foreach (var cb in FindControls<CheckBox>(Controls, "checkBox"))
-            {
-                if (!cb.Checked) continue;
+            var results = FindControls<CheckBox>(Controls, "checkBox")
+                .Where(cb => cb.Checked)
+                .Select(cb =>
+                {
+                    var tagslotIndex = int.Parse(cb.Name.Substring(cb.Name.Length - 1));
 
-                var tagslotIndex = int.Parse(cb.Name.Substring(cb.Name.Length - 1));
-                if (tagslotIndex <= 0) return;
+                    //SETTINGMY=tagslotIndex-1
+                    SendCommandWithoutResult($"SETTING{_cmdExtension}={tagslotIndex - 1}");
 
-                txt_output.Text += $"[Tag slot {tagslotIndex}]{Environment.NewLine}";
+                    var data = SendCommand($"DETECTION{_cmdExtension}?") as byte[];
+                    return new KeyValuePair<int, byte[]>(tagslotIndex, data);
+                })
+                .OrderBy(pair => pair.Key)
+                .AsParallel()
+                .AsOrdered()
+                .Select(pair =>
+                {
+                    var result = MfKeyAttacks.Attack(pair.Value);
+                    if (string.IsNullOrWhiteSpace(result))
+                        result = $"mfkey32 attack failed, no keys found{Environment.NewLine}";
 
-                //SETTINGMY=tagslotIndex-1
-                SendCommandWithoutResult($"SETTING{_cmdExtension}={tagslotIndex - 1}");
-
-                var data = SendCommand($"DETECTION{_cmdExtension}?") as byte[];
-
-                var result = MfKeyAttacks.Attack(data);
-                if (string.IsNullOrWhiteSpace(result))
-                    result = $"mfkey32 attack failed, no keys found{Environment.NewLine}";
-                txt_output.Text += result;
-            }
+                    result = $"[Tag slot {pair.Key}]{Environment.NewLine}" + result;
+                    return result;
+                });
+            txt_output.AppendText(string.Join(string.Empty, results));
             this.Cursor = Cursors.Default;
         }
 

@@ -84,6 +84,9 @@
     <ApplicationIcon>chameleon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Crapto1Sharp, Version=1.2.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Crapto1Sharp.1.2.2\lib\net45\Crapto1Sharp.dll</HintPath>
+    </Reference>
     <Reference Include="DynamicExpresso.Core, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DynamicExpresso.Core.2.0.0\lib\net461\DynamicExpresso.Core.dll</HintPath>
       <Private>True</Private>
@@ -246,10 +249,6 @@
     <ProjectReference Include="..\Be.Windows.Forms.HexBox\Be.Windows.Forms.HexBox.csproj">
       <Project>{26c5f25f-b450-4caf-ad8b-b8d11ae73457}</Project>
       <Name>Be.Windows.Forms.HexBox</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Crapto1\Crapto1.vcxproj">
-      <Project>{958af723-58d7-4d0d-bd67-e230c95401b6}</Project>
-      <Name>Crapto1</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

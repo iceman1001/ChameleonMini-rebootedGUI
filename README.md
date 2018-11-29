@@ -42,3 +42,4 @@ A list of those who contributed to this repo in order to make it work. The commu
 - @proxgrind (Chinese translations)
 - @asper (Italian translations)
 - @djbiohazard (Dutch translations)
+- @Vrumfondel

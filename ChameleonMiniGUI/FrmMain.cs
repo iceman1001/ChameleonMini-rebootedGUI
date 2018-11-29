@@ -1219,25 +1219,32 @@ namespace ChameleonMiniGUI
                 _comport.Write(tx_data, 0, tx_data.Length);
                 _comport.Write("\r\n");
 
-                // wait to make sure data is transmitted
-                Thread.Sleep(100);
-
-                var rx_data = new byte[275];
-
-                // read the result
-                var read_count = _comport.Read(rx_data, 0, rx_data.Length);
-                if (read_count <= 0) return string.Empty;
-
                 if (cmdText.Contains("DETECTIONMY?"))
                 {
+                    // wait to make sure data is transmitted
+                    Thread.Sleep(100);
+
+                    var rx_data = new byte[275];
+
+                    // read the result
+                    var read_count = _comport.Read(rx_data, 0, rx_data.Length);
+                    if (read_count <= 0) return string.Empty;
+
                     var foo = new byte[read_count];
                     Array.Copy(rx_data, 8, foo, 0, read_count - 7);
                     return foo;
                 }
                 else
                 {
-                    var s = new string(Encoding.ASCII.GetChars(rx_data, 0, read_count));
-                    return s.Replace("101:OK WITH TEXT", "").Replace("100:OK", "").Replace("\r\n", "");
+                    string read_response = "";
+                    DateTime start = DateTime.Now;
+                               
+                    while (( (read_response == "") || (read_response == null)) && (DateTime.Now.Subtract(start).Milliseconds < 500))
+                    {
+                        read_response = _comport.ReadLine();
+                        read_response = read_response.Replace("101:OK WITH TEXT", "").Replace("100:OK", "").Replace("\r", "");
+                    }
+                    return read_response;
                 }
             }
             catch (Exception)

@@ -1193,8 +1193,7 @@ namespace ChameleonMiniGUI
 
         private void SendCommandWithoutResult(string cmdText)
         {
-            if (string.IsNullOrWhiteSpace(cmdText)) return;
-            if (_comport == null || !_comport.IsOpen) return;
+            if (!SendCommandPossible(cmdText)) return;
 
             try
             {
@@ -1209,16 +1208,14 @@ namespace ChameleonMiniGUI
 
         private object SendCommand(string cmdText)
         {
-            if (string.IsNullOrWhiteSpace(cmdText)) return string.Empty;
-            if (_comport == null || !_comport.IsOpen) return string.Empty;
+            if (!SendCommandPossible(cmdText)) return string.Empty;
 
             try
             {
+                _comport.DiscardInBuffer();
                 // send command
-                var tx_data = Encoding.ASCII.GetBytes(cmdText);
-                _comport.Write(tx_data, 0, tx_data.Length);
-                _comport.Write("\r\n");
-
+                SendCommandWithoutResult(cmdText);
+            
                 if (cmdText.Contains("DETECTIONMY?"))
                 {
                     // wait to make sure data is transmitted
@@ -1252,7 +1249,19 @@ namespace ChameleonMiniGUI
                 return string.Empty;
             }
         }
+        
+        private bool SendCommandPossible(string cmdText)
+        {
+            bool retVal = true;
 
+            if ((_comport == null) || (!_comport.IsOpen) || string.IsNullOrWhiteSpace(cmdText))
+            {
+                retVal = false;
+            }
+
+            return retVal;
+        }
+        
         private async Task<object> SendCommand_ICE(string cmdText)
         {
             if (string.IsNullOrWhiteSpace(cmdText)) return string.Empty;

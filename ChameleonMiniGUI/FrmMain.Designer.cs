@@ -45,6 +45,7 @@ namespace ChameleonMiniGUI
             this.lbl_interval = new System.Windows.Forms.Label();
             this.chk_keepalive = new System.Windows.Forms.CheckBox();
             this.gb_connectionSettings = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.pb_device = new System.Windows.Forms.PictureBox();
             this.tb_firmware = new System.Windows.Forms.TextBox();
             this.txt_constatus = new System.Windows.Forms.TextBox();
@@ -85,88 +86,104 @@ namespace ChameleonMiniGUI
             this.btn_download = new System.Windows.Forms.Button();
             this.btn_upload = new System.Windows.Forms.Button();
             this.gb_tagslot6 = new System.Windows.Forms.GroupBox();
-            this.cb_buttonlong6 = new System.Windows.Forms.ComboBox();
+            this.cb_Rbuttonlong6 = new System.Windows.Forms.ComboBox();
+            this.cb_Rbutton6 = new System.Windows.Forms.ComboBox();
+            this.cb_Lbuttonlong6 = new System.Windows.Forms.ComboBox();
             this.lbl_buttonlong6 = new System.Windows.Forms.Label();
             this.txt_size6 = new System.Windows.Forms.TextBox();
             this.lbl_size6 = new System.Windows.Forms.Label();
-            this.cb_button6 = new System.Windows.Forms.ComboBox();
+            this.cb_Lbutton6 = new System.Windows.Forms.ComboBox();
             this.lbl_button6 = new System.Windows.Forms.Label();
             this.txt_uid6 = new System.Windows.Forms.TextBox();
             this.lbl_uid6 = new System.Windows.Forms.Label();
             this.lbl_mode6 = new System.Windows.Forms.Label();
             this.cb_mode6 = new System.Windows.Forms.ComboBox();
             this.gb_tagslot1 = new System.Windows.Forms.GroupBox();
-            this.cb_buttonlong1 = new System.Windows.Forms.ComboBox();
+            this.cb_Rbuttonlong1 = new System.Windows.Forms.ComboBox();
+            this.cb_Rbutton1 = new System.Windows.Forms.ComboBox();
+            this.cb_Lbuttonlong1 = new System.Windows.Forms.ComboBox();
             this.lbl_buttonlong1 = new System.Windows.Forms.Label();
             this.lbl_mode1 = new System.Windows.Forms.Label();
             this.cb_mode1 = new System.Windows.Forms.ComboBox();
             this.txt_size1 = new System.Windows.Forms.TextBox();
             this.lbl_size1 = new System.Windows.Forms.Label();
-            this.cb_button1 = new System.Windows.Forms.ComboBox();
+            this.cb_Lbutton1 = new System.Windows.Forms.ComboBox();
             this.lbl_uid1 = new System.Windows.Forms.Label();
             this.lbl_button1 = new System.Windows.Forms.Label();
             this.txt_uid1 = new System.Windows.Forms.TextBox();
             this.gb_tagslot2 = new System.Windows.Forms.GroupBox();
-            this.cb_buttonlong2 = new System.Windows.Forms.ComboBox();
+            this.cb_Rbuttonlong2 = new System.Windows.Forms.ComboBox();
+            this.cb_Rbutton2 = new System.Windows.Forms.ComboBox();
+            this.cb_Lbuttonlong2 = new System.Windows.Forms.ComboBox();
             this.lbl_buttonlong2 = new System.Windows.Forms.Label();
             this.txt_size2 = new System.Windows.Forms.TextBox();
             this.lbl_size2 = new System.Windows.Forms.Label();
-            this.cb_button2 = new System.Windows.Forms.ComboBox();
+            this.cb_Lbutton2 = new System.Windows.Forms.ComboBox();
             this.lbl_button2 = new System.Windows.Forms.Label();
             this.txt_uid2 = new System.Windows.Forms.TextBox();
             this.lbl_uid2 = new System.Windows.Forms.Label();
             this.lbl_mode2 = new System.Windows.Forms.Label();
             this.cb_mode2 = new System.Windows.Forms.ComboBox();
             this.gb_tagslot4 = new System.Windows.Forms.GroupBox();
-            this.cb_buttonlong4 = new System.Windows.Forms.ComboBox();
+            this.cb_Rbuttonlong4 = new System.Windows.Forms.ComboBox();
+            this.cb_Rbutton4 = new System.Windows.Forms.ComboBox();
+            this.cb_Lbuttonlong4 = new System.Windows.Forms.ComboBox();
             this.lbl_buttonlong4 = new System.Windows.Forms.Label();
             this.txt_size4 = new System.Windows.Forms.TextBox();
             this.lbl_size4 = new System.Windows.Forms.Label();
-            this.cb_button4 = new System.Windows.Forms.ComboBox();
+            this.cb_Lbutton4 = new System.Windows.Forms.ComboBox();
             this.lbl_button4 = new System.Windows.Forms.Label();
             this.txt_uid4 = new System.Windows.Forms.TextBox();
             this.lbl_uid4 = new System.Windows.Forms.Label();
             this.lbl_mode4 = new System.Windows.Forms.Label();
             this.cb_mode4 = new System.Windows.Forms.ComboBox();
             this.gb_tagslot3 = new System.Windows.Forms.GroupBox();
-            this.cb_buttonlong3 = new System.Windows.Forms.ComboBox();
+            this.cb_Rbuttonlong3 = new System.Windows.Forms.ComboBox();
+            this.cb_Rbutton3 = new System.Windows.Forms.ComboBox();
+            this.cb_Lbuttonlong3 = new System.Windows.Forms.ComboBox();
             this.lbl_buttonlong3 = new System.Windows.Forms.Label();
             this.txt_size3 = new System.Windows.Forms.TextBox();
             this.lbl_size3 = new System.Windows.Forms.Label();
-            this.cb_button3 = new System.Windows.Forms.ComboBox();
+            this.cb_Lbutton3 = new System.Windows.Forms.ComboBox();
             this.lbl_button3 = new System.Windows.Forms.Label();
             this.txt_uid3 = new System.Windows.Forms.TextBox();
             this.lbl_uid3 = new System.Windows.Forms.Label();
             this.lbl_mode3 = new System.Windows.Forms.Label();
             this.cb_mode3 = new System.Windows.Forms.ComboBox();
             this.gb_tagslot5 = new System.Windows.Forms.GroupBox();
-            this.cb_buttonlong5 = new System.Windows.Forms.ComboBox();
+            this.cb_Rbuttonlong5 = new System.Windows.Forms.ComboBox();
+            this.cb_Rbutton5 = new System.Windows.Forms.ComboBox();
+            this.cb_Lbuttonlong5 = new System.Windows.Forms.ComboBox();
             this.lbl_buttonlong5 = new System.Windows.Forms.Label();
             this.txt_size5 = new System.Windows.Forms.TextBox();
             this.lbl_size5 = new System.Windows.Forms.Label();
-            this.cb_button5 = new System.Windows.Forms.ComboBox();
+            this.cb_Lbutton5 = new System.Windows.Forms.ComboBox();
             this.lbl_button5 = new System.Windows.Forms.Label();
             this.txt_uid5 = new System.Windows.Forms.TextBox();
             this.lbl_uid5 = new System.Windows.Forms.Label();
             this.lbl_mode5 = new System.Windows.Forms.Label();
             this.cb_mode5 = new System.Windows.Forms.ComboBox();
             this.gb_tagslot7 = new System.Windows.Forms.GroupBox();
-            this.cb_buttonlong7 = new System.Windows.Forms.ComboBox();
+            this.cb_Rbuttonlong7 = new System.Windows.Forms.ComboBox();
+            this.cb_Rbutton7 = new System.Windows.Forms.ComboBox();
+            this.cb_Lbuttonlong7 = new System.Windows.Forms.ComboBox();
             this.lbl_buttonlong7 = new System.Windows.Forms.Label();
             this.txt_size7 = new System.Windows.Forms.TextBox();
             this.lbl_size7 = new System.Windows.Forms.Label();
-            this.cb_button7 = new System.Windows.Forms.ComboBox();
+            this.cb_Lbutton7 = new System.Windows.Forms.ComboBox();
             this.lbl_button7 = new System.Windows.Forms.Label();
             this.txt_uid7 = new System.Windows.Forms.TextBox();
             this.lbl_uid7 = new System.Windows.Forms.Label();
             this.lbl_mode7 = new System.Windows.Forms.Label();
             this.cb_mode7 = new System.Windows.Forms.ComboBox();
             this.gb_tagslot8 = new System.Windows.Forms.GroupBox();
-            this.cb_buttonlong8 = new System.Windows.Forms.ComboBox();
+            this.cb_Rbuttonlong8 = new System.Windows.Forms.ComboBox();
+            this.cb_Rbutton8 = new System.Windows.Forms.ComboBox();
+            this.cb_Lbuttonlong8 = new System.Windows.Forms.ComboBox();
             this.lbl_buttonlong8 = new System.Windows.Forms.Label();
             this.txt_size8 = new System.Windows.Forms.TextBox();
             this.lbl_size8 = new System.Windows.Forms.Label();
-            this.cb_button8 = new System.Windows.Forms.ComboBox();
+            this.cb_Lbutton8 = new System.Windows.Forms.ComboBox();
             this.lbl_button8 = new System.Windows.Forms.Label();
             this.txt_uid8 = new System.Windows.Forms.TextBox();
             this.lbl_uid8 = new System.Windows.Forms.Label();
@@ -196,6 +213,8 @@ namespace ChameleonMiniGUI
             this.btn_open1 = new System.Windows.Forms.Button();
             this.hexBox2 = new Be.Windows.Forms.HexBox();
             this.hexBox1 = new Be.Windows.Forms.HexBox();
+            this.tpUtils = new System.Windows.Forms.TabPage();
+            this.ucExplorer1 = new ChameleonMiniGUI.UcExplorer();
             this.tpSerial = new System.Windows.Forms.TabPage();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.gbSerial_interface = new System.Windows.Forms.GroupBox();
@@ -210,11 +229,40 @@ namespace ChameleonMiniGUI
             this.tbSerialHelp = new System.Windows.Forms.TextBox();
             this.linkRevG = new System.Windows.Forms.LinkLabel();
             this.linkRevE = new System.Windows.Forms.LinkLabel();
-            this.tpUtils = new System.Windows.Forms.TabPage();
-            this.ucExplorer1 = new ChameleonMiniGUI.UcExplorer();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lb_ledledgreen1 = new System.Windows.Forms.Label();
+            this.lb_ledledred1 = new System.Windows.Forms.Label();
+            this.cb_ledgreen1 = new System.Windows.Forms.ComboBox();
+            this.cb_ledred1 = new System.Windows.Forms.ComboBox();
+            this.cb_ledred2 = new System.Windows.Forms.ComboBox();
+            this.cb_ledgreen2 = new System.Windows.Forms.ComboBox();
+            this.lb_ledledred2 = new System.Windows.Forms.Label();
+            this.lb_ledledgreen2 = new System.Windows.Forms.Label();
+            this.cb_ledred3 = new System.Windows.Forms.ComboBox();
+            this.cb_ledgreen3 = new System.Windows.Forms.ComboBox();
+            this.lb_ledledred3 = new System.Windows.Forms.Label();
+            this.lb_ledledgreen3 = new System.Windows.Forms.Label();
+            this.cb_ledred4 = new System.Windows.Forms.ComboBox();
+            this.cb_ledgreen4 = new System.Windows.Forms.ComboBox();
+            this.lb_ledledred4 = new System.Windows.Forms.Label();
+            this.lb_ledledgreen4 = new System.Windows.Forms.Label();
+            this.cb_ledred8 = new System.Windows.Forms.ComboBox();
+            this.cb_ledgreen8 = new System.Windows.Forms.ComboBox();
+            this.lb_ledledred8 = new System.Windows.Forms.Label();
+            this.lb_ledledgreen8 = new System.Windows.Forms.Label();
+            this.cb_ledred7 = new System.Windows.Forms.ComboBox();
+            this.cb_ledgreen7 = new System.Windows.Forms.ComboBox();
+            this.lb_ledledred7 = new System.Windows.Forms.Label();
+            this.lb_ledledgreen7 = new System.Windows.Forms.Label();
+            this.cb_ledred6 = new System.Windows.Forms.ComboBox();
+            this.cb_ledgreen6 = new System.Windows.Forms.ComboBox();
+            this.lb_ledledred6 = new System.Windows.Forms.Label();
+            this.lb_ledledgreen6 = new System.Windows.Forms.Label();
+            this.cb_ledred5 = new System.Windows.Forms.ComboBox();
+            this.cb_ledgreen5 = new System.Windows.Forms.ComboBox();
+            this.lb_ledledred5 = new System.Windows.Forms.Label();
+            this.lb_ledledgreen5 = new System.Windows.Forms.Label();
             this.gb_output.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bsLanguages)).BeginInit();
             this.tpSettings.SuspendLayout();
@@ -239,12 +287,12 @@ namespace ChameleonMiniGUI
             this.tpDump.SuspendLayout();
             this.menuScroll.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bsTemplates)).BeginInit();
+            this.tpUtils.SuspendLayout();
             this.tpSerial.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.gbSerial_interface.SuspendLayout();
             this.menuClear.SuspendLayout();
             this.gbAvailableCmds.SuspendLayout();
-            this.tpUtils.SuspendLayout();
             this.SuspendLayout();
             // 
             // txt_output
@@ -268,7 +316,7 @@ namespace ChameleonMiniGUI
             // gb_output
             // 
             this.gb_output.Controls.Add(this.txt_output);
-            this.gb_output.Location = new System.Drawing.Point(8, 535);
+            this.gb_output.Location = new System.Drawing.Point(12, 709);
             this.gb_output.Name = "gb_output";
             this.gb_output.Size = new System.Drawing.Size(1283, 169);
             this.gb_output.TabIndex = 7;
@@ -295,7 +343,7 @@ namespace ChameleonMiniGUI
             this.tpSettings.Controls.Add(this.gb_rssi);
             this.tpSettings.Location = new System.Drawing.Point(4, 22);
             this.tpSettings.Name = "tpSettings";
-            this.tpSettings.Size = new System.Drawing.Size(1279, 491);
+            this.tpSettings.Size = new System.Drawing.Size(1279, 596);
             this.tpSettings.TabIndex = 3;
             this.tpSettings.Text = "Settings";
             this.tpSettings.UseVisualStyleBackColor = true;
@@ -385,6 +433,15 @@ namespace ChameleonMiniGUI
             this.gb_connectionSettings.TabIndex = 3;
             this.gb_connectionSettings.TabStop = false;
             this.gb_connectionSettings.Text = "Connection status";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(167, 119);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(86, 13);
+            this.label1.TabIndex = 7;
+            this.label1.Text = "Firmware version";
             // 
             // pb_device
             // 
@@ -612,7 +669,7 @@ namespace ChameleonMiniGUI
             this.tpOperation.Location = new System.Drawing.Point(4, 22);
             this.tpOperation.Name = "tpOperation";
             this.tpOperation.Padding = new System.Windows.Forms.Padding(3);
-            this.tpOperation.Size = new System.Drawing.Size(1279, 491);
+            this.tpOperation.Size = new System.Drawing.Size(1279, 665);
             this.tpOperation.TabIndex = 0;
             this.tpOperation.Text = "Operation";
             this.tpOperation.UseVisualStyleBackColor = true;
@@ -622,7 +679,7 @@ namespace ChameleonMiniGUI
             this.checkBox8.AutoSize = true;
             this.checkBox8.Enabled = false;
             this.checkBox8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox8.Location = new System.Drawing.Point(943, 227);
+            this.checkBox8.Location = new System.Drawing.Point(943, 281);
             this.checkBox8.Name = "checkBox8";
             this.checkBox8.Size = new System.Drawing.Size(59, 17);
             this.checkBox8.TabIndex = 8;
@@ -635,7 +692,7 @@ namespace ChameleonMiniGUI
             this.checkBox7.AutoSize = true;
             this.checkBox7.Enabled = false;
             this.checkBox7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox7.Location = new System.Drawing.Point(652, 227);
+            this.checkBox7.Location = new System.Drawing.Point(652, 281);
             this.checkBox7.Name = "checkBox7";
             this.checkBox7.Size = new System.Drawing.Size(59, 17);
             this.checkBox7.TabIndex = 7;
@@ -648,7 +705,7 @@ namespace ChameleonMiniGUI
             this.checkBox6.AutoSize = true;
             this.checkBox6.Enabled = false;
             this.checkBox6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox6.Location = new System.Drawing.Point(361, 227);
+            this.checkBox6.Location = new System.Drawing.Point(361, 281);
             this.checkBox6.Name = "checkBox6";
             this.checkBox6.Size = new System.Drawing.Size(59, 17);
             this.checkBox6.TabIndex = 6;
@@ -661,7 +718,7 @@ namespace ChameleonMiniGUI
             this.checkBox5.AutoSize = true;
             this.checkBox5.Enabled = false;
             this.checkBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox5.Location = new System.Drawing.Point(70, 227);
+            this.checkBox5.Location = new System.Drawing.Point(70, 281);
             this.checkBox5.Name = "checkBox5";
             this.checkBox5.Size = new System.Drawing.Size(59, 17);
             this.checkBox5.TabIndex = 5;
@@ -734,7 +791,7 @@ namespace ChameleonMiniGUI
             this.gb_actions.Controls.Add(this.btn_apply);
             this.gb_actions.Controls.Add(this.btn_download);
             this.gb_actions.Controls.Add(this.btn_upload);
-            this.gb_actions.Location = new System.Drawing.Point(61, 424);
+            this.gb_actions.Location = new System.Drawing.Point(61, 580);
             this.gb_actions.Name = "gb_actions";
             this.gb_actions.Size = new System.Drawing.Size(1151, 61);
             this.gb_actions.TabIndex = 36;
@@ -837,34 +894,90 @@ namespace ChameleonMiniGUI
             // 
             // gb_tagslot6
             // 
-            this.gb_tagslot6.Controls.Add(this.cb_buttonlong6);
+            this.gb_tagslot6.Controls.Add(this.cb_ledred6);
+            this.gb_tagslot6.Controls.Add(this.cb_ledgreen6);
+            this.gb_tagslot6.Controls.Add(this.lb_ledledred6);
+            this.gb_tagslot6.Controls.Add(this.lb_ledledgreen6);
+            this.gb_tagslot6.Controls.Add(this.cb_Rbuttonlong6);
+            this.gb_tagslot6.Controls.Add(this.cb_Rbutton6);
+            this.gb_tagslot6.Controls.Add(this.cb_Lbuttonlong6);
             this.gb_tagslot6.Controls.Add(this.lbl_buttonlong6);
             this.gb_tagslot6.Controls.Add(this.txt_size6);
             this.gb_tagslot6.Controls.Add(this.lbl_size6);
-            this.gb_tagslot6.Controls.Add(this.cb_button6);
+            this.gb_tagslot6.Controls.Add(this.cb_Lbutton6);
             this.gb_tagslot6.Controls.Add(this.lbl_button6);
             this.gb_tagslot6.Controls.Add(this.txt_uid6);
             this.gb_tagslot6.Controls.Add(this.lbl_uid6);
             this.gb_tagslot6.Controls.Add(this.lbl_mode6);
             this.gb_tagslot6.Controls.Add(this.cb_mode6);
-            this.gb_tagslot6.Location = new System.Drawing.Point(352, 241);
+            this.gb_tagslot6.Location = new System.Drawing.Point(352, 295);
             this.gb_tagslot6.Name = "gb_tagslot6";
-            this.gb_tagslot6.Size = new System.Drawing.Size(278, 177);
+            this.gb_tagslot6.Size = new System.Drawing.Size(278, 242);
             this.gb_tagslot6.TabIndex = 26;
             this.gb_tagslot6.TabStop = false;
             // 
-            // cb_buttonlong6
+            // cb_Rbuttonlong6
             // 
-            this.cb_buttonlong6.FormattingEnabled = true;
-            this.cb_buttonlong6.Items.AddRange(new object[] {
-            "",
-            "SWITCHCARD",
-            "RANDOM_UID",
-            "CLOSED"});
-            this.cb_buttonlong6.Location = new System.Drawing.Point(93, 116);
-            this.cb_buttonlong6.Name = "cb_buttonlong6";
-            this.cb_buttonlong6.Size = new System.Drawing.Size(175, 21);
-            this.cb_buttonlong6.TabIndex = 19;
+            this.cb_Rbuttonlong6.FormattingEnabled = true;
+            this.cb_Rbuttonlong6.Items.AddRange(new object[] {
+            "NONE",
+            "UID_RANDOM",
+            "UID_LEFT_INCREMENT",
+            "UID_RIGHT_INCREMENT",
+            "UID_LEFT_DECREMENT",
+            "UID_RIGHT_DECREMENT",
+            "CYCLE_SETTINGS",
+            "STORE_MEM",
+            "RECALL_MEM",
+            "TOGGLE_FIELD",
+            "STORE_LOG",
+            "CLONE"});
+            this.cb_Rbuttonlong6.Location = new System.Drawing.Point(192, 116);
+            this.cb_Rbuttonlong6.Name = "cb_Rbuttonlong6";
+            this.cb_Rbuttonlong6.Size = new System.Drawing.Size(80, 21);
+            this.cb_Rbuttonlong6.TabIndex = 21;
+            // 
+            // cb_Rbutton6
+            // 
+            this.cb_Rbutton6.FormattingEnabled = true;
+            this.cb_Rbutton6.Items.AddRange(new object[] {
+            "NONE",
+            "UID_RANDOM",
+            "UID_LEFT_INCREMENT",
+            "UID_RIGHT_INCREMENT",
+            "UID_LEFT_DECREMENT",
+            "UID_RIGHT_DECREMENT",
+            "CYCLE_SETTINGS",
+            "STORE_MEM",
+            "RECALL_MEM",
+            "TOGGLE_FIELD",
+            "STORE_LOG",
+            "CLONE"});
+            this.cb_Rbutton6.Location = new System.Drawing.Point(192, 83);
+            this.cb_Rbutton6.Name = "cb_Rbutton6";
+            this.cb_Rbutton6.Size = new System.Drawing.Size(80, 21);
+            this.cb_Rbutton6.TabIndex = 20;
+            // 
+            // cb_Lbuttonlong6
+            // 
+            this.cb_Lbuttonlong6.FormattingEnabled = true;
+            this.cb_Lbuttonlong6.Items.AddRange(new object[] {
+            "NONE",
+            "UID_RANDOM",
+            "UID_LEFT_INCREMENT",
+            "UID_RIGHT_INCREMENT",
+            "UID_LEFT_DECREMENT",
+            "UID_RIGHT_DECREMENT",
+            "CYCLE_SETTINGS",
+            "STORE_MEM",
+            "RECALL_MEM",
+            "TOGGLE_FIELD",
+            "STORE_LOG",
+            "CLONE"});
+            this.cb_Lbuttonlong6.Location = new System.Drawing.Point(97, 116);
+            this.cb_Lbuttonlong6.Name = "cb_Lbuttonlong6";
+            this.cb_Lbuttonlong6.Size = new System.Drawing.Size(80, 21);
+            this.cb_Lbuttonlong6.TabIndex = 19;
             // 
             // lbl_buttonlong6
             // 
@@ -877,7 +990,7 @@ namespace ChameleonMiniGUI
             // 
             // txt_size6
             // 
-            this.txt_size6.Location = new System.Drawing.Point(93, 147);
+            this.txt_size6.Location = new System.Drawing.Point(97, 211);
             this.txt_size6.Name = "txt_size6";
             this.txt_size6.ReadOnly = true;
             this.txt_size6.Size = new System.Drawing.Size(175, 20);
@@ -886,24 +999,32 @@ namespace ChameleonMiniGUI
             // lbl_size6
             // 
             this.lbl_size6.AutoSize = true;
-            this.lbl_size6.Location = new System.Drawing.Point(6, 150);
+            this.lbl_size6.Location = new System.Drawing.Point(6, 216);
             this.lbl_size6.Name = "lbl_size6";
             this.lbl_size6.Size = new System.Drawing.Size(27, 13);
             this.lbl_size6.TabIndex = 14;
             this.lbl_size6.Text = "Size";
             // 
-            // cb_button6
+            // cb_Lbutton6
             // 
-            this.cb_button6.FormattingEnabled = true;
-            this.cb_button6.Items.AddRange(new object[] {
-            "",
-            "SWITCHCARD",
-            "RANDOM_UID",
-            "CLOSED"});
-            this.cb_button6.Location = new System.Drawing.Point(93, 83);
-            this.cb_button6.Name = "cb_button6";
-            this.cb_button6.Size = new System.Drawing.Size(175, 21);
-            this.cb_button6.TabIndex = 5;
+            this.cb_Lbutton6.FormattingEnabled = true;
+            this.cb_Lbutton6.Items.AddRange(new object[] {
+            "NONE",
+            "UID_RANDOM",
+            "UID_LEFT_INCREMENT",
+            "UID_RIGHT_INCREMENT",
+            "UID_LEFT_DECREMENT",
+            "UID_RIGHT_DECREMENT",
+            "CYCLE_SETTINGS",
+            "STORE_MEM",
+            "RECALL_MEM",
+            "TOGGLE_FIELD",
+            "STORE_LOG",
+            "CLONE"});
+            this.cb_Lbutton6.Location = new System.Drawing.Point(97, 83);
+            this.cb_Lbutton6.Name = "cb_Lbutton6";
+            this.cb_Lbutton6.Size = new System.Drawing.Size(80, 21);
+            this.cb_Lbutton6.TabIndex = 5;
             // 
             // lbl_button6
             // 
@@ -916,7 +1037,7 @@ namespace ChameleonMiniGUI
             // 
             // txt_uid6
             // 
-            this.txt_uid6.Location = new System.Drawing.Point(93, 51);
+            this.txt_uid6.Location = new System.Drawing.Point(97, 51);
             this.txt_uid6.Name = "txt_uid6";
             this.txt_uid6.Size = new System.Drawing.Size(175, 20);
             this.txt_uid6.TabIndex = 3;
@@ -943,47 +1064,105 @@ namespace ChameleonMiniGUI
             // 
             this.cb_mode6.FormattingEnabled = true;
             this.cb_mode6.Items.AddRange(new object[] {
-            "",
+            "NONE",
             "MF_CLASSIC_1K",
+            "MF_CLASSIC_1K_7B",
             "MF_CLASSIC_4K",
+            "MF_CLASSIC_4K_7B",
             "MF_ULTRALIGHT",
-            "MF_DETECTION",
-            "CLOSED"});
-            this.cb_mode6.Location = new System.Drawing.Point(93, 19);
+            "ISO14443A_SNIFF",
+            "ISO14443A_READER"});
+            this.cb_mode6.Location = new System.Drawing.Point(97, 19);
             this.cb_mode6.Name = "cb_mode6";
             this.cb_mode6.Size = new System.Drawing.Size(175, 21);
             this.cb_mode6.TabIndex = 0;
             // 
             // gb_tagslot1
             // 
-            this.gb_tagslot1.Controls.Add(this.cb_buttonlong1);
+            this.gb_tagslot1.Controls.Add(this.cb_ledred1);
+            this.gb_tagslot1.Controls.Add(this.cb_ledgreen1);
+            this.gb_tagslot1.Controls.Add(this.lb_ledledred1);
+            this.gb_tagslot1.Controls.Add(this.lb_ledledgreen1);
+            this.gb_tagslot1.Controls.Add(this.cb_Rbuttonlong1);
+            this.gb_tagslot1.Controls.Add(this.cb_Rbutton1);
+            this.gb_tagslot1.Controls.Add(this.cb_Lbuttonlong1);
             this.gb_tagslot1.Controls.Add(this.lbl_buttonlong1);
             this.gb_tagslot1.Controls.Add(this.lbl_mode1);
             this.gb_tagslot1.Controls.Add(this.cb_mode1);
             this.gb_tagslot1.Controls.Add(this.txt_size1);
             this.gb_tagslot1.Controls.Add(this.lbl_size1);
-            this.gb_tagslot1.Controls.Add(this.cb_button1);
+            this.gb_tagslot1.Controls.Add(this.cb_Lbutton1);
             this.gb_tagslot1.Controls.Add(this.lbl_uid1);
             this.gb_tagslot1.Controls.Add(this.lbl_button1);
             this.gb_tagslot1.Controls.Add(this.txt_uid1);
             this.gb_tagslot1.Location = new System.Drawing.Point(61, 30);
             this.gb_tagslot1.Name = "gb_tagslot1";
-            this.gb_tagslot1.Size = new System.Drawing.Size(278, 177);
+            this.gb_tagslot1.Size = new System.Drawing.Size(278, 242);
             this.gb_tagslot1.TabIndex = 25;
             this.gb_tagslot1.TabStop = false;
             // 
-            // cb_buttonlong1
+            // cb_Rbuttonlong1
             // 
-            this.cb_buttonlong1.FormattingEnabled = true;
-            this.cb_buttonlong1.Items.AddRange(new object[] {
-            "",
-            "SWITCHCARD",
-            "RANDOM_UID",
-            "CLOSED"});
-            this.cb_buttonlong1.Location = new System.Drawing.Point(97, 115);
-            this.cb_buttonlong1.Name = "cb_buttonlong1";
-            this.cb_buttonlong1.Size = new System.Drawing.Size(175, 21);
-            this.cb_buttonlong1.TabIndex = 11;
+            this.cb_Rbuttonlong1.FormattingEnabled = true;
+            this.cb_Rbuttonlong1.Items.AddRange(new object[] {
+            "NONE",
+            "UID_RANDOM",
+            "UID_LEFT_INCREMENT",
+            "UID_RIGHT_INCREMENT",
+            "UID_LEFT_DECREMENT",
+            "UID_RIGHT_DECREMENT",
+            "CYCLE_SETTINGS",
+            "STORE_MEM",
+            "RECALL_MEM",
+            "TOGGLE_FIELD",
+            "STORE_LOG",
+            "CLONE"});
+            this.cb_Rbuttonlong1.Location = new System.Drawing.Point(190, 114);
+            this.cb_Rbuttonlong1.Name = "cb_Rbuttonlong1";
+            this.cb_Rbuttonlong1.Size = new System.Drawing.Size(80, 21);
+            this.cb_Rbuttonlong1.TabIndex = 13;
+            // 
+            // cb_Rbutton1
+            // 
+            this.cb_Rbutton1.FormattingEnabled = true;
+            this.cb_Rbutton1.Items.AddRange(new object[] {
+            "NONE",
+            "UID_RANDOM",
+            "UID_LEFT_INCREMENT",
+            "UID_RIGHT_INCREMENT",
+            "UID_LEFT_DECREMENT",
+            "UID_RIGHT_DECREMENT",
+            "CYCLE_SETTINGS",
+            "STORE_MEM",
+            "RECALL_MEM",
+            "TOGGLE_FIELD",
+            "STORE_LOG",
+            "CLONE"});
+            this.cb_Rbutton1.Location = new System.Drawing.Point(190, 81);
+            this.cb_Rbutton1.Name = "cb_Rbutton1";
+            this.cb_Rbutton1.Size = new System.Drawing.Size(80, 21);
+            this.cb_Rbutton1.TabIndex = 12;
+            // 
+            // cb_Lbuttonlong1
+            // 
+            this.cb_Lbuttonlong1.FormattingEnabled = true;
+            this.cb_Lbuttonlong1.Items.AddRange(new object[] {
+            "NONE",
+            "UID_RANDOM",
+            "UID_LEFT_INCREMENT",
+            "UID_RIGHT_INCREMENT",
+            "UID_LEFT_DECREMENT",
+            "UID_RIGHT_DECREMENT",
+            "CYCLE_SETTINGS",
+            "STORE_MEM",
+            "RECALL_MEM",
+            "TOGGLE_FIELD",
+            "STORE_LOG",
+            "CLONE"});
+            this.cb_Lbuttonlong1.Location = new System.Drawing.Point(97, 115);
+            this.cb_Lbuttonlong1.Name = "cb_Lbuttonlong1";
+            this.cb_Lbuttonlong1.Size = new System.Drawing.Size(80, 21);
+            this.cb_Lbuttonlong1.TabIndex = 11;
             // 
             // lbl_buttonlong1
             // 
@@ -1007,12 +1186,14 @@ namespace ChameleonMiniGUI
             // 
             this.cb_mode1.FormattingEnabled = true;
             this.cb_mode1.Items.AddRange(new object[] {
-            "",
+            "NONE",
             "MF_CLASSIC_1K",
+            "MF_CLASSIC_1K_7B",
             "MF_CLASSIC_4K",
+            "MF_CLASSIC_4K_7B",
             "MF_ULTRALIGHT",
-            "MF_DETECTION",
-            "CLOSED"});
+            "ISO14443A_SNIFF",
+            "ISO14443A_READER"});
             this.cb_mode1.Location = new System.Drawing.Point(97, 18);
             this.cb_mode1.Name = "cb_mode1";
             this.cb_mode1.Size = new System.Drawing.Size(175, 21);
@@ -1020,7 +1201,7 @@ namespace ChameleonMiniGUI
             // 
             // txt_size1
             // 
-            this.txt_size1.Location = new System.Drawing.Point(97, 147);
+            this.txt_size1.Location = new System.Drawing.Point(97, 211);
             this.txt_size1.Name = "txt_size1";
             this.txt_size1.ReadOnly = true;
             this.txt_size1.Size = new System.Drawing.Size(175, 20);
@@ -1029,24 +1210,32 @@ namespace ChameleonMiniGUI
             // lbl_size1
             // 
             this.lbl_size1.AutoSize = true;
-            this.lbl_size1.Location = new System.Drawing.Point(6, 150);
+            this.lbl_size1.Location = new System.Drawing.Point(6, 216);
             this.lbl_size1.Name = "lbl_size1";
             this.lbl_size1.Size = new System.Drawing.Size(27, 13);
             this.lbl_size1.TabIndex = 8;
             this.lbl_size1.Text = "Size";
             // 
-            // cb_button1
+            // cb_Lbutton1
             // 
-            this.cb_button1.FormattingEnabled = true;
-            this.cb_button1.Items.AddRange(new object[] {
-            "",
-            "SWITCHCARD",
-            "RANDOM_UID",
-            "CLOSED"});
-            this.cb_button1.Location = new System.Drawing.Point(97, 82);
-            this.cb_button1.Name = "cb_button1";
-            this.cb_button1.Size = new System.Drawing.Size(175, 21);
-            this.cb_button1.TabIndex = 5;
+            this.cb_Lbutton1.FormattingEnabled = true;
+            this.cb_Lbutton1.Items.AddRange(new object[] {
+            "NONE",
+            "UID_RANDOM",
+            "UID_LEFT_INCREMENT",
+            "UID_RIGHT_INCREMENT",
+            "UID_LEFT_DECREMENT",
+            "UID_RIGHT_DECREMENT",
+            "CYCLE_SETTINGS",
+            "STORE_MEM",
+            "RECALL_MEM",
+            "TOGGLE_FIELD",
+            "STORE_LOG",
+            "CLONE"});
+            this.cb_Lbutton1.Location = new System.Drawing.Point(97, 82);
+            this.cb_Lbutton1.Name = "cb_Lbutton1";
+            this.cb_Lbutton1.Size = new System.Drawing.Size(80, 21);
+            this.cb_Lbutton1.TabIndex = 5;
             // 
             // lbl_uid1
             // 
@@ -1075,11 +1264,17 @@ namespace ChameleonMiniGUI
             // 
             // gb_tagslot2
             // 
-            this.gb_tagslot2.Controls.Add(this.cb_buttonlong2);
+            this.gb_tagslot2.Controls.Add(this.cb_ledred2);
+            this.gb_tagslot2.Controls.Add(this.cb_ledgreen2);
+            this.gb_tagslot2.Controls.Add(this.lb_ledledred2);
+            this.gb_tagslot2.Controls.Add(this.lb_ledledgreen2);
+            this.gb_tagslot2.Controls.Add(this.cb_Rbuttonlong2);
+            this.gb_tagslot2.Controls.Add(this.cb_Rbutton2);
+            this.gb_tagslot2.Controls.Add(this.cb_Lbuttonlong2);
             this.gb_tagslot2.Controls.Add(this.lbl_buttonlong2);
             this.gb_tagslot2.Controls.Add(this.txt_size2);
             this.gb_tagslot2.Controls.Add(this.lbl_size2);
-            this.gb_tagslot2.Controls.Add(this.cb_button2);
+            this.gb_tagslot2.Controls.Add(this.cb_Lbutton2);
             this.gb_tagslot2.Controls.Add(this.lbl_button2);
             this.gb_tagslot2.Controls.Add(this.txt_uid2);
             this.gb_tagslot2.Controls.Add(this.lbl_uid2);
@@ -1087,22 +1282,72 @@ namespace ChameleonMiniGUI
             this.gb_tagslot2.Controls.Add(this.cb_mode2);
             this.gb_tagslot2.Location = new System.Drawing.Point(352, 30);
             this.gb_tagslot2.Name = "gb_tagslot2";
-            this.gb_tagslot2.Size = new System.Drawing.Size(278, 177);
+            this.gb_tagslot2.Size = new System.Drawing.Size(278, 242);
             this.gb_tagslot2.TabIndex = 24;
             this.gb_tagslot2.TabStop = false;
             // 
-            // cb_buttonlong2
+            // cb_Rbuttonlong2
             // 
-            this.cb_buttonlong2.FormattingEnabled = true;
-            this.cb_buttonlong2.Items.AddRange(new object[] {
-            "",
-            "SWITCHCARD",
-            "RANDOM_UID",
-            "CLOSED"});
-            this.cb_buttonlong2.Location = new System.Drawing.Point(93, 114);
-            this.cb_buttonlong2.Name = "cb_buttonlong2";
-            this.cb_buttonlong2.Size = new System.Drawing.Size(175, 21);
-            this.cb_buttonlong2.TabIndex = 13;
+            this.cb_Rbuttonlong2.FormattingEnabled = true;
+            this.cb_Rbuttonlong2.Items.AddRange(new object[] {
+            "NONE",
+            "UID_RANDOM",
+            "UID_LEFT_INCREMENT",
+            "UID_RIGHT_INCREMENT",
+            "UID_LEFT_DECREMENT",
+            "UID_RIGHT_DECREMENT",
+            "CYCLE_SETTINGS",
+            "STORE_MEM",
+            "RECALL_MEM",
+            "TOGGLE_FIELD",
+            "STORE_LOG",
+            "CLONE"});
+            this.cb_Rbuttonlong2.Location = new System.Drawing.Point(192, 114);
+            this.cb_Rbuttonlong2.Name = "cb_Rbuttonlong2";
+            this.cb_Rbuttonlong2.Size = new System.Drawing.Size(80, 21);
+            this.cb_Rbuttonlong2.TabIndex = 15;
+            // 
+            // cb_Rbutton2
+            // 
+            this.cb_Rbutton2.FormattingEnabled = true;
+            this.cb_Rbutton2.Items.AddRange(new object[] {
+            "NONE",
+            "UID_RANDOM",
+            "UID_LEFT_INCREMENT",
+            "UID_RIGHT_INCREMENT",
+            "UID_LEFT_DECREMENT",
+            "UID_RIGHT_DECREMENT",
+            "CYCLE_SETTINGS",
+            "STORE_MEM",
+            "RECALL_MEM",
+            "TOGGLE_FIELD",
+            "STORE_LOG",
+            "CLONE"});
+            this.cb_Rbutton2.Location = new System.Drawing.Point(192, 82);
+            this.cb_Rbutton2.Name = "cb_Rbutton2";
+            this.cb_Rbutton2.Size = new System.Drawing.Size(80, 21);
+            this.cb_Rbutton2.TabIndex = 14;
+            // 
+            // cb_Lbuttonlong2
+            // 
+            this.cb_Lbuttonlong2.FormattingEnabled = true;
+            this.cb_Lbuttonlong2.Items.AddRange(new object[] {
+            "NONE",
+            "UID_RANDOM",
+            "UID_LEFT_INCREMENT",
+            "UID_RIGHT_INCREMENT",
+            "UID_LEFT_DECREMENT",
+            "UID_RIGHT_DECREMENT",
+            "CYCLE_SETTINGS",
+            "STORE_MEM",
+            "RECALL_MEM",
+            "TOGGLE_FIELD",
+            "STORE_LOG",
+            "CLONE"});
+            this.cb_Lbuttonlong2.Location = new System.Drawing.Point(97, 114);
+            this.cb_Lbuttonlong2.Name = "cb_Lbuttonlong2";
+            this.cb_Lbuttonlong2.Size = new System.Drawing.Size(80, 21);
+            this.cb_Lbuttonlong2.TabIndex = 13;
             // 
             // lbl_buttonlong2
             // 
@@ -1115,7 +1360,7 @@ namespace ChameleonMiniGUI
             // 
             // txt_size2
             // 
-            this.txt_size2.Location = new System.Drawing.Point(93, 145);
+            this.txt_size2.Location = new System.Drawing.Point(97, 211);
             this.txt_size2.Name = "txt_size2";
             this.txt_size2.ReadOnly = true;
             this.txt_size2.Size = new System.Drawing.Size(175, 20);
@@ -1124,24 +1369,32 @@ namespace ChameleonMiniGUI
             // lbl_size2
             // 
             this.lbl_size2.AutoSize = true;
-            this.lbl_size2.Location = new System.Drawing.Point(5, 150);
+            this.lbl_size2.Location = new System.Drawing.Point(5, 216);
             this.lbl_size2.Name = "lbl_size2";
             this.lbl_size2.Size = new System.Drawing.Size(27, 13);
             this.lbl_size2.TabIndex = 6;
             this.lbl_size2.Text = "Size";
             // 
-            // cb_button2
+            // cb_Lbutton2
             // 
-            this.cb_button2.FormattingEnabled = true;
-            this.cb_button2.Items.AddRange(new object[] {
-            "",
-            "SWITCHCARD",
-            "RANDOM_UID",
-            "CLOSED"});
-            this.cb_button2.Location = new System.Drawing.Point(93, 82);
-            this.cb_button2.Name = "cb_button2";
-            this.cb_button2.Size = new System.Drawing.Size(175, 21);
-            this.cb_button2.TabIndex = 5;
+            this.cb_Lbutton2.FormattingEnabled = true;
+            this.cb_Lbutton2.Items.AddRange(new object[] {
+            "NONE",
+            "UID_RANDOM",
+            "UID_LEFT_INCREMENT",
+            "UID_RIGHT_INCREMENT",
+            "UID_LEFT_DECREMENT",
+            "UID_RIGHT_DECREMENT",
+            "CYCLE_SETTINGS",
+            "STORE_MEM",
+            "RECALL_MEM",
+            "TOGGLE_FIELD",
+            "STORE_LOG",
+            "CLONE"});
+            this.cb_Lbutton2.Location = new System.Drawing.Point(97, 82);
+            this.cb_Lbutton2.Name = "cb_Lbutton2";
+            this.cb_Lbutton2.Size = new System.Drawing.Size(80, 21);
+            this.cb_Lbutton2.TabIndex = 5;
             // 
             // lbl_button2
             // 
@@ -1154,7 +1407,7 @@ namespace ChameleonMiniGUI
             // 
             // txt_uid2
             // 
-            this.txt_uid2.Location = new System.Drawing.Point(93, 50);
+            this.txt_uid2.Location = new System.Drawing.Point(97, 50);
             this.txt_uid2.Name = "txt_uid2";
             this.txt_uid2.Size = new System.Drawing.Size(175, 20);
             this.txt_uid2.TabIndex = 3;
@@ -1181,24 +1434,32 @@ namespace ChameleonMiniGUI
             // 
             this.cb_mode2.FormattingEnabled = true;
             this.cb_mode2.Items.AddRange(new object[] {
-            "",
+            "NONE",
             "MF_CLASSIC_1K",
+            "MF_CLASSIC_1K_7B",
             "MF_CLASSIC_4K",
+            "MF_CLASSIC_4K_7B",
             "MF_ULTRALIGHT",
-            "MF_DETECTION",
-            "CLOSED"});
-            this.cb_mode2.Location = new System.Drawing.Point(93, 18);
+            "ISO14443A_SNIFF",
+            "ISO14443A_READER"});
+            this.cb_mode2.Location = new System.Drawing.Point(97, 18);
             this.cb_mode2.Name = "cb_mode2";
             this.cb_mode2.Size = new System.Drawing.Size(175, 21);
             this.cb_mode2.TabIndex = 0;
             // 
             // gb_tagslot4
             // 
-            this.gb_tagslot4.Controls.Add(this.cb_buttonlong4);
+            this.gb_tagslot4.Controls.Add(this.cb_ledred4);
+            this.gb_tagslot4.Controls.Add(this.cb_ledgreen4);
+            this.gb_tagslot4.Controls.Add(this.lb_ledledred4);
+            this.gb_tagslot4.Controls.Add(this.lb_ledledgreen4);
+            this.gb_tagslot4.Controls.Add(this.cb_Rbuttonlong4);
+            this.gb_tagslot4.Controls.Add(this.cb_Rbutton4);
+            this.gb_tagslot4.Controls.Add(this.cb_Lbuttonlong4);
             this.gb_tagslot4.Controls.Add(this.lbl_buttonlong4);
             this.gb_tagslot4.Controls.Add(this.txt_size4);
             this.gb_tagslot4.Controls.Add(this.lbl_size4);
-            this.gb_tagslot4.Controls.Add(this.cb_button4);
+            this.gb_tagslot4.Controls.Add(this.cb_Lbutton4);
             this.gb_tagslot4.Controls.Add(this.lbl_button4);
             this.gb_tagslot4.Controls.Add(this.txt_uid4);
             this.gb_tagslot4.Controls.Add(this.lbl_uid4);
@@ -1206,22 +1467,72 @@ namespace ChameleonMiniGUI
             this.gb_tagslot4.Controls.Add(this.cb_mode4);
             this.gb_tagslot4.Location = new System.Drawing.Point(934, 30);
             this.gb_tagslot4.Name = "gb_tagslot4";
-            this.gb_tagslot4.Size = new System.Drawing.Size(278, 177);
+            this.gb_tagslot4.Size = new System.Drawing.Size(278, 242);
             this.gb_tagslot4.TabIndex = 23;
             this.gb_tagslot4.TabStop = false;
             // 
-            // cb_buttonlong4
+            // cb_Rbuttonlong4
             // 
-            this.cb_buttonlong4.FormattingEnabled = true;
-            this.cb_buttonlong4.Items.AddRange(new object[] {
-            "",
-            "SWITCHCARD",
-            "RANDOM_UID",
-            "CLOSED"});
-            this.cb_buttonlong4.Location = new System.Drawing.Point(97, 114);
-            this.cb_buttonlong4.Name = "cb_buttonlong4";
-            this.cb_buttonlong4.Size = new System.Drawing.Size(175, 21);
-            this.cb_buttonlong4.TabIndex = 15;
+            this.cb_Rbuttonlong4.FormattingEnabled = true;
+            this.cb_Rbuttonlong4.Items.AddRange(new object[] {
+            "NONE",
+            "UID_RANDOM",
+            "UID_LEFT_INCREMENT",
+            "UID_RIGHT_INCREMENT",
+            "UID_LEFT_DECREMENT",
+            "UID_RIGHT_DECREMENT",
+            "CYCLE_SETTINGS",
+            "STORE_MEM",
+            "RECALL_MEM",
+            "TOGGLE_FIELD",
+            "STORE_LOG",
+            "CLONE"});
+            this.cb_Rbuttonlong4.Location = new System.Drawing.Point(192, 115);
+            this.cb_Rbuttonlong4.Name = "cb_Rbuttonlong4";
+            this.cb_Rbuttonlong4.Size = new System.Drawing.Size(80, 21);
+            this.cb_Rbuttonlong4.TabIndex = 17;
+            // 
+            // cb_Rbutton4
+            // 
+            this.cb_Rbutton4.FormattingEnabled = true;
+            this.cb_Rbutton4.Items.AddRange(new object[] {
+            "NONE",
+            "UID_RANDOM",
+            "UID_LEFT_INCREMENT",
+            "UID_RIGHT_INCREMENT",
+            "UID_LEFT_DECREMENT",
+            "UID_RIGHT_DECREMENT",
+            "CYCLE_SETTINGS",
+            "STORE_MEM",
+            "RECALL_MEM",
+            "TOGGLE_FIELD",
+            "STORE_LOG",
+            "CLONE"});
+            this.cb_Rbutton4.Location = new System.Drawing.Point(192, 83);
+            this.cb_Rbutton4.Name = "cb_Rbutton4";
+            this.cb_Rbutton4.Size = new System.Drawing.Size(80, 21);
+            this.cb_Rbutton4.TabIndex = 16;
+            // 
+            // cb_Lbuttonlong4
+            // 
+            this.cb_Lbuttonlong4.FormattingEnabled = true;
+            this.cb_Lbuttonlong4.Items.AddRange(new object[] {
+            "NONE",
+            "UID_RANDOM",
+            "UID_LEFT_INCREMENT",
+            "UID_RIGHT_INCREMENT",
+            "UID_LEFT_DECREMENT",
+            "UID_RIGHT_DECREMENT",
+            "CYCLE_SETTINGS",
+            "STORE_MEM",
+            "RECALL_MEM",
+            "TOGGLE_FIELD",
+            "STORE_LOG",
+            "CLONE"});
+            this.cb_Lbuttonlong4.Location = new System.Drawing.Point(97, 114);
+            this.cb_Lbuttonlong4.Name = "cb_Lbuttonlong4";
+            this.cb_Lbuttonlong4.Size = new System.Drawing.Size(80, 21);
+            this.cb_Lbuttonlong4.TabIndex = 15;
             // 
             // lbl_buttonlong4
             // 
@@ -1234,7 +1545,7 @@ namespace ChameleonMiniGUI
             // 
             // txt_size4
             // 
-            this.txt_size4.Location = new System.Drawing.Point(97, 145);
+            this.txt_size4.Location = new System.Drawing.Point(97, 211);
             this.txt_size4.Name = "txt_size4";
             this.txt_size4.ReadOnly = true;
             this.txt_size4.Size = new System.Drawing.Size(175, 20);
@@ -1243,24 +1554,32 @@ namespace ChameleonMiniGUI
             // lbl_size4
             // 
             this.lbl_size4.AutoSize = true;
-            this.lbl_size4.Location = new System.Drawing.Point(6, 149);
+            this.lbl_size4.Location = new System.Drawing.Point(6, 216);
             this.lbl_size4.Name = "lbl_size4";
             this.lbl_size4.Size = new System.Drawing.Size(27, 13);
             this.lbl_size4.TabIndex = 12;
             this.lbl_size4.Text = "Size";
             // 
-            // cb_button4
+            // cb_Lbutton4
             // 
-            this.cb_button4.FormattingEnabled = true;
-            this.cb_button4.Items.AddRange(new object[] {
-            "",
-            "SWITCHCARD",
-            "RANDOM_UID",
-            "CLOSED"});
-            this.cb_button4.Location = new System.Drawing.Point(97, 82);
-            this.cb_button4.Name = "cb_button4";
-            this.cb_button4.Size = new System.Drawing.Size(175, 21);
-            this.cb_button4.TabIndex = 5;
+            this.cb_Lbutton4.FormattingEnabled = true;
+            this.cb_Lbutton4.Items.AddRange(new object[] {
+            "NONE",
+            "UID_RANDOM",
+            "UID_LEFT_INCREMENT",
+            "UID_RIGHT_INCREMENT",
+            "UID_LEFT_DECREMENT",
+            "UID_RIGHT_DECREMENT",
+            "CYCLE_SETTINGS",
+            "STORE_MEM",
+            "RECALL_MEM",
+            "TOGGLE_FIELD",
+            "STORE_LOG",
+            "CLONE"});
+            this.cb_Lbutton4.Location = new System.Drawing.Point(97, 82);
+            this.cb_Lbutton4.Name = "cb_Lbutton4";
+            this.cb_Lbutton4.Size = new System.Drawing.Size(80, 21);
+            this.cb_Lbutton4.TabIndex = 5;
             // 
             // lbl_button4
             // 
@@ -1300,12 +1619,14 @@ namespace ChameleonMiniGUI
             // 
             this.cb_mode4.FormattingEnabled = true;
             this.cb_mode4.Items.AddRange(new object[] {
-            "",
+            "NONE",
             "MF_CLASSIC_1K",
+            "MF_CLASSIC_1K_7B",
             "MF_CLASSIC_4K",
+            "MF_CLASSIC_4K_7B",
             "MF_ULTRALIGHT",
-            "MF_DETECTION",
-            "CLOSED"});
+            "ISO14443A_SNIFF",
+            "ISO14443A_READER"});
             this.cb_mode4.Location = new System.Drawing.Point(97, 18);
             this.cb_mode4.Name = "cb_mode4";
             this.cb_mode4.Size = new System.Drawing.Size(175, 21);
@@ -1313,11 +1634,17 @@ namespace ChameleonMiniGUI
             // 
             // gb_tagslot3
             // 
-            this.gb_tagslot3.Controls.Add(this.cb_buttonlong3);
+            this.gb_tagslot3.Controls.Add(this.cb_ledred3);
+            this.gb_tagslot3.Controls.Add(this.cb_ledgreen3);
+            this.gb_tagslot3.Controls.Add(this.lb_ledledred3);
+            this.gb_tagslot3.Controls.Add(this.lb_ledledgreen3);
+            this.gb_tagslot3.Controls.Add(this.cb_Rbuttonlong3);
+            this.gb_tagslot3.Controls.Add(this.cb_Rbutton3);
+            this.gb_tagslot3.Controls.Add(this.cb_Lbuttonlong3);
             this.gb_tagslot3.Controls.Add(this.lbl_buttonlong3);
             this.gb_tagslot3.Controls.Add(this.txt_size3);
             this.gb_tagslot3.Controls.Add(this.lbl_size3);
-            this.gb_tagslot3.Controls.Add(this.cb_button3);
+            this.gb_tagslot3.Controls.Add(this.cb_Lbutton3);
             this.gb_tagslot3.Controls.Add(this.lbl_button3);
             this.gb_tagslot3.Controls.Add(this.txt_uid3);
             this.gb_tagslot3.Controls.Add(this.lbl_uid3);
@@ -1325,22 +1652,72 @@ namespace ChameleonMiniGUI
             this.gb_tagslot3.Controls.Add(this.cb_mode3);
             this.gb_tagslot3.Location = new System.Drawing.Point(643, 30);
             this.gb_tagslot3.Name = "gb_tagslot3";
-            this.gb_tagslot3.Size = new System.Drawing.Size(278, 177);
+            this.gb_tagslot3.Size = new System.Drawing.Size(278, 242);
             this.gb_tagslot3.TabIndex = 22;
             this.gb_tagslot3.TabStop = false;
             // 
-            // cb_buttonlong3
+            // cb_Rbuttonlong3
             // 
-            this.cb_buttonlong3.FormattingEnabled = true;
-            this.cb_buttonlong3.Items.AddRange(new object[] {
-            "",
-            "SWITCHCARD",
-            "RANDOM_UID",
-            "CLOSED"});
-            this.cb_buttonlong3.Location = new System.Drawing.Point(97, 114);
-            this.cb_buttonlong3.Name = "cb_buttonlong3";
-            this.cb_buttonlong3.Size = new System.Drawing.Size(175, 21);
-            this.cb_buttonlong3.TabIndex = 15;
+            this.cb_Rbuttonlong3.FormattingEnabled = true;
+            this.cb_Rbuttonlong3.Items.AddRange(new object[] {
+            "NONE",
+            "UID_RANDOM",
+            "UID_LEFT_INCREMENT",
+            "UID_RIGHT_INCREMENT",
+            "UID_LEFT_DECREMENT",
+            "UID_RIGHT_DECREMENT",
+            "CYCLE_SETTINGS",
+            "STORE_MEM",
+            "RECALL_MEM",
+            "TOGGLE_FIELD",
+            "STORE_LOG",
+            "CLONE"});
+            this.cb_Rbuttonlong3.Location = new System.Drawing.Point(192, 113);
+            this.cb_Rbuttonlong3.Name = "cb_Rbuttonlong3";
+            this.cb_Rbuttonlong3.Size = new System.Drawing.Size(80, 21);
+            this.cb_Rbuttonlong3.TabIndex = 17;
+            // 
+            // cb_Rbutton3
+            // 
+            this.cb_Rbutton3.FormattingEnabled = true;
+            this.cb_Rbutton3.Items.AddRange(new object[] {
+            "NONE",
+            "UID_RANDOM",
+            "UID_LEFT_INCREMENT",
+            "UID_RIGHT_INCREMENT",
+            "UID_LEFT_DECREMENT",
+            "UID_RIGHT_DECREMENT",
+            "CYCLE_SETTINGS",
+            "STORE_MEM",
+            "RECALL_MEM",
+            "TOGGLE_FIELD",
+            "STORE_LOG",
+            "CLONE"});
+            this.cb_Rbutton3.Location = new System.Drawing.Point(192, 81);
+            this.cb_Rbutton3.Name = "cb_Rbutton3";
+            this.cb_Rbutton3.Size = new System.Drawing.Size(80, 21);
+            this.cb_Rbutton3.TabIndex = 16;
+            // 
+            // cb_Lbuttonlong3
+            // 
+            this.cb_Lbuttonlong3.FormattingEnabled = true;
+            this.cb_Lbuttonlong3.Items.AddRange(new object[] {
+            "NONE",
+            "UID_RANDOM",
+            "UID_LEFT_INCREMENT",
+            "UID_RIGHT_INCREMENT",
+            "UID_LEFT_DECREMENT",
+            "UID_RIGHT_DECREMENT",
+            "CYCLE_SETTINGS",
+            "STORE_MEM",
+            "RECALL_MEM",
+            "TOGGLE_FIELD",
+            "STORE_LOG",
+            "CLONE"});
+            this.cb_Lbuttonlong3.Location = new System.Drawing.Point(97, 114);
+            this.cb_Lbuttonlong3.Name = "cb_Lbuttonlong3";
+            this.cb_Lbuttonlong3.Size = new System.Drawing.Size(80, 21);
+            this.cb_Lbuttonlong3.TabIndex = 15;
             // 
             // lbl_buttonlong3
             // 
@@ -1353,7 +1730,7 @@ namespace ChameleonMiniGUI
             // 
             // txt_size3
             // 
-            this.txt_size3.Location = new System.Drawing.Point(98, 146);
+            this.txt_size3.Location = new System.Drawing.Point(98, 211);
             this.txt_size3.Name = "txt_size3";
             this.txt_size3.ReadOnly = true;
             this.txt_size3.Size = new System.Drawing.Size(175, 20);
@@ -1362,24 +1739,32 @@ namespace ChameleonMiniGUI
             // lbl_size3
             // 
             this.lbl_size3.AutoSize = true;
-            this.lbl_size3.Location = new System.Drawing.Point(6, 150);
+            this.lbl_size3.Location = new System.Drawing.Point(6, 216);
             this.lbl_size3.Name = "lbl_size3";
             this.lbl_size3.Size = new System.Drawing.Size(27, 13);
             this.lbl_size3.TabIndex = 10;
             this.lbl_size3.Text = "Size";
             // 
-            // cb_button3
+            // cb_Lbutton3
             // 
-            this.cb_button3.FormattingEnabled = true;
-            this.cb_button3.Items.AddRange(new object[] {
-            "",
-            "SWITCHCARD",
-            "RANDOM_UID",
-            "CLOSED"});
-            this.cb_button3.Location = new System.Drawing.Point(97, 82);
-            this.cb_button3.Name = "cb_button3";
-            this.cb_button3.Size = new System.Drawing.Size(175, 21);
-            this.cb_button3.TabIndex = 5;
+            this.cb_Lbutton3.FormattingEnabled = true;
+            this.cb_Lbutton3.Items.AddRange(new object[] {
+            "NONE",
+            "UID_RANDOM",
+            "UID_LEFT_INCREMENT",
+            "UID_RIGHT_INCREMENT",
+            "UID_LEFT_DECREMENT",
+            "UID_RIGHT_DECREMENT",
+            "CYCLE_SETTINGS",
+            "STORE_MEM",
+            "RECALL_MEM",
+            "TOGGLE_FIELD",
+            "STORE_LOG",
+            "CLONE"});
+            this.cb_Lbutton3.Location = new System.Drawing.Point(97, 82);
+            this.cb_Lbutton3.Name = "cb_Lbutton3";
+            this.cb_Lbutton3.Size = new System.Drawing.Size(80, 21);
+            this.cb_Lbutton3.TabIndex = 5;
             // 
             // lbl_button3
             // 
@@ -1419,12 +1804,14 @@ namespace ChameleonMiniGUI
             // 
             this.cb_mode3.FormattingEnabled = true;
             this.cb_mode3.Items.AddRange(new object[] {
-            "",
+            "NONE",
             "MF_CLASSIC_1K",
+            "MF_CLASSIC_1K_7B",
             "MF_CLASSIC_4K",
+            "MF_CLASSIC_4K_7B",
             "MF_ULTRALIGHT",
-            "MF_DETECTION",
-            "CLOSED"});
+            "ISO14443A_SNIFF",
+            "ISO14443A_READER"});
             this.cb_mode3.Location = new System.Drawing.Point(97, 18);
             this.cb_mode3.Name = "cb_mode3";
             this.cb_mode3.Size = new System.Drawing.Size(175, 21);
@@ -1432,34 +1819,90 @@ namespace ChameleonMiniGUI
             // 
             // gb_tagslot5
             // 
-            this.gb_tagslot5.Controls.Add(this.cb_buttonlong5);
+            this.gb_tagslot5.Controls.Add(this.cb_ledred5);
+            this.gb_tagslot5.Controls.Add(this.cb_ledgreen5);
+            this.gb_tagslot5.Controls.Add(this.lb_ledledred5);
+            this.gb_tagslot5.Controls.Add(this.lb_ledledgreen5);
+            this.gb_tagslot5.Controls.Add(this.cb_Rbuttonlong5);
+            this.gb_tagslot5.Controls.Add(this.cb_Rbutton5);
+            this.gb_tagslot5.Controls.Add(this.cb_Lbuttonlong5);
             this.gb_tagslot5.Controls.Add(this.lbl_buttonlong5);
             this.gb_tagslot5.Controls.Add(this.txt_size5);
             this.gb_tagslot5.Controls.Add(this.lbl_size5);
-            this.gb_tagslot5.Controls.Add(this.cb_button5);
+            this.gb_tagslot5.Controls.Add(this.cb_Lbutton5);
             this.gb_tagslot5.Controls.Add(this.lbl_button5);
             this.gb_tagslot5.Controls.Add(this.txt_uid5);
             this.gb_tagslot5.Controls.Add(this.lbl_uid5);
             this.gb_tagslot5.Controls.Add(this.lbl_mode5);
             this.gb_tagslot5.Controls.Add(this.cb_mode5);
-            this.gb_tagslot5.Location = new System.Drawing.Point(61, 241);
+            this.gb_tagslot5.Location = new System.Drawing.Point(61, 295);
             this.gb_tagslot5.Name = "gb_tagslot5";
-            this.gb_tagslot5.Size = new System.Drawing.Size(278, 177);
+            this.gb_tagslot5.Size = new System.Drawing.Size(278, 242);
             this.gb_tagslot5.TabIndex = 21;
             this.gb_tagslot5.TabStop = false;
             // 
-            // cb_buttonlong5
+            // cb_Rbuttonlong5
             // 
-            this.cb_buttonlong5.FormattingEnabled = true;
-            this.cb_buttonlong5.Items.AddRange(new object[] {
-            "",
-            "SWITCHCARD",
-            "RANDOM_UID",
-            "CLOSED"});
-            this.cb_buttonlong5.Location = new System.Drawing.Point(97, 116);
-            this.cb_buttonlong5.Name = "cb_buttonlong5";
-            this.cb_buttonlong5.Size = new System.Drawing.Size(175, 21);
-            this.cb_buttonlong5.TabIndex = 17;
+            this.cb_Rbuttonlong5.FormattingEnabled = true;
+            this.cb_Rbuttonlong5.Items.AddRange(new object[] {
+            "NONE",
+            "UID_RANDOM",
+            "UID_LEFT_INCREMENT",
+            "UID_RIGHT_INCREMENT",
+            "UID_LEFT_DECREMENT",
+            "UID_RIGHT_DECREMENT",
+            "CYCLE_SETTINGS",
+            "STORE_MEM",
+            "RECALL_MEM",
+            "TOGGLE_FIELD",
+            "STORE_LOG",
+            "CLONE"});
+            this.cb_Rbuttonlong5.Location = new System.Drawing.Point(190, 116);
+            this.cb_Rbuttonlong5.Name = "cb_Rbuttonlong5";
+            this.cb_Rbuttonlong5.Size = new System.Drawing.Size(80, 21);
+            this.cb_Rbuttonlong5.TabIndex = 19;
+            // 
+            // cb_Rbutton5
+            // 
+            this.cb_Rbutton5.FormattingEnabled = true;
+            this.cb_Rbutton5.Items.AddRange(new object[] {
+            "NONE",
+            "UID_RANDOM",
+            "UID_LEFT_INCREMENT",
+            "UID_RIGHT_INCREMENT",
+            "UID_LEFT_DECREMENT",
+            "UID_RIGHT_DECREMENT",
+            "CYCLE_SETTINGS",
+            "STORE_MEM",
+            "RECALL_MEM",
+            "TOGGLE_FIELD",
+            "STORE_LOG",
+            "CLONE"});
+            this.cb_Rbutton5.Location = new System.Drawing.Point(190, 83);
+            this.cb_Rbutton5.Name = "cb_Rbutton5";
+            this.cb_Rbutton5.Size = new System.Drawing.Size(80, 21);
+            this.cb_Rbutton5.TabIndex = 18;
+            // 
+            // cb_Lbuttonlong5
+            // 
+            this.cb_Lbuttonlong5.FormattingEnabled = true;
+            this.cb_Lbuttonlong5.Items.AddRange(new object[] {
+            "NONE",
+            "UID_RANDOM",
+            "UID_LEFT_INCREMENT",
+            "UID_RIGHT_INCREMENT",
+            "UID_LEFT_DECREMENT",
+            "UID_RIGHT_DECREMENT",
+            "CYCLE_SETTINGS",
+            "STORE_MEM",
+            "RECALL_MEM",
+            "TOGGLE_FIELD",
+            "STORE_LOG",
+            "CLONE"});
+            this.cb_Lbuttonlong5.Location = new System.Drawing.Point(97, 116);
+            this.cb_Lbuttonlong5.Name = "cb_Lbuttonlong5";
+            this.cb_Lbuttonlong5.Size = new System.Drawing.Size(80, 21);
+            this.cb_Lbuttonlong5.TabIndex = 17;
             // 
             // lbl_buttonlong5
             // 
@@ -1472,7 +1915,7 @@ namespace ChameleonMiniGUI
             // 
             // txt_size5
             // 
-            this.txt_size5.Location = new System.Drawing.Point(97, 147);
+            this.txt_size5.Location = new System.Drawing.Point(97, 211);
             this.txt_size5.Name = "txt_size5";
             this.txt_size5.ReadOnly = true;
             this.txt_size5.Size = new System.Drawing.Size(175, 20);
@@ -1481,24 +1924,32 @@ namespace ChameleonMiniGUI
             // lbl_size5
             // 
             this.lbl_size5.AutoSize = true;
-            this.lbl_size5.Location = new System.Drawing.Point(6, 150);
+            this.lbl_size5.Location = new System.Drawing.Point(6, 216);
             this.lbl_size5.Name = "lbl_size5";
             this.lbl_size5.Size = new System.Drawing.Size(27, 13);
             this.lbl_size5.TabIndex = 14;
             this.lbl_size5.Text = "Size";
             // 
-            // cb_button5
+            // cb_Lbutton5
             // 
-            this.cb_button5.FormattingEnabled = true;
-            this.cb_button5.Items.AddRange(new object[] {
-            "",
-            "SWITCHCARD",
-            "RANDOM_UID",
-            "CLOSED"});
-            this.cb_button5.Location = new System.Drawing.Point(97, 83);
-            this.cb_button5.Name = "cb_button5";
-            this.cb_button5.Size = new System.Drawing.Size(175, 21);
-            this.cb_button5.TabIndex = 5;
+            this.cb_Lbutton5.FormattingEnabled = true;
+            this.cb_Lbutton5.Items.AddRange(new object[] {
+            "NONE",
+            "UID_RANDOM",
+            "UID_LEFT_INCREMENT",
+            "UID_RIGHT_INCREMENT",
+            "UID_LEFT_DECREMENT",
+            "UID_RIGHT_DECREMENT",
+            "CYCLE_SETTINGS",
+            "STORE_MEM",
+            "RECALL_MEM",
+            "TOGGLE_FIELD",
+            "STORE_LOG",
+            "CLONE"});
+            this.cb_Lbutton5.Location = new System.Drawing.Point(97, 83);
+            this.cb_Lbutton5.Name = "cb_Lbutton5";
+            this.cb_Lbutton5.Size = new System.Drawing.Size(80, 21);
+            this.cb_Lbutton5.TabIndex = 5;
             // 
             // lbl_button5
             // 
@@ -1538,12 +1989,14 @@ namespace ChameleonMiniGUI
             // 
             this.cb_mode5.FormattingEnabled = true;
             this.cb_mode5.Items.AddRange(new object[] {
-            "",
+            "NONE",
             "MF_CLASSIC_1K",
+            "MF_CLASSIC_1K_7B",
             "MF_CLASSIC_4K",
+            "MF_CLASSIC_4K_7B",
             "MF_ULTRALIGHT",
-            "MF_DETECTION",
-            "CLOSED"});
+            "ISO14443A_SNIFF",
+            "ISO14443A_READER"});
             this.cb_mode5.Location = new System.Drawing.Point(97, 19);
             this.cb_mode5.Name = "cb_mode5";
             this.cb_mode5.Size = new System.Drawing.Size(175, 21);
@@ -1551,34 +2004,90 @@ namespace ChameleonMiniGUI
             // 
             // gb_tagslot7
             // 
-            this.gb_tagslot7.Controls.Add(this.cb_buttonlong7);
+            this.gb_tagslot7.Controls.Add(this.cb_ledred7);
+            this.gb_tagslot7.Controls.Add(this.cb_ledgreen7);
+            this.gb_tagslot7.Controls.Add(this.lb_ledledred7);
+            this.gb_tagslot7.Controls.Add(this.lb_ledledgreen7);
+            this.gb_tagslot7.Controls.Add(this.cb_Rbuttonlong7);
+            this.gb_tagslot7.Controls.Add(this.cb_Rbutton7);
+            this.gb_tagslot7.Controls.Add(this.cb_Lbuttonlong7);
             this.gb_tagslot7.Controls.Add(this.lbl_buttonlong7);
             this.gb_tagslot7.Controls.Add(this.txt_size7);
             this.gb_tagslot7.Controls.Add(this.lbl_size7);
-            this.gb_tagslot7.Controls.Add(this.cb_button7);
+            this.gb_tagslot7.Controls.Add(this.cb_Lbutton7);
             this.gb_tagslot7.Controls.Add(this.lbl_button7);
             this.gb_tagslot7.Controls.Add(this.txt_uid7);
             this.gb_tagslot7.Controls.Add(this.lbl_uid7);
             this.gb_tagslot7.Controls.Add(this.lbl_mode7);
             this.gb_tagslot7.Controls.Add(this.cb_mode7);
-            this.gb_tagslot7.Location = new System.Drawing.Point(643, 241);
+            this.gb_tagslot7.Location = new System.Drawing.Point(643, 295);
             this.gb_tagslot7.Name = "gb_tagslot7";
-            this.gb_tagslot7.Size = new System.Drawing.Size(278, 177);
+            this.gb_tagslot7.Size = new System.Drawing.Size(278, 242);
             this.gb_tagslot7.TabIndex = 27;
             this.gb_tagslot7.TabStop = false;
             // 
-            // cb_buttonlong7
+            // cb_Rbuttonlong7
             // 
-            this.cb_buttonlong7.FormattingEnabled = true;
-            this.cb_buttonlong7.Items.AddRange(new object[] {
-            "",
-            "SWITCHCARD",
-            "RANDOM_UID",
-            "CLOSED"});
-            this.cb_buttonlong7.Location = new System.Drawing.Point(97, 116);
-            this.cb_buttonlong7.Name = "cb_buttonlong7";
-            this.cb_buttonlong7.Size = new System.Drawing.Size(175, 21);
-            this.cb_buttonlong7.TabIndex = 19;
+            this.cb_Rbuttonlong7.FormattingEnabled = true;
+            this.cb_Rbuttonlong7.Items.AddRange(new object[] {
+            "NONE",
+            "UID_RANDOM",
+            "UID_LEFT_INCREMENT",
+            "UID_RIGHT_INCREMENT",
+            "UID_LEFT_DECREMENT",
+            "UID_RIGHT_DECREMENT",
+            "CYCLE_SETTINGS",
+            "STORE_MEM",
+            "RECALL_MEM",
+            "TOGGLE_FIELD",
+            "STORE_LOG",
+            "CLONE"});
+            this.cb_Rbuttonlong7.Location = new System.Drawing.Point(192, 116);
+            this.cb_Rbuttonlong7.Name = "cb_Rbuttonlong7";
+            this.cb_Rbuttonlong7.Size = new System.Drawing.Size(80, 21);
+            this.cb_Rbuttonlong7.TabIndex = 21;
+            // 
+            // cb_Rbutton7
+            // 
+            this.cb_Rbutton7.FormattingEnabled = true;
+            this.cb_Rbutton7.Items.AddRange(new object[] {
+            "NONE",
+            "UID_RANDOM",
+            "UID_LEFT_INCREMENT",
+            "UID_RIGHT_INCREMENT",
+            "UID_LEFT_DECREMENT",
+            "UID_RIGHT_DECREMENT",
+            "CYCLE_SETTINGS",
+            "STORE_MEM",
+            "RECALL_MEM",
+            "TOGGLE_FIELD",
+            "STORE_LOG",
+            "CLONE"});
+            this.cb_Rbutton7.Location = new System.Drawing.Point(192, 83);
+            this.cb_Rbutton7.Name = "cb_Rbutton7";
+            this.cb_Rbutton7.Size = new System.Drawing.Size(80, 21);
+            this.cb_Rbutton7.TabIndex = 20;
+            // 
+            // cb_Lbuttonlong7
+            // 
+            this.cb_Lbuttonlong7.FormattingEnabled = true;
+            this.cb_Lbuttonlong7.Items.AddRange(new object[] {
+            "NONE",
+            "UID_RANDOM",
+            "UID_LEFT_INCREMENT",
+            "UID_RIGHT_INCREMENT",
+            "UID_LEFT_DECREMENT",
+            "UID_RIGHT_DECREMENT",
+            "CYCLE_SETTINGS",
+            "STORE_MEM",
+            "RECALL_MEM",
+            "TOGGLE_FIELD",
+            "STORE_LOG",
+            "CLONE"});
+            this.cb_Lbuttonlong7.Location = new System.Drawing.Point(97, 116);
+            this.cb_Lbuttonlong7.Name = "cb_Lbuttonlong7";
+            this.cb_Lbuttonlong7.Size = new System.Drawing.Size(80, 21);
+            this.cb_Lbuttonlong7.TabIndex = 19;
             // 
             // lbl_buttonlong7
             // 
@@ -1591,7 +2100,7 @@ namespace ChameleonMiniGUI
             // 
             // txt_size7
             // 
-            this.txt_size7.Location = new System.Drawing.Point(97, 147);
+            this.txt_size7.Location = new System.Drawing.Point(97, 211);
             this.txt_size7.Name = "txt_size7";
             this.txt_size7.ReadOnly = true;
             this.txt_size7.Size = new System.Drawing.Size(175, 20);
@@ -1600,24 +2109,32 @@ namespace ChameleonMiniGUI
             // lbl_size7
             // 
             this.lbl_size7.AutoSize = true;
-            this.lbl_size7.Location = new System.Drawing.Point(6, 150);
+            this.lbl_size7.Location = new System.Drawing.Point(6, 216);
             this.lbl_size7.Name = "lbl_size7";
             this.lbl_size7.Size = new System.Drawing.Size(27, 13);
             this.lbl_size7.TabIndex = 14;
             this.lbl_size7.Text = "Size";
             // 
-            // cb_button7
+            // cb_Lbutton7
             // 
-            this.cb_button7.FormattingEnabled = true;
-            this.cb_button7.Items.AddRange(new object[] {
-            "",
-            "SWITCHCARD",
-            "RANDOM_UID",
-            "CLOSED"});
-            this.cb_button7.Location = new System.Drawing.Point(97, 83);
-            this.cb_button7.Name = "cb_button7";
-            this.cb_button7.Size = new System.Drawing.Size(175, 21);
-            this.cb_button7.TabIndex = 5;
+            this.cb_Lbutton7.FormattingEnabled = true;
+            this.cb_Lbutton7.Items.AddRange(new object[] {
+            "NONE",
+            "UID_RANDOM",
+            "UID_LEFT_INCREMENT",
+            "UID_RIGHT_INCREMENT",
+            "UID_LEFT_DECREMENT",
+            "UID_RIGHT_DECREMENT",
+            "CYCLE_SETTINGS",
+            "STORE_MEM",
+            "RECALL_MEM",
+            "TOGGLE_FIELD",
+            "STORE_LOG",
+            "CLONE"});
+            this.cb_Lbutton7.Location = new System.Drawing.Point(97, 83);
+            this.cb_Lbutton7.Name = "cb_Lbutton7";
+            this.cb_Lbutton7.Size = new System.Drawing.Size(80, 21);
+            this.cb_Lbutton7.TabIndex = 5;
             // 
             // lbl_button7
             // 
@@ -1657,12 +2174,14 @@ namespace ChameleonMiniGUI
             // 
             this.cb_mode7.FormattingEnabled = true;
             this.cb_mode7.Items.AddRange(new object[] {
-            "",
+            "NONE",
             "MF_CLASSIC_1K",
+            "MF_CLASSIC_1K_7B",
             "MF_CLASSIC_4K",
+            "MF_CLASSIC_4K_7B",
             "MF_ULTRALIGHT",
-            "MF_DETECTION",
-            "CLOSED"});
+            "ISO14443A_SNIFF",
+            "ISO14443A_READER"});
             this.cb_mode7.Location = new System.Drawing.Point(97, 19);
             this.cb_mode7.Name = "cb_mode7";
             this.cb_mode7.Size = new System.Drawing.Size(175, 21);
@@ -1670,34 +2189,90 @@ namespace ChameleonMiniGUI
             // 
             // gb_tagslot8
             // 
-            this.gb_tagslot8.Controls.Add(this.cb_buttonlong8);
+            this.gb_tagslot8.Controls.Add(this.cb_ledred8);
+            this.gb_tagslot8.Controls.Add(this.cb_ledgreen8);
+            this.gb_tagslot8.Controls.Add(this.lb_ledledred8);
+            this.gb_tagslot8.Controls.Add(this.lb_ledledgreen8);
+            this.gb_tagslot8.Controls.Add(this.cb_Rbuttonlong8);
+            this.gb_tagslot8.Controls.Add(this.cb_Rbutton8);
+            this.gb_tagslot8.Controls.Add(this.cb_Lbuttonlong8);
             this.gb_tagslot8.Controls.Add(this.lbl_buttonlong8);
             this.gb_tagslot8.Controls.Add(this.txt_size8);
             this.gb_tagslot8.Controls.Add(this.lbl_size8);
-            this.gb_tagslot8.Controls.Add(this.cb_button8);
+            this.gb_tagslot8.Controls.Add(this.cb_Lbutton8);
             this.gb_tagslot8.Controls.Add(this.lbl_button8);
             this.gb_tagslot8.Controls.Add(this.txt_uid8);
             this.gb_tagslot8.Controls.Add(this.lbl_uid8);
             this.gb_tagslot8.Controls.Add(this.lbl_mode8);
             this.gb_tagslot8.Controls.Add(this.cb_mode8);
-            this.gb_tagslot8.Location = new System.Drawing.Point(934, 241);
+            this.gb_tagslot8.Location = new System.Drawing.Point(934, 295);
             this.gb_tagslot8.Name = "gb_tagslot8";
-            this.gb_tagslot8.Size = new System.Drawing.Size(278, 177);
+            this.gb_tagslot8.Size = new System.Drawing.Size(278, 242);
             this.gb_tagslot8.TabIndex = 20;
             this.gb_tagslot8.TabStop = false;
             // 
-            // cb_buttonlong8
+            // cb_Rbuttonlong8
             // 
-            this.cb_buttonlong8.FormattingEnabled = true;
-            this.cb_buttonlong8.Items.AddRange(new object[] {
-            "",
-            "SWITCHCARD",
-            "RANDOM_UID",
-            "CLOSED"});
-            this.cb_buttonlong8.Location = new System.Drawing.Point(97, 116);
-            this.cb_buttonlong8.Name = "cb_buttonlong8";
-            this.cb_buttonlong8.Size = new System.Drawing.Size(175, 21);
-            this.cb_buttonlong8.TabIndex = 19;
+            this.cb_Rbuttonlong8.FormattingEnabled = true;
+            this.cb_Rbuttonlong8.Items.AddRange(new object[] {
+            "NONE",
+            "UID_RANDOM",
+            "UID_LEFT_INCREMENT",
+            "UID_RIGHT_INCREMENT",
+            "UID_LEFT_DECREMENT",
+            "UID_RIGHT_DECREMENT",
+            "CYCLE_SETTINGS",
+            "STORE_MEM",
+            "RECALL_MEM",
+            "TOGGLE_FIELD",
+            "STORE_LOG",
+            "CLONE"});
+            this.cb_Rbuttonlong8.Location = new System.Drawing.Point(192, 116);
+            this.cb_Rbuttonlong8.Name = "cb_Rbuttonlong8";
+            this.cb_Rbuttonlong8.Size = new System.Drawing.Size(80, 21);
+            this.cb_Rbuttonlong8.TabIndex = 21;
+            // 
+            // cb_Rbutton8
+            // 
+            this.cb_Rbutton8.FormattingEnabled = true;
+            this.cb_Rbutton8.Items.AddRange(new object[] {
+            "NONE",
+            "UID_RANDOM",
+            "UID_LEFT_INCREMENT",
+            "UID_RIGHT_INCREMENT",
+            "UID_LEFT_DECREMENT",
+            "UID_RIGHT_DECREMENT",
+            "CYCLE_SETTINGS",
+            "STORE_MEM",
+            "RECALL_MEM",
+            "TOGGLE_FIELD",
+            "STORE_LOG",
+            "CLONE"});
+            this.cb_Rbutton8.Location = new System.Drawing.Point(192, 83);
+            this.cb_Rbutton8.Name = "cb_Rbutton8";
+            this.cb_Rbutton8.Size = new System.Drawing.Size(80, 21);
+            this.cb_Rbutton8.TabIndex = 20;
+            // 
+            // cb_Lbuttonlong8
+            // 
+            this.cb_Lbuttonlong8.FormattingEnabled = true;
+            this.cb_Lbuttonlong8.Items.AddRange(new object[] {
+            "NONE",
+            "UID_RANDOM",
+            "UID_LEFT_INCREMENT",
+            "UID_RIGHT_INCREMENT",
+            "UID_LEFT_DECREMENT",
+            "UID_RIGHT_DECREMENT",
+            "CYCLE_SETTINGS",
+            "STORE_MEM",
+            "RECALL_MEM",
+            "TOGGLE_FIELD",
+            "STORE_LOG",
+            "CLONE"});
+            this.cb_Lbuttonlong8.Location = new System.Drawing.Point(97, 116);
+            this.cb_Lbuttonlong8.Name = "cb_Lbuttonlong8";
+            this.cb_Lbuttonlong8.Size = new System.Drawing.Size(80, 21);
+            this.cb_Lbuttonlong8.TabIndex = 19;
             // 
             // lbl_buttonlong8
             // 
@@ -1710,7 +2285,7 @@ namespace ChameleonMiniGUI
             // 
             // txt_size8
             // 
-            this.txt_size8.Location = new System.Drawing.Point(97, 147);
+            this.txt_size8.Location = new System.Drawing.Point(97, 211);
             this.txt_size8.Name = "txt_size8";
             this.txt_size8.ReadOnly = true;
             this.txt_size8.Size = new System.Drawing.Size(175, 20);
@@ -1719,24 +2294,32 @@ namespace ChameleonMiniGUI
             // lbl_size8
             // 
             this.lbl_size8.AutoSize = true;
-            this.lbl_size8.Location = new System.Drawing.Point(6, 150);
+            this.lbl_size8.Location = new System.Drawing.Point(6, 216);
             this.lbl_size8.Name = "lbl_size8";
             this.lbl_size8.Size = new System.Drawing.Size(27, 13);
             this.lbl_size8.TabIndex = 16;
             this.lbl_size8.Text = "Size";
             // 
-            // cb_button8
+            // cb_Lbutton8
             // 
-            this.cb_button8.FormattingEnabled = true;
-            this.cb_button8.Items.AddRange(new object[] {
-            "",
-            "SWITCHCARD",
-            "RANDOM_UID",
-            "CLOSED"});
-            this.cb_button8.Location = new System.Drawing.Point(97, 83);
-            this.cb_button8.Name = "cb_button8";
-            this.cb_button8.Size = new System.Drawing.Size(175, 21);
-            this.cb_button8.TabIndex = 5;
+            this.cb_Lbutton8.FormattingEnabled = true;
+            this.cb_Lbutton8.Items.AddRange(new object[] {
+            "NONE",
+            "UID_RANDOM",
+            "UID_LEFT_INCREMENT",
+            "UID_RIGHT_INCREMENT",
+            "UID_LEFT_DECREMENT",
+            "UID_RIGHT_DECREMENT",
+            "CYCLE_SETTINGS",
+            "STORE_MEM",
+            "RECALL_MEM",
+            "TOGGLE_FIELD",
+            "STORE_LOG",
+            "CLONE"});
+            this.cb_Lbutton8.Location = new System.Drawing.Point(97, 83);
+            this.cb_Lbutton8.Name = "cb_Lbutton8";
+            this.cb_Lbutton8.Size = new System.Drawing.Size(80, 21);
+            this.cb_Lbutton8.TabIndex = 5;
             // 
             // lbl_button8
             // 
@@ -1776,12 +2359,14 @@ namespace ChameleonMiniGUI
             // 
             this.cb_mode8.FormattingEnabled = true;
             this.cb_mode8.Items.AddRange(new object[] {
-            "",
+            "NONE",
             "MF_CLASSIC_1K",
+            "MF_CLASSIC_1K_7B",
             "MF_CLASSIC_4K",
+            "MF_CLASSIC_4K_7B",
             "MF_ULTRALIGHT",
-            "MF_DETECTION",
-            "CLOSED"});
+            "ISO14443A_SNIFF",
+            "ISO14443A_READER"});
             this.cb_mode8.Location = new System.Drawing.Point(97, 19);
             this.cb_mode8.Name = "cb_mode8";
             this.cb_mode8.Size = new System.Drawing.Size(175, 21);
@@ -1797,7 +2382,7 @@ namespace ChameleonMiniGUI
             this.tabControl1.Location = new System.Drawing.Point(8, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1287, 517);
+            this.tabControl1.Size = new System.Drawing.Size(1287, 691);
             this.tabControl1.TabIndex = 8;
             // 
             // tpDump
@@ -1824,7 +2409,7 @@ namespace ChameleonMiniGUI
             this.tpDump.Controls.Add(this.hexBox1);
             this.tpDump.Location = new System.Drawing.Point(4, 22);
             this.tpDump.Name = "tpDump";
-            this.tpDump.Size = new System.Drawing.Size(1279, 491);
+            this.tpDump.Size = new System.Drawing.Size(1279, 596);
             this.tpDump.TabIndex = 4;
             this.tpDump.Text = "Dump Management";
             this.tpDump.UseVisualStyleBackColor = true;
@@ -2059,13 +2644,31 @@ namespace ChameleonMiniGUI
             this.hexBox1.ToggleSyncScrollPressed += new System.EventHandler(this.toggleSyncScrollPressed);
             this.hexBox1.MouseEnter += new System.EventHandler(this.hexBox_MouseEnter);
             // 
+            // tpUtils
+            // 
+            this.tpUtils.Controls.Add(this.ucExplorer1);
+            this.tpUtils.Location = new System.Drawing.Point(4, 22);
+            this.tpUtils.Name = "tpUtils";
+            this.tpUtils.Padding = new System.Windows.Forms.Padding(3);
+            this.tpUtils.Size = new System.Drawing.Size(1279, 596);
+            this.tpUtils.TabIndex = 6;
+            this.tpUtils.Text = "Utils";
+            this.tpUtils.UseVisualStyleBackColor = true;
+            // 
+            // ucExplorer1
+            // 
+            this.ucExplorer1.Location = new System.Drawing.Point(52, 48);
+            this.ucExplorer1.Name = "ucExplorer1";
+            this.ucExplorer1.Size = new System.Drawing.Size(730, 366);
+            this.ucExplorer1.TabIndex = 0;
+            // 
             // tpSerial
             // 
             this.tpSerial.Controls.Add(this.flowLayoutPanel1);
             this.tpSerial.Location = new System.Drawing.Point(4, 22);
             this.tpSerial.Name = "tpSerial";
             this.tpSerial.Padding = new System.Windows.Forms.Padding(3);
-            this.tpSerial.Size = new System.Drawing.Size(1279, 491);
+            this.tpSerial.Size = new System.Drawing.Size(1279, 596);
             this.tpSerial.TabIndex = 5;
             this.tpSerial.Text = "Serial";
             this.tpSerial.UseVisualStyleBackColor = true;
@@ -2078,7 +2681,7 @@ namespace ChameleonMiniGUI
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(10);
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(1273, 485);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(1273, 590);
             this.flowLayoutPanel1.TabIndex = 9;
             // 
             // gbSerial_interface
@@ -2198,42 +2801,432 @@ namespace ChameleonMiniGUI
             this.linkRevE.Text = "Rev E rebooted Wiki";
             this.linkRevE.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkRevE_LinkClicked);
             // 
-            // tpUtils
-            // 
-            this.tpUtils.Controls.Add(this.ucExplorer1);
-            this.tpUtils.Location = new System.Drawing.Point(4, 22);
-            this.tpUtils.Name = "tpUtils";
-            this.tpUtils.Padding = new System.Windows.Forms.Padding(3);
-            this.tpUtils.Size = new System.Drawing.Size(1279, 491);
-            this.tpUtils.TabIndex = 6;
-            this.tpUtils.Text = "Utils";
-            this.tpUtils.UseVisualStyleBackColor = true;
-            // 
-            // ucExplorer1
-            // 
-            this.ucExplorer1.Location = new System.Drawing.Point(52, 48);
-            this.ucExplorer1.Name = "ucExplorer1";
-            this.ucExplorer1.Size = new System.Drawing.Size(730, 366);
-            this.ucExplorer1.TabIndex = 0;
-            // 
             // openFileDialog2
             // 
             this.openFileDialog2.FileName = "openFileDialog2";
             // 
-            // label1
+            // lb_ledledgreen1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(167, 119);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(86, 13);
-            this.label1.TabIndex = 7;
-            this.label1.Text = "Firmware version";
+            this.lb_ledledgreen1.AutoSize = true;
+            this.lb_ledledgreen1.Location = new System.Drawing.Point(6, 151);
+            this.lb_ledledgreen1.Name = "lb_ledledgreen1";
+            this.lb_ledledgreen1.Size = new System.Drawing.Size(57, 13);
+            this.lb_ledledgreen1.TabIndex = 14;
+            this.lb_ledledgreen1.Text = "LEDGreen";
+            // 
+            // lb_ledledred1
+            // 
+            this.lb_ledledred1.AutoSize = true;
+            this.lb_ledledred1.Location = new System.Drawing.Point(6, 184);
+            this.lb_ledledred1.Name = "lb_ledledred1";
+            this.lb_ledledred1.Size = new System.Drawing.Size(48, 13);
+            this.lb_ledledred1.TabIndex = 15;
+            this.lb_ledledred1.Text = "LEDRed";
+            // 
+            // cb_ledgreen1
+            // 
+            this.cb_ledgreen1.FormattingEnabled = true;
+            this.cb_ledgreen1.Items.AddRange(new object[] {
+            "NONE",
+            "MF_CLASSIC_1K",
+            "MF_CLASSIC_1K_7B",
+            "MF_CLASSIC_4K",
+            "MF_CLASSIC_4K_7B",
+            "MF_ULTRALIGHT",
+            "ISO14443A_SNIFF",
+            "ISO14443A_READER"});
+            this.cb_ledgreen1.Location = new System.Drawing.Point(97, 147);
+            this.cb_ledgreen1.Name = "cb_ledgreen1";
+            this.cb_ledgreen1.Size = new System.Drawing.Size(175, 21);
+            this.cb_ledgreen1.TabIndex = 16;
+            // 
+            // cb_ledred1
+            // 
+            this.cb_ledred1.FormattingEnabled = true;
+            this.cb_ledred1.Items.AddRange(new object[] {
+            "NONE",
+            "MF_CLASSIC_1K",
+            "MF_CLASSIC_1K_7B",
+            "MF_CLASSIC_4K",
+            "MF_CLASSIC_4K_7B",
+            "MF_ULTRALIGHT",
+            "ISO14443A_SNIFF",
+            "ISO14443A_READER"});
+            this.cb_ledred1.Location = new System.Drawing.Point(97, 180);
+            this.cb_ledred1.Name = "cb_ledred1";
+            this.cb_ledred1.Size = new System.Drawing.Size(175, 21);
+            this.cb_ledred1.TabIndex = 17;
+            // 
+            // cb_ledred2
+            // 
+            this.cb_ledred2.FormattingEnabled = true;
+            this.cb_ledred2.Items.AddRange(new object[] {
+            "NONE",
+            "MF_CLASSIC_1K",
+            "MF_CLASSIC_1K_7B",
+            "MF_CLASSIC_4K",
+            "MF_CLASSIC_4K_7B",
+            "MF_ULTRALIGHT",
+            "ISO14443A_SNIFF",
+            "ISO14443A_READER"});
+            this.cb_ledred2.Location = new System.Drawing.Point(97, 180);
+            this.cb_ledred2.Name = "cb_ledred2";
+            this.cb_ledred2.Size = new System.Drawing.Size(175, 21);
+            this.cb_ledred2.TabIndex = 21;
+            // 
+            // cb_ledgreen2
+            // 
+            this.cb_ledgreen2.FormattingEnabled = true;
+            this.cb_ledgreen2.Items.AddRange(new object[] {
+            "NONE",
+            "MF_CLASSIC_1K",
+            "MF_CLASSIC_1K_7B",
+            "MF_CLASSIC_4K",
+            "MF_CLASSIC_4K_7B",
+            "MF_ULTRALIGHT",
+            "ISO14443A_SNIFF",
+            "ISO14443A_READER"});
+            this.cb_ledgreen2.Location = new System.Drawing.Point(97, 147);
+            this.cb_ledgreen2.Name = "cb_ledgreen2";
+            this.cb_ledgreen2.Size = new System.Drawing.Size(175, 21);
+            this.cb_ledgreen2.TabIndex = 20;
+            // 
+            // lb_ledledred2
+            // 
+            this.lb_ledledred2.AutoSize = true;
+            this.lb_ledledred2.Location = new System.Drawing.Point(6, 184);
+            this.lb_ledledred2.Name = "lb_ledledred2";
+            this.lb_ledledred2.Size = new System.Drawing.Size(48, 13);
+            this.lb_ledledred2.TabIndex = 19;
+            this.lb_ledledred2.Text = "LEDRed";
+            // 
+            // lb_ledledgreen2
+            // 
+            this.lb_ledledgreen2.AutoSize = true;
+            this.lb_ledledgreen2.Location = new System.Drawing.Point(6, 151);
+            this.lb_ledledgreen2.Name = "lb_ledledgreen2";
+            this.lb_ledledgreen2.Size = new System.Drawing.Size(57, 13);
+            this.lb_ledledgreen2.TabIndex = 18;
+            this.lb_ledledgreen2.Text = "LEDGreen";
+            // 
+            // cb_ledred3
+            // 
+            this.cb_ledred3.FormattingEnabled = true;
+            this.cb_ledred3.Items.AddRange(new object[] {
+            "NONE",
+            "MF_CLASSIC_1K",
+            "MF_CLASSIC_1K_7B",
+            "MF_CLASSIC_4K",
+            "MF_CLASSIC_4K_7B",
+            "MF_ULTRALIGHT",
+            "ISO14443A_SNIFF",
+            "ISO14443A_READER"});
+            this.cb_ledred3.Location = new System.Drawing.Point(97, 180);
+            this.cb_ledred3.Name = "cb_ledred3";
+            this.cb_ledred3.Size = new System.Drawing.Size(175, 21);
+            this.cb_ledred3.TabIndex = 21;
+            // 
+            // cb_ledgreen3
+            // 
+            this.cb_ledgreen3.FormattingEnabled = true;
+            this.cb_ledgreen3.Items.AddRange(new object[] {
+            "NONE",
+            "MF_CLASSIC_1K",
+            "MF_CLASSIC_1K_7B",
+            "MF_CLASSIC_4K",
+            "MF_CLASSIC_4K_7B",
+            "MF_ULTRALIGHT",
+            "ISO14443A_SNIFF",
+            "ISO14443A_READER"});
+            this.cb_ledgreen3.Location = new System.Drawing.Point(97, 147);
+            this.cb_ledgreen3.Name = "cb_ledgreen3";
+            this.cb_ledgreen3.Size = new System.Drawing.Size(175, 21);
+            this.cb_ledgreen3.TabIndex = 20;
+            // 
+            // lb_ledledred3
+            // 
+            this.lb_ledledred3.AutoSize = true;
+            this.lb_ledledred3.Location = new System.Drawing.Point(6, 184);
+            this.lb_ledledred3.Name = "lb_ledledred3";
+            this.lb_ledledred3.Size = new System.Drawing.Size(48, 13);
+            this.lb_ledledred3.TabIndex = 19;
+            this.lb_ledledred3.Text = "LEDRed";
+            // 
+            // lb_ledledgreen3
+            // 
+            this.lb_ledledgreen3.AutoSize = true;
+            this.lb_ledledgreen3.Location = new System.Drawing.Point(6, 151);
+            this.lb_ledledgreen3.Name = "lb_ledledgreen3";
+            this.lb_ledledgreen3.Size = new System.Drawing.Size(57, 13);
+            this.lb_ledledgreen3.TabIndex = 18;
+            this.lb_ledledgreen3.Text = "LEDGreen";
+            // 
+            // cb_ledred4
+            // 
+            this.cb_ledred4.FormattingEnabled = true;
+            this.cb_ledred4.Items.AddRange(new object[] {
+            "NONE",
+            "MF_CLASSIC_1K",
+            "MF_CLASSIC_1K_7B",
+            "MF_CLASSIC_4K",
+            "MF_CLASSIC_4K_7B",
+            "MF_ULTRALIGHT",
+            "ISO14443A_SNIFF",
+            "ISO14443A_READER"});
+            this.cb_ledred4.Location = new System.Drawing.Point(97, 180);
+            this.cb_ledred4.Name = "cb_ledred4";
+            this.cb_ledred4.Size = new System.Drawing.Size(175, 21);
+            this.cb_ledred4.TabIndex = 21;
+            this.cb_ledred4.SelectedIndexChanged += new System.EventHandler(this.comboBox5_SelectedIndexChanged);
+            // 
+            // cb_ledgreen4
+            // 
+            this.cb_ledgreen4.FormattingEnabled = true;
+            this.cb_ledgreen4.Items.AddRange(new object[] {
+            "NONE",
+            "MF_CLASSIC_1K",
+            "MF_CLASSIC_1K_7B",
+            "MF_CLASSIC_4K",
+            "MF_CLASSIC_4K_7B",
+            "MF_ULTRALIGHT",
+            "ISO14443A_SNIFF",
+            "ISO14443A_READER"});
+            this.cb_ledgreen4.Location = new System.Drawing.Point(97, 147);
+            this.cb_ledgreen4.Name = "cb_ledgreen4";
+            this.cb_ledgreen4.Size = new System.Drawing.Size(175, 21);
+            this.cb_ledgreen4.TabIndex = 20;
+            // 
+            // lb_ledledred4
+            // 
+            this.lb_ledledred4.AutoSize = true;
+            this.lb_ledledred4.Location = new System.Drawing.Point(6, 184);
+            this.lb_ledledred4.Name = "lb_ledledred4";
+            this.lb_ledledred4.Size = new System.Drawing.Size(48, 13);
+            this.lb_ledledred4.TabIndex = 19;
+            this.lb_ledledred4.Text = "LEDRed";
+            // 
+            // lb_ledledgreen4
+            // 
+            this.lb_ledledgreen4.AutoSize = true;
+            this.lb_ledledgreen4.Location = new System.Drawing.Point(6, 151);
+            this.lb_ledledgreen4.Name = "lb_ledledgreen4";
+            this.lb_ledledgreen4.Size = new System.Drawing.Size(57, 13);
+            this.lb_ledledgreen4.TabIndex = 18;
+            this.lb_ledledgreen4.Text = "LEDGreen";
+            // 
+            // cb_ledred8
+            // 
+            this.cb_ledred8.FormattingEnabled = true;
+            this.cb_ledred8.Items.AddRange(new object[] {
+            "NONE",
+            "MF_CLASSIC_1K",
+            "MF_CLASSIC_1K_7B",
+            "MF_CLASSIC_4K",
+            "MF_CLASSIC_4K_7B",
+            "MF_ULTRALIGHT",
+            "ISO14443A_SNIFF",
+            "ISO14443A_READER"});
+            this.cb_ledred8.Location = new System.Drawing.Point(97, 180);
+            this.cb_ledred8.Name = "cb_ledred8";
+            this.cb_ledred8.Size = new System.Drawing.Size(175, 21);
+            this.cb_ledred8.TabIndex = 25;
+            // 
+            // cb_ledgreen8
+            // 
+            this.cb_ledgreen8.FormattingEnabled = true;
+            this.cb_ledgreen8.Items.AddRange(new object[] {
+            "NONE",
+            "MF_CLASSIC_1K",
+            "MF_CLASSIC_1K_7B",
+            "MF_CLASSIC_4K",
+            "MF_CLASSIC_4K_7B",
+            "MF_ULTRALIGHT",
+            "ISO14443A_SNIFF",
+            "ISO14443A_READER"});
+            this.cb_ledgreen8.Location = new System.Drawing.Point(97, 147);
+            this.cb_ledgreen8.Name = "cb_ledgreen8";
+            this.cb_ledgreen8.Size = new System.Drawing.Size(175, 21);
+            this.cb_ledgreen8.TabIndex = 24;
+            // 
+            // lb_ledledred8
+            // 
+            this.lb_ledledred8.AutoSize = true;
+            this.lb_ledledred8.Location = new System.Drawing.Point(6, 184);
+            this.lb_ledledred8.Name = "lb_ledledred8";
+            this.lb_ledledred8.Size = new System.Drawing.Size(48, 13);
+            this.lb_ledledred8.TabIndex = 23;
+            this.lb_ledledred8.Text = "LEDRed";
+            // 
+            // lb_ledledgreen8
+            // 
+            this.lb_ledledgreen8.AutoSize = true;
+            this.lb_ledledgreen8.Location = new System.Drawing.Point(6, 151);
+            this.lb_ledledgreen8.Name = "lb_ledledgreen8";
+            this.lb_ledledgreen8.Size = new System.Drawing.Size(57, 13);
+            this.lb_ledledgreen8.TabIndex = 22;
+            this.lb_ledledgreen8.Text = "LEDGreen";
+            // 
+            // cb_ledred7
+            // 
+            this.cb_ledred7.FormattingEnabled = true;
+            this.cb_ledred7.Items.AddRange(new object[] {
+            "NONE",
+            "MF_CLASSIC_1K",
+            "MF_CLASSIC_1K_7B",
+            "MF_CLASSIC_4K",
+            "MF_CLASSIC_4K_7B",
+            "MF_ULTRALIGHT",
+            "ISO14443A_SNIFF",
+            "ISO14443A_READER"});
+            this.cb_ledred7.Location = new System.Drawing.Point(97, 180);
+            this.cb_ledred7.Name = "cb_ledred7";
+            this.cb_ledred7.Size = new System.Drawing.Size(175, 21);
+            this.cb_ledred7.TabIndex = 25;
+            // 
+            // cb_ledgreen7
+            // 
+            this.cb_ledgreen7.FormattingEnabled = true;
+            this.cb_ledgreen7.Items.AddRange(new object[] {
+            "NONE",
+            "MF_CLASSIC_1K",
+            "MF_CLASSIC_1K_7B",
+            "MF_CLASSIC_4K",
+            "MF_CLASSIC_4K_7B",
+            "MF_ULTRALIGHT",
+            "ISO14443A_SNIFF",
+            "ISO14443A_READER"});
+            this.cb_ledgreen7.Location = new System.Drawing.Point(97, 147);
+            this.cb_ledgreen7.Name = "cb_ledgreen7";
+            this.cb_ledgreen7.Size = new System.Drawing.Size(175, 21);
+            this.cb_ledgreen7.TabIndex = 24;
+            // 
+            // lb_ledledred7
+            // 
+            this.lb_ledledred7.AutoSize = true;
+            this.lb_ledledred7.Location = new System.Drawing.Point(6, 184);
+            this.lb_ledledred7.Name = "lb_ledledred7";
+            this.lb_ledledred7.Size = new System.Drawing.Size(48, 13);
+            this.lb_ledledred7.TabIndex = 23;
+            this.lb_ledledred7.Text = "LEDRed";
+            // 
+            // lb_ledledgreen7
+            // 
+            this.lb_ledledgreen7.AutoSize = true;
+            this.lb_ledledgreen7.Location = new System.Drawing.Point(6, 151);
+            this.lb_ledledgreen7.Name = "lb_ledledgreen7";
+            this.lb_ledledgreen7.Size = new System.Drawing.Size(57, 13);
+            this.lb_ledledgreen7.TabIndex = 22;
+            this.lb_ledledgreen7.Text = "LEDGreen";
+            // 
+            // cb_ledred6
+            // 
+            this.cb_ledred6.FormattingEnabled = true;
+            this.cb_ledred6.Items.AddRange(new object[] {
+            "NONE",
+            "MF_CLASSIC_1K",
+            "MF_CLASSIC_1K_7B",
+            "MF_CLASSIC_4K",
+            "MF_CLASSIC_4K_7B",
+            "MF_ULTRALIGHT",
+            "ISO14443A_SNIFF",
+            "ISO14443A_READER"});
+            this.cb_ledred6.Location = new System.Drawing.Point(97, 180);
+            this.cb_ledred6.Name = "cb_ledred6";
+            this.cb_ledred6.Size = new System.Drawing.Size(175, 21);
+            this.cb_ledred6.TabIndex = 25;
+            // 
+            // cb_ledgreen6
+            // 
+            this.cb_ledgreen6.FormattingEnabled = true;
+            this.cb_ledgreen6.Items.AddRange(new object[] {
+            "NONE",
+            "MF_CLASSIC_1K",
+            "MF_CLASSIC_1K_7B",
+            "MF_CLASSIC_4K",
+            "MF_CLASSIC_4K_7B",
+            "MF_ULTRALIGHT",
+            "ISO14443A_SNIFF",
+            "ISO14443A_READER"});
+            this.cb_ledgreen6.Location = new System.Drawing.Point(97, 147);
+            this.cb_ledgreen6.Name = "cb_ledgreen6";
+            this.cb_ledgreen6.Size = new System.Drawing.Size(175, 21);
+            this.cb_ledgreen6.TabIndex = 24;
+            // 
+            // lb_ledledred6
+            // 
+            this.lb_ledledred6.AutoSize = true;
+            this.lb_ledledred6.Location = new System.Drawing.Point(6, 184);
+            this.lb_ledledred6.Name = "lb_ledledred6";
+            this.lb_ledledred6.Size = new System.Drawing.Size(48, 13);
+            this.lb_ledledred6.TabIndex = 23;
+            this.lb_ledledred6.Text = "LEDRed";
+            // 
+            // lb_ledledgreen6
+            // 
+            this.lb_ledledgreen6.AutoSize = true;
+            this.lb_ledledgreen6.Location = new System.Drawing.Point(6, 151);
+            this.lb_ledledgreen6.Name = "lb_ledledgreen6";
+            this.lb_ledledgreen6.Size = new System.Drawing.Size(57, 13);
+            this.lb_ledledgreen6.TabIndex = 22;
+            this.lb_ledledgreen6.Text = "LEDGreen";
+            // 
+            // cb_ledred5
+            // 
+            this.cb_ledred5.FormattingEnabled = true;
+            this.cb_ledred5.Items.AddRange(new object[] {
+            "NONE",
+            "MF_CLASSIC_1K",
+            "MF_CLASSIC_1K_7B",
+            "MF_CLASSIC_4K",
+            "MF_CLASSIC_4K_7B",
+            "MF_ULTRALIGHT",
+            "ISO14443A_SNIFF",
+            "ISO14443A_READER"});
+            this.cb_ledred5.Location = new System.Drawing.Point(97, 180);
+            this.cb_ledred5.Name = "cb_ledred5";
+            this.cb_ledred5.Size = new System.Drawing.Size(175, 21);
+            this.cb_ledred5.TabIndex = 23;
+            // 
+            // cb_ledgreen5
+            // 
+            this.cb_ledgreen5.FormattingEnabled = true;
+            this.cb_ledgreen5.Items.AddRange(new object[] {
+            "NONE",
+            "MF_CLASSIC_1K",
+            "MF_CLASSIC_1K_7B",
+            "MF_CLASSIC_4K",
+            "MF_CLASSIC_4K_7B",
+            "MF_ULTRALIGHT",
+            "ISO14443A_SNIFF",
+            "ISO14443A_READER"});
+            this.cb_ledgreen5.Location = new System.Drawing.Point(97, 147);
+            this.cb_ledgreen5.Name = "cb_ledgreen5";
+            this.cb_ledgreen5.Size = new System.Drawing.Size(175, 21);
+            this.cb_ledgreen5.TabIndex = 22;
+            // 
+            // lb_ledledred5
+            // 
+            this.lb_ledledred5.AutoSize = true;
+            this.lb_ledledred5.Location = new System.Drawing.Point(6, 184);
+            this.lb_ledledred5.Name = "lb_ledledred5";
+            this.lb_ledledred5.Size = new System.Drawing.Size(48, 13);
+            this.lb_ledledred5.TabIndex = 21;
+            this.lb_ledledred5.Text = "LEDRed";
+            // 
+            // lb_ledledgreen5
+            // 
+            this.lb_ledledgreen5.AutoSize = true;
+            this.lb_ledledgreen5.Location = new System.Drawing.Point(6, 151);
+            this.lb_ledledgreen5.Name = "lb_ledledgreen5";
+            this.lb_ledledgreen5.Size = new System.Drawing.Size(57, 13);
+            this.lb_ledledgreen5.TabIndex = 20;
+            this.lb_ledledgreen5.Text = "LEDGreen";
             // 
             // frm_main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1302, 712);
+            this.ClientSize = new System.Drawing.Size(1302, 890);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.gb_output);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -2283,6 +3276,7 @@ namespace ChameleonMiniGUI
             this.tpDump.PerformLayout();
             this.menuScroll.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.bsTemplates)).EndInit();
+            this.tpUtils.ResumeLayout(false);
             this.tpSerial.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.gbSerial_interface.ResumeLayout(false);
@@ -2290,7 +3284,6 @@ namespace ChameleonMiniGUI
             this.menuClear.ResumeLayout(false);
             this.gbAvailableCmds.ResumeLayout(false);
             this.gbAvailableCmds.PerformLayout();
-            this.tpUtils.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -2328,7 +3321,7 @@ namespace ChameleonMiniGUI
         private System.Windows.Forms.GroupBox gb_tagslot6;
         private System.Windows.Forms.TextBox txt_size6;
         private System.Windows.Forms.Label lbl_size6;
-        private System.Windows.Forms.ComboBox cb_button6;
+        private System.Windows.Forms.ComboBox cb_Lbutton6;
         private System.Windows.Forms.Label lbl_button6;
         private System.Windows.Forms.TextBox txt_uid6;
         private System.Windows.Forms.Label lbl_uid6;
@@ -2339,14 +3332,14 @@ namespace ChameleonMiniGUI
         private System.Windows.Forms.ComboBox cb_mode1;
         private System.Windows.Forms.TextBox txt_size1;
         private System.Windows.Forms.Label lbl_size1;
-        private System.Windows.Forms.ComboBox cb_button1;
+        private System.Windows.Forms.ComboBox cb_Lbutton1;
         private System.Windows.Forms.Label lbl_uid1;
         private System.Windows.Forms.Label lbl_button1;
         private System.Windows.Forms.TextBox txt_uid1;
         private System.Windows.Forms.GroupBox gb_tagslot2;
         private System.Windows.Forms.TextBox txt_size2;
         private System.Windows.Forms.Label lbl_size2;
-        private System.Windows.Forms.ComboBox cb_button2;
+        private System.Windows.Forms.ComboBox cb_Lbutton2;
         private System.Windows.Forms.Label lbl_button2;
         private System.Windows.Forms.TextBox txt_uid2;
         private System.Windows.Forms.Label lbl_uid2;
@@ -2355,7 +3348,7 @@ namespace ChameleonMiniGUI
         private System.Windows.Forms.GroupBox gb_tagslot4;
         private System.Windows.Forms.TextBox txt_size4;
         private System.Windows.Forms.Label lbl_size4;
-        private System.Windows.Forms.ComboBox cb_button4;
+        private System.Windows.Forms.ComboBox cb_Lbutton4;
         private System.Windows.Forms.Label lbl_button4;
         private System.Windows.Forms.TextBox txt_uid4;
         private System.Windows.Forms.Label lbl_uid4;
@@ -2364,7 +3357,7 @@ namespace ChameleonMiniGUI
         private System.Windows.Forms.GroupBox gb_tagslot3;
         private System.Windows.Forms.TextBox txt_size3;
         private System.Windows.Forms.Label lbl_size3;
-        private System.Windows.Forms.ComboBox cb_button3;
+        private System.Windows.Forms.ComboBox cb_Lbutton3;
         private System.Windows.Forms.Label lbl_button3;
         private System.Windows.Forms.TextBox txt_uid3;
         private System.Windows.Forms.Label lbl_uid3;
@@ -2373,7 +3366,7 @@ namespace ChameleonMiniGUI
         private System.Windows.Forms.GroupBox gb_tagslot5;
         private System.Windows.Forms.TextBox txt_size5;
         private System.Windows.Forms.Label lbl_size5;
-        private System.Windows.Forms.ComboBox cb_button5;
+        private System.Windows.Forms.ComboBox cb_Lbutton5;
         private System.Windows.Forms.Label lbl_button5;
         private System.Windows.Forms.TextBox txt_uid5;
         private System.Windows.Forms.Label lbl_uid5;
@@ -2382,7 +3375,7 @@ namespace ChameleonMiniGUI
         private System.Windows.Forms.GroupBox gb_tagslot7;
         private System.Windows.Forms.TextBox txt_size7;
         private System.Windows.Forms.Label lbl_size7;
-        private System.Windows.Forms.ComboBox cb_button7;
+        private System.Windows.Forms.ComboBox cb_Lbutton7;
         private System.Windows.Forms.Label lbl_button7;
         private System.Windows.Forms.TextBox txt_uid7;
         private System.Windows.Forms.Label lbl_uid7;
@@ -2391,7 +3384,7 @@ namespace ChameleonMiniGUI
         private System.Windows.Forms.GroupBox gb_tagslot8;
         private System.Windows.Forms.TextBox txt_size8;
         private System.Windows.Forms.Label lbl_size8;
-        private System.Windows.Forms.ComboBox cb_button8;
+        private System.Windows.Forms.ComboBox cb_Lbutton8;
         private System.Windows.Forms.Label lbl_button8;
         private System.Windows.Forms.TextBox txt_uid8;
         private System.Windows.Forms.Label lbl_uid8;
@@ -2426,21 +3419,21 @@ namespace ChameleonMiniGUI
         private System.Windows.Forms.Button btn_open2;
         private System.Windows.Forms.Button btn_save1;
         private System.Windows.Forms.Button btn_open1;
-        private System.Windows.Forms.ComboBox cb_buttonlong6;
+        private System.Windows.Forms.ComboBox cb_Lbuttonlong6;
         private System.Windows.Forms.Label lbl_buttonlong6;
-        private System.Windows.Forms.ComboBox cb_buttonlong1;
+        private System.Windows.Forms.ComboBox cb_Lbuttonlong1;
         private System.Windows.Forms.Label lbl_buttonlong1;
-        private System.Windows.Forms.ComboBox cb_buttonlong2;
+        private System.Windows.Forms.ComboBox cb_Lbuttonlong2;
         private System.Windows.Forms.Label lbl_buttonlong2;
-        private System.Windows.Forms.ComboBox cb_buttonlong4;
+        private System.Windows.Forms.ComboBox cb_Lbuttonlong4;
         private System.Windows.Forms.Label lbl_buttonlong4;
-        private System.Windows.Forms.ComboBox cb_buttonlong3;
+        private System.Windows.Forms.ComboBox cb_Lbuttonlong3;
         private System.Windows.Forms.Label lbl_buttonlong3;
-        private System.Windows.Forms.ComboBox cb_buttonlong5;
+        private System.Windows.Forms.ComboBox cb_Lbuttonlong5;
         private System.Windows.Forms.Label lbl_buttonlong5;
-        private System.Windows.Forms.ComboBox cb_buttonlong7;
+        private System.Windows.Forms.ComboBox cb_Lbuttonlong7;
         private System.Windows.Forms.Label lbl_buttonlong7;
-        private System.Windows.Forms.ComboBox cb_buttonlong8;
+        private System.Windows.Forms.ComboBox cb_Lbuttonlong8;
         private System.Windows.Forms.Label lbl_buttonlong8;
         private System.Windows.Forms.RadioButton rbtn_bytewidth16;
         private System.Windows.Forms.RadioButton rbtn_bytewidth08;
@@ -2481,5 +3474,53 @@ namespace ChameleonMiniGUI
         private System.Windows.Forms.OpenFileDialog openFileDialog2;
         private UcExplorer ucExplorer1;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox cb_Rbuttonlong1;
+        private System.Windows.Forms.ComboBox cb_Rbutton1;
+        private System.Windows.Forms.ComboBox cb_Rbuttonlong2;
+        private System.Windows.Forms.ComboBox cb_Rbutton2;
+        private System.Windows.Forms.ComboBox cb_Rbuttonlong3;
+        private System.Windows.Forms.ComboBox cb_Rbutton3;
+        private System.Windows.Forms.ComboBox cb_Rbuttonlong4;
+        private System.Windows.Forms.ComboBox cb_Rbutton4;
+        private System.Windows.Forms.ComboBox cb_Rbuttonlong6;
+        private System.Windows.Forms.ComboBox cb_Rbutton6;
+        private System.Windows.Forms.ComboBox cb_Rbuttonlong7;
+        private System.Windows.Forms.ComboBox cb_Rbutton7;
+        private System.Windows.Forms.ComboBox cb_Rbuttonlong8;
+        private System.Windows.Forms.ComboBox cb_Rbutton8;
+        private System.Windows.Forms.ComboBox cb_Rbuttonlong5;
+        private System.Windows.Forms.ComboBox cb_Rbutton5;
+        private System.Windows.Forms.ComboBox cb_ledred1;
+        private System.Windows.Forms.ComboBox cb_ledgreen1;
+        private System.Windows.Forms.Label lb_ledledred1;
+        private System.Windows.Forms.Label lb_ledledgreen1;
+        private System.Windows.Forms.ComboBox cb_ledred6;
+        private System.Windows.Forms.ComboBox cb_ledgreen6;
+        private System.Windows.Forms.Label lb_ledledred6;
+        private System.Windows.Forms.Label lb_ledledgreen6;
+        private System.Windows.Forms.ComboBox cb_ledred2;
+        private System.Windows.Forms.ComboBox cb_ledgreen2;
+        private System.Windows.Forms.Label lb_ledledred2;
+        private System.Windows.Forms.Label lb_ledledgreen2;
+        private System.Windows.Forms.ComboBox cb_ledred4;
+        private System.Windows.Forms.ComboBox cb_ledgreen4;
+        private System.Windows.Forms.Label lb_ledledred4;
+        private System.Windows.Forms.Label lb_ledledgreen4;
+        private System.Windows.Forms.ComboBox cb_ledred3;
+        private System.Windows.Forms.ComboBox cb_ledgreen3;
+        private System.Windows.Forms.Label lb_ledledred3;
+        private System.Windows.Forms.Label lb_ledledgreen3;
+        private System.Windows.Forms.ComboBox cb_ledred5;
+        private System.Windows.Forms.ComboBox cb_ledgreen5;
+        private System.Windows.Forms.Label lb_ledledred5;
+        private System.Windows.Forms.Label lb_ledledgreen5;
+        private System.Windows.Forms.ComboBox cb_ledred7;
+        private System.Windows.Forms.ComboBox cb_ledgreen7;
+        private System.Windows.Forms.Label lb_ledledred7;
+        private System.Windows.Forms.Label lb_ledledgreen7;
+        private System.Windows.Forms.ComboBox cb_ledred8;
+        private System.Windows.Forms.ComboBox cb_ledgreen8;
+        private System.Windows.Forms.Label lb_ledledred8;
+        private System.Windows.Forms.Label lb_ledledgreen8;
     }
 }

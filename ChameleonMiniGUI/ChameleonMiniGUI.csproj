@@ -78,7 +78,7 @@
     <ManifestKeyFile>ChameleonMiniGUI_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>chameleon.ico</ApplicationIcon>

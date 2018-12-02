@@ -16,6 +16,8 @@ using Be.Windows.Forms;
 using System.Drawing;
 using System.Reflection;
 using System.Threading.Tasks;
+using System.Runtime.Serialization.Json;
+using ChameleonMiniGUI.Json;
 
 namespace ChameleonMiniGUI
 {
@@ -515,7 +517,17 @@ namespace ChameleonMiniGUI
                         var dumpFilename = saveFileDialog1.FileName;
 
                         // Add extension if missing
-                        dumpFilename = !dumpFilename.ToLower().Contains(".bin") ? dumpFilename + ".bin" : dumpFilename;
+                        switch (saveFileDialog1.FilterIndex)
+                        {
+                            case 1:
+                                dumpFilename = !dumpFilename.ToLower().Contains(".bin") ? dumpFilename + ".bin" : dumpFilename;
+                                break;
+                            case 2:
+                                dumpFilename = !dumpFilename.ToLower().EndsWith(".json") ? dumpFilename + ".json" : dumpFilename;
+                                break;
+                            default:
+                                break;
+                        }
 
                         // Save the dump
                         DownloadAndSaveDump(dumpFilename);
@@ -1827,8 +1839,31 @@ namespace ChameleonMiniGUI
 
         private static byte[] ReadFileIntoByteArray(string filename)
         {
-            if (File.Exists(filename))
-                return File.ReadAllBytes(filename);
+            var fi = new FileInfo(filename);
+            if (fi.Exists)
+            {
+                switch (fi.Extension.ToLower())
+                {
+                    case ".bin":
+                    case ".dump":
+                    case ".mfd":
+                    case ".hex":
+                        return File.ReadAllBytes(filename);
+                    case ".json":
+                        using (var fs = fi.OpenRead())
+                        {
+                            var settings = new DataContractJsonSerializerSettings();
+                            settings.DataContractSurrogate = new BlockSurrogate();
+                            settings.KnownTypes = new List<Type> { typeof(Dictionary<string, string>) };
+                            settings.UseSimpleDictionaryFormat = true;
+                            var ser = new DataContractJsonSerializer(typeof(MifareClassicModel), settings);
+                            var mfc = ser.ReadObject(fs) as MifareClassicModel;
+                            return mfc.ToByteArray();
+                        }
+                    default:
+                        break;
+                }
+            }
             return null;
         }
 
@@ -1918,7 +1953,28 @@ namespace ChameleonMiniGUI
                 }
 
                 // Write the actual file
-                File.WriteAllBytes(filename, neededBytes);
+                if (Path.GetExtension(filename).ToLower() == ".json")
+                {
+                    var mfc = new MifareClassicModel()
+                    {
+                        Created = "ChameleonMiniGUI",
+                        FileType = "mfcard",
+                        Blocks = MifareClassicModel.ToNestedByteArray(neededBytes)
+                    };
+                    using (var fs = File.Open(filename, FileMode.Create, FileAccess.Write, FileShare.ReadWrite))
+                    using (var writer = JsonReaderWriterFactory.CreateJsonWriter(fs, Encoding.UTF8, true, true, "  "))
+                    {
+                        var settings = new DataContractJsonSerializerSettings();
+                        settings.DataContractSurrogate = new BlockSurrogate();
+                        settings.KnownTypes = new List<Type> { typeof(Dictionary<string, string>) };
+                        settings.UseSimpleDictionaryFormat = true;
+                        var ser = new DataContractJsonSerializer(typeof(MifareClassicModel), settings);
+                        ser.WriteObject(writer, mfc);
+                        writer.Flush();
+                    }
+                }
+                else
+                    File.WriteAllBytes(filename, neededBytes);
 
                 msg = $"[+] File saved to {filename}{Environment.NewLine}";
                 Console.WriteLine(msg);
@@ -1962,7 +2018,7 @@ namespace ChameleonMiniGUI
 
             try
             {
-                var dynamicFileByteProvider = hexBox.ByteProvider as DynamicFileByteProvider;
+                var dynamicFileByteProvider = hexBox.ByteProvider;
                 dynamicFileByteProvider?.ApplyChanges();
 
                 txt_output.Text += $"[+] Saved file {l?.Text}{Environment.NewLine}";
@@ -2019,7 +2075,21 @@ namespace ChameleonMiniGUI
 
 
                 // try to open in write mode
-                var dynamicFileByteProvider = new DynamicFileByteProvider(fi.Open(FileMode.Open, FileAccess.ReadWrite));
+                IByteProvider dynamicFileByteProvider = null;
+                switch (fi.Extension.ToLower())
+                {
+                    case ".bin":
+                    case ".dump":
+                    case ".mfd":
+                    case ".hex":
+                        dynamicFileByteProvider = new DynamicFileByteProvider(fi.Open(FileMode.Open, FileAccess.ReadWrite));
+                        break;
+                    case ".json":
+                        dynamicFileByteProvider = new JsonFileByteProvider(fi.FullName);
+                        break;
+                    default:
+                        break;
+                }
                 hexBox.ByteProvider = dynamicFileByteProvider;
 
                 // Display info for the file

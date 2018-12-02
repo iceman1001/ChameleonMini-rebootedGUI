@@ -95,6 +95,7 @@
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Management" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -117,6 +118,11 @@
     </Compile>
     <Compile Include="Comparers\KeyComparer.cs" />
     <Compile Include="Attacks\MfKeyAttacks.cs" />
+    <Compile Include="Json\BlockSurrogate.cs" />
+    <Compile Include="Json\JsonFileByteProvider.cs" />
+    <Compile Include="Json\MifareClassicCardInfo.cs" />
+    <Compile Include="Json\MifareClassicModel.cs" />
+    <Compile Include="Json\MifareClassicSectorKey.cs" />
     <Compile Include="Legend\IlegendItem.cs" />
     <Compile Include="Legend\Legend.cs" />
     <Compile Include="Legend\UcLegend.cs">

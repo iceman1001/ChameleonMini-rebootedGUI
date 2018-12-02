@@ -16,6 +16,8 @@ using Be.Windows.Forms;
 using System.Drawing;
 using System.Reflection;
 using System.Threading.Tasks;
+using System.Runtime.Serialization.Json;
+using ChameleonMiniGUI.Json;
 
 namespace ChameleonMiniGUI
 {
@@ -1827,8 +1829,31 @@ namespace ChameleonMiniGUI
 
         private static byte[] ReadFileIntoByteArray(string filename)
         {
-            if (File.Exists(filename))
-                return File.ReadAllBytes(filename);
+            var fi = new FileInfo(filename);
+            if (fi.Exists)
+            {
+                switch (fi.Extension.ToLower())
+                {
+                    case ".bin":
+                    case ".dump":
+                    case ".mfd":
+                    case ".hex":
+                        return File.ReadAllBytes(filename);
+                    case ".json":
+                        using (var fs = fi.OpenRead())
+                        {
+                            var settings = new DataContractJsonSerializerSettings();
+                            settings.DataContractSurrogate = new BlockSurrogate();
+                            settings.KnownTypes = new List<Type> { typeof(Dictionary<string, string>) };
+                            settings.UseSimpleDictionaryFormat = true;
+                            var ser = new DataContractJsonSerializer(typeof(MifareClassicModel), settings);
+                            var mfc = ser.ReadObject(fs) as MifareClassicModel;
+                            return mfc.ToByteArray();
+                        }
+                    default:
+                        break;
+                }
+            }
             return null;
         }
 

@@ -307,7 +307,7 @@ namespace ChameleonMiniGUI
             // 
             // openFileDialog1
             // 
-            this.openFileDialog1.Filter = "Dump files| *.bin; *.dump; *.mfd; *.hex";
+            this.openFileDialog1.Filter = "Dump files| *.bin; *.dump; *.mfd; *.hex; *.json";
             // 
             // saveFileDialog1
             // 

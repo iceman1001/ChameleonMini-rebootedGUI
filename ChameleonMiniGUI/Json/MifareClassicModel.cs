@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace ChameleonMiniGUI.Json
 {
+
     [DataContract]
     public class MifareClassicModel
     {
@@ -23,16 +25,19 @@ namespace ChameleonMiniGUI.Json
         [DataMember]
         public MifareClassicCardInfo Card
         {
-            get => new MifareClassicCardInfo(this);
+            get { return new MifareClassicCardInfo(this); }
             set { }
         }
 
         [DataMember]
         public Dictionary<string, MifareClassicSectorKey> SectorKeys
         {
-            get => Enumerable
-                .Range(0, Blocks.Length / 4)
-                .ToDictionary(i => i.ToString(), i => new MifareClassicSectorKey(this, i));
+            get
+            {
+                return Enumerable
+                    .Range(0, Blocks.Length/4)
+                    .ToDictionary(i => i.ToString(), i => new MifareClassicSectorKey(this, i));
+            }
             set { }
         }
 

@@ -24,21 +24,27 @@ namespace ChameleonMiniGUI.Json
         [DataMember]
         public string KeyA
         {
-            get => MifareClassicModel.ByteArrayToString(mfc.Blocks[sector * 4 + 3].Take(6));
+            get
+            {
+             return MifareClassicModel.ByteArrayToString(mfc.Blocks[sector*4 + 3].Take(6));
+            }
             set { }
         }
 
         [DataMember]
         public string KeyB
         {
-            get => MifareClassicModel.ByteArrayToString(mfc.Blocks[sector * 4 + 3].Skip(10).Take(6));
+            get { return MifareClassicModel.ByteArrayToString(mfc.Blocks[sector*4 + 3].Skip(10).Take(6)); }
             set { }
         }
 
         [DataMember]
         public string AccessConditions
         {
-            get => MifareClassicModel.ByteArrayToString(mfc.Blocks[sector * 4 + 3].Skip(6).Take(4));
+            get
+            {
+                return MifareClassicModel.ByteArrayToString(mfc.Blocks[sector*4 + 3].Skip(6).Take(4));                 
+            }
             set { }
         }
 

@@ -311,7 +311,7 @@ namespace ChameleonMiniGUI
             // 
             // saveFileDialog1
             // 
-            this.saveFileDialog1.Filter = "Dump files| *.bin; *.dump; *.mfd; *.hex";
+            this.saveFileDialog1.Filter = "Dump files| *.bin; *.dump; *.mfd; *.hex | JSON file | *.json";
             // 
             // gb_output
             // 

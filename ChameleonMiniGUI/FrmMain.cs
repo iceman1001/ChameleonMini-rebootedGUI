@@ -517,7 +517,17 @@ namespace ChameleonMiniGUI
                         var dumpFilename = saveFileDialog1.FileName;
 
                         // Add extension if missing
-                        dumpFilename = !dumpFilename.ToLower().Contains(".bin") ? dumpFilename + ".bin" : dumpFilename;
+                        switch (saveFileDialog1.FilterIndex)
+                        {
+                            case 1:
+                                dumpFilename = !dumpFilename.ToLower().Contains(".bin") ? dumpFilename + ".bin" : dumpFilename;
+                                break;
+                            case 2:
+                                dumpFilename = !dumpFilename.ToLower().EndsWith(".json") ? dumpFilename + ".json" : dumpFilename;
+                                break;
+                            default:
+                                break;
+                        }
 
                         // Save the dump
                         DownloadAndSaveDump(dumpFilename);
@@ -1943,7 +1953,28 @@ namespace ChameleonMiniGUI
                 }
 
                 // Write the actual file
-                File.WriteAllBytes(filename, neededBytes);
+                if (Path.GetExtension(filename).ToLower() == ".json")
+                {
+                    var mfc = new MifareClassicModel()
+                    {
+                        Created = "ChameleonMiniGUI",
+                        FileType = "mfcard",
+                        Blocks = MifareClassicModel.ToNestedByteArray(neededBytes)
+                    };
+                    using (var fs = File.Open(filename, FileMode.Create, FileAccess.Write, FileShare.ReadWrite))
+                    using (var writer = JsonReaderWriterFactory.CreateJsonWriter(fs, Encoding.UTF8, true, true, "  "))
+                    {
+                        var settings = new DataContractJsonSerializerSettings();
+                        settings.DataContractSurrogate = new BlockSurrogate();
+                        settings.KnownTypes = new List<Type> { typeof(Dictionary<string, string>) };
+                        settings.UseSimpleDictionaryFormat = true;
+                        var ser = new DataContractJsonSerializer(typeof(MifareClassicModel), settings);
+                        ser.WriteObject(writer, mfc);
+                        writer.Flush();
+                    }
+                }
+                else
+                    File.WriteAllBytes(filename, neededBytes);
 
                 msg = $"[+] File saved to {filename}{Environment.NewLine}";
                 Console.WriteLine(msg);
@@ -1987,7 +2018,7 @@ namespace ChameleonMiniGUI
 
             try
             {
-                var dynamicFileByteProvider = hexBox.ByteProvider as DynamicFileByteProvider;
+                var dynamicFileByteProvider = hexBox.ByteProvider;
                 dynamicFileByteProvider?.ApplyChanges();
 
                 txt_output.Text += $"[+] Saved file {l?.Text}{Environment.NewLine}";

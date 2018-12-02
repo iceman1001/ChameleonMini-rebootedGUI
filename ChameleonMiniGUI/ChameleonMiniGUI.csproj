@@ -119,7 +119,9 @@
     <Compile Include="Comparers\KeyComparer.cs" />
     <Compile Include="Attacks\MfKeyAttacks.cs" />
     <Compile Include="Json\BlockSurrogate.cs" />
+    <Compile Include="Json\MifareClassicCardInfo.cs" />
     <Compile Include="Json\MifareClassicModel.cs" />
+    <Compile Include="Json\MifareClassicSectorKey.cs" />
     <Compile Include="Legend\IlegendItem.cs" />
     <Compile Include="Legend\Legend.cs" />
     <Compile Include="Legend\UcLegend.cs">

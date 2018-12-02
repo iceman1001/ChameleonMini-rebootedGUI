@@ -2044,7 +2044,21 @@ namespace ChameleonMiniGUI
 
 
                 // try to open in write mode
-                var dynamicFileByteProvider = new DynamicFileByteProvider(fi.Open(FileMode.Open, FileAccess.ReadWrite));
+                IByteProvider dynamicFileByteProvider = null;
+                switch (fi.Extension.ToLower())
+                {
+                    case ".bin":
+                    case ".dump":
+                    case ".mfd":
+                    case ".hex":
+                        dynamicFileByteProvider = new DynamicFileByteProvider(fi.Open(FileMode.Open, FileAccess.ReadWrite));
+                        break;
+                    case ".json":
+                        dynamicFileByteProvider = new JsonFileByteProvider(fi.FullName);
+                        break;
+                    default:
+                        break;
+                }
                 hexBox.ByteProvider = dynamicFileByteProvider;
 
                 // Display info for the file

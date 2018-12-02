@@ -119,6 +119,7 @@
     <Compile Include="Comparers\KeyComparer.cs" />
     <Compile Include="Attacks\MfKeyAttacks.cs" />
     <Compile Include="Json\BlockSurrogate.cs" />
+    <Compile Include="Json\JsonFileByteProvider.cs" />
     <Compile Include="Json\MifareClassicCardInfo.cs" />
     <Compile Include="Json\MifareClassicModel.cs" />
     <Compile Include="Json\MifareClassicSectorKey.cs" />

@@ -2977,7 +2977,6 @@ namespace ChameleonMiniGUI
             this.cb_ledred4.Name = "cb_ledred4";
             this.cb_ledred4.Size = new System.Drawing.Size(175, 21);
             this.cb_ledred4.TabIndex = 21;
-            this.cb_ledred4.SelectedIndexChanged += new System.EventHandler(this.comboBox5_SelectedIndexChanged);
             // 
             // cb_ledgreen4
             // 

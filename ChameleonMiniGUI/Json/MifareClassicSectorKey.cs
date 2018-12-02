@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace ChameleonMiniGUI.Json
 {
+    [DataContract]
     public class MifareClassicSectorKey
     {
         MifareClassicModel mfc;
@@ -21,34 +22,37 @@ namespace ChameleonMiniGUI.Json
             this.sector = sector;
         }
 
-        [DataMember(Order=3)]
+        [DataMember(Order = 0)]
         public string KeyA
         {
             get
             {
-             return MifareClassicModel.ByteArrayToString(mfc.Blocks[sector*4 + 3].Take(6));
+                return MifareClassicModel.ByteArrayToString(mfc.Blocks[sector * 4 + 3].Take(6));
             }
             set { }
         }
 
-        [DataMember(Order=4)]
+        [DataMember(Order = 1)]
         public string KeyB
         {
-            get { return MifareClassicModel.ByteArrayToString(mfc.Blocks[sector*4 + 3].Skip(10).Take(6)); }
+            get
+            {
+                return MifareClassicModel.ByteArrayToString(mfc.Blocks[sector * 4 + 3].Skip(10).Take(6));
+            }
             set { }
         }
 
-        [DataMember(Order=1)]
+        [DataMember(Order = 2)]
         public string AccessConditions
         {
             get
             {
-                return MifareClassicModel.ByteArrayToString(mfc.Blocks[sector*4 + 3].Skip(6).Take(4));                 
+                return MifareClassicModel.ByteArrayToString(mfc.Blocks[sector * 4 + 3].Skip(6).Take(4));
             }
             set { }
         }
 
-        [DataMember(Order=2)]
+        [DataMember(Order = 3)]
         public Dictionary<string, string> AccessConditionsText
         {
             get

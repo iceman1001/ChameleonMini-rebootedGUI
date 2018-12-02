@@ -13,29 +13,29 @@ namespace ChameleonMiniGUI.Json
     [DataContract]
     public class MifareClassicModel
     {
-        [DataMember(Order=1)] 
+        [DataMember(Order = 0)]
         public string Created { get; set; }
 
-        [DataMember(Order = 2)]
+        [DataMember(Order = 1)]
         public string FileType { get; set; }
 
-        [DataMember(Name = "blocks", Order = 3) ]
+        [DataMember(Name = "blocks", Order = 2)]
         public byte[][] Blocks { get; set; }
-        
-        [DataMember(Order = 4)]
+
+        [DataMember(Order = 3)]
         public MifareClassicCardInfo Card
         {
             get { return new MifareClassicCardInfo(this); }
             set { }
         }
 
-        [DataMember(Order = 5)]
+        [DataMember(Order = 4)]
         public Dictionary<string, MifareClassicSectorKey> SectorKeys
         {
             get
             {
                 return Enumerable
-                    .Range(0, Blocks.Length/4)
+                    .Range(0, Blocks.Length / 4)
                     .ToDictionary(i => i.ToString(), i => new MifareClassicSectorKey(this, i));
             }
             set { }
@@ -49,7 +49,7 @@ namespace ChameleonMiniGUI.Json
 
         public static string ByteArrayToString(IEnumerable<byte> bytes)
             => string.Join("", bytes.Select(b => b.ToString("X2")));
-        
+
         public static byte[][] ToNestedByteArray(byte[] data)
         {
             return Enumerable.Range(0, data.Length / 16)

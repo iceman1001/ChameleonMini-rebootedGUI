@@ -19,21 +19,21 @@ namespace ChameleonMiniGUI.Json
             this.mfc = mfc;
         }
 
-        [DataMember(Name = "UID")]
+        [DataMember(Name = "UID", Order=3)]
         public string Uid
         {
             get { return MifareClassicModel.ByteArrayToString(mfc.Blocks[0].Take(4)); }
             set { }
         }
 
-        [DataMember(Name = "SAK")]
+        [DataMember(Name = "SAK", Order=2)]
         public string Sak
         {
             get { return MifareClassicModel.ByteArrayToString(mfc.Blocks[0].Skip(5).Take(1)); }
             set { }
         }
 
-        [DataMember(Name = "ATQA")]
+        [DataMember(Name = "ATQA", Order=1)]
         public string Atqa
         {
             get { return MifareClassicModel.ByteArrayToString(mfc.Blocks[0].Skip(6).Take(2)); }

@@ -21,10 +21,12 @@ namespace ChameleonMiniGUI.Json
             this.fileName = fileName;
             using (var fs = File.Open(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
-                var settings = new DataContractJsonSerializerSettings();
-                settings.DataContractSurrogate = new BlockSurrogate();
-                settings.KnownTypes = new List<Type> { typeof(Dictionary<string, string>) };
-                settings.UseSimpleDictionaryFormat = true;
+                var settings = new DataContractJsonSerializerSettings
+                {
+                    DataContractSurrogate = new BlockSurrogate(),
+                    KnownTypes = new List<Type> {typeof (Dictionary<string, string>)},
+                    UseSimpleDictionaryFormat = true
+                };
                 var ser = new DataContractJsonSerializer(typeof(MifareClassicModel), settings);
                 mfc = ser.ReadObject(fs) as MifareClassicModel;
                 data = mfc.ToByteArray();
@@ -49,10 +51,12 @@ namespace ChameleonMiniGUI.Json
             using (var fs = File.Open(fileName, FileMode.Open, FileAccess.Write, FileShare.ReadWrite))
             using (var writer = JsonReaderWriterFactory.CreateJsonWriter(fs, Encoding.UTF8, true, true, "  "))
             {
-                var settings = new DataContractJsonSerializerSettings();
-                settings.DataContractSurrogate = new BlockSurrogate();
-                settings.KnownTypes = new List<Type> { typeof(Dictionary<string, string>) };
-                settings.UseSimpleDictionaryFormat = true;
+                var settings = new DataContractJsonSerializerSettings
+                {
+                    DataContractSurrogate = new BlockSurrogate(),
+                    KnownTypes = new List<Type> {typeof (Dictionary<string, string>)},
+                    UseSimpleDictionaryFormat = true
+                };
                 var ser = new DataContractJsonSerializer(typeof(MifareClassicModel), settings);
                 ser.WriteObject(writer, mfc);
                 writer.Flush();

@@ -13,23 +13,23 @@ namespace ChameleonMiniGUI.Json
     [DataContract]
     public class MifareClassicModel
     {
-        [DataMember]
+        [DataMember(Order=1)] 
         public string Created { get; set; }
 
-        [DataMember]
+        [DataMember(Order = 2)]
         public string FileType { get; set; }
 
-        [DataMember(Name = "blocks")]
+        [DataMember(Name = "blocks", Order = 3) ]
         public byte[][] Blocks { get; set; }
         
-        [DataMember]
+        [DataMember(Order = 4)]
         public MifareClassicCardInfo Card
         {
             get { return new MifareClassicCardInfo(this); }
             set { }
         }
 
-        [DataMember]
+        [DataMember(Order = 5)]
         public Dictionary<string, MifareClassicSectorKey> SectorKeys
         {
             get

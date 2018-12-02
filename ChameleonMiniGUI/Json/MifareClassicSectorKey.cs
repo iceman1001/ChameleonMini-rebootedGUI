@@ -21,7 +21,7 @@ namespace ChameleonMiniGUI.Json
             this.sector = sector;
         }
 
-        [DataMember]
+        [DataMember(Order=3)]
         public string KeyA
         {
             get
@@ -31,14 +31,14 @@ namespace ChameleonMiniGUI.Json
             set { }
         }
 
-        [DataMember]
+        [DataMember(Order=4)]
         public string KeyB
         {
             get { return MifareClassicModel.ByteArrayToString(mfc.Blocks[sector*4 + 3].Skip(10).Take(6)); }
             set { }
         }
 
-        [DataMember]
+        [DataMember(Order=1)]
         public string AccessConditions
         {
             get
@@ -48,7 +48,7 @@ namespace ChameleonMiniGUI.Json
             set { }
         }
 
-        [DataMember]
+        [DataMember(Order=2)]
         public Dictionary<string, string> AccessConditionsText
         {
             get

@@ -1455,119 +1455,15 @@ namespace ChameleonMiniGUI
             var selectedSlot = SendCommand($"SETTING{_cmdExtension}?").ToString();
             if (!selectedSlot.Contains((slotIndex - _tagslotIndexOffset).ToString())) return;
 
-            //CONFIGMY? -> RETURNS THE CONFIGURATION MODE
-            var slotMode = SendCommand($"CONFIG{_cmdExtension}?").ToString();
-            if (IsModeValid(slotMode))
-            {
-                // set the combobox value of the i+1 cb_mode
-                var cbMode = FindControls<ComboBox>(Controls, $"cb_mode{slotIndex}");
-                foreach (var box in cbMode)
-                {
-                    if (slotMode.Equals("MF_CLASSIC_4K") && box.Name != "cb_mode1")
-                        continue;
-                    box.SelectedItem = slotMode;
-                }
-            }
-
             //UIDMY? -> RETURNS THE UID
             var slotUid = SendCommand($"UID{_cmdExtension}?").ToString();
             if (!string.IsNullOrWhiteSpace(slotUid))
             {
                 // set the textbox value of the i+1 txt_uid
-                var tbs = FindControls<TextBox>(Controls, "txt_uid" + (slotIndex));
+                var tbs = FindControls<TextBox>(Controls, $"txt_uid{slotIndex}");
                 foreach (var box in tbs)
                 {
                     box.Text = slotUid;
-                }
-            }
-
-
-
-            // SWAP TYPES
-            if (_CurrentDevType == DeviceType.RevG)
-            {
-                //BUTTONMY? -> RETURNS THE MODE OF THE BUTTON
-                var slotLButtonMode = SendCommand($"LBUTTON{_cmdExtension}?").ToString();
-                if (IsLButtonModeValid(slotLButtonMode))
-                {
-                    // set the combobox value of the i+1 cb_button
-                    var cbLButton = FindControls<ComboBox>(Controls, "cb_Lbutton" + (slotIndex));
-                    foreach (var box in cbLButton)
-                    {
-                        box.SelectedItem = slotLButtonMode;
-                    }
-                }
-
-                //BUTTON_LONGMY? -> RETURNS THE MODE OF THE BUTTON LONG
-                var slotLButtonLongMode = SendCommand($"LBUTTON_LONG{_cmdExtension}?").ToString();
-                if (IsLButtonModeValid(slotLButtonLongMode))
-                {
-                    // set the combobox value of the i+1 cb_buttonlong
-                    var cbLButtonLong = FindControls<ComboBox>(Controls, "cb_Lbuttonlong" + (slotIndex));
-                    foreach (var box in cbLButtonLong)
-                    {
-                        box.SelectedItem = slotLButtonLongMode;
-                    }
-                }
-
-                //BUTTONMY? -> RETURNS THE MODE OF THE BUTTON
-                var slotRButtonMode = SendCommand($"RBUTTON{_cmdExtension}?").ToString();
-                if (IsRButtonModeValid(slotRButtonMode))
-                {
-                    // set the combobox value of the i+1 cb_button
-                    var cbButton = FindControls<ComboBox>(Controls, "cb_Rbutton" + (slotIndex));
-                    foreach (var box in cbButton)
-                    {
-                        box.SelectedItem = slotRButtonMode;
-                    }
-                }
-
-                //BUTTON_LONGMY? -> RETURNS THE MODE OF THE BUTTON LONG
-                var slotRButtonLongMode = SendCommand($"RBUTTON_LONG{_cmdExtension}?").ToString();
-                if (IsRButtonLongModeValid(slotRButtonLongMode))
-                {
-                    // set the combobox value of the i+1 cb_buttonlong
-                    var cbRButtonLong = FindControls<ComboBox>(Controls, "cb_Rbuttonlong" + (slotIndex + _tagslotIndexOffset));
-                    foreach (var box in cbRButtonLong)
-                    {
-                        box.SelectedItem = slotRButtonLongMode;
-                    }
-                }
-
-                var slotLEDGreen = SendCommand($"LEDGREEN{_cmdExtension}?").ToString();
-                if (IsLEDGreenModeValid(slotLEDGreen))
-                {
-                    // set the combobox value of the i+1 cb_button
-                    var cbLEDGreen = FindControls<ComboBox>(Controls, "cb_ledgreen" + (slotIndex));
-                    foreach (var box in cbLEDGreen)
-                    {
-                        box.SelectedItem = slotLEDGreen;
-                    }
-                }
-
-                var slotLEDRed = SendCommand($"LEDRED{_cmdExtension}?").ToString();
-                if (IsLEDRedModeValid(slotLEDRed))
-                {
-                    // set the combobox value of the i+1 cb_button
-                    var cbLEDRed = FindControls<ComboBox>(Controls, "cb_ledred" + (slotIndex));
-                    foreach (var box in cbLEDRed)
-                    {
-                        box.SelectedItem = slotLEDRed;
-                    }
-                }
-            }
-            else if (_CurrentDevType == DeviceType.RevE)
-            {
-                //BUTTONMY? -> RETURNS THE MODE OF THE BUTTON
-                var slotLButtonMode = SendCommand($"BUTTON{_cmdExtension}?").ToString();
-                if (IsLButtonModeValid(slotLButtonMode))
-                {
-                    // set the combobox value of the i+1 cb_button
-                    var cbLButton = FindControls<ComboBox>(Controls, $"cb_Lbutton{slotIndex}");
-                    foreach (var box in cbLButton)
-                    {
-                        box.SelectedItem = slotLButtonMode;
-                    }
                 }
             }
 
@@ -1580,6 +1476,121 @@ namespace ChameleonMiniGUI
                 foreach (var box in txtMemSize)
                 {
                     box.Text = slotMemSize;
+                }
+            }
+
+
+            // SWAP TYPES
+            if (_CurrentDevType == DeviceType.RevG)
+            {
+                //CONFIGMY? -> RETURNS THE CONFIGURATION MODE
+                var slotMode = SendCommand($"CONFIG{_cmdExtension}?").ToString();
+                if (IsModeValid(slotMode))
+                {
+                    // set the combobox value of the i+1 cb_mode
+                    var cbMode = FindControls<ComboBox>(Controls, $"cb_mode{slotIndex}");
+                    foreach (var box in cbMode)
+                    {
+                        box.SelectedItem = slotMode;
+                    }
+                }
+
+                //BUTTONMY? -> RETURNS THE MODE OF THE BUTTON
+                var slotLButtonMode = SendCommand($"LBUTTON{_cmdExtension}?").ToString();
+                if (IsLButtonModeValid(slotLButtonMode))
+                {
+                    // set the combobox value of the i+1 cb_button
+                    var cbLButton = FindControls<ComboBox>(Controls, $"cb_lbutton{slotIndex}");
+                    foreach (var box in cbLButton)
+                    {
+                        box.SelectedItem = slotLButtonMode;
+                    }
+                }
+
+                //BUTTON_LONGMY? -> RETURNS THE MODE OF THE BUTTON LONG
+                var slotLButtonLongMode = SendCommand($"LBUTTON_LONG{_cmdExtension}?").ToString();
+                if (IsLButtonModeValid(slotLButtonLongMode))
+                {
+                    // set the combobox value of the i+1 cb_buttonlong
+                    var cbLButtonLong = FindControls<ComboBox>(Controls, $"cb_lbuttonlong{slotIndex}");
+                    foreach (var box in cbLButtonLong)
+                    {
+                        box.SelectedItem = slotLButtonLongMode;
+                    }
+                }
+
+                //BUTTONMY? -> RETURNS THE MODE OF THE BUTTON
+                var slotRButtonMode = SendCommand($"RBUTTON{_cmdExtension}?").ToString();
+                if (IsRButtonModeValid(slotRButtonMode))
+                {
+                    // set the combobox value of the i+1 cb_button
+                    var cbButton = FindControls<ComboBox>(Controls, $"cb_rbutton{slotIndex}");
+                    foreach (var box in cbButton)
+                    {
+                        box.SelectedItem = slotRButtonMode;
+                    }
+                }
+
+                //BUTTON_LONGMY? -> RETURNS THE MODE OF THE BUTTON LONG
+                var slotRButtonLongMode = SendCommand($"RBUTTON_LONG{_cmdExtension}?").ToString();
+                if (IsRButtonLongModeValid(slotRButtonLongMode))
+                {
+                    // set the combobox value of the i+1 cb_buttonlong
+                    var cbRButtonLong = FindControls<ComboBox>(Controls, $"cb_rbuttonlong{slotIndex + _tagslotIndexOffset}");
+                    foreach (var box in cbRButtonLong)
+                    {
+                        box.SelectedItem = slotRButtonLongMode;
+                    }
+                }
+
+                var slotLEDGreen = SendCommand($"LEDGREEN{_cmdExtension}?").ToString();
+                if (IsLEDGreenModeValid(slotLEDGreen))
+                {
+                    // set the combobox value of the i+1 cb_button
+                    var cbLEDGreen = FindControls<ComboBox>(Controls, $"cb_ledgreen{slotIndex}");
+                    foreach (var box in cbLEDGreen)
+                    {
+                        box.SelectedItem = slotLEDGreen;
+                    }
+                }
+
+                var slotLEDRed = SendCommand($"LEDRED{_cmdExtension}?").ToString();
+                if (IsLEDRedModeValid(slotLEDRed))
+                {
+                    // set the combobox value of the i+1 cb_button
+                    var cbLEDRed = FindControls<ComboBox>(Controls, $"cb_ledred{slotIndex}");
+                    foreach (var box in cbLEDRed)
+                    {
+                        box.SelectedItem = slotLEDRed;
+                    }
+                }
+            }
+            else if (_CurrentDevType == DeviceType.RevE)
+            {
+                //CONFIGMY? -> RETURNS THE CONFIGURATION MODE
+                var slotMode = SendCommand($"CONFIG{_cmdExtension}?").ToString();
+                if (IsModeValid(slotMode))
+                {
+                    // set the combobox value of the i+1 cb_mode
+                    var cbMode = FindControls<ComboBox>(Controls, $"cb_mode{slotIndex}");
+                    foreach (var box in cbMode)
+                    {
+                        if (slotMode.Equals("MF_CLASSIC_4K") && box.Name != "cb_mode1")
+                            continue;
+                        box.SelectedItem = slotMode;
+                    }
+                }
+
+                //BUTTONMY? -> RETURNS THE MODE OF THE BUTTON
+                var slotLButtonMode = SendCommand($"BUTTON{_cmdExtension}?").ToString();
+                if (IsLButtonModeValid(slotLButtonMode))
+                {
+                    // set the combobox value of the i+1 cb_button
+                    var cbLButton = FindControls<ComboBox>(Controls, $"cb_lbutton{slotIndex}");
+                    foreach (var box in cbLButton)
+                    {
+                        box.SelectedItem = slotLButtonMode;
+                    }
                 }
             }
         }
@@ -1648,12 +1659,6 @@ namespace ChameleonMiniGUI
                     {
                         cb.Items.Clear();
                         cb.Items.AddRange(_modesArray);
-
-                        // We can set the MF_CLASSIC_4K mode only on the first tag slot
-                        // if (cb.Name != "cb_mode1")
-                        // {
-                        //     cb.Items.Remove("MF_CLASSIC_4K");
-                        // }
                     }
                 }
             }
@@ -2285,95 +2290,91 @@ namespace ChameleonMiniGUI
 
         private void ConfigHMIForRevE()
         {
-            for (int i = 1; i < 9; i++)
+            var list = FindControls<ComboBox>(Controls, "cb_Rbutton");
+            list.ForEach(a => ApplyAll(a, c =>
             {
-                var c = FindControls<ComboBox>(Controls, "cb_Rbutton" + (i)).FirstOrDefault();
-                if (c != null)
-                {
-                    c.Visible = false;
-                }
+                c.Visible = false;
+            }));
 
-                c = FindControls<ComboBox>(Controls, "cb_Lbutton" + (i)).FirstOrDefault();
-                if (c != null)
-                {
-                    c.Visible = true;
-                    c.Width = REVEDefaultComboWidth;
-                }
+            list = FindControls<ComboBox>(Controls, "cb_Lbutton");
+            list.ForEach(a => ApplyAll(a, c =>
+            {
+                c.Visible = true;
+                c.Width = REVEDefaultComboWidth;
+            }));
 
-                c = FindControls<ComboBox>(Controls, "cb_Rbuttonlong" + (i)).FirstOrDefault();
-                if (c != null)
-                {
-                    c.Visible = false;
-                }
+            list = FindControls<ComboBox>(Controls, "cb_Rbuttonlong");
+            list.ForEach(a => ApplyAll(a, c =>
+            {
+                c.Visible = false;
+            }));
 
-                c = FindControls<ComboBox>(Controls, "cb_Lbuttonlong" + (i)).FirstOrDefault();
-                if (c != null)
-                {
-                    c.Visible = false;
-                }
+            list = FindControls<ComboBox>(Controls, "cb_Lbuttonlong");
+            list.ForEach(a => ApplyAll(a, c =>
+            {
+                c.Visible = false;
+            }));
 
-                c = FindControls<ComboBox>(Controls, "cb_ledgreen" + (i)).FirstOrDefault();
-                if (c != null)
-                {
-                    c.Visible = false;
-                    c.Enabled = false;
-                }
+            list = FindControls<ComboBox>(Controls, "cb_ledgreen");
+            list.ForEach(a => ApplyAll(a, c =>
+            {
+                c.Visible = false;
+                c.Enabled = false;
+            }));
 
-                c = FindControls<ComboBox>(Controls, "cb_ledred" + (i)).FirstOrDefault();
-                if (c != null)
-                {
-                    c.Visible = false;
-                    c.Enabled = false;
-                }
-            }
+            list = FindControls<ComboBox>(Controls, "cb_ledred");
+            list.ForEach(a => ApplyAll(a, c =>
+            {
+                c.Visible = false;
+                c.Enabled = false;
+            }));
         }
 
         private void ConfigHMIForRevG()
         {
-            for (int i = 1; i < 9; i++)
+            
+            var list = FindControls<ComboBox>(Controls, "cb_Rbutton");
+            list.ForEach( a =>  ApplyAll( a, c => 
             {
-                var c = FindControls<ComboBox>(Controls, "cb_Rbutton" + (i)).FirstOrDefault();
-                if (c != null)
-                {
+                c.Visible = true;
+                c.Width = REVGDefaultComboWidth;
+            }));
+
+
+            list = FindControls<ComboBox>(Controls, "cb_Lbutton");
+            list.ForEach(a => ApplyAll(a, c =>
+            {
                     c.Visible = true;
                     c.Width = REVGDefaultComboWidth;
-                }
+            }));
 
-                c = FindControls<ComboBox>(Controls, "cb_Lbutton" + (i)).FirstOrDefault();
-                if (c != null)
-                {
+            list = FindControls<ComboBox>(Controls, "cb_Rbuttonlong");
+            list.ForEach(a => ApplyAll(a, c =>
+            {
                     c.Visible = true;
                     c.Width = REVGDefaultComboWidth;
-                }
+            }));
 
-                c = FindControls<ComboBox>(Controls, "cb_Rbuttonlong" + (i)).FirstOrDefault();
-                if (c != null)
-                {
+            list = FindControls<ComboBox>(Controls, "cb_Lbuttonlong");
+            list.ForEach(a => ApplyAll(a, c =>
+            {
                     c.Visible = true;
                     c.Width = REVGDefaultComboWidth;
-                }
+            }));
 
-                c = FindControls<ComboBox>(Controls, "cb_Lbuttonlong" + (i)).FirstOrDefault();
-                if (c != null)
-                {
-                    c.Visible = true;
-                    c.Width = REVGDefaultComboWidth;
-                }
-
-                c = FindControls<ComboBox>(Controls, "cb_ledgreen" + (i)).FirstOrDefault();
-                if (c != null)
-                {
+            list = FindControls<ComboBox>(Controls, "cb_ledgreen");
+            list.ForEach(a => ApplyAll(a, c =>
+            {
                     c.Visible = true;
                     c.Enabled = true;
-                }
+            }));
 
-                c = FindControls<ComboBox>(Controls, "cb_ledred" + (i)).FirstOrDefault();
-                if (c != null)
-                {
+            list = FindControls<ComboBox>(Controls, "cb_ledred");
+            list.ForEach(a => ApplyAll(a, c =>
+            {
                     c.Visible = true;
                     c.Enabled = true;
-                }
-            }
+            }));
         }
 
         #endregion

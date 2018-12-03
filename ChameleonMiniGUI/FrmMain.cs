@@ -1500,7 +1500,7 @@ namespace ChameleonMiniGUI
                 if (IsLButtonModeValid(slotLButtonMode))
                 {
                     // set the combobox value of the i+1 cb_button
-                    var cbLButton = FindControls<ComboBox>(Controls, $"cb_lbutton{slotIndex}");
+                    var cbLButton = FindControls<ComboBox>(Controls, $"cb_Lbutton{slotIndex}");
                     foreach (var box in cbLButton)
                     {
                         box.SelectedItem = slotLButtonMode;
@@ -1512,7 +1512,7 @@ namespace ChameleonMiniGUI
                 if (IsLButtonModeValid(slotLButtonLongMode))
                 {
                     // set the combobox value of the i+1 cb_buttonlong
-                    var cbLButtonLong = FindControls<ComboBox>(Controls, $"cb_lbuttonlong{slotIndex}");
+                    var cbLButtonLong = FindControls<ComboBox>(Controls, $"cb_Lbuttonlong{slotIndex}");
                     foreach (var box in cbLButtonLong)
                     {
                         box.SelectedItem = slotLButtonLongMode;
@@ -1524,7 +1524,7 @@ namespace ChameleonMiniGUI
                 if (IsRButtonModeValid(slotRButtonMode))
                 {
                     // set the combobox value of the i+1 cb_button
-                    var cbButton = FindControls<ComboBox>(Controls, $"cb_rbutton{slotIndex}");
+                    var cbButton = FindControls<ComboBox>(Controls, $"cb_Rbutton{slotIndex}");
                     foreach (var box in cbButton)
                     {
                         box.SelectedItem = slotRButtonMode;
@@ -1536,7 +1536,7 @@ namespace ChameleonMiniGUI
                 if (IsRButtonLongModeValid(slotRButtonLongMode))
                 {
                     // set the combobox value of the i+1 cb_buttonlong
-                    var cbRButtonLong = FindControls<ComboBox>(Controls, $"cb_rbuttonlong{slotIndex + _tagslotIndexOffset}");
+                    var cbRButtonLong = FindControls<ComboBox>(Controls, $"cb_Rbuttonlong{slotIndex + _tagslotIndexOffset}");
                     foreach (var box in cbRButtonLong)
                     {
                         box.SelectedItem = slotRButtonLongMode;
@@ -1586,7 +1586,7 @@ namespace ChameleonMiniGUI
                 if (IsLButtonModeValid(slotLButtonMode))
                 {
                     // set the combobox value of the i+1 cb_button
-                    var cbLButton = FindControls<ComboBox>(Controls, $"cb_lbutton{slotIndex}");
+                    var cbLButton = FindControls<ComboBox>(Controls, $"cb_Lbutton{slotIndex}");
                     foreach (var box in cbLButton)
                     {
                         box.SelectedItem = slotLButtonMode;
@@ -1714,7 +1714,7 @@ namespace ChameleonMiniGUI
                 if (!_lbuttonLongModesArray.Any()) return;
 
                 // populate all dropdowns
-                foreach (var cb in FindControls<ComboBox>(Controls, "cb_lbuttonlong"))
+                foreach (var cb in FindControls<ComboBox>(Controls, "cb_Lbuttonlong"))
                 {
                     cb.Enabled = true;
                     cb.Items.Clear();
@@ -1728,7 +1728,7 @@ namespace ChameleonMiniGUI
                 if (rbuttonLongModesStr.ToLower().StartsWith("200"))
                 {
                     // disable all dropdowns
-                    foreach (var cb in FindControls<ComboBox>(Controls, "cb_rbuttonlong"))
+                    foreach (var cb in FindControls<ComboBox>(Controls, "cb_Rbuttonlong"))
                     {
                         cb.Items.Clear();
                         cb.Enabled = false;
@@ -1742,7 +1742,7 @@ namespace ChameleonMiniGUI
                     if (!_rbuttonLongModesArray.Any()) return;
 
                     // populate all dropdowns
-                    foreach (var cb in FindControls<ComboBox>(Controls, "cb_rbuttonlong"))
+                    foreach (var cb in FindControls<ComboBox>(Controls, "cb_Rbuttonlong"))
                     {
                         cb.Enabled = true;
                         cb.Items.Clear();

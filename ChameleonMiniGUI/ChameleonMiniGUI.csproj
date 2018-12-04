@@ -118,6 +118,9 @@
     </Compile>
     <Compile Include="Comparers\KeyComparer.cs" />
     <Compile Include="Attacks\MfKeyAttacks.cs" />
+    <Compile Include="GroupBoxEnhanced.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Json\BlockSurrogate.cs" />
     <Compile Include="Json\JsonFileByteProvider.cs" />
     <Compile Include="Json\MifareClassicCardInfo.cs" />
@@ -169,7 +172,7 @@
     <None Include="Resources\folder-open.ico" />
     <None Include="Resources\hard-drive.ico" />
     <None Include="Resources\network-drive.ico" />
-    <None Include="Resources\warning.ico" />
+    <Content Include="Resources\warning.png" />
     <Content Include="Templates\MIfare-S20-320b-Black.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

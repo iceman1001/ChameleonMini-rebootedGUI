@@ -2453,6 +2453,9 @@ namespace ChameleonMiniGUI
                 c.Visible = false;
                 c.Enabled = false;
             }));
+
+            tbIdentify.Visible = false;
+            btn_Identify.Visible = false;
         }
 
         private void ConfigHMIForRevG()
@@ -2460,10 +2463,10 @@ namespace ChameleonMiniGUI
 
             var list = FindControls<ComboBox>(Controls, "cb_Rbutton");
             list.ForEach(a => ApplyAll(a, c =>
-         {
+            {
              c.Visible = true;
              c.Width = REVGDefaultComboWidth;
-         }));
+            }));
 
             list = FindControls<ComboBox>(Controls, "cb_Lbutton");
             list.ForEach(a => ApplyAll(a, c =>
@@ -2499,6 +2502,9 @@ namespace ChameleonMiniGUI
                 c.Visible = true;
                 c.Enabled = true;
             }));
+
+            tbIdentify.Visible = true;
+            btn_Identify.Visible = true;
         }
 
         private void frm_main_Move(object sender, EventArgs e)

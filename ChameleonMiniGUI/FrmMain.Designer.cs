@@ -246,6 +246,8 @@ namespace ChameleonMiniGUI
             this.hexBox2 = new Be.Windows.Forms.HexBox();
             this.hexBox1 = new Be.Windows.Forms.HexBox();
             this.tpUtils = new System.Windows.Forms.TabPage();
+            this.tbIdentify = new System.Windows.Forms.TextBox();
+            this.btn_Identify = new System.Windows.Forms.Button();
             this.ucExplorer1 = new ChameleonMiniGUI.UcExplorer();
             this.tpSerial = new System.Windows.Forms.TabPage();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
@@ -263,6 +265,7 @@ namespace ChameleonMiniGUI
             this.linkRevE = new System.Windows.Forms.LinkLabel();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.gb_output.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bsLanguages)).BeginInit();
             this.tpSettings.SuspendLayout();
@@ -3095,6 +3098,8 @@ namespace ChameleonMiniGUI
             // 
             // tpUtils
             // 
+            this.tpUtils.Controls.Add(this.tbIdentify);
+            this.tpUtils.Controls.Add(this.btn_Identify);
             this.tpUtils.Controls.Add(this.ucExplorer1);
             this.tpUtils.Location = new System.Drawing.Point(4, 22);
             this.tpUtils.Name = "tpUtils";
@@ -3103,6 +3108,26 @@ namespace ChameleonMiniGUI
             this.tpUtils.TabIndex = 6;
             this.tpUtils.Text = "Utils";
             this.tpUtils.UseVisualStyleBackColor = true;
+            // 
+            // tbIdentify
+            // 
+            this.tbIdentify.Location = new System.Drawing.Point(52, 508);
+            this.tbIdentify.Multiline = true;
+            this.tbIdentify.Name = "tbIdentify";
+            this.tbIdentify.ReadOnly = true;
+            this.tbIdentify.Size = new System.Drawing.Size(268, 85);
+            this.tbIdentify.TabIndex = 2;
+            // 
+            // btn_Identify
+            // 
+            this.btn_Identify.Location = new System.Drawing.Point(52, 599);
+            this.btn_Identify.Name = "btn_Identify";
+            this.btn_Identify.Size = new System.Drawing.Size(75, 23);
+            this.btn_Identify.TabIndex = 1;
+            this.btn_Identify.Text = "Identify";
+            this.toolTip1.SetToolTip(this.btn_Identify, "Identify Card at Reader");
+            this.btn_Identify.UseVisualStyleBackColor = true;
+            this.btn_Identify.Click += new System.EventHandler(this.btn_Identify_Click);
             // 
             // ucExplorer1
             // 
@@ -3312,6 +3337,7 @@ namespace ChameleonMiniGUI
             this.menuScroll.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.bsTemplates)).EndInit();
             this.tpUtils.ResumeLayout(false);
+            this.tpUtils.PerformLayout();
             this.tpSerial.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.gbSerial_interface.ResumeLayout(false);
@@ -3557,5 +3583,8 @@ namespace ChameleonMiniGUI
         private System.Windows.Forms.ComboBox cb_ledgreen8;
         private System.Windows.Forms.Label lb_ledledred8;
         private System.Windows.Forms.Label lb_ledledgreen8;
+        private System.Windows.Forms.Button btn_Identify;
+        private System.Windows.Forms.TextBox tbIdentify;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }

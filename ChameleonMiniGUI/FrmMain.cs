@@ -1373,7 +1373,7 @@ namespace ChameleonMiniGUI
                     string read_response = "";
                     DateTime start = DateTime.Now;
 
-                    while (((read_response == "") || (read_response == null)) && (DateTime.Now.Subtract(start).Milliseconds < 1000))
+                    while (((read_response == "") || (read_response == null)) && (DateTime.Now.Subtract(start).TotalMilliseconds < 1000))
                     {
                         read_response = _comport.ReadLine();
                         read_response = read_response.Replace("101:OK WITH TEXT", "").Replace("100:OK", "").Replace("\r", "");
@@ -1386,6 +1386,44 @@ namespace ChameleonMiniGUI
                 return string.Empty;
             }
         }
+
+        // Some commands are expected to give multiline response, like IDENTIFY
+        private object SendCommandWithMultilineResponse(string cmdText)
+        {
+            if (!SendCommandPossible(cmdText)) return string.Empty;
+            string full_response = "";
+            try
+            {
+                _comport.DiscardInBuffer();
+                // send command
+                SendCommandWithoutResult(cmdText);
+                string read_response ="";
+                bool receptionStarted = false;
+
+                DateTime start = DateTime.Now;
+                DateTime segment = DateTime.Now;
+
+                // Read until no more data is received for 50ms
+                while ( (DateTime.Now.Subtract(start).TotalMilliseconds < 5000) || (receptionStarted && (DateTime.Now.Subtract(segment).TotalMilliseconds < 100) ) )
+                {
+                    read_response = _comport.ReadExisting();
+                    if ((read_response != null) && (read_response != "" ))
+                    {
+                        full_response += read_response;
+                        segment = DateTime.Now;
+                        receptionStarted = true;
+                    }
+                }
+
+                full_response = full_response.Replace("101:OK WITH TEXT", "").Replace("100:OK", "");
+                return full_response;
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
+
 
         private bool SendCommandPossible(string cmdText)
         {
@@ -2354,6 +2392,19 @@ namespace ChameleonMiniGUI
         private void frm_main_ResizeEnd(object sender, EventArgs e)
         {
             GroupBoxEnhanced.RedrawGroupBoxDisplay(tpOperation);
+        }
+
+        private void btn_Identify_Click(object sender, EventArgs e)
+        {
+            Cursor.Current = Cursors.WaitCursor;
+            var OriginalConfig = SendCommand($"CONFIG{ _cmdExtension}?");
+
+            SendCommandWithoutResult($"CONFIG{_cmdExtension}=ISO14443A_READER");
+            var Ident = SendCommandWithMultilineResponse($"IDENTIFY{_cmdExtension}");
+            tbIdentify.Text = Ident.ToString();
+
+            SendCommandWithoutResult($"CONFIG{ _cmdExtension}={OriginalConfig}");
+            Cursor.Current = Cursors.Default;
         }
     }
 

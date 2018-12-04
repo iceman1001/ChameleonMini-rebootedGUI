@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Configuration;
 using System.Linq;
@@ -148,7 +148,6 @@ namespace ChameleonMiniGUI
                 txt_interval.Text = "2000";
             }
 
-
             var ml = new MultiLanguage();
             var languages = ml.GetLanguages();
             if (languages.Any())
@@ -159,7 +158,6 @@ namespace ChameleonMiniGUI
                 cb_languages.ValueMember = "Value";
                 lockFlag = false;
             }
-
 
             // load prefered language
             var lang = Properties.Settings.Default.Language;
@@ -993,6 +991,7 @@ namespace ChameleonMiniGUI
             linkRevG.LinkVisited = true;
             Start("https://rawgit.com/emsec/ChameleonMini/master/Doc/Doxygen/html/_page__command_line.html");
         }
+
         private void menuClear_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
             if (e.ClickedItem.Name == "tsmi_copy")
@@ -1016,6 +1015,7 @@ namespace ChameleonMiniGUI
 
             Send(cmd);
         }
+
         private void btnSerialSend_Click(object sender, EventArgs e)
         {
             var cmd = tbSerialCmd.Text.Trim();
@@ -1028,6 +1028,7 @@ namespace ChameleonMiniGUI
         {
             CloseFile(hexBox1);
         }
+
         private void btn_close2_Click(object sender, EventArgs e)
         {
             CloseFile(hexBox2);
@@ -1222,7 +1223,6 @@ namespace ChameleonMiniGUI
                     WriteTimeout = 6000,
                     DtrEnable = true,
                     RtsEnable = true,
-                    
                 };
 
                 try
@@ -1592,6 +1592,18 @@ namespace ChameleonMiniGUI
                         box.SelectedItem = slotLButtonMode;
                     }
                 }
+
+                //BUTTON_LONGMY? -> RETURNS THE MODE OF THE BUTTON LONG
+                var slotLButtonLongMode = SendCommand($"BUTTON_LONG{_cmdExtension}?").ToString();
+                if (IsLButtonModeValid(slotLButtonLongMode))
+                {
+                    // set the combobox value of the i+1 cb_buttonlong
+                    var cbLButtonLong = FindControls<ComboBox>(Controls, $"cb_lbuttonlong{slotIndex}");
+                    foreach (var box in cbLButtonLong)
+                    {
+                        box.SelectedItem = slotLButtonLongMode;
+                    }
+                }
             }
         }
 
@@ -1691,7 +1703,6 @@ namespace ChameleonMiniGUI
                 cb.Items.Clear();
                 cb.Items.AddRange(_rbuttonModesArray);
             }
-
 
             // Get button long modes
             var lbuttonLongModesStr = SendCommand($"LBUTTON_LONG{_cmdExtension}=?").ToString();
@@ -1819,6 +1830,35 @@ namespace ChameleonMiniGUI
             {
                 cb.Items.Clear();
                 cb.Items.AddRange(_lbuttonModesArray);
+            }
+
+            // Get button long modes
+            var lbuttonLongModesStr = SendCommand($"BUTTON_LONG{_cmdExtension}").ToString();
+            if (string.IsNullOrEmpty(lbuttonLongModesStr)) return;
+
+            if (lbuttonLongModesStr.ToLower().StartsWith("200"))
+            {
+                // disable all dropdowns
+                foreach (var cb in FindControls<ComboBox>(Controls, "cb_Lbuttonlong"))
+                {
+                    cb.Items.Clear();
+                    cb.Enabled = false;
+                }
+            }
+            else
+            {
+                // split by comma
+                _lbuttonLongModesArray = lbuttonLongModesStr.Split(',');
+
+                if (!_lbuttonLongModesArray.Any()) return;
+
+                // populate all dropdowns
+                foreach (var cb in FindControls<ComboBox>(Controls, "cb_lbuttonlong"))
+                {
+                    cb.Enabled = true;
+                    cb.Items.Clear();
+                    cb.Items.AddRange(_lbuttonLongModesArray);
+                }
             }
         }
 
@@ -2089,7 +2129,6 @@ namespace ChameleonMiniGUI
             {
                 CleanUpHexBox(hexBox);
 
-
                 // try to open in write mode
                 IByteProvider dynamicFileByteProvider = null;
                 switch (fi.Extension.ToLower())
@@ -2312,7 +2351,8 @@ namespace ChameleonMiniGUI
             list = FindControls<ComboBox>(Controls, "cb_Lbuttonlong");
             list.ForEach(a => ApplyAll(a, c =>
             {
-                c.Visible = false;
+                c.Visible = true;
+                c.Width = REVEDefaultComboWidth;
             }));
 
             list = FindControls<ComboBox>(Controls, "cb_ledgreen");
@@ -2339,7 +2379,6 @@ namespace ChameleonMiniGUI
                 c.Visible = true;
                 c.Width = REVGDefaultComboWidth;
             }));
-
 
             list = FindControls<ComboBox>(Controls, "cb_Lbutton");
             list.ForEach(a => ApplyAll(a, c =>

@@ -2657,9 +2657,9 @@ namespace ChameleonMiniGUI
             // 
             // ucExplorer1
             // 
-            this.ucExplorer1.Location = new System.Drawing.Point(52, 48);
+            this.ucExplorer1.Location = new System.Drawing.Point(24, 24);
             this.ucExplorer1.Name = "ucExplorer1";
-            this.ucExplorer1.Size = new System.Drawing.Size(730, 366);
+            this.ucExplorer1.Size = new System.Drawing.Size(1226, 617);
             this.ucExplorer1.TabIndex = 0;
             // 
             // tpSerial

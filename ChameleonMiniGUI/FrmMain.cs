@@ -452,6 +452,8 @@ namespace ChameleonMiniGUI
 
         private void btn_upload_Click(object sender, EventArgs e)
         {
+            var ActiveselectedSlot = SendCommand($"SETTING{_cmdExtension}?").ToString();
+
             Cursor.Current = Cursors.WaitCursor;
             foreach (var cb in FindControls<CheckBox>(Controls, "checkBox"))
             {
@@ -477,6 +479,9 @@ namespace ChameleonMiniGUI
 
                 break; // We can only upload a single dump at a time
             }
+
+            SendCommandWithoutResult($"SETTING{_cmdExtension}={ActiveselectedSlot}".ToString());
+            HighlightActiveSlot();
             Cursor.Current = Cursors.Default;
         }
 
@@ -541,6 +546,7 @@ namespace ChameleonMiniGUI
         private void btn_mfkey_Click(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;
+            var ActiveselectedSlot = SendCommand($"SETTING{_cmdExtension}?").ToString();
 
             // Get all selected indices
             var results = FindControls<CheckBox>(Controls, "checkBox")
@@ -568,6 +574,10 @@ namespace ChameleonMiniGUI
                     return result;
                 });
             txt_output.AppendText(string.Join(string.Empty, results));
+
+            SendCommandWithoutResult($"SETTING{_cmdExtension}={ActiveselectedSlot}".ToString());
+            HighlightActiveSlot();
+
             this.Cursor = Cursors.Default;
         }
 
@@ -616,6 +626,9 @@ namespace ChameleonMiniGUI
                     RefreshSlot(tagslotIndex);
                 }
             }
+
+            HighlightActiveSlot();
+
             Cursor.Current = Cursors.Default;
         }
 
@@ -649,7 +662,35 @@ namespace ChameleonMiniGUI
 
                 break; // Only one can be set as active
             }
+
+            HighlightActiveSlot();
+
             Cursor.Current = Cursors.Default;
+        }
+
+        private void HighlightActiveSlot()
+        {
+            // Determine which slot is active finally
+            var ActSetting = SendCommand($"SETTING{ _cmdExtension}?");
+
+            int Slot = Convert.ToInt32(ActSetting.ToString());
+
+            foreach (var gb in FindControls<GroupBoxEnhanced>(Controls, "gb_tagslot"))
+            {
+                var tagslotIndex = int.Parse(gb.Name.Substring(gb.Name.Length - 1));
+                if (tagslotIndex <= 0) continue;
+
+                gb.BorderColor = System.Drawing.SystemColors.ControlLight;
+                gb.BorderColorLight = System.Drawing.SystemColors.ControlLightLight;
+                gb.BorderWidth = 1;
+            }
+
+
+            var gb_active = FindControls<GroupBoxEnhanced>(Controls, $"gb_tagslot{Slot}").FirstOrDefault();
+            gb_active.BorderColor = System.Drawing.Color.Green;
+            gb_active.BorderColorLight = System.Drawing.Color.LightGreen;
+            gb_active.BorderWidth = 2;
+            GroupBoxEnhanced.RedrawGroupBoxDisplay(tpOperation);
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -1439,6 +1480,9 @@ namespace ChameleonMiniGUI
 
         private void RefreshSlot(int slotIndex)
         {
+            // Keep initial Active Slot when refreshing
+            var ActiveselectedSlot = SendCommand($"SETTING{_cmdExtension}?").ToString();
+
             //SETTINGMY=i
             SendCommandWithoutResult($"SETTING{_cmdExtension}={slotIndex - _tagslotIndexOffset}");
 
@@ -1586,6 +1630,9 @@ namespace ChameleonMiniGUI
                     box.Text = slotMemSize;
                 }
             }
+
+            SendCommandWithoutResult($"SETTING{_cmdExtension}={ActiveselectedSlot}".ToString());
+            HighlightActiveSlot();
         }
 
         private bool IsLButtonModeValid(string s)
@@ -2294,11 +2341,21 @@ namespace ChameleonMiniGUI
 
         #endregion
 
-        private void comboBox5_SelectedIndexChanged(object sender, EventArgs e)
+        private void frm_main_Activated(object sender, EventArgs e)
         {
+            GroupBoxEnhanced.RedrawGroupBoxDisplay(tpOperation);
+        }
 
+        private void frm_main_Move(object sender, EventArgs e)
+        {
+            GroupBoxEnhanced.RedrawGroupBoxDisplay(tpOperation);
+        }
+
+        private void frm_main_ResizeEnd(object sender, EventArgs e)
+        {
+            GroupBoxEnhanced.RedrawGroupBoxDisplay(tpOperation);
         }
     }
 
      
-    }
+}

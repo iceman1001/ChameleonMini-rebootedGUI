@@ -117,6 +117,9 @@
     </Compile>
     <Compile Include="Comparers\KeyComparer.cs" />
     <Compile Include="Attacks\MfKeyAttacks.cs" />
+    <Compile Include="GroupBoxEnhanced.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Legend\IlegendItem.cs" />
     <Compile Include="Legend\Legend.cs" />
     <Compile Include="Legend\UcLegend.cs">

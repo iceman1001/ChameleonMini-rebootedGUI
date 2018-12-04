@@ -310,11 +310,11 @@ namespace ChameleonMiniGUI
             // 
             // openFileDialog1
             // 
-            this.openFileDialog1.Filter = "Dump files| *.bin; *.dump; *.mfd; *.hex";
+            this.openFileDialog1.Filter = "Dump files| *.bin; *.dump; *.mfd; *.hex; *.json";
             // 
             // saveFileDialog1
             // 
-            this.saveFileDialog1.Filter = "Dump files| *.bin; *.dump; *.mfd; *.hex";
+            this.saveFileDialog1.Filter = "Dump files| *.bin; *.dump; *.mfd; *.hex | JSON file | *.json";
             // 
             // gb_output
             // 
@@ -1406,58 +1406,6 @@ namespace ChameleonMiniGUI
             this.gb_tagslot2.TabIndex = 24;
             this.gb_tagslot2.TabStop = false;
             // 
-            // cb_ledred2
-            // 
-            this.cb_ledred2.FormattingEnabled = true;
-            this.cb_ledred2.Items.AddRange(new object[] {
-            "NONE",
-            "MF_CLASSIC_1K",
-            "MF_CLASSIC_1K_7B",
-            "MF_CLASSIC_4K",
-            "MF_CLASSIC_4K_7B",
-            "MF_ULTRALIGHT",
-            "ISO14443A_SNIFF",
-            "ISO14443A_READER"});
-            this.cb_ledred2.Location = new System.Drawing.Point(97, 180);
-            this.cb_ledred2.Name = "cb_ledred2";
-            this.cb_ledred2.Size = new System.Drawing.Size(175, 21);
-            this.cb_ledred2.TabIndex = 21;
-            // 
-            // cb_ledgreen2
-            // 
-            this.cb_ledgreen2.FormattingEnabled = true;
-            this.cb_ledgreen2.Items.AddRange(new object[] {
-            "NONE",
-            "MF_CLASSIC_1K",
-            "MF_CLASSIC_1K_7B",
-            "MF_CLASSIC_4K",
-            "MF_CLASSIC_4K_7B",
-            "MF_ULTRALIGHT",
-            "ISO14443A_SNIFF",
-            "ISO14443A_READER"});
-            this.cb_ledgreen2.Location = new System.Drawing.Point(97, 147);
-            this.cb_ledgreen2.Name = "cb_ledgreen2";
-            this.cb_ledgreen2.Size = new System.Drawing.Size(175, 21);
-            this.cb_ledgreen2.TabIndex = 20;
-            // 
-            // lb_ledledred2
-            // 
-            this.lb_ledledred2.AutoSize = true;
-            this.lb_ledledred2.Location = new System.Drawing.Point(6, 184);
-            this.lb_ledledred2.Name = "lb_ledledred2";
-            this.lb_ledledred2.Size = new System.Drawing.Size(48, 13);
-            this.lb_ledledred2.TabIndex = 19;
-            this.lb_ledledred2.Text = "LEDRed";
-            // 
-            // lb_ledledgreen2
-            // 
-            this.lb_ledledgreen2.AutoSize = true;
-            this.lb_ledledgreen2.Location = new System.Drawing.Point(6, 151);
-            this.lb_ledledgreen2.Name = "lb_ledledgreen2";
-            this.lb_ledledgreen2.Size = new System.Drawing.Size(57, 13);
-            this.lb_ledledgreen2.TabIndex = 18;
-            this.lb_ledledgreen2.Text = "LEDGreen";
-            // 
             // cb_Rbuttonlong2
             // 
             this.cb_Rbuttonlong2.FormattingEnabled = true;
@@ -1646,58 +1594,6 @@ namespace ChameleonMiniGUI
             this.gb_tagslot4.Size = new System.Drawing.Size(278, 242);
             this.gb_tagslot4.TabIndex = 23;
             this.gb_tagslot4.TabStop = false;
-            // 
-            // cb_ledred4
-            // 
-            this.cb_ledred4.FormattingEnabled = true;
-            this.cb_ledred4.Items.AddRange(new object[] {
-            "NONE",
-            "MF_CLASSIC_1K",
-            "MF_CLASSIC_1K_7B",
-            "MF_CLASSIC_4K",
-            "MF_CLASSIC_4K_7B",
-            "MF_ULTRALIGHT",
-            "ISO14443A_SNIFF",
-            "ISO14443A_READER"});
-            this.cb_ledred4.Location = new System.Drawing.Point(97, 180);
-            this.cb_ledred4.Name = "cb_ledred4";
-            this.cb_ledred4.Size = new System.Drawing.Size(175, 21);
-            this.cb_ledred4.TabIndex = 21;
-            // 
-            // cb_ledgreen4
-            // 
-            this.cb_ledgreen4.FormattingEnabled = true;
-            this.cb_ledgreen4.Items.AddRange(new object[] {
-            "NONE",
-            "MF_CLASSIC_1K",
-            "MF_CLASSIC_1K_7B",
-            "MF_CLASSIC_4K",
-            "MF_CLASSIC_4K_7B",
-            "MF_ULTRALIGHT",
-            "ISO14443A_SNIFF",
-            "ISO14443A_READER"});
-            this.cb_ledgreen4.Location = new System.Drawing.Point(97, 147);
-            this.cb_ledgreen4.Name = "cb_ledgreen4";
-            this.cb_ledgreen4.Size = new System.Drawing.Size(175, 21);
-            this.cb_ledgreen4.TabIndex = 20;
-            // 
-            // lb_ledledred4
-            // 
-            this.lb_ledledred4.AutoSize = true;
-            this.lb_ledledred4.Location = new System.Drawing.Point(6, 184);
-            this.lb_ledledred4.Name = "lb_ledledred4";
-            this.lb_ledledred4.Size = new System.Drawing.Size(48, 13);
-            this.lb_ledledred4.TabIndex = 19;
-            this.lb_ledledred4.Text = "LEDRed";
-            // 
-            // lb_ledledgreen4
-            // 
-            this.lb_ledledgreen4.AutoSize = true;
-            this.lb_ledledgreen4.Location = new System.Drawing.Point(6, 151);
-            this.lb_ledledgreen4.Name = "lb_ledledgreen4";
-            this.lb_ledledgreen4.Size = new System.Drawing.Size(57, 13);
-            this.lb_ledledgreen4.TabIndex = 18;
-            this.lb_ledledgreen4.Text = "LEDGreen";
             // 
             // cb_Rbuttonlong4
             // 
@@ -1888,58 +1784,6 @@ namespace ChameleonMiniGUI
             this.gb_tagslot3.TabIndex = 22;
             this.gb_tagslot3.TabStop = false;
             // 
-            // cb_ledred3
-            // 
-            this.cb_ledred3.FormattingEnabled = true;
-            this.cb_ledred3.Items.AddRange(new object[] {
-            "NONE",
-            "MF_CLASSIC_1K",
-            "MF_CLASSIC_1K_7B",
-            "MF_CLASSIC_4K",
-            "MF_CLASSIC_4K_7B",
-            "MF_ULTRALIGHT",
-            "ISO14443A_SNIFF",
-            "ISO14443A_READER"});
-            this.cb_ledred3.Location = new System.Drawing.Point(97, 180);
-            this.cb_ledred3.Name = "cb_ledred3";
-            this.cb_ledred3.Size = new System.Drawing.Size(175, 21);
-            this.cb_ledred3.TabIndex = 21;
-            // 
-            // cb_ledgreen3
-            // 
-            this.cb_ledgreen3.FormattingEnabled = true;
-            this.cb_ledgreen3.Items.AddRange(new object[] {
-            "NONE",
-            "MF_CLASSIC_1K",
-            "MF_CLASSIC_1K_7B",
-            "MF_CLASSIC_4K",
-            "MF_CLASSIC_4K_7B",
-            "MF_ULTRALIGHT",
-            "ISO14443A_SNIFF",
-            "ISO14443A_READER"});
-            this.cb_ledgreen3.Location = new System.Drawing.Point(97, 147);
-            this.cb_ledgreen3.Name = "cb_ledgreen3";
-            this.cb_ledgreen3.Size = new System.Drawing.Size(175, 21);
-            this.cb_ledgreen3.TabIndex = 20;
-            // 
-            // lb_ledledred3
-            // 
-            this.lb_ledledred3.AutoSize = true;
-            this.lb_ledledred3.Location = new System.Drawing.Point(6, 184);
-            this.lb_ledledred3.Name = "lb_ledledred3";
-            this.lb_ledledred3.Size = new System.Drawing.Size(48, 13);
-            this.lb_ledledred3.TabIndex = 19;
-            this.lb_ledledred3.Text = "LEDRed";
-            // 
-            // lb_ledledgreen3
-            // 
-            this.lb_ledledgreen3.AutoSize = true;
-            this.lb_ledledgreen3.Location = new System.Drawing.Point(6, 151);
-            this.lb_ledledgreen3.Name = "lb_ledledgreen3";
-            this.lb_ledledgreen3.Size = new System.Drawing.Size(57, 13);
-            this.lb_ledledgreen3.TabIndex = 18;
-            this.lb_ledledgreen3.Text = "LEDGreen";
-            // 
             // cb_Rbuttonlong3
             // 
             this.cb_Rbuttonlong3.FormattingEnabled = true;
@@ -2128,58 +1972,6 @@ namespace ChameleonMiniGUI
             this.gb_tagslot5.Size = new System.Drawing.Size(278, 242);
             this.gb_tagslot5.TabIndex = 21;
             this.gb_tagslot5.TabStop = false;
-            // 
-            // cb_ledred5
-            // 
-            this.cb_ledred5.FormattingEnabled = true;
-            this.cb_ledred5.Items.AddRange(new object[] {
-            "NONE",
-            "MF_CLASSIC_1K",
-            "MF_CLASSIC_1K_7B",
-            "MF_CLASSIC_4K",
-            "MF_CLASSIC_4K_7B",
-            "MF_ULTRALIGHT",
-            "ISO14443A_SNIFF",
-            "ISO14443A_READER"});
-            this.cb_ledred5.Location = new System.Drawing.Point(97, 180);
-            this.cb_ledred5.Name = "cb_ledred5";
-            this.cb_ledred5.Size = new System.Drawing.Size(175, 21);
-            this.cb_ledred5.TabIndex = 23;
-            // 
-            // cb_ledgreen5
-            // 
-            this.cb_ledgreen5.FormattingEnabled = true;
-            this.cb_ledgreen5.Items.AddRange(new object[] {
-            "NONE",
-            "MF_CLASSIC_1K",
-            "MF_CLASSIC_1K_7B",
-            "MF_CLASSIC_4K",
-            "MF_CLASSIC_4K_7B",
-            "MF_ULTRALIGHT",
-            "ISO14443A_SNIFF",
-            "ISO14443A_READER"});
-            this.cb_ledgreen5.Location = new System.Drawing.Point(97, 147);
-            this.cb_ledgreen5.Name = "cb_ledgreen5";
-            this.cb_ledgreen5.Size = new System.Drawing.Size(175, 21);
-            this.cb_ledgreen5.TabIndex = 22;
-            // 
-            // lb_ledledred5
-            // 
-            this.lb_ledledred5.AutoSize = true;
-            this.lb_ledledred5.Location = new System.Drawing.Point(6, 184);
-            this.lb_ledledred5.Name = "lb_ledledred5";
-            this.lb_ledledred5.Size = new System.Drawing.Size(48, 13);
-            this.lb_ledledred5.TabIndex = 21;
-            this.lb_ledledred5.Text = "LEDRed";
-            // 
-            // lb_ledledgreen5
-            // 
-            this.lb_ledledgreen5.AutoSize = true;
-            this.lb_ledledgreen5.Location = new System.Drawing.Point(6, 151);
-            this.lb_ledledgreen5.Name = "lb_ledledgreen5";
-            this.lb_ledledgreen5.Size = new System.Drawing.Size(57, 13);
-            this.lb_ledledgreen5.TabIndex = 20;
-            this.lb_ledledgreen5.Text = "LEDGreen";
             // 
             // cb_Rbuttonlong5
             // 
@@ -2370,58 +2162,6 @@ namespace ChameleonMiniGUI
             this.gb_tagslot7.TabIndex = 27;
             this.gb_tagslot7.TabStop = false;
             // 
-            // cb_ledred7
-            // 
-            this.cb_ledred7.FormattingEnabled = true;
-            this.cb_ledred7.Items.AddRange(new object[] {
-            "NONE",
-            "MF_CLASSIC_1K",
-            "MF_CLASSIC_1K_7B",
-            "MF_CLASSIC_4K",
-            "MF_CLASSIC_4K_7B",
-            "MF_ULTRALIGHT",
-            "ISO14443A_SNIFF",
-            "ISO14443A_READER"});
-            this.cb_ledred7.Location = new System.Drawing.Point(97, 180);
-            this.cb_ledred7.Name = "cb_ledred7";
-            this.cb_ledred7.Size = new System.Drawing.Size(175, 21);
-            this.cb_ledred7.TabIndex = 25;
-            // 
-            // cb_ledgreen7
-            // 
-            this.cb_ledgreen7.FormattingEnabled = true;
-            this.cb_ledgreen7.Items.AddRange(new object[] {
-            "NONE",
-            "MF_CLASSIC_1K",
-            "MF_CLASSIC_1K_7B",
-            "MF_CLASSIC_4K",
-            "MF_CLASSIC_4K_7B",
-            "MF_ULTRALIGHT",
-            "ISO14443A_SNIFF",
-            "ISO14443A_READER"});
-            this.cb_ledgreen7.Location = new System.Drawing.Point(97, 147);
-            this.cb_ledgreen7.Name = "cb_ledgreen7";
-            this.cb_ledgreen7.Size = new System.Drawing.Size(175, 21);
-            this.cb_ledgreen7.TabIndex = 24;
-            // 
-            // lb_ledledred7
-            // 
-            this.lb_ledledred7.AutoSize = true;
-            this.lb_ledledred7.Location = new System.Drawing.Point(6, 184);
-            this.lb_ledledred7.Name = "lb_ledledred7";
-            this.lb_ledledred7.Size = new System.Drawing.Size(48, 13);
-            this.lb_ledledred7.TabIndex = 23;
-            this.lb_ledledred7.Text = "LEDRed";
-            // 
-            // lb_ledledgreen7
-            // 
-            this.lb_ledledgreen7.AutoSize = true;
-            this.lb_ledledgreen7.Location = new System.Drawing.Point(6, 151);
-            this.lb_ledledgreen7.Name = "lb_ledledgreen7";
-            this.lb_ledledgreen7.Size = new System.Drawing.Size(57, 13);
-            this.lb_ledledgreen7.TabIndex = 22;
-            this.lb_ledledgreen7.Text = "LEDGreen";
-            // 
             // cb_Rbuttonlong7
             // 
             this.cb_Rbuttonlong7.FormattingEnabled = true;
@@ -2610,58 +2350,6 @@ namespace ChameleonMiniGUI
             this.gb_tagslot8.Size = new System.Drawing.Size(278, 242);
             this.gb_tagslot8.TabIndex = 20;
             this.gb_tagslot8.TabStop = false;
-            // 
-            // cb_ledred8
-            // 
-            this.cb_ledred8.FormattingEnabled = true;
-            this.cb_ledred8.Items.AddRange(new object[] {
-            "NONE",
-            "MF_CLASSIC_1K",
-            "MF_CLASSIC_1K_7B",
-            "MF_CLASSIC_4K",
-            "MF_CLASSIC_4K_7B",
-            "MF_ULTRALIGHT",
-            "ISO14443A_SNIFF",
-            "ISO14443A_READER"});
-            this.cb_ledred8.Location = new System.Drawing.Point(97, 180);
-            this.cb_ledred8.Name = "cb_ledred8";
-            this.cb_ledred8.Size = new System.Drawing.Size(175, 21);
-            this.cb_ledred8.TabIndex = 25;
-            // 
-            // cb_ledgreen8
-            // 
-            this.cb_ledgreen8.FormattingEnabled = true;
-            this.cb_ledgreen8.Items.AddRange(new object[] {
-            "NONE",
-            "MF_CLASSIC_1K",
-            "MF_CLASSIC_1K_7B",
-            "MF_CLASSIC_4K",
-            "MF_CLASSIC_4K_7B",
-            "MF_ULTRALIGHT",
-            "ISO14443A_SNIFF",
-            "ISO14443A_READER"});
-            this.cb_ledgreen8.Location = new System.Drawing.Point(97, 147);
-            this.cb_ledgreen8.Name = "cb_ledgreen8";
-            this.cb_ledgreen8.Size = new System.Drawing.Size(175, 21);
-            this.cb_ledgreen8.TabIndex = 24;
-            // 
-            // lb_ledledred8
-            // 
-            this.lb_ledledred8.AutoSize = true;
-            this.lb_ledledred8.Location = new System.Drawing.Point(6, 184);
-            this.lb_ledledred8.Name = "lb_ledledred8";
-            this.lb_ledledred8.Size = new System.Drawing.Size(48, 13);
-            this.lb_ledledred8.TabIndex = 23;
-            this.lb_ledledred8.Text = "LEDRed";
-            // 
-            // lb_ledledgreen8
-            // 
-            this.lb_ledledgreen8.AutoSize = true;
-            this.lb_ledledgreen8.Location = new System.Drawing.Point(6, 151);
-            this.lb_ledledgreen8.Name = "lb_ledledgreen8";
-            this.lb_ledledgreen8.Size = new System.Drawing.Size(57, 13);
-            this.lb_ledledgreen8.TabIndex = 22;
-            this.lb_ledledgreen8.Text = "LEDGreen";
             // 
             // cb_Rbuttonlong8
             // 
@@ -3131,9 +2819,9 @@ namespace ChameleonMiniGUI
             // 
             // ucExplorer1
             // 
-            this.ucExplorer1.Location = new System.Drawing.Point(52, 48);
+            this.ucExplorer1.Location = new System.Drawing.Point(24, 24);
             this.ucExplorer1.Name = "ucExplorer1";
-            this.ucExplorer1.Size = new System.Drawing.Size(730, 366);
+            this.ucExplorer1.Size = new System.Drawing.Size(1226, 617);
             this.ucExplorer1.TabIndex = 0;
             // 
             // tpSerial
@@ -3278,6 +2966,422 @@ namespace ChameleonMiniGUI
             // openFileDialog2
             // 
             this.openFileDialog2.FileName = "openFileDialog2";
+            // 
+            // lb_ledledgreen1
+            // 
+            this.lb_ledledgreen1.AutoSize = true;
+            this.lb_ledledgreen1.Location = new System.Drawing.Point(6, 151);
+            this.lb_ledledgreen1.Name = "lb_ledledgreen1";
+            this.lb_ledledgreen1.Size = new System.Drawing.Size(57, 13);
+            this.lb_ledledgreen1.TabIndex = 14;
+            this.lb_ledledgreen1.Text = "LEDGreen";
+            // 
+            // lb_ledledred1
+            // 
+            this.lb_ledledred1.AutoSize = true;
+            this.lb_ledledred1.Location = new System.Drawing.Point(6, 184);
+            this.lb_ledledred1.Name = "lb_ledledred1";
+            this.lb_ledledred1.Size = new System.Drawing.Size(48, 13);
+            this.lb_ledledred1.TabIndex = 15;
+            this.lb_ledledred1.Text = "LEDRed";
+            // 
+            // cb_ledgreen1
+            // 
+            this.cb_ledgreen1.FormattingEnabled = true;
+            this.cb_ledgreen1.Items.AddRange(new object[] {
+            "NONE",
+            "MF_CLASSIC_1K",
+            "MF_CLASSIC_1K_7B",
+            "MF_CLASSIC_4K",
+            "MF_CLASSIC_4K_7B",
+            "MF_ULTRALIGHT",
+            "ISO14443A_SNIFF",
+            "ISO14443A_READER"});
+            this.cb_ledgreen1.Location = new System.Drawing.Point(97, 147);
+            this.cb_ledgreen1.Name = "cb_ledgreen1";
+            this.cb_ledgreen1.Size = new System.Drawing.Size(175, 21);
+            this.cb_ledgreen1.TabIndex = 16;
+            // 
+            // cb_ledred1
+            // 
+            this.cb_ledred1.FormattingEnabled = true;
+            this.cb_ledred1.Items.AddRange(new object[] {
+            "NONE",
+            "MF_CLASSIC_1K",
+            "MF_CLASSIC_1K_7B",
+            "MF_CLASSIC_4K",
+            "MF_CLASSIC_4K_7B",
+            "MF_ULTRALIGHT",
+            "ISO14443A_SNIFF",
+            "ISO14443A_READER"});
+            this.cb_ledred1.Location = new System.Drawing.Point(97, 180);
+            this.cb_ledred1.Name = "cb_ledred1";
+            this.cb_ledred1.Size = new System.Drawing.Size(175, 21);
+            this.cb_ledred1.TabIndex = 17;
+            // 
+            // cb_ledred2
+            // 
+            this.cb_ledred2.FormattingEnabled = true;
+            this.cb_ledred2.Items.AddRange(new object[] {
+            "NONE",
+            "MF_CLASSIC_1K",
+            "MF_CLASSIC_1K_7B",
+            "MF_CLASSIC_4K",
+            "MF_CLASSIC_4K_7B",
+            "MF_ULTRALIGHT",
+            "ISO14443A_SNIFF",
+            "ISO14443A_READER"});
+            this.cb_ledred2.Location = new System.Drawing.Point(97, 180);
+            this.cb_ledred2.Name = "cb_ledred2";
+            this.cb_ledred2.Size = new System.Drawing.Size(175, 21);
+            this.cb_ledred2.TabIndex = 21;
+            // 
+            // cb_ledgreen2
+            // 
+            this.cb_ledgreen2.FormattingEnabled = true;
+            this.cb_ledgreen2.Items.AddRange(new object[] {
+            "NONE",
+            "MF_CLASSIC_1K",
+            "MF_CLASSIC_1K_7B",
+            "MF_CLASSIC_4K",
+            "MF_CLASSIC_4K_7B",
+            "MF_ULTRALIGHT",
+            "ISO14443A_SNIFF",
+            "ISO14443A_READER"});
+            this.cb_ledgreen2.Location = new System.Drawing.Point(97, 147);
+            this.cb_ledgreen2.Name = "cb_ledgreen2";
+            this.cb_ledgreen2.Size = new System.Drawing.Size(175, 21);
+            this.cb_ledgreen2.TabIndex = 20;
+            // 
+            // lb_ledledred2
+            // 
+            this.lb_ledledred2.AutoSize = true;
+            this.lb_ledledred2.Location = new System.Drawing.Point(6, 184);
+            this.lb_ledledred2.Name = "lb_ledledred2";
+            this.lb_ledledred2.Size = new System.Drawing.Size(48, 13);
+            this.lb_ledledred2.TabIndex = 19;
+            this.lb_ledledred2.Text = "LEDRed";
+            // 
+            // lb_ledledgreen2
+            // 
+            this.lb_ledledgreen2.AutoSize = true;
+            this.lb_ledledgreen2.Location = new System.Drawing.Point(6, 151);
+            this.lb_ledledgreen2.Name = "lb_ledledgreen2";
+            this.lb_ledledgreen2.Size = new System.Drawing.Size(57, 13);
+            this.lb_ledledgreen2.TabIndex = 18;
+            this.lb_ledledgreen2.Text = "LEDGreen";
+            // 
+            // cb_ledred3
+            // 
+            this.cb_ledred3.FormattingEnabled = true;
+            this.cb_ledred3.Items.AddRange(new object[] {
+            "NONE",
+            "MF_CLASSIC_1K",
+            "MF_CLASSIC_1K_7B",
+            "MF_CLASSIC_4K",
+            "MF_CLASSIC_4K_7B",
+            "MF_ULTRALIGHT",
+            "ISO14443A_SNIFF",
+            "ISO14443A_READER"});
+            this.cb_ledred3.Location = new System.Drawing.Point(97, 180);
+            this.cb_ledred3.Name = "cb_ledred3";
+            this.cb_ledred3.Size = new System.Drawing.Size(175, 21);
+            this.cb_ledred3.TabIndex = 21;
+            // 
+            // cb_ledgreen3
+            // 
+            this.cb_ledgreen3.FormattingEnabled = true;
+            this.cb_ledgreen3.Items.AddRange(new object[] {
+            "NONE",
+            "MF_CLASSIC_1K",
+            "MF_CLASSIC_1K_7B",
+            "MF_CLASSIC_4K",
+            "MF_CLASSIC_4K_7B",
+            "MF_ULTRALIGHT",
+            "ISO14443A_SNIFF",
+            "ISO14443A_READER"});
+            this.cb_ledgreen3.Location = new System.Drawing.Point(97, 147);
+            this.cb_ledgreen3.Name = "cb_ledgreen3";
+            this.cb_ledgreen3.Size = new System.Drawing.Size(175, 21);
+            this.cb_ledgreen3.TabIndex = 20;
+            // 
+            // lb_ledledred3
+            // 
+            this.lb_ledledred3.AutoSize = true;
+            this.lb_ledledred3.Location = new System.Drawing.Point(6, 184);
+            this.lb_ledledred3.Name = "lb_ledledred3";
+            this.lb_ledledred3.Size = new System.Drawing.Size(48, 13);
+            this.lb_ledledred3.TabIndex = 19;
+            this.lb_ledledred3.Text = "LEDRed";
+            // 
+            // lb_ledledgreen3
+            // 
+            this.lb_ledledgreen3.AutoSize = true;
+            this.lb_ledledgreen3.Location = new System.Drawing.Point(6, 151);
+            this.lb_ledledgreen3.Name = "lb_ledledgreen3";
+            this.lb_ledledgreen3.Size = new System.Drawing.Size(57, 13);
+            this.lb_ledledgreen3.TabIndex = 18;
+            this.lb_ledledgreen3.Text = "LEDGreen";
+            // 
+            // cb_ledred4
+            // 
+            this.cb_ledred4.FormattingEnabled = true;
+            this.cb_ledred4.Items.AddRange(new object[] {
+            "NONE",
+            "MF_CLASSIC_1K",
+            "MF_CLASSIC_1K_7B",
+            "MF_CLASSIC_4K",
+            "MF_CLASSIC_4K_7B",
+            "MF_ULTRALIGHT",
+            "ISO14443A_SNIFF",
+            "ISO14443A_READER"});
+            this.cb_ledred4.Location = new System.Drawing.Point(97, 180);
+            this.cb_ledred4.Name = "cb_ledred4";
+            this.cb_ledred4.Size = new System.Drawing.Size(175, 21);
+            this.cb_ledred4.TabIndex = 21;
+            // 
+            // cb_ledgreen4
+            // 
+            this.cb_ledgreen4.FormattingEnabled = true;
+            this.cb_ledgreen4.Items.AddRange(new object[] {
+            "NONE",
+            "MF_CLASSIC_1K",
+            "MF_CLASSIC_1K_7B",
+            "MF_CLASSIC_4K",
+            "MF_CLASSIC_4K_7B",
+            "MF_ULTRALIGHT",
+            "ISO14443A_SNIFF",
+            "ISO14443A_READER"});
+            this.cb_ledgreen4.Location = new System.Drawing.Point(97, 147);
+            this.cb_ledgreen4.Name = "cb_ledgreen4";
+            this.cb_ledgreen4.Size = new System.Drawing.Size(175, 21);
+            this.cb_ledgreen4.TabIndex = 20;
+            // 
+            // lb_ledledred4
+            // 
+            this.lb_ledledred4.AutoSize = true;
+            this.lb_ledledred4.Location = new System.Drawing.Point(6, 184);
+            this.lb_ledledred4.Name = "lb_ledledred4";
+            this.lb_ledledred4.Size = new System.Drawing.Size(48, 13);
+            this.lb_ledledred4.TabIndex = 19;
+            this.lb_ledledred4.Text = "LEDRed";
+            // 
+            // lb_ledledgreen4
+            // 
+            this.lb_ledledgreen4.AutoSize = true;
+            this.lb_ledledgreen4.Location = new System.Drawing.Point(6, 151);
+            this.lb_ledledgreen4.Name = "lb_ledledgreen4";
+            this.lb_ledledgreen4.Size = new System.Drawing.Size(57, 13);
+            this.lb_ledledgreen4.TabIndex = 18;
+            this.lb_ledledgreen4.Text = "LEDGreen";
+            // 
+            // cb_ledred8
+            // 
+            this.cb_ledred8.FormattingEnabled = true;
+            this.cb_ledred8.Items.AddRange(new object[] {
+            "NONE",
+            "MF_CLASSIC_1K",
+            "MF_CLASSIC_1K_7B",
+            "MF_CLASSIC_4K",
+            "MF_CLASSIC_4K_7B",
+            "MF_ULTRALIGHT",
+            "ISO14443A_SNIFF",
+            "ISO14443A_READER"});
+            this.cb_ledred8.Location = new System.Drawing.Point(97, 180);
+            this.cb_ledred8.Name = "cb_ledred8";
+            this.cb_ledred8.Size = new System.Drawing.Size(175, 21);
+            this.cb_ledred8.TabIndex = 25;
+            // 
+            // cb_ledgreen8
+            // 
+            this.cb_ledgreen8.FormattingEnabled = true;
+            this.cb_ledgreen8.Items.AddRange(new object[] {
+            "NONE",
+            "MF_CLASSIC_1K",
+            "MF_CLASSIC_1K_7B",
+            "MF_CLASSIC_4K",
+            "MF_CLASSIC_4K_7B",
+            "MF_ULTRALIGHT",
+            "ISO14443A_SNIFF",
+            "ISO14443A_READER"});
+            this.cb_ledgreen8.Location = new System.Drawing.Point(97, 147);
+            this.cb_ledgreen8.Name = "cb_ledgreen8";
+            this.cb_ledgreen8.Size = new System.Drawing.Size(175, 21);
+            this.cb_ledgreen8.TabIndex = 24;
+            // 
+            // lb_ledledred8
+            // 
+            this.lb_ledledred8.AutoSize = true;
+            this.lb_ledledred8.Location = new System.Drawing.Point(6, 184);
+            this.lb_ledledred8.Name = "lb_ledledred8";
+            this.lb_ledledred8.Size = new System.Drawing.Size(48, 13);
+            this.lb_ledledred8.TabIndex = 23;
+            this.lb_ledledred8.Text = "LEDRed";
+            // 
+            // lb_ledledgreen8
+            // 
+            this.lb_ledledgreen8.AutoSize = true;
+            this.lb_ledledgreen8.Location = new System.Drawing.Point(6, 151);
+            this.lb_ledledgreen8.Name = "lb_ledledgreen8";
+            this.lb_ledledgreen8.Size = new System.Drawing.Size(57, 13);
+            this.lb_ledledgreen8.TabIndex = 22;
+            this.lb_ledledgreen8.Text = "LEDGreen";
+            // 
+            // cb_ledred7
+            // 
+            this.cb_ledred7.FormattingEnabled = true;
+            this.cb_ledred7.Items.AddRange(new object[] {
+            "NONE",
+            "MF_CLASSIC_1K",
+            "MF_CLASSIC_1K_7B",
+            "MF_CLASSIC_4K",
+            "MF_CLASSIC_4K_7B",
+            "MF_ULTRALIGHT",
+            "ISO14443A_SNIFF",
+            "ISO14443A_READER"});
+            this.cb_ledred7.Location = new System.Drawing.Point(97, 180);
+            this.cb_ledred7.Name = "cb_ledred7";
+            this.cb_ledred7.Size = new System.Drawing.Size(175, 21);
+            this.cb_ledred7.TabIndex = 25;
+            // 
+            // cb_ledgreen7
+            // 
+            this.cb_ledgreen7.FormattingEnabled = true;
+            this.cb_ledgreen7.Items.AddRange(new object[] {
+            "NONE",
+            "MF_CLASSIC_1K",
+            "MF_CLASSIC_1K_7B",
+            "MF_CLASSIC_4K",
+            "MF_CLASSIC_4K_7B",
+            "MF_ULTRALIGHT",
+            "ISO14443A_SNIFF",
+            "ISO14443A_READER"});
+            this.cb_ledgreen7.Location = new System.Drawing.Point(97, 147);
+            this.cb_ledgreen7.Name = "cb_ledgreen7";
+            this.cb_ledgreen7.Size = new System.Drawing.Size(175, 21);
+            this.cb_ledgreen7.TabIndex = 24;
+            // 
+            // lb_ledledred7
+            // 
+            this.lb_ledledred7.AutoSize = true;
+            this.lb_ledledred7.Location = new System.Drawing.Point(6, 184);
+            this.lb_ledledred7.Name = "lb_ledledred7";
+            this.lb_ledledred7.Size = new System.Drawing.Size(48, 13);
+            this.lb_ledledred7.TabIndex = 23;
+            this.lb_ledledred7.Text = "LEDRed";
+            // 
+            // lb_ledledgreen7
+            // 
+            this.lb_ledledgreen7.AutoSize = true;
+            this.lb_ledledgreen7.Location = new System.Drawing.Point(6, 151);
+            this.lb_ledledgreen7.Name = "lb_ledledgreen7";
+            this.lb_ledledgreen7.Size = new System.Drawing.Size(57, 13);
+            this.lb_ledledgreen7.TabIndex = 22;
+            this.lb_ledledgreen7.Text = "LEDGreen";
+            // 
+            // cb_ledred6
+            // 
+            this.cb_ledred6.FormattingEnabled = true;
+            this.cb_ledred6.Items.AddRange(new object[] {
+            "NONE",
+            "MF_CLASSIC_1K",
+            "MF_CLASSIC_1K_7B",
+            "MF_CLASSIC_4K",
+            "MF_CLASSIC_4K_7B",
+            "MF_ULTRALIGHT",
+            "ISO14443A_SNIFF",
+            "ISO14443A_READER"});
+            this.cb_ledred6.Location = new System.Drawing.Point(97, 180);
+            this.cb_ledred6.Name = "cb_ledred6";
+            this.cb_ledred6.Size = new System.Drawing.Size(175, 21);
+            this.cb_ledred6.TabIndex = 25;
+            // 
+            // cb_ledgreen6
+            // 
+            this.cb_ledgreen6.FormattingEnabled = true;
+            this.cb_ledgreen6.Items.AddRange(new object[] {
+            "NONE",
+            "MF_CLASSIC_1K",
+            "MF_CLASSIC_1K_7B",
+            "MF_CLASSIC_4K",
+            "MF_CLASSIC_4K_7B",
+            "MF_ULTRALIGHT",
+            "ISO14443A_SNIFF",
+            "ISO14443A_READER"});
+            this.cb_ledgreen6.Location = new System.Drawing.Point(97, 147);
+            this.cb_ledgreen6.Name = "cb_ledgreen6";
+            this.cb_ledgreen6.Size = new System.Drawing.Size(175, 21);
+            this.cb_ledgreen6.TabIndex = 24;
+            // 
+            // lb_ledledred6
+            // 
+            this.lb_ledledred6.AutoSize = true;
+            this.lb_ledledred6.Location = new System.Drawing.Point(6, 184);
+            this.lb_ledledred6.Name = "lb_ledledred6";
+            this.lb_ledledred6.Size = new System.Drawing.Size(48, 13);
+            this.lb_ledledred6.TabIndex = 23;
+            this.lb_ledledred6.Text = "LEDRed";
+            // 
+            // lb_ledledgreen6
+            // 
+            this.lb_ledledgreen6.AutoSize = true;
+            this.lb_ledledgreen6.Location = new System.Drawing.Point(6, 151);
+            this.lb_ledledgreen6.Name = "lb_ledledgreen6";
+            this.lb_ledledgreen6.Size = new System.Drawing.Size(57, 13);
+            this.lb_ledledgreen6.TabIndex = 22;
+            this.lb_ledledgreen6.Text = "LEDGreen";
+            // 
+            // cb_ledred5
+            // 
+            this.cb_ledred5.FormattingEnabled = true;
+            this.cb_ledred5.Items.AddRange(new object[] {
+            "NONE",
+            "MF_CLASSIC_1K",
+            "MF_CLASSIC_1K_7B",
+            "MF_CLASSIC_4K",
+            "MF_CLASSIC_4K_7B",
+            "MF_ULTRALIGHT",
+            "ISO14443A_SNIFF",
+            "ISO14443A_READER"});
+            this.cb_ledred5.Location = new System.Drawing.Point(97, 180);
+            this.cb_ledred5.Name = "cb_ledred5";
+            this.cb_ledred5.Size = new System.Drawing.Size(175, 21);
+            this.cb_ledred5.TabIndex = 23;
+            // 
+            // cb_ledgreen5
+            // 
+            this.cb_ledgreen5.FormattingEnabled = true;
+            this.cb_ledgreen5.Items.AddRange(new object[] {
+            "NONE",
+            "MF_CLASSIC_1K",
+            "MF_CLASSIC_1K_7B",
+            "MF_CLASSIC_4K",
+            "MF_CLASSIC_4K_7B",
+            "MF_ULTRALIGHT",
+            "ISO14443A_SNIFF",
+            "ISO14443A_READER"});
+            this.cb_ledgreen5.Location = new System.Drawing.Point(97, 147);
+            this.cb_ledgreen5.Name = "cb_ledgreen5";
+            this.cb_ledgreen5.Size = new System.Drawing.Size(175, 21);
+            this.cb_ledgreen5.TabIndex = 22;
+            // 
+            // lb_ledledred5
+            // 
+            this.lb_ledledred5.AutoSize = true;
+            this.lb_ledledred5.Location = new System.Drawing.Point(6, 184);
+            this.lb_ledledred5.Name = "lb_ledledred5";
+            this.lb_ledledred5.Size = new System.Drawing.Size(48, 13);
+            this.lb_ledledred5.TabIndex = 21;
+            this.lb_ledledred5.Text = "LEDRed";
+            // 
+            // lb_ledledgreen5
+            // 
+            this.lb_ledledgreen5.AutoSize = true;
+            this.lb_ledledgreen5.Location = new System.Drawing.Point(6, 151);
+            this.lb_ledledgreen5.Name = "lb_ledledgreen5";
+            this.lb_ledledgreen5.Size = new System.Drawing.Size(57, 13);
+            this.lb_ledledgreen5.TabIndex = 20;
+            this.lb_ledledgreen5.Text = "LEDGreen";
             // 
             // frm_main
             // 

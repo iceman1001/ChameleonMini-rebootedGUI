@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ChameleonMiniGUI</RootNamespace>
     <AssemblyName>ChameleonMiniGUI</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <IsWebBootstrapper>true</IsWebBootstrapper>
@@ -95,6 +95,7 @@
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Management" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -107,6 +108,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Jason\BlockSurrogate.cs" />
     <Compile Include="Communications\Command.cs" />
     <Compile Include="Crc\Crc.cs" />
     <Compile Include="FrmMain.cs">
@@ -120,6 +122,7 @@
     <Compile Include="GroupBoxEnhanced.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Jason\JsonFileByteProvider.cs" />
     <Compile Include="Legend\IlegendItem.cs" />
     <Compile Include="Legend\Legend.cs" />
     <Compile Include="Legend\UcLegend.cs">
@@ -128,9 +131,17 @@
     <Compile Include="Legend\UcLegend.Designer.cs">
       <DependentUpon>UcLegend.cs</DependentUpon>
     </Compile>
+    <Compile Include="Jason\MifareClassicCardInfo.cs" />
+    <Compile Include="Jason\MifareClassicModel.cs" />
+    <Compile Include="Jason\MifareClassicSectorKey.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="MultiLanguage.cs" />
+    <Compile Include="Jason\MultiLanguage.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Templating.cs" />
     <Compile Include="ThreadHelperClass.cs" />
     <Compile Include="UcExplorer.cs">
@@ -166,7 +177,7 @@
     <None Include="Resources\folder-open.ico" />
     <None Include="Resources\hard-drive.ico" />
     <None Include="Resources\network-drive.ico" />
-    <None Include="Resources\warning.ico" />
+    <Content Include="Resources\warning.png" />
     <Content Include="Templates\MIfare-S20-320b-Black.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -201,14 +212,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <Content Include="chameleon.ico" />
     <Content Include="Extras\myfile.bin">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -255,6 +261,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="NewFolder1\" />
     <Folder Include="Properties\DataSources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

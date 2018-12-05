@@ -1497,7 +1497,7 @@ namespace ChameleonMiniGUI
             // and there exists 4,7,10 uid lengths.
 
             // if mode is classic then UID must be 4 bytes (8 hex digits) long
-            if (selectedMode.StartsWith("MF_CLASSIC"))
+            if (selectedMode.StartsWith("MF_CLASSIC") || selectedMode.StartsWith("MF_DETECTION"))
             {
                 if (uid.Length == 8)
                 {

@@ -107,6 +107,7 @@ namespace ChameleonMiniGUI
 
             // Initialize timer
             InitTimer();
+            SplashScreen.CloseForm();
         }
 
         private void InitHelp()

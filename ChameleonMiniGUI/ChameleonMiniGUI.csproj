@@ -137,6 +137,12 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MultiLanguage.cs" />
+    <Compile Include="SplashScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SplashScreen.Designer.cs">
+      <DependentUpon>SplashScreen.cs</DependentUpon>
+    </Compile>
     <Compile Include="Templating.cs" />
     <Compile Include="ThreadHelperClass.cs" />
     <Compile Include="UcExplorer.cs">
@@ -172,6 +178,7 @@
     <None Include="Resources\folder-open.ico" />
     <None Include="Resources\hard-drive.ico" />
     <None Include="Resources\network-drive.ico" />
+    <Content Include="Resources\chameleon.png" />
     <Content Include="Resources\warning.png" />
     <Content Include="Templates\MIfare-S20-320b-Black.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -191,6 +198,9 @@
     <Content Include="Templates\Ultralight-EV1-164B.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="SplashScreen.resx">
+      <DependentUpon>SplashScreen.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UcExplorer.resx">
       <DependentUpon>UcExplorer.cs</DependentUpon>
     </EmbeddedResource>

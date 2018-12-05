@@ -1799,7 +1799,7 @@ namespace ChameleonMiniGUI
 
         private void SetRevGButtons()
         {
-            var modesStr = SendCommand($"CONFIG{_cmdExtension}?").ToString();
+            var modesStr = SendCommand($"CONFIG{_cmdExtension}=?").ToString();
 
             if (!string.IsNullOrEmpty(modesStr))
             {

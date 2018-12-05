@@ -1253,96 +1253,81 @@ namespace ChameleonMiniGUI
             txt_output.Text = string.Empty;
 
             //var searcher = new ManagementObjectSearcher("select DeviceID from Win32_SerialPort where Description = \"ChameleonMini Virtual Serial Port\"");
-            var searcher = new ManagementObjectSearcher("select Name, DeviceID, PNPDeviceID from Win32_SerialPort ");
 
-            // first check if there is a known VID/PID found - this increases startup-speed significantly
+            //first search for known PNP ID's
+            var searcher = new ManagementObjectSearcher("select Name, DeviceID, PNPDeviceID from Win32_SerialPort where PNPDeviceID like \"%VID_16D0&PID_04B2%\" or PNPDeviceID like \"%VID_03EB&PID_2044%\" ");
 
             foreach (var obj in searcher.Get())
             {
                 var comPortStr = obj["DeviceID"].ToString();
                 var pnpId = obj["PNPDeviceID"].ToString();
 
-                if (pnpId.Contains("VID_03EB&PID_2044") || (pnpId.Contains("VID_16D0&PID_04B2")))
+                _comport = new SerialPort(comPortStr, 115200)
                 {
-                    _comport = new SerialPort(comPortStr, 115200)
-                    {
-                        ReadTimeout = 4000,
-                        WriteTimeout = 6000,
-                        DtrEnable = true,
-                        RtsEnable = true,
-                    };
+                    ReadTimeout = 4000,
+                    WriteTimeout = 6000,
+                    DtrEnable = true,
+                    RtsEnable = true,
+                };
 
-                    try
+                try
+                {
+                    _comport.Open();
+                    var name = obj["Name"].ToString();
+                    txt_output.Text += $"Connecting to {name} at {comPortStr}{Environment.NewLine}";
+                }
+                catch (Exception)
+                {
+                    txt_output.Text = $"Failed {comPortStr}{Environment.NewLine}";
+                }
+
+                if (_comport.IsOpen)
+                {
+                    if (pnpId.Contains("VID_16D0&PID_04B2"))
                     {
-                        _comport.Open();
-                        var name = obj["Name"].ToString();
-                        txt_output.Text += $"Connecting to {name} at {comPortStr}{Environment.NewLine}";
+                        // revG
+                        _deviceIdentification = "Firmware RevG Official";
+                        pb_device.Image = (Bitmap)Properties.Resources.ResourceManager.GetObject("chamRevG1");
+                        _CurrentDevType = DeviceType.RevG;
+                        _tagslotIndexOffset = 0;
+                        ConfigHMIForRevG();
                     }
-                    catch (Exception)
+                    else if (pnpId.Contains("VID_03EB&PID_2044"))
                     {
-                        txt_output.Text = $"Failed {comPortStr}{Environment.NewLine}";
-                    }
-
-                    if (_comport.IsOpen)
-                    {
-                        if (pnpId.Contains("VID_03EB&PID_2044"))
-                        {
-                            // revE
-                            _deviceIdentification = "Firmware RevE rebooted";
-                            pb_device.Image = (Bitmap)Properties.Resources.ResourceManager.GetObject("chamRevE");
-                            _CurrentDevType = DeviceType.RevE;
-                            _tagslotIndexOffset = 1;
-                            ConfigHMIForRevE();
-
-                            // try without the "MY" extension first
-                            FirmwareVersion = SendCommand("VERSION?") as string;
-                            if (!string.IsNullOrEmpty(_firmwareVersion) && _firmwareVersion.Contains("Chameleon"))
-                            {
-                                _cmdExtension = string.Empty;
-                                txt_output.Text = $"Success, found Chameleon Mini device on '{comPortStr}' with {_deviceIdentification} installed{Environment.NewLine}";
-                                _current_comport = comPortStr;
-                                this.Cursor = Cursors.Default;
-                                return;
-                            }
-
-                            FirmwareVersion = SendCommand("VERSIONMY?") as string;
-                            if (!string.IsNullOrEmpty(_firmwareVersion) && _firmwareVersion.Contains("Chameleon"))
-                            {
-                                _cmdExtension = "MY";
-                                txt_output.Text = $"Success, found Chameleon Mini device on '{comPortStr}' with {_deviceIdentification} installed{Environment.NewLine}";
-                                _current_comport = comPortStr;
-                                this.Cursor = Cursors.Default;
-                                return;
-                            }
-                        }
-                        else if (pnpId.Contains("VID_16D0&PID_04B2"))
-                        {
-                            // revG
-                            _deviceIdentification = "Firmware RevG Official";
-                            pb_device.Image = (Bitmap)Properties.Resources.ResourceManager.GetObject("chamRevG1");
-                            _CurrentDevType = DeviceType.RevG;
-                            _tagslotIndexOffset = 0;
-                            ConfigHMIForRevG();
-
-                            // try without the "MY" extension first
-                            FirmwareVersion = SendCommand("VERSION?") as string;
-                            if (!string.IsNullOrEmpty(_firmwareVersion) && _firmwareVersion.Contains("Chameleon"))
-                            {
-                                _cmdExtension = string.Empty;
-                                txt_output.Text = $"Success, found Chameleon Mini device on '{comPortStr}' with {_deviceIdentification} installed{Environment.NewLine}";
-                                _current_comport = comPortStr;
-                                this.Cursor = Cursors.Default;
-                                return;
-                            }
-
-                        }
-
+                        // revE
+                        _deviceIdentification = "Firmware RevE rebooted";
+                        pb_device.Image = (Bitmap)Properties.Resources.ResourceManager.GetObject("chamRevE");
+                        _CurrentDevType = DeviceType.RevE;
+                        _tagslotIndexOffset = 1;
+                        ConfigHMIForRevE();
                     }
 
+                        // try without the "MY" extension first
+                        FirmwareVersion = SendCommand("VERSION?") as string;
+                    if (!string.IsNullOrEmpty(_firmwareVersion) && _firmwareVersion.Contains("Chameleon"))
+                    {
+                        _cmdExtension = string.Empty;
+                        txt_output.Text = $"Success, found Chameleon Mini device on '{comPortStr}' with {_deviceIdentification} installed{Environment.NewLine}";
+                        _current_comport = comPortStr;
+                        this.Cursor = Cursors.Default;
+                        return;
+                    }
+
+                    FirmwareVersion = SendCommand("VERSIONMY?") as string;
+                    if (!string.IsNullOrEmpty(_firmwareVersion) && _firmwareVersion.Contains("Chameleon"))
+                    {
+                        _cmdExtension = "MY";
+                        txt_output.Text = $"Success, found Chameleon Mini device on '{comPortStr}' with {_deviceIdentification} installed{Environment.NewLine}";
+                        _current_comport = comPortStr;
+                        this.Cursor = Cursors.Default;
+                        return;
+                    }
                 }
             }
 
             // OK, no known USB HW-ID's found, then go "brute-force" ....
+
+            searcher = new ManagementObjectSearcher("select Name, DeviceID, PNPDeviceID from Win32_SerialPort");
             foreach (var obj in searcher.Get())
             {
                 var comPortStr = obj["DeviceID"].ToString();

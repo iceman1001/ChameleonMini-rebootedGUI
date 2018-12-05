@@ -22,12 +22,34 @@ namespace ChameleonMiniGUI.Json
             this.sector = sector;
         }
 
+        int FirstBlockNumber
+        {
+            get
+            {
+                if (sector < 32)
+                    return sector * 4;
+                else
+                    return 32 * 4 + (sector - 32) * 16;
+            }
+        }
+
+        int KeyBlockNumber
+        {
+            get
+            {
+                if (sector < 32)
+                    return sector * 4 + 3;
+                else
+                    return 32 * 4 + (sector - 32) * 16 + 15;
+            }
+        }
+
         [DataMember(Order = 0)]
         public string KeyA
         {
             get
             {
-                return MifareClassicModel.ByteArrayToString(mfc.Blocks[sector * 4 + 3].Take(6));
+                return MifareClassicModel.ByteArrayToString(mfc.Blocks[KeyBlockNumber].Take(6));
             }
             set { }
         }
@@ -37,7 +59,7 @@ namespace ChameleonMiniGUI.Json
         {
             get
             {
-                return MifareClassicModel.ByteArrayToString(mfc.Blocks[sector * 4 + 3].Skip(10).Take(6));
+                return MifareClassicModel.ByteArrayToString(mfc.Blocks[KeyBlockNumber].Skip(10).Take(6));
             }
             set { }
         }
@@ -47,9 +69,17 @@ namespace ChameleonMiniGUI.Json
         {
             get
             {
-                return MifareClassicModel.ByteArrayToString(mfc.Blocks[sector * 4 + 3].Skip(6).Take(4));
+                return MifareClassicModel.ByteArrayToString(mfc.Blocks[KeyBlockNumber].Skip(6).Take(4));
             }
             set { }
+        }
+
+        string GetBlockNameByConditionNumber(int i)
+        {
+            var start = FirstBlockNumber;
+            if (sector < 32)
+                return "block" + (start + i);
+            return $"block{start + i * 5}~block{start + i * 5 + 4}";
         }
 
         [DataMember(Order = 3)]
@@ -57,14 +87,14 @@ namespace ChameleonMiniGUI.Json
         {
             get
             {
-                var keyBlock = mfc.Blocks[sector * 4 + 3];
+                var keyBlock = mfc.Blocks[KeyBlockNumber];
                 var conditions = keyBlock.Skip(6).Take(4).ToArray();
                 var dic = new Dictionary<string, string>
                 {
-                    ["block" + (sector * 4)] = GetAccessConditionsDesc(0, conditions),
-                    ["block" + (sector * 4 + 1)] = GetAccessConditionsDesc(1, conditions),
-                    ["block" + (sector * 4 + 2)] = GetAccessConditionsDesc(2, conditions),
-                    ["block" + (sector * 4 + 3)] = GetAccessConditionsDesc(3, conditions),
+                    [GetBlockNameByConditionNumber(0)] = GetAccessConditionsDesc(0, conditions),
+                    [GetBlockNameByConditionNumber(1)] = GetAccessConditionsDesc(1, conditions),
+                    [GetBlockNameByConditionNumber(2)] = GetAccessConditionsDesc(2, conditions),
+                    ["block" + KeyBlockNumber] = GetAccessConditionsDesc(3, conditions),
                     ["UserData"] = MifareClassicModel.ByteArrayToString(keyBlock.Skip(9).Take(1))
                 };
                 return dic;

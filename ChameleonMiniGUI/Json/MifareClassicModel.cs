@@ -35,7 +35,7 @@ namespace ChameleonMiniGUI.Json
             get
             {
                 return Enumerable
-                    .Range(0, Blocks.Length / 4)
+                    .Range(0, Blocks.Length <= 128 ? Blocks.Length / 4 : 32 + (Blocks.Length - 128) / 16)
                     .ToDictionary(i => i.ToString(), i => new MifareClassicSectorKey(this, i));
             }
             set { }

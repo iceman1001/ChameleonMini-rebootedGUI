@@ -267,6 +267,9 @@ namespace ChameleonMiniGUI
         private void btn_apply_Click(object sender, EventArgs e)
         {
             Cursor.Current = Cursors.WaitCursor;
+
+            var ActiveselectedSlot = SendCommand($"SETTING{_cmdExtension}?").ToString();
+
             // Get all selected indices
             foreach (var cb in FindControls<CheckBox>(Controls, "checkBox"))
             {
@@ -387,6 +390,9 @@ namespace ChameleonMiniGUI
 
                     RefreshSlot(tagslotIndex);
             }
+
+            SendCommandWithoutResult($"SETTING{_cmdExtension}={ActiveselectedSlot}".ToString());
+            HighlightActiveSlot();
             Cursor.Current = Cursors.Default;
         }
 

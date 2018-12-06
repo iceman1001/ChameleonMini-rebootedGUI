@@ -874,6 +874,8 @@ namespace ChameleonMiniGUI
                 return;
             }
 
+            disconnectPressed = false;
+            DeviceConnected();
             GetAvailableCommands();
             InitHelp();
         }

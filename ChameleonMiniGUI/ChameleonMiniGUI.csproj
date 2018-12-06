@@ -111,6 +111,12 @@
   <ItemGroup>
     <Compile Include="Communications\Command.cs" />
     <Compile Include="Crc\Crc.cs" />
+    <Compile Include="Dump\BinaryDumpStrategy.cs" />
+    <Compile Include="Dump\DumpStrategy.cs" />
+    <Compile Include="Dump\DumpStrategyFactory.cs" />
+    <Compile Include="Dump\DumpType.cs" />
+    <Compile Include="Dump\EmlDumpStrategy.cs" />
+    <Compile Include="Dump\JsonDumpStrategy.cs" />
     <Compile Include="FrmMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -123,7 +129,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Json\BlockSurrogate.cs" />
-    <Compile Include="Json\JsonFileByteProvider.cs" />
+    <Compile Include="Dump\DumpFileByteProvider.cs" />
     <Compile Include="Json\MifareClassicCardInfo.cs" />
     <Compile Include="Json\MifareClassicModel.cs" />
     <Compile Include="Json\MifareClassicSectorKey.cs" />

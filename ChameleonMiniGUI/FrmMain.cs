@@ -66,6 +66,8 @@ namespace ChameleonMiniGUI
         {
             InitializeComponent();
 
+            tfSerialHelp.TextClick += new TextFlow.ClickHandler(tfSerialHelp_TextClick);
+
             var software_version = Properties.Settings.Default.version;
             // 
             this.Text = $"Chameleon Mini GUI - {software_version} - iceman edition 冰人";
@@ -112,16 +114,18 @@ namespace ChameleonMiniGUI
 
         private void InitHelp()
         {
+            tfSerialHelp.Clear();
+
             if ( !AvailableCommands.Any())
             {
-                tbSerialHelp.Text = "N/A";
+                tfSerialHelp.Add ("N/A");
             }
             else
             {
-                var txt = string.Empty;
-                var nl = Environment.NewLine;
-                txt = AvailableCommands.Aggregate(txt, (current, c) => current + $"* {c}{nl}");
-                tbSerialHelp.Text = txt.Replace("*", "\u2022");
+                foreach (var line in AvailableCommands)
+                {
+                    tfSerialHelp.Add(line);
+                }
             }
         }
 
@@ -1196,7 +1200,8 @@ namespace ChameleonMiniGUI
             // tab Serial
             btnSerialSend.Enabled = false;
             tbSerialCmd.Enabled = false;
-            tbSerialHelp.Text = "N/A";
+            tfSerialHelp.Clear();
+            tfSerialHelp.Add("N/A");
         }
 
         private void DeviceConnected()
@@ -2596,6 +2601,16 @@ namespace ChameleonMiniGUI
             SendCommandWithoutResult($"CONFIG{ _cmdExtension}={OriginalConfig}");
             Cursor.Current = Cursors.Default;
         }
-            #endregion
+
+        void tfSerialHelp_TextClick(object sender, EventArgs e)
+        {
+            var tbClicked = sender as TextBox;
+            tbSerialCmd.Text = tbClicked.Text;
+            tbSerialCmd.SelectionStart = tbSerialCmd.Text.Length;
+            tbSerialCmd.SelectionLength = 0;
+            this.ActiveControl = tbSerialCmd;
+        }
+
+        #endregion
     }     
 }

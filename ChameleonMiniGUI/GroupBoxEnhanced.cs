@@ -216,5 +216,54 @@ namespace ChameleonMiniGUI
                 if (control.GetType() == typeof(GroupBoxEnhanced))
                     ((GroupBoxEnhanced)control).Invalidate();
         }
-    } // GroupBoxMOD
+    } // GroupBoxEnhanced
+
+    internal class TextFlow : FlowLayoutPanel
+    {
+        public delegate void ClickHandler(object sender, EventArgs e);
+        public event ClickHandler TextClick;
+
+        public TextFlow()
+        {
+            base.AutoScroll = true;
+            base.FlowDirection = FlowDirection.TopDown;
+        }
+
+        public void Add(string noteText)
+        {
+            TextBox TextBox1 = new TextBox();
+            TextBox1.Multiline = true;
+            TextBox1.Text = noteText;
+            TextBox1.ReadOnly = true;
+            TextBox1.BorderStyle = 0;
+            TextBox1.TabStop = false;
+            Size size = TextRenderer.MeasureText(TextBox1.Text, TextBox1.Font);
+            TextBox1.Width = size.Width;
+            TextBox1.Height = size.Height;
+            TextBox1.Click += new EventHandler(TextBox1_Click);
+            TextBox1.Margin = new Padding(1,1,1,1);
+            base.Controls.Add(TextBox1);
+            try
+            {
+                // the below might cause an exception of the BackColor of the FLP is eg Transparent
+                TextBox1.BackColor = this.BackColor;
+            }
+            catch { }
+        }
+
+        public void Clear()
+        {
+            base.Controls.Clear();
+        }
+
+        void TextBox1_Click(object sender, EventArgs e)
+        {
+            if (TextClick != null)
+            {
+                TextClick(sender, e);
+            }
+        }
+    }
+
+
 } //NameSpace

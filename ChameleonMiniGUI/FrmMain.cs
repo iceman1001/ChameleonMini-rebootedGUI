@@ -21,6 +21,8 @@ using ChameleonMiniGUI.Json;
 
 namespace ChameleonMiniGUI
 {
+    enum DeviceType { RevE, RevG };
+
     public partial class frm_main : Form
     {
         private SerialPort _comport;
@@ -35,7 +37,7 @@ namespace ChameleonMiniGUI
         private System.Windows.Forms.Timer timer1;
         private bool isConnected;
         private bool disconnectPressed;
-    
+
         private string _current_comport = string.Empty;
         private string _deviceIdentification;
         private string _firmwareVersion;
@@ -47,8 +49,7 @@ namespace ChameleonMiniGUI
 
         private bool lockFlag = false;
         private DeviceType _CurrentDevType = DeviceType.RevG;
-
-        private enum DeviceType {RevE, RevG};
+        private int _active_selected_slot;
 
         public string FirmwareVersion
         {
@@ -112,7 +113,7 @@ namespace ChameleonMiniGUI
 
         private void InitHelp()
         {
-            if ( !AvailableCommands.Any())
+            if (!AvailableCommands.Any())
             {
                 tbSerialHelp.Text = "N/A";
             }
@@ -267,8 +268,7 @@ namespace ChameleonMiniGUI
         private void btn_apply_Click(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;
-
-            var activeselectedSlot = SendCommand($"SETTING{_cmdExtension}?").ToString();
+            SaveActiveSlot();
 
             // Get all selected indices
             foreach (var cb in FindControls<CheckBox>(Controls, "checkBox"))
@@ -280,7 +280,7 @@ namespace ChameleonMiniGUI
 
                 //SETTINGMY=tagslotIndex-1
                 SendCommandWithoutResult($"SETTING{_cmdExtension}=" + (tagslotIndex - _tagslotIndexOffset));
-                
+
                 //SETTINGMY? -> SHOULD BE "NO."+tagslotIndex
                 var selectedSlot = SendCommand($"SETTING{_cmdExtension}?").ToString();
                 if (!selectedSlot.Contains((tagslotIndex - _tagslotIndexOffset).ToString()))
@@ -289,69 +289,32 @@ namespace ChameleonMiniGUI
                     return;
                 }
 
-
                 var selectedMode = string.Empty;
 
-                // Set the mode of the selected slot
                 var cb_mode = FindControls<ComboBox>(Controls, $"cb_mode{tagslotIndex}").FirstOrDefault();
                 if (cb_mode != null)
                 {
-                    //CONFIGMY=cb_mode.SelectedItem
                     SendCommandWithoutResult($"CONFIG{_cmdExtension}={cb_mode.SelectedItem}");
                     selectedMode = cb_mode.SelectedItem.ToString();
                 }
 
-                if (_CurrentDevType == DeviceType.RevG)
+                switch (_CurrentDevType)
                 {
-                    // Set the button mode of the selected slot
-                    var cb_Lbutton = FindControls<ComboBox>(Controls, $"cb_Lbutton{tagslotIndex}").FirstOrDefault();
-                    if (cb_Lbutton != null)
-                    {
-                        //BUTTONMY=cb_buttonMode.SelectedItem
-                        SendCommandWithoutResult($"LBUTTON{_cmdExtension}={cb_Lbutton.SelectedItem}");
-                    }
-
-                    // Set the button mode of the selected slot
-                    var cb_Rbutton = FindControls<ComboBox>(Controls, $"cb_Rbutton{tagslotIndex}").FirstOrDefault();
-                    if (cb_Rbutton != null)
-                    {
-                        //BUTTONMY=cb_buttonMode.SelectedItem
-                        SendCommandWithoutResult($"RBUTTON{_cmdExtension}={cb_Rbutton.SelectedItem}");
-                    }
-
-                    // Set the button long mode of the selected slot
-                    var cb_Lbuttonlong = FindControls<ComboBox>(Controls, $"cb_Lbuttonlong{tagslotIndex}").FirstOrDefault();
-                    if (cb_Lbuttonlong != null)
-                    {
-                        //BUTTON_LONGMY=cb_buttonMode.SelectedItem
-                        SendCommandWithoutResult($"LBUTTON_LONG{_cmdExtension}={cb_Lbuttonlong.SelectedItem}");
-                    }
-
-                    // Set the button long mode of the selected slot
-                    var cb_Rbuttonlong = FindControls<ComboBox>(Controls, $"cb_Rbuttonlong{tagslotIndex}").FirstOrDefault();
-                    if (cb_Rbuttonlong != null)
-                    {
-                        //BUTTON_LONGMY=cb_buttonMode.SelectedItem
-                        SendCommandWithoutResult($"RBUTTON_LONG{_cmdExtension}={cb_Rbuttonlong.SelectedItem}");
-                    }
-                }
-                else if (_CurrentDevType == DeviceType.RevE)
-                {
-                    // Set the button mode of the selected slot
-                    var cb_Lbutton = FindControls<ComboBox>(Controls, $"cb_Lbutton{tagslotIndex}").FirstOrDefault();
-                    if (cb_Lbutton != null)
-                    {
-                        //BUTTONMY=cb_buttonMode.SelectedItem
-                        SendCommandWithoutResult($"BUTTON{_cmdExtension}={cb_Lbutton.SelectedItem}");
-                    }
-
-                    // Set the button long mode of the selected slot
-                    var cb_Lbuttonlong = FindControls<ComboBox>(Controls, $"cb_Lbuttonlong{tagslotIndex}").FirstOrDefault();
-                    if (cb_Lbuttonlong != null)
-                    {
-                        //BUTTON_LONGMY=cb_buttonMode.SelectedItem
-                        SendCommandWithoutResult($"BUTTON_LONG{_cmdExtension}={cb_Lbuttonlong.SelectedItem}");
-                    }
+                    case DeviceType.RevG:
+                        {
+                            FindControls<ComboBox>(Controls, $"cb_Rbutton{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"RBUTTON{_cmdExtension}={a.SelectedItem}"));
+                            //FindControls<ComboBox>(Controls, $"cb_Lbuttonlong{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LBUTTON_LONG{_cmdExtension}={a.SelectedItem}"));
+                            FindControls<ComboBox>(Controls, $"cb_Rbuttonlong{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"RBUTTON_LONG{_cmdExtension}={a.SelectedItem}"));
+                            FindControls<ComboBox>(Controls, $"cb_ledgreen{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LEDGREEN{_cmdExtension}={a.SelectedItem}"));
+                            FindControls<ComboBox>(Controls, $"cb_ledred{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LEDRED{_cmdExtension}={a.SelectedItem}"));
+                            goto default;
+                        }
+                    default:
+                        {
+                            FindControls<ComboBox>(Controls, $"cb_Lbutton{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"BUTTON{_cmdExtension}={a.SelectedItem}"));
+                            FindControls<ComboBox>(Controls, $"cb_Lbuttonlong{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"BUTTON_LONG{_cmdExtension}={a.SelectedItem}"));
+                            break;
+                        }
                 }
 
                 // Set the UID
@@ -370,32 +333,9 @@ namespace ChameleonMiniGUI
                         SendCommandWithoutResult($"UID{_cmdExtension}=?");
                     }
                 }
-
-                // Set LEDs
-                if (_CurrentDevType == DeviceType.RevG)
-                {
-                    // Set the button mode of the selected slot
-                    var cb_LEDgreen = FindControls<ComboBox>(Controls, $"cb_ledgreen{tagslotIndex}").FirstOrDefault();
-                    if (cb_LEDgreen != null)
-                    {
-                        //BUTTONMY=cb_buttonMode.SelectedItem
-                        SendCommandWithoutResult($"LEDGREEN{_cmdExtension}={cb_LEDgreen.SelectedItem}");
-                    }
-
-                    // Set the button mode of the selected slot
-                    var cb_LEDred = FindControls<ComboBox>(Controls, $"cb_ledred{tagslotIndex}").FirstOrDefault();
-                    if (cb_LEDred != null)
-                    {
-                        //BUTTONMY=cb_buttonMode.SelectedItem
-                        SendCommandWithoutResult($"LEDRED{_cmdExtension}={cb_LEDred.SelectedItem}");
-                    }
-
-                }
-
-                    RefreshSlot(tagslotIndex);
             }
-            SendCommandWithoutResult($"SETTING{_cmdExtension}={activeselectedSlot}");
-            HighlightActiveSlot();
+
+            RestoreActiveSlot();
             this.Cursor = Cursors.Default;
         }
 
@@ -462,9 +402,9 @@ namespace ChameleonMiniGUI
 
         private void btn_upload_Click(object sender, EventArgs e)
         {
-            var activeselectedSlot = SendCommand($"SETTING{_cmdExtension}?").ToString();
-
             this.Cursor = Cursors.WaitCursor;
+            SaveActiveSlot();
+
             foreach (var cb in FindControls<CheckBox>(Controls, "checkBox"))
             {
                 if (!cb.Checked) continue;
@@ -490,15 +430,15 @@ namespace ChameleonMiniGUI
                 break; // We can only upload a single dump at a time
             }
 
-            SendCommandWithoutResult($"SETTING{_cmdExtension}={activeselectedSlot}");
-            HighlightActiveSlot();
+            RestoreActiveSlot();
             this.Cursor = Cursors.Default;
         }
 
         private void btn_download_Click(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;
-
+            SaveActiveSlot();
+                
             var downloadPath = Application.StartupPath;
 
             // Try to use the default download path if exists
@@ -565,13 +505,15 @@ namespace ChameleonMiniGUI
                     }
                 }
             }
+
+            RestoreActiveSlot();
             this.Cursor = Cursors.Default;
         }
 
         private void btn_mfkey_Click(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;
-            var activeselectedSlot = SendCommand($"SETTING{_cmdExtension}?").ToString();
+            SaveActiveSlot();
 
             // Get all selected indices
             var results = FindControls<CheckBox>(Controls, "checkBox")
@@ -600,15 +542,15 @@ namespace ChameleonMiniGUI
                 });
             txt_output.AppendText(string.Join(string.Empty, results));
 
-            SendCommandWithoutResult($"SETTING{_cmdExtension}={activeselectedSlot}");
-            HighlightActiveSlot();
-
+            RestoreActiveSlot();
             this.Cursor = Cursors.Default;
         }
 
         private void btn_clear_Click(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;
+            SaveActiveSlot();
+
             // Get all selected indices
             foreach (var cb in FindControls<CheckBox>(Controls, "checkBox"))
             {
@@ -624,29 +566,30 @@ namespace ChameleonMiniGUI
                     //SETTINGMY=tagslotIndex-1
                     SendCommandWithoutResult($"SETTING{_cmdExtension}=" + (tagslotIndex - _tagslotIndexOffset));
 
-                    // DETECTIONMY = CLOSED
                     SendCommandWithoutResult($"DETECTION{_cmdExtension}=CLOSED");
 
-                    // CLEARMY
                     SendCommandWithoutResult($"CLEAR{_cmdExtension}");
 
                     // Set every field to a default value
-                    var cb_mode = FindControls<ComboBox>(Controls, $"cb_mode{tagslotIndex}").FirstOrDefault();
-                    if (cb_mode != null)
-                    {
-                        SendCommandWithoutResult($"CONFIG{_cmdExtension}={cb_mode.Items[0]}");
-                    }
+                    FindControls<ComboBox>(Controls, $"cb_mode{tagslotIndex}").ForEach( a => SendCommandWithoutResult($"CONFIG{_cmdExtension}={a.Items[0]}"));
 
-                    var cb_button = FindControls<ComboBox>(Controls, $"cb_button{tagslotIndex}").FirstOrDefault();
-                    if (cb_button != null)
+                    switch (_CurrentDevType)
                     {
-                        SendCommandWithoutResult($"BUTTON{_cmdExtension}={cb_button.Items[0]}");
-                    }
-
-                    var cb_buttonlong = FindControls<ComboBox>(Controls, $"cb_buttonlong{tagslotIndex}").FirstOrDefault();
-                    if (cb_buttonlong != null)
-                    {
-                        SendCommandWithoutResult($"BUTTON_LONG{_cmdExtension}={cb_buttonlong.Items[0]}");
+                        case DeviceType.RevG:
+                            {
+                                FindControls<ComboBox>(Controls, $"cb_Rbutton{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"RBUTTON{_cmdExtension}={a.Items[0]}"));
+                                //FindControls<ComboBox>(Controls, $"cb_Lbuttonlong{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LBUTTON_LONG{_cmdExtension}={a.Items[0]}"));
+                                FindControls<ComboBox>(Controls, $"cb_Rbuttonlong{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"RBUTTON_LONG{_cmdExtension}={a.Items[0]}"));
+                                FindControls<ComboBox>(Controls, $"cb_ledgreen{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LEDGREEN{_cmdExtension}={a.Items[0]}"));
+                                FindControls<ComboBox>(Controls, $"cb_ledred{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LEDRED{_cmdExtension}={a.Items[0]}"));
+                                goto default;
+                            }
+                        default:
+                            {
+                                FindControls<ComboBox>(Controls, $"cb_Lbutton{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LBUTTON{_cmdExtension}={a.Items[0]}"));
+                                FindControls<ComboBox>(Controls, $"cb_Lbuttonlong{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LBUTTON_LONG{_cmdExtension}={a.Items[0]}"));
+                                break;
+                            }
                     }
 
                     SendCommandWithoutResult($"UID{_cmdExtension}=?");
@@ -656,8 +599,7 @@ namespace ChameleonMiniGUI
                 }
             }
 
-            HighlightActiveSlot();
-
+            RestoreActiveSlot();
             this.Cursor = Cursors.Default;
         }
 
@@ -689,6 +631,8 @@ namespace ChameleonMiniGUI
 
                 SendCommandWithoutResult($"SETTING{_cmdExtension}={tagslotIndex - _tagslotIndexOffset}");
 
+                _active_selected_slot = tagslotIndex;
+
                 break; // Only one can be set as active
             }
 
@@ -705,16 +649,16 @@ namespace ChameleonMiniGUI
                 // Check if keep alive is set
                 if (!chk_keepalive.Checked) return;
 
-                    var version = SendCommand($"VERSION{_cmdExtension}?").ToString();
-                    if (!string.IsNullOrEmpty(version))
-                    {
-                        DeviceConnected();
-                    }
-                    else
-                    {
-                        DeviceDisconnected();
-                    }
+                var version = SendCommand($"VERSION{_cmdExtension}?").ToString();
+                if (!string.IsNullOrEmpty(version))
+                {
+                    DeviceConnected();
                 }
+                else
+                {
+                    DeviceDisconnected();
+                }
+            }
             else
             {
                 DeviceDisconnected();
@@ -723,7 +667,7 @@ namespace ChameleonMiniGUI
                 if (!disconnectPressed)
                 {
                     // try to connect
-                    OpenChameleonSerialPort();                    
+                    OpenChameleonSerialPort();
                     if (_comport == null || !_comport.IsOpen)
                         return;
 
@@ -1000,7 +944,7 @@ namespace ChameleonMiniGUI
 
         private void hexBox_MouseEnter(object sender, EventArgs e)
         {
-            var hb = (HexBox) sender;
+            var hb = (HexBox)sender;
 
             if (!hb.Focused)
                 hb.Focus();
@@ -1071,7 +1015,6 @@ namespace ChameleonMiniGUI
             CloseFile(hexBox2);
         }
 
-
         private void frm_main_Move(object sender, EventArgs e)
         {
             GroupBoxEnhanced.RedrawGroupBoxDisplay(tpOperation);
@@ -1093,7 +1036,7 @@ namespace ChameleonMiniGUI
             var originalConfig = SendCommand($"CONFIG{ _cmdExtension}?");
 
             SendCommandWithoutResult($"CONFIG{_cmdExtension}=ISO14443A_READER");
-            
+
             tbIdentify.Text = SendCommandWithMultilineResponse($"IDENTIFY{_cmdExtension}").ToString();
 
             SendCommandWithoutResult($"CONFIG{ _cmdExtension}={originalConfig}");
@@ -1131,6 +1074,7 @@ namespace ChameleonMiniGUI
             }
             ApplyByteWidthChange(width);
         }
+
         private void DisplayText()
         {
             var ident = string.Empty;
@@ -1328,8 +1272,8 @@ namespace ChameleonMiniGUI
                     }
 
 
-                        // try without the "MY" extension first
-                        FirmwareVersion = SendCommand("VERSION?") as string;
+                    // try without the "MY" extension first
+                    FirmwareVersion = SendCommand("VERSION?") as string;
                     if (!string.IsNullOrEmpty(_firmwareVersion) && _firmwareVersion.Contains("Chameleon"))
                     {
                         _cmdExtension = string.Empty;
@@ -1378,13 +1322,13 @@ namespace ChameleonMiniGUI
 
                 if (_comport.IsOpen)
                 {
-                   
+
                     _deviceIdentification = "Unknown Version";
                     pb_device.Image = (Bitmap)Properties.Resources.ResourceManager.GetObject("warning");
                     _CurrentDevType = DeviceType.RevE;
                     _tagslotIndexOffset = 1;
                     ConfigHMIForRevE();
-                   
+
 
                     // try without the "MY" extension first
                     FirmwareVersion = SendCommand("VERSION?") as string;
@@ -1420,7 +1364,7 @@ namespace ChameleonMiniGUI
         private void SendCommandWithoutResult(string cmdText)
         {
             if (!SendCommandPossible(cmdText)) return;
-         
+
             try
             {
                 // send command
@@ -1435,7 +1379,7 @@ namespace ChameleonMiniGUI
         private object SendCommand(string cmdText)
         {
             if (!SendCommandPossible(cmdText)) return string.Empty;
-     
+
             try
             {
                 _comport.DiscardInBuffer();
@@ -1486,17 +1430,17 @@ namespace ChameleonMiniGUI
                 _comport.DiscardInBuffer();
                 // send command
                 SendCommandWithoutResult(cmdText);
-                string read_response ="";
+                string read_response = "";
                 bool receptionStarted = false;
 
                 DateTime start = DateTime.Now;
                 DateTime segment = DateTime.Now;
 
                 // Read until no more data is received for 50ms
-                while ( (DateTime.Now.Subtract(start).TotalMilliseconds < 5000) || (receptionStarted && (DateTime.Now.Subtract(segment).TotalMilliseconds < 100) ) )
+                while ((DateTime.Now.Subtract(start).TotalMilliseconds < 5000) || (receptionStarted && (DateTime.Now.Subtract(segment).TotalMilliseconds < 100)))
                 {
                     read_response = _comport.ReadExisting();
-                    if ((read_response != null) && (read_response != "" ))
+                    if ((read_response != null) && (read_response != ""))
                     {
                         full_response += read_response;
                         segment = DateTime.Now;
@@ -1606,8 +1550,7 @@ namespace ChameleonMiniGUI
 
         private void RefreshSlot(int slotIndex)
         {
-            // Keep initial Active Slot when refreshing
-            var activeselectedSlot = SendCommand($"SETTING{_cmdExtension}?").ToString();
+            SaveActiveSlot();
 
             //SETTINGMY=i
             SendCommandWithoutResult($"SETTING{_cmdExtension}={slotIndex - _tagslotIndexOffset}");
@@ -1643,55 +1586,55 @@ namespace ChameleonMiniGUI
             switch (_CurrentDevType)
             {
                 case DeviceType.RevG:
-                {
-                    //CONFIGMY? -> RETURNS THE CONFIGURATION MODE
-                    var slotMode = SendCommand($"CONFIG{_cmdExtension}?").ToString();
-                    if (IsModeValid(slotMode))
                     {
-                        FindControls<ComboBox>(Controls, $"cb_mode{slotIndex}").ForEach(box => box.SelectedItem = slotMode);
-                    }
+                        //CONFIGMY? -> RETURNS THE CONFIGURATION MODE
+                        var slotMode = SendCommand($"CONFIG{_cmdExtension}?").ToString();
+                        if (IsModeValid(slotMode))
+                        {
+                            FindControls<ComboBox>(Controls, $"cb_mode{slotIndex}").ForEach(box => box.SelectedItem = slotMode);
+                        }
 
-                    //BUTTONMY? -> RETURNS THE MODE OF THE BUTTON
-                    var slotLButtonMode = SendCommand($"LBUTTON{_cmdExtension}?").ToString();
-                    if (IsLButtonModeValid(slotLButtonMode))
-                    {
-                        FindControls<ComboBox>(Controls, $"cb_lbutton{slotIndex}").ForEach( box => box.SelectedItem = slotLButtonMode);
-                    }
+                        //BUTTONMY? -> RETURNS THE MODE OF THE BUTTON
+                        var slotLButtonMode = SendCommand($"LBUTTON{_cmdExtension}?").ToString();
+                        if (IsLButtonModeValid(slotLButtonMode))
+                        {
+                            FindControls<ComboBox>(Controls, $"cb_lbutton{slotIndex}").ForEach(box => box.SelectedItem = slotLButtonMode);
+                        }
 
-                    //BUTTON_LONGMY? -> RETURNS THE MODE OF THE BUTTON LONG
-                    var slotLButtonLongMode = SendCommand($"LBUTTON_LONG{_cmdExtension}?").ToString();
-                    if (IsLButtonLongModeValid(slotLButtonLongMode))
-                    {
-                        FindControls<ComboBox>(Controls, $"cb_lbuttonlong{slotIndex}").ForEach(box => box.SelectedItem = slotLButtonLongMode);
-                    }
+                        //BUTTON_LONGMY? -> RETURNS THE MODE OF THE BUTTON LONG
+                        var slotLButtonLongMode = SendCommand($"LBUTTON_LONG{_cmdExtension}?").ToString();
+                        if (IsLButtonLongModeValid(slotLButtonLongMode))
+                        {
+                            FindControls<ComboBox>(Controls, $"cb_lbuttonlong{slotIndex}").ForEach(box => box.SelectedItem = slotLButtonLongMode);
+                        }
 
-                    //BUTTONMY? -> RETURNS THE MODE OF THE BUTTON
-                    var slotRButtonMode = SendCommand($"RBUTTON{_cmdExtension}?").ToString();
-                    if (IsRButtonModeValid(slotRButtonMode))
-                    {
-                        FindControls<ComboBox>(Controls, $"cb_rbutton{slotIndex}").ForEach(box => box.SelectedItem = slotRButtonMode);
-                    }
+                        //BUTTONMY? -> RETURNS THE MODE OF THE BUTTON
+                        var slotRButtonMode = SendCommand($"RBUTTON{_cmdExtension}?").ToString();
+                        if (IsRButtonModeValid(slotRButtonMode))
+                        {
+                            FindControls<ComboBox>(Controls, $"cb_rbutton{slotIndex}").ForEach(box => box.SelectedItem = slotRButtonMode);
+                        }
 
-                    //BUTTON_LONGMY? -> RETURNS THE MODE OF THE BUTTON LONG
-                    var slotRButtonLongMode = SendCommand($"RBUTTON_LONG{_cmdExtension}?").ToString();
-                    if (IsRButtonLongModeValid(slotRButtonLongMode))
-                    {
-                        FindControls<ComboBox>(Controls, $"cb_rbuttonlong{slotIndex + _tagslotIndexOffset}").ForEach( box => box.SelectedItem = slotRButtonLongMode);
-                    }
+                        //BUTTON_LONGMY? -> RETURNS THE MODE OF THE BUTTON LONG
+                        var slotRButtonLongMode = SendCommand($"RBUTTON_LONG{_cmdExtension}?").ToString();
+                        if (IsRButtonLongModeValid(slotRButtonLongMode))
+                        {
+                            FindControls<ComboBox>(Controls, $"cb_rbuttonlong{slotIndex + _tagslotIndexOffset}").ForEach(box => box.SelectedItem = slotRButtonLongMode);
+                        }
 
-                    var slotGreen = SendCommand($"LEDGREEN{_cmdExtension}?").ToString();
-                    if (IsLEDGreenModeValid(slotGreen))
-                    {
-                        FindControls<ComboBox>(Controls, $"cb_ledgreen{slotIndex}").ForEach(box => box.SelectedItem = slotGreen);
-                    }
+                        var slotGreen = SendCommand($"LEDGREEN{_cmdExtension}?").ToString();
+                        if (IsLEDGreenModeValid(slotGreen))
+                        {
+                            FindControls<ComboBox>(Controls, $"cb_ledgreen{slotIndex}").ForEach(box => box.SelectedItem = slotGreen);
+                        }
 
-                    var slotRed = SendCommand($"LEDRED{_cmdExtension}?").ToString();
-                    if (IsLEDRedModeValid(slotRed))
-                    {
-                        FindControls<ComboBox>(Controls, $"cb_ledred{slotIndex}").ForEach( box => box.SelectedItem = slotRed);
+                        var slotRed = SendCommand($"LEDRED{_cmdExtension}?").ToString();
+                        if (IsLEDRedModeValid(slotRed))
+                        {
+                            FindControls<ComboBox>(Controls, $"cb_ledred{slotIndex}").ForEach(box => box.SelectedItem = slotRed);
+                        }
+                        break;
                     }
-                    break;
-                }
                 default:
                     {
                         //CONFIGMY? -> RETURNS THE CONFIGURATION MODE
@@ -1725,8 +1668,7 @@ namespace ChameleonMiniGUI
                     }
             }
 
-            SendCommandWithoutResult($"SETTING{_cmdExtension}={activeselectedSlot}");
-            HighlightActiveSlot();
+            RestoreActiveSlot();
         }
 
         private bool IsLButtonModeValid(string s)
@@ -1914,6 +1856,7 @@ namespace ChameleonMiniGUI
                 cb.Items.AddRange(_LEDRedModesArray);
             }
         }
+
         private void SetRevEButtons()
         {
             var modesStr = SendCommand($"CONFIG{_cmdExtension}").ToString();
@@ -1990,7 +1933,7 @@ namespace ChameleonMiniGUI
                     break;
                 default:
                     SetRevEButtons();
-                    break;                
+                    break;
 
             }
         }
@@ -1998,18 +1941,18 @@ namespace ChameleonMiniGUI
         private void GetAvailableCommands()
         {
             var cmd = $"HELP{_cmdExtension}";
-          
+
             var result = SendCommand(cmd).ToString();
             if (string.IsNullOrEmpty(result))
                 return;
-            
+
             // split by comma
             var helpArray = result.Split(',');
             if (!helpArray.Any()) return;
 
             // Set 
             AvailableCommands.Clear();
-            AvailableCommands.AddRange(helpArray);            
+            AvailableCommands.AddRange(helpArray);
         }
 
         private static byte[] ReadFileIntoByteArray(string filename)
@@ -2487,15 +2430,6 @@ namespace ChameleonMiniGUI
 
         private void HighlightActiveSlot()
         {
-            // Determine which slot is active finally
-            var actSetting = SendCommand($"SETTING{ _cmdExtension}?").ToString();
-
-            var slotindex = int.Parse(actSetting.Substring(actSetting.Length - 1));
-            slotindex++;
-
-            if (slotindex <= 0) return;
-
-
             foreach (var gb in FindControls<GroupBoxEnhanced>(Controls, "gb_tagslot"))
             {
                 var tagslotIndex = int.Parse(gb.Name.Substring(gb.Name.Length - 1));
@@ -2507,13 +2441,36 @@ namespace ChameleonMiniGUI
             }
 
 
-            var gb_active = FindControls<GroupBoxEnhanced>(Controls, $"gb_tagslot{slotindex}").FirstOrDefault();
+            var gb_active = FindControls<GroupBoxEnhanced>(Controls, $"gb_tagslot{_active_selected_slot}").FirstOrDefault();
             gb_active.BorderColor = Color.Green;
             gb_active.BorderColorLight = Color.AntiqueWhite;
             gb_active.BorderWidth = 1;
             GroupBoxEnhanced.RedrawGroupBoxDisplay(tpOperation);
         }
 
+        /// <summary>
+        /// save the active slot.  Use before all 
+        /// </summary>
+        private bool SaveActiveSlot()
+        {
+            // Determine which slot is active
+            var actSetting = SendCommand($"SETTING{_cmdExtension}?").ToString();
+
+            int slotindex;
+            if (int.TryParse(actSetting.Substring(actSetting.Length - 1), out slotindex))
+            {
+                slotindex++;
+                _active_selected_slot = slotindex;
+                return true;
+            }
+            return false;
+        }
+
+        private void RestoreActiveSlot()
+        {
+            SendCommandWithoutResult($"SETTING{_cmdExtension}={_active_selected_slot - _tagslotIndexOffset}");
+            HighlightActiveSlot();
+        }
         #endregion
-    }     
+    }
 }

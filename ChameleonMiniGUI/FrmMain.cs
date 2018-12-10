@@ -302,12 +302,13 @@ namespace ChameleonMiniGUI
                 {
                     case DeviceType.RevG:
                         {
-                            FindControls<ComboBox>(Controls, $"cb_Rbutton{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"RBUTTON{_cmdExtension}={a.SelectedItem}"));
-                            //FindControls<ComboBox>(Controls, $"cb_Lbuttonlong{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LBUTTON_LONG{_cmdExtension}={a.SelectedItem}"));
+                            FindControls<ComboBox>(Controls, $"cb_Lbutton{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LBUTTON{_cmdExtension}={a.SelectedItem}"));
+                            FindControls<ComboBox>(Controls, $"cb_Lbuttonlong{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LBUTTON_LONG{_cmdExtension}={a.SelectedItem}"));
+                            FindControls<ComboBox>(Controls, $"cb_Rbutton{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"RBUTTON{_cmdExtension}={a.SelectedItem}"));                            
                             FindControls<ComboBox>(Controls, $"cb_Rbuttonlong{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"RBUTTON_LONG{_cmdExtension}={a.SelectedItem}"));
                             FindControls<ComboBox>(Controls, $"cb_ledgreen{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LEDGREEN{_cmdExtension}={a.SelectedItem}"));
                             FindControls<ComboBox>(Controls, $"cb_ledred{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LEDRED{_cmdExtension}={a.SelectedItem}"));
-                            goto default;
+                            break;
                         }
                     default:
                         {
@@ -577,24 +578,28 @@ namespace ChameleonMiniGUI
                     {
                         case DeviceType.RevG:
                             {
-                                FindControls<ComboBox>(Controls, $"cb_Rbutton{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"RBUTTON{_cmdExtension}={a.Items[0]}"));
-                                //FindControls<ComboBox>(Controls, $"cb_Lbuttonlong{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LBUTTON_LONG{_cmdExtension}={a.Items[0]}"));
+                                FindControls<ComboBox>(Controls, $"cb_Lbutton{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LBUTTON{_cmdExtension}={a.Items[0]}"));
+                                FindControls<ComboBox>(Controls, $"cb_Lbuttonlong{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LBUTTON_LONG{_cmdExtension}={a.Items[0]}"));
+                                FindControls<ComboBox>(Controls, $"cb_Rbutton{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"RBUTTON{_cmdExtension}={a.Items[0]}"));                                
                                 FindControls<ComboBox>(Controls, $"cb_Rbuttonlong{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"RBUTTON_LONG{_cmdExtension}={a.Items[0]}"));
                                 FindControls<ComboBox>(Controls, $"cb_ledgreen{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LEDGREEN{_cmdExtension}={a.Items[0]}"));
                                 FindControls<ComboBox>(Controls, $"cb_ledred{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LEDRED{_cmdExtension}={a.Items[0]}"));
-                                goto default;
+                                break;
                             }
                         default:
                             {
-                                FindControls<ComboBox>(Controls, $"cb_Lbutton{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LBUTTON{_cmdExtension}={a.Items[0]}"));
-                                FindControls<ComboBox>(Controls, $"cb_Lbuttonlong{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LBUTTON_LONG{_cmdExtension}={a.Items[0]}"));
+                                FindControls<ComboBox>(Controls, $"cb_Lbutton{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"BUTTON{_cmdExtension}={a.Items[0]}"));
+                                FindControls<ComboBox>(Controls, $"cb_Lbuttonlong{tagslotIndex}").ForEach(a =>
+                                {
+                                    if (a.Items.Count > 0)
+                                    {
+                                        SendCommandWithoutResult($"BUTTON_LONG{_cmdExtension}={a.Items[0]}");
+                                    }
+
+                                });
                                 break;
                             }
                     }
-
-                    SendCommandWithoutResult($"UID{_cmdExtension}=?");
-
-                    // Refresh
                     RefreshSlot(tagslotIndex);
                 }
             }

@@ -262,9 +262,6 @@ namespace ChameleonMiniGUI
             this.Cursor = Cursors.WaitCursor;
             SaveActiveSlot();
 
-
-            var ActiveselectedSlot = SendCommand($"SETTING{_cmdExtension}?").ToString();
-
             // Get all selected indices
             foreach (var cb in FindControls<CheckBox>(Controls, "checkBox"))
             {
@@ -1668,6 +1665,7 @@ namespace ChameleonMiniGUI
                         break;
                     }
                 }
+
                 RestoreActiveSlot();
             }
             catch (Exception ex)
@@ -2434,28 +2432,23 @@ namespace ChameleonMiniGUI
 
         private void HighlightActiveSlot()
         {
-            try
+            foreach (var gb in FindControls<GroupBoxEnhanced>(Controls, "gb_tagslot"))
             {
-                foreach (var gb in FindControls<GroupBoxEnhanced>(Controls, "gb_tagslot"))
-                {
-                    var tagslotIndex = int.Parse(gb.Name.Substring(gb.Name.Length - 1));
-                    if (tagslotIndex <= 0) continue;
+                var tagslotIndex = int.Parse(gb.Name.Substring(gb.Name.Length - 1));
+                if (tagslotIndex <= 0) continue;
 
-                    gb.BorderColor = SystemColors.ControlLight;
-                    gb.BorderColorLight = SystemColors.ControlLightLight;
-                    gb.BorderWidth = 1;
-                }
-
-
-                var gb_active = FindControls<GroupBoxEnhanced>(Controls, $"gb_tagslot{_active_selected_slot}").FirstOrDefault();
+                gb.BorderColor = SystemColors.ControlLight;
+                gb.BorderColorLight = SystemColors.ControlLightLight;
+                gb.BorderWidth = 1;
+            }
+            var gb_active = FindControls<GroupBoxEnhanced>(Controls, $"gb_tagslot{_active_selected_slot}").FirstOrDefault();
+            if (gb_active != null)
+            {
                 gb_active.BorderColor = Color.Green;
                 gb_active.BorderColorLight = Color.AntiqueWhite;
                 gb_active.BorderWidth = 1;
-                GroupBoxEnhanced.RedrawGroupBoxDisplay(tpOperation);
             }
-            catch (Exception ex)
-            {
-            }
+            GroupBoxEnhanced.RedrawGroupBoxDisplay(tpOperation);
         }
 
         /// <summary>
@@ -2469,8 +2462,7 @@ namespace ChameleonMiniGUI
             int slotindex;
             if (int.TryParse(actSetting.Substring(actSetting.Length - 1), out slotindex))
             {
-                slotindex++;
-                _active_selected_slot = slotindex;
+                _active_selected_slot = slotindex + _tagslotIndexOffset;
                 return true;
             }
             return false;
@@ -2481,8 +2473,7 @@ namespace ChameleonMiniGUI
             SendCommandWithoutResult($"SETTING{_cmdExtension}={_active_selected_slot - _tagslotIndexOffset}");
             HighlightActiveSlot();
         }
-        #endregion
-
+     
         private void tfSerialHelp_TextClick(object sender, EventArgs e)
         {
             var tbClicked = sender as TextBox;
@@ -2491,5 +2482,6 @@ namespace ChameleonMiniGUI
             tbSerialCmd.SelectionLength = 0;
             this.ActiveControl = tbSerialCmd;
         }
+        #endregion
     }
 }

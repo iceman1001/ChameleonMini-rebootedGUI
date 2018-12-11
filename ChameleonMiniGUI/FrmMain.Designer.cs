@@ -310,11 +310,11 @@ namespace ChameleonMiniGUI
             // 
             // openFileDialog1
             // 
-            this.openFileDialog1.Filter = "Dump files| *.bin; *.dump; *.mfd; *.hex; *.json";
+            this.openFileDialog1.Filter = "Dump files| *.bin; *.dump; *.mfd; *.hex; *.json; *.eml";
             // 
             // saveFileDialog1
             // 
-            this.saveFileDialog1.Filter = "Dump files| *.bin; *.dump; *.mfd; *.hex | JSON file | *.json";
+            this.saveFileDialog1.Filter = "Dump files| *.bin; *.dump; *.mfd; *.hex | JSON file | *.json | EML file | *.eml";
             // 
             // gb_output
             // 

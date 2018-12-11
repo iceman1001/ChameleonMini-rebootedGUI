@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Linq;
 using System.Windows.Forms;
 
 /// <summary>
@@ -212,9 +213,8 @@ namespace ChameleonMiniGUI
         /// <param name="controlWithGroupboxes">Control, which contains GroupBoxMOD controls</param>
         public static void RedrawGroupBoxDisplay(Control controlWithGroupboxes)
         {
-            foreach (Control control in controlWithGroupboxes.Controls)
-                if (control.GetType() == typeof(GroupBoxEnhanced))
-                    ((GroupBoxEnhanced)control).Invalidate();
+            foreach (var control in controlWithGroupboxes.Controls.Cast<Control>().Where(control => control.GetType() == typeof(GroupBoxEnhanced)))
+                ((GroupBoxEnhanced)control).Invalidate();
         }
     } // GroupBoxEnhanced
 

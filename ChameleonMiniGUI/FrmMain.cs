@@ -68,7 +68,7 @@ namespace ChameleonMiniGUI
             InitializeComponent();
 
             var software_version = Properties.Settings.Default.version;
-            // 
+        
             this.Text = $"Chameleon Mini GUI - {software_version} - iceman edition 冰人";
 
             AvailableCommands = new List<string>();
@@ -86,14 +86,6 @@ namespace ChameleonMiniGUI
             if (_comport != null && _comport.IsOpen)
             {
                 DeviceConnected();
-
-                // Get all available modes and populate the dropdowns
-                GetSupportedModes();
-
-                // Refresh all
-                RefreshAllSlots();
-
-                GetAvailableCommands();
                 InitHelp();
             }
 
@@ -115,14 +107,14 @@ namespace ChameleonMiniGUI
         {
             if (!AvailableCommands.Any())
             {
-                tbSerialHelp.Text = "N/A";
+                tfSerialHelp.Add ("N/A");
             }
             else
             {
-                var txt = string.Empty;
-                var nl = Environment.NewLine;
-                txt = AvailableCommands.Aggregate(txt, (current, c) => current + $"* {c}{nl}");
-                tbSerialHelp.Text = txt.Replace("*", "\u2022");
+                foreach (var line in AvailableCommands)
+                {
+                   tfSerialHelp.Add(line);
+                }
             }
         }
 
@@ -1161,7 +1153,8 @@ namespace ChameleonMiniGUI
             // tab Serial
             btnSerialSend.Enabled = false;
             tbSerialCmd.Enabled = false;
-            tbSerialHelp.Text = "N/A";
+            tfSerialHelp.Clear();
+            tfSerialHelp.Add("N/A");
         }
 
         private void DeviceConnected()
@@ -1214,8 +1207,6 @@ namespace ChameleonMiniGUI
             btnSerialSend.Enabled = true;
             tbSerialCmd.Enabled = true;
             GetAvailableCommands();
-            InitHelp();
-
             this.Cursor = Cursors.Default;
         }
 
@@ -1555,42 +1546,44 @@ namespace ChameleonMiniGUI
 
         private void RefreshSlot(int slotIndex)
         {
-            SaveActiveSlot();
+            try
+            { 
+                SaveActiveSlot();
 
-            //SETTINGMY=i
-            SendCommandWithoutResult($"SETTING{_cmdExtension}={slotIndex - _tagslotIndexOffset}");
+                //SETTINGMY=i
+                SendCommandWithoutResult($"SETTING{_cmdExtension}={slotIndex - _tagslotIndexOffset}");
 
-            //SETTINGMY? -> SHOULD BE "NO."+i
-            var selectedSlot = SendCommand($"SETTING{_cmdExtension}?").ToString();
-            if (!selectedSlot.Contains((slotIndex - _tagslotIndexOffset).ToString())) return;
+                //SETTINGMY? -> SHOULD BE "NO."+i
+                var selectedSlot = SendCommand($"SETTING{_cmdExtension}?").ToString();
+                if (!selectedSlot.Contains((slotIndex - _tagslotIndexOffset).ToString())) return;
 
-            //UIDMY? -> RETURNS THE UID
-            var slotUid = SendCommand($"UID{_cmdExtension}?").ToString();
-            if (!string.IsNullOrWhiteSpace(slotUid))
-            {
-                // set the textbox value of the i+1 txt_uid
-                var tbs = FindControls<TextBox>(Controls, $"txt_uid{slotIndex}");
-                foreach (var box in tbs)
+                //UIDMY? -> RETURNS THE UID
+                var slotUid = SendCommand($"UID{_cmdExtension}?").ToString();
+                if (!string.IsNullOrWhiteSpace(slotUid))
                 {
-                    box.Text = slotUid;
+                    // set the textbox value of the i+1 txt_uid
+                    var tbs = FindControls<TextBox>(Controls, $"txt_uid{slotIndex}");
+                    foreach (var box in tbs)
+                    {
+                        box.Text = slotUid;
+                    }
                 }
-            }
 
-            //MEMSIZEMY? -> RETURNS THE SIZE OF THE OCCUPIED MEMORY
-            var slotMemSize = SendCommand($"MEMSIZE{_cmdExtension}?").ToString();
-            if (!string.IsNullOrEmpty(slotMemSize))
-            {
-                // set the textbox value of the i+1 txt_size
-                var txtMemSize = FindControls<TextBox>(Controls, $"txt_size{slotIndex}");
-                foreach (var box in txtMemSize)
+                //MEMSIZEMY? -> RETURNS THE SIZE OF THE OCCUPIED MEMORY
+                var slotMemSize = SendCommand($"MEMSIZE{_cmdExtension}?").ToString();
+                if (!string.IsNullOrEmpty(slotMemSize))
                 {
-                    box.Text = slotMemSize;
+                    // set the textbox value of the i+1 txt_size
+                    var txtMemSize = FindControls<TextBox>(Controls, $"txt_size{slotIndex}");
+                    foreach (var box in txtMemSize)
+                    {
+                        box.Text = slotMemSize;
+                    }
                 }
-            }
 
-            switch (_CurrentDevType)
-            {
-                case DeviceType.RevG:
+                switch (_CurrentDevType)
+                {
+                    case DeviceType.RevG:
                     {
                         //CONFIGMY? -> RETURNS THE CONFIGURATION MODE
                         var slotMode = SendCommand($"CONFIG{_cmdExtension}?").ToString();
@@ -1640,7 +1633,7 @@ namespace ChameleonMiniGUI
                         }
                         break;
                     }
-                default:
+                    default:
                     {
                         //CONFIGMY? -> RETURNS THE CONFIGURATION MODE
                         var slotMode = SendCommand($"CONFIG{_cmdExtension}?").ToString();
@@ -1671,9 +1664,13 @@ namespace ChameleonMiniGUI
                         }
                         break;
                     }
-            }
+                }
 
-            RestoreActiveSlot();
+                RestoreActiveSlot();
+            }
+            catch (Exception ex)
+            {
+            }
         }
 
         private bool IsLButtonModeValid(string s)
@@ -2444,12 +2441,13 @@ namespace ChameleonMiniGUI
                 gb.BorderColorLight = SystemColors.ControlLightLight;
                 gb.BorderWidth = 1;
             }
-
-
             var gb_active = FindControls<GroupBoxEnhanced>(Controls, $"gb_tagslot{_active_selected_slot}").FirstOrDefault();
-            gb_active.BorderColor = Color.Green;
-            gb_active.BorderColorLight = Color.AntiqueWhite;
-            gb_active.BorderWidth = 1;
+            if (gb_active != null)
+            {
+                gb_active.BorderColor = Color.Green;
+                gb_active.BorderColorLight = Color.AntiqueWhite;
+                gb_active.BorderWidth = 1;
+            }
             GroupBoxEnhanced.RedrawGroupBoxDisplay(tpOperation);
         }
 
@@ -2464,8 +2462,7 @@ namespace ChameleonMiniGUI
             int slotindex;
             if (int.TryParse(actSetting.Substring(actSetting.Length - 1), out slotindex))
             {
-                slotindex++;
-                _active_selected_slot = slotindex;
+                _active_selected_slot = slotindex + _tagslotIndexOffset;
                 return true;
             }
             return false;
@@ -2475,6 +2472,15 @@ namespace ChameleonMiniGUI
         {
             SendCommandWithoutResult($"SETTING{_cmdExtension}={_active_selected_slot - _tagslotIndexOffset}");
             HighlightActiveSlot();
+        }
+     
+        private void tfSerialHelp_TextClick(object sender, EventArgs e)
+        {
+            var tbClicked = sender as TextBox;
+            tbSerialCmd.Text = tbClicked.Text;
+            tbSerialCmd.SelectionStart = tbSerialCmd.Text.Length;
+            tbSerialCmd.SelectionLength = 0;
+            this.ActiveControl = tbSerialCmd;
         }
         #endregion
     }

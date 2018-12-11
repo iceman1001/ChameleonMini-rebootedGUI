@@ -216,5 +216,7 @@ namespace ChameleonMiniGUI
             foreach (var control in controlWithGroupboxes.Controls.Cast<Control>().Where(control => control.GetType() == typeof(GroupBoxEnhanced)))
                 ((GroupBoxEnhanced)control).Invalidate();
         }
-    } // GroupBoxMOD
+    } // GroupBoxEnhanced
+     
+
 } //NameSpace

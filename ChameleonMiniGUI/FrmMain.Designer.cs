@@ -260,12 +260,12 @@ namespace ChameleonMiniGUI
             this.tsmi_clear = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_copy = new System.Windows.Forms.ToolStripMenuItem();
             this.gbAvailableCmds = new System.Windows.Forms.GroupBox();
+            this.tfSerialHelp = new ChameleonMiniGUI.textFlow();
             this.linkRevG = new System.Windows.Forms.LinkLabel();
             this.linkRevE = new System.Windows.Forms.LinkLabel();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.tfSerialHelp = new ChameleonMiniGUI.textFlow();
             this.gb_output.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bsLanguages)).BeginInit();
             this.tpSettings.SuspendLayout();
@@ -2990,7 +2990,7 @@ namespace ChameleonMiniGUI
             // 
             this.lbl_hbfilename2.AutoSize = true;
             this.lbl_hbfilename2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_hbfilename2.Location = new System.Drawing.Point(640, 467);
+            this.lbl_hbfilename2.Location = new System.Drawing.Point(640, 641);
             this.lbl_hbfilename2.Name = "lbl_hbfilename2";
             this.lbl_hbfilename2.Size = new System.Drawing.Size(30, 13);
             this.lbl_hbfilename2.TabIndex = 17;
@@ -3000,7 +3000,7 @@ namespace ChameleonMiniGUI
             // 
             this.lbl_hbfilename1.AutoSize = true;
             this.lbl_hbfilename1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_hbfilename1.Location = new System.Drawing.Point(4, 467);
+            this.lbl_hbfilename1.Location = new System.Drawing.Point(4, 641);
             this.lbl_hbfilename1.Name = "lbl_hbfilename1";
             this.lbl_hbfilename1.Size = new System.Drawing.Size(30, 13);
             this.lbl_hbfilename1.TabIndex = 15;
@@ -3100,7 +3100,7 @@ namespace ChameleonMiniGUI
             this.hexBox2.Location = new System.Drawing.Point(643, 70);
             this.hexBox2.Name = "hexBox2";
             this.hexBox2.ShadowSelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(60)))), ((int)(((byte)(188)))), ((int)(((byte)(255)))));
-            this.hexBox2.Size = new System.Drawing.Size(630, 387);
+            this.hexBox2.Size = new System.Drawing.Size(630, 568);
             this.hexBox2.StringViewVisible = true;
             this.hexBox2.TabIndex = 2;
             this.hexBox2.UseFixedBytesPerLine = true;
@@ -3120,7 +3120,7 @@ namespace ChameleonMiniGUI
             this.hexBox1.Location = new System.Drawing.Point(7, 70);
             this.hexBox1.Name = "hexBox1";
             this.hexBox1.ShadowSelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(60)))), ((int)(((byte)(188)))), ((int)(((byte)(255)))));
-            this.hexBox1.Size = new System.Drawing.Size(630, 387);
+            this.hexBox1.Size = new System.Drawing.Size(630, 568);
             this.hexBox1.StringViewVisible = true;
             this.hexBox1.TabIndex = 1;
             this.hexBox1.UseFixedBytesPerLine = true;
@@ -3201,7 +3201,7 @@ namespace ChameleonMiniGUI
             this.gbSerial_interface.Controls.Add(this.tbSerialOutput);
             this.gbSerial_interface.Location = new System.Drawing.Point(13, 13);
             this.gbSerial_interface.Name = "gbSerial_interface";
-            this.gbSerial_interface.Size = new System.Drawing.Size(653, 575);
+            this.gbSerial_interface.Size = new System.Drawing.Size(653, 629);
             this.gbSerial_interface.TabIndex = 8;
             this.gbSerial_interface.TabStop = false;
             this.gbSerial_interface.Text = "Serial interface";
@@ -3242,7 +3242,7 @@ namespace ChameleonMiniGUI
             this.tbSerialOutput.Multiline = true;
             this.tbSerialOutput.Name = "tbSerialOutput";
             this.tbSerialOutput.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.tbSerialOutput.Size = new System.Drawing.Size(617, 479);
+            this.tbSerialOutput.Size = new System.Drawing.Size(617, 545);
             this.tbSerialOutput.TabIndex = 0;
             // 
             // menuClear
@@ -3274,10 +3274,24 @@ namespace ChameleonMiniGUI
             this.gbAvailableCmds.Controls.Add(this.linkRevE);
             this.gbAvailableCmds.Location = new System.Drawing.Point(672, 13);
             this.gbAvailableCmds.Name = "gbAvailableCmds";
-            this.gbAvailableCmds.Size = new System.Drawing.Size(238, 575);
+            this.gbAvailableCmds.Size = new System.Drawing.Size(238, 629);
             this.gbAvailableCmds.TabIndex = 7;
             this.gbAvailableCmds.TabStop = false;
             this.gbAvailableCmds.Text = "Available commands";
+            // 
+            // tfSerialHelp
+            // 
+            this.tfSerialHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tfSerialHelp.AutoScroll = true;
+            this.tfSerialHelp.AutoSize = true;
+            this.tfSerialHelp.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.tfSerialHelp.Location = new System.Drawing.Point(6, 84);
+            this.tfSerialHelp.Name = "tfSerialHelp";
+            this.tfSerialHelp.Size = new System.Drawing.Size(226, 539);
+            this.tfSerialHelp.TabIndex = 8;
+            this.tfSerialHelp.TextClick += new ChameleonMiniGUI.textFlow.ClickHandler(this.tfSerialHelp_TextClick);
             // 
             // linkRevG
             // 
@@ -3304,20 +3318,6 @@ namespace ChameleonMiniGUI
             // openFileDialog2
             // 
             this.openFileDialog2.FileName = "openFileDialog2";
-            // 
-            // tfSerialHelp
-            // 
-            this.tfSerialHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tfSerialHelp.AutoScroll = true;
-            this.tfSerialHelp.AutoSize = true;
-            this.tfSerialHelp.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.tfSerialHelp.Location = new System.Drawing.Point(6, 84);
-            this.tfSerialHelp.Name = "tfSerialHelp";
-            this.tfSerialHelp.Size = new System.Drawing.Size(226, 485);
-            this.tfSerialHelp.TabIndex = 8;
-            this.tfSerialHelp.TextClick += new ChameleonMiniGUI.textFlow.ClickHandler(this.tfSerialHelp_TextClick);
             // 
             // frm_main
             // 

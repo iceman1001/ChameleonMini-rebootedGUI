@@ -120,7 +120,7 @@ namespace ChameleonMiniGUI
         public static string Attack(byte[] bytes)
         {
             var show_all = "";
-            if (!bytes.Any())
+            if (bytes == null || !bytes.Any())
                 return $"No data found on device{Environment.NewLine}";
 
            

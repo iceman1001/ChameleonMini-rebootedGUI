@@ -260,12 +260,12 @@ namespace ChameleonMiniGUI
             this.tsmi_clear = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_copy = new System.Windows.Forms.ToolStripMenuItem();
             this.gbAvailableCmds = new System.Windows.Forms.GroupBox();
-            this.tfSerialHelp = new ChameleonMiniGUI.TextFlow();
             this.linkRevG = new System.Windows.Forms.LinkLabel();
             this.linkRevE = new System.Windows.Forms.LinkLabel();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.tfSerialHelp = new ChameleonMiniGUI.textFlow();
             this.gb_output.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bsLanguages)).BeginInit();
             this.tpSettings.SuspendLayout();
@@ -3279,16 +3279,6 @@ namespace ChameleonMiniGUI
             this.gbAvailableCmds.TabStop = false;
             this.gbAvailableCmds.Text = "Available commands";
             // 
-            // tfSerialHelp
-            // 
-            this.tfSerialHelp.AutoScroll = true;
-            this.tfSerialHelp.BackColor = System.Drawing.Color.White;
-            this.tfSerialHelp.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.tfSerialHelp.Location = new System.Drawing.Point(14, 71);
-            this.tfSerialHelp.Name = "tfSerialHelp";
-            this.tfSerialHelp.Size = new System.Drawing.Size(209, 479);
-            this.tfSerialHelp.TabIndex = 8;
-            // 
             // linkRevG
             // 
             this.linkRevG.AutoSize = true;
@@ -3314,6 +3304,20 @@ namespace ChameleonMiniGUI
             // openFileDialog2
             // 
             this.openFileDialog2.FileName = "openFileDialog2";
+            // 
+            // tfSerialHelp
+            // 
+            this.tfSerialHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tfSerialHelp.AutoScroll = true;
+            this.tfSerialHelp.AutoSize = true;
+            this.tfSerialHelp.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.tfSerialHelp.Location = new System.Drawing.Point(6, 84);
+            this.tfSerialHelp.Name = "tfSerialHelp";
+            this.tfSerialHelp.Size = new System.Drawing.Size(226, 485);
+            this.tfSerialHelp.TabIndex = 8;
+            this.tfSerialHelp.TextClick += new ChameleonMiniGUI.textFlow.ClickHandler(this.tfSerialHelp_TextClick);
             // 
             // frm_main
             // 
@@ -3621,6 +3625,6 @@ namespace ChameleonMiniGUI
         private System.Windows.Forms.Button btn_Identify;
         private System.Windows.Forms.TextBox tbIdentify;
         private System.Windows.Forms.ToolTip toolTip1;
-        private TextFlow tfSerialHelp;
+        private textFlow tfSerialHelp;
     }
 }

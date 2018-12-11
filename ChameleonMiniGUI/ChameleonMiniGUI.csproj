@@ -151,6 +151,12 @@
       <DependentUpon>SplashScreen.cs</DependentUpon>
     </Compile>
     <Compile Include="Templating.cs" />
+    <Compile Include="TextFlow.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TextFlow.Designer.cs">
+      <DependentUpon>TextFlow.cs</DependentUpon>
+    </Compile>
     <Compile Include="ThreadHelperClass.cs" />
     <Compile Include="UcExplorer.cs">
       <SubType>UserControl</SubType>
@@ -207,6 +213,9 @@
     </Content>
     <EmbeddedResource Include="SplashScreen.resx">
       <DependentUpon>SplashScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TextFlow.resx">
+      <DependentUpon>TextFlow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UcExplorer.resx">
       <DependentUpon>UcExplorer.cs</DependentUpon>

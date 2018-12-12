@@ -76,6 +76,7 @@ namespace ChameleonMiniGUI
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.gb_actions = new System.Windows.Forms.GroupBox();
+            this.btn_Identify = new System.Windows.Forms.Button();
             this.btn_setactive = new System.Windows.Forms.Button();
             this.btn_selectnone = new System.Windows.Forms.Button();
             this.btn_selectall = new System.Windows.Forms.Button();
@@ -246,8 +247,6 @@ namespace ChameleonMiniGUI
             this.hexBox2 = new Be.Windows.Forms.HexBox();
             this.hexBox1 = new Be.Windows.Forms.HexBox();
             this.tpUtils = new System.Windows.Forms.TabPage();
-            this.tbIdentify = new System.Windows.Forms.TextBox();
-            this.btn_Identify = new System.Windows.Forms.Button();
             this.ucExplorer1 = new ChameleonMiniGUI.UcExplorer();
             this.tpSerial = new System.Windows.Forms.TabPage();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
@@ -440,7 +439,7 @@ namespace ChameleonMiniGUI
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(167, 119);
+            this.label1.Location = new System.Drawing.Point(185, 78);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(86, 13);
             this.label1.TabIndex = 7;
@@ -785,6 +784,7 @@ namespace ChameleonMiniGUI
             // 
             // gb_actions
             // 
+            this.gb_actions.Controls.Add(this.btn_Identify);
             this.gb_actions.Controls.Add(this.btn_setactive);
             this.gb_actions.Controls.Add(this.btn_selectnone);
             this.gb_actions.Controls.Add(this.btn_selectall);
@@ -801,9 +801,20 @@ namespace ChameleonMiniGUI
             this.gb_actions.TabStop = false;
             this.gb_actions.Text = "Available Actions";
             // 
+            // btn_Identify
+            // 
+            this.btn_Identify.Location = new System.Drawing.Point(758, 24);
+            this.btn_Identify.Name = "btn_Identify";
+            this.btn_Identify.Size = new System.Drawing.Size(75, 23);
+            this.btn_Identify.TabIndex = 18;
+            this.btn_Identify.Text = "Identify";
+            this.toolTip1.SetToolTip(this.btn_Identify, "Identify Card at Reader");
+            this.btn_Identify.UseVisualStyleBackColor = true;
+            this.btn_Identify.Click += new System.EventHandler(this.btn_Identify_Click);
+            // 
             // btn_setactive
             // 
-            this.btn_setactive.Location = new System.Drawing.Point(604, 24);
+            this.btn_setactive.Location = new System.Drawing.Point(574, 24);
             this.btn_setactive.Name = "btn_setactive";
             this.btn_setactive.Size = new System.Drawing.Size(86, 23);
             this.btn_setactive.TabIndex = 14;
@@ -837,7 +848,7 @@ namespace ChameleonMiniGUI
             // 
             // btn_refresh
             // 
-            this.btn_refresh.Location = new System.Drawing.Point(512, 24);
+            this.btn_refresh.Location = new System.Drawing.Point(482, 24);
             this.btn_refresh.Name = "btn_refresh";
             this.btn_refresh.Size = new System.Drawing.Size(86, 23);
             this.btn_refresh.TabIndex = 13;
@@ -847,7 +858,7 @@ namespace ChameleonMiniGUI
             // 
             // btn_clear
             // 
-            this.btn_clear.Location = new System.Drawing.Point(420, 24);
+            this.btn_clear.Location = new System.Drawing.Point(390, 24);
             this.btn_clear.Name = "btn_clear";
             this.btn_clear.Size = new System.Drawing.Size(86, 23);
             this.btn_clear.TabIndex = 12;
@@ -857,7 +868,7 @@ namespace ChameleonMiniGUI
             // 
             // btn_keycalc
             // 
-            this.btn_keycalc.Location = new System.Drawing.Point(696, 24);
+            this.btn_keycalc.Location = new System.Drawing.Point(666, 24);
             this.btn_keycalc.Name = "btn_keycalc";
             this.btn_keycalc.Size = new System.Drawing.Size(86, 23);
             this.btn_keycalc.TabIndex = 15;
@@ -867,7 +878,7 @@ namespace ChameleonMiniGUI
             // 
             // btn_apply
             // 
-            this.btn_apply.Location = new System.Drawing.Point(328, 24);
+            this.btn_apply.Location = new System.Drawing.Point(298, 24);
             this.btn_apply.Name = "btn_apply";
             this.btn_apply.Size = new System.Drawing.Size(86, 23);
             this.btn_apply.TabIndex = 11;
@@ -3132,8 +3143,6 @@ namespace ChameleonMiniGUI
             // 
             // tpUtils
             // 
-            this.tpUtils.Controls.Add(this.tbIdentify);
-            this.tpUtils.Controls.Add(this.btn_Identify);
             this.tpUtils.Controls.Add(this.ucExplorer1);
             this.tpUtils.Location = new System.Drawing.Point(4, 22);
             this.tpUtils.Name = "tpUtils";
@@ -3143,32 +3152,12 @@ namespace ChameleonMiniGUI
             this.tpUtils.Text = "Utils";
             this.tpUtils.UseVisualStyleBackColor = true;
             // 
-            // tbIdentify
-            // 
-            this.tbIdentify.Location = new System.Drawing.Point(52, 537);
-            this.tbIdentify.Multiline = true;
-            this.tbIdentify.Name = "tbIdentify";
-            this.tbIdentify.ReadOnly = true;
-            this.tbIdentify.Size = new System.Drawing.Size(268, 85);
-            this.tbIdentify.TabIndex = 2;
-            // 
-            // btn_Identify
-            // 
-            this.btn_Identify.Location = new System.Drawing.Point(52, 628);
-            this.btn_Identify.Name = "btn_Identify";
-            this.btn_Identify.Size = new System.Drawing.Size(75, 23);
-            this.btn_Identify.TabIndex = 1;
-            this.btn_Identify.Text = "Identify";
-            this.toolTip1.SetToolTip(this.btn_Identify, "Identify Card at Reader");
-            this.btn_Identify.UseVisualStyleBackColor = true;
-            this.btn_Identify.Click += new System.EventHandler(this.btn_Identify_Click);
-            // 
             // ucExplorer1
             // 
             this.ucExplorer1.Location = new System.Drawing.Point(24, 24);
             this.ucExplorer1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.ucExplorer1.Name = "ucExplorer1";
-            this.ucExplorer1.Size = new System.Drawing.Size(1226, 476);
+            this.ucExplorer1.Size = new System.Drawing.Size(1226, 622);
             this.ucExplorer1.TabIndex = 0;
             // 
             // tpSerial
@@ -3286,6 +3275,7 @@ namespace ChameleonMiniGUI
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tfSerialHelp.AutoScroll = true;
             this.tfSerialHelp.AutoSize = true;
+            this.tfSerialHelp.AvailableCommands = null;
             this.tfSerialHelp.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.tfSerialHelp.Location = new System.Drawing.Point(6, 84);
             this.tfSerialHelp.Name = "tfSerialHelp";
@@ -3377,7 +3367,6 @@ namespace ChameleonMiniGUI
             this.menuScroll.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.bsTemplates)).EndInit();
             this.tpUtils.ResumeLayout(false);
-            this.tpUtils.PerformLayout();
             this.tpSerial.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.gbSerial_interface.ResumeLayout(false);
@@ -3622,9 +3611,8 @@ namespace ChameleonMiniGUI
         private System.Windows.Forms.ComboBox cb_ledgreen8;
         private System.Windows.Forms.Label lb_ledledred8;
         private System.Windows.Forms.Label lb_ledledgreen8;
-        private System.Windows.Forms.Button btn_Identify;
-        private System.Windows.Forms.TextBox tbIdentify;
         private System.Windows.Forms.ToolTip toolTip1;
         private UcTextFlow tfSerialHelp;
+        private System.Windows.Forms.Button btn_Identify;
     }
 }

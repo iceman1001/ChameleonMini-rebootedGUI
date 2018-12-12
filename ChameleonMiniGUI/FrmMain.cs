@@ -105,17 +105,8 @@ namespace ChameleonMiniGUI
 
         private void InitHelp()
         {
-            if (!AvailableCommands.Any())
-            {
-                tfSerialHelp.Add ("N/A");
-            }
-            else
-            {
-                foreach (var line in AvailableCommands)
-                {
-                   tfSerialHelp.Add(line);
-                }
-            }
+            tfSerialHelp.AvailableCommands = AvailableCommands;
+            tfSerialHelp.SetList();
         }
 
         private void LoadSettings()
@@ -182,16 +173,11 @@ namespace ChameleonMiniGUI
                 cb_templateA.ValueMember = "Value";
                 lockFlag = false;
             }
-
         }
 
         private void frm_main_FormClosed(object sender, FormClosedEventArgs e)
         {
-            // Stop the timer
-            if (timer1 != null)
-            {
-                timer1.Stop();
-            }
+            timer1?.Stop();
 
             // Close the port if still open
             if (_comport != null && _comport.IsOpen)
@@ -1153,8 +1139,8 @@ namespace ChameleonMiniGUI
             // tab Serial
             btnSerialSend.Enabled = false;
             tbSerialCmd.Enabled = false;
-            tfSerialHelp.Clear();
-            tfSerialHelp.Add("N/A");
+            tfSerialHelp.AvailableCommands = null;
+            tfSerialHelp.SetList();
         }
 
         private void DeviceConnected()
@@ -2477,6 +2463,8 @@ namespace ChameleonMiniGUI
         private void tfSerialHelp_TextClick(object sender, EventArgs e)
         {
             var tbClicked = sender as TextBox;
+            if (tbClicked == null) return;
+
             tbSerialCmd.Text = tbClicked.Text;
             tbSerialCmd.SelectionStart = tbSerialCmd.Text.Length;
             tbSerialCmd.SelectionLength = 0;

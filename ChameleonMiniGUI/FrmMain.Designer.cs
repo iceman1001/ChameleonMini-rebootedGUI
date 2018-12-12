@@ -260,7 +260,7 @@ namespace ChameleonMiniGUI
             this.tsmi_clear = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_copy = new System.Windows.Forms.ToolStripMenuItem();
             this.gbAvailableCmds = new System.Windows.Forms.GroupBox();
-            this.tfSerialHelp = new ChameleonMiniGUI.textFlow();
+            this.tfSerialHelp = new ChameleonMiniGUI.UcTextFlow();
             this.linkRevG = new System.Windows.Forms.LinkLabel();
             this.linkRevE = new System.Windows.Forms.LinkLabel();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
@@ -3291,7 +3291,7 @@ namespace ChameleonMiniGUI
             this.tfSerialHelp.Name = "tfSerialHelp";
             this.tfSerialHelp.Size = new System.Drawing.Size(226, 539);
             this.tfSerialHelp.TabIndex = 8;
-            this.tfSerialHelp.TextClick += new ChameleonMiniGUI.textFlow.ClickHandler(this.tfSerialHelp_TextClick);
+            this.tfSerialHelp.TextClick += new ChameleonMiniGUI.UcTextFlow.ClickHandler(this.tfSerialHelp_TextClick);
             // 
             // linkRevG
             // 
@@ -3625,6 +3625,6 @@ namespace ChameleonMiniGUI
         private System.Windows.Forms.Button btn_Identify;
         private System.Windows.Forms.TextBox tbIdentify;
         private System.Windows.Forms.ToolTip toolTip1;
-        private textFlow tfSerialHelp;
+        private UcTextFlow tfSerialHelp;
     }
 }

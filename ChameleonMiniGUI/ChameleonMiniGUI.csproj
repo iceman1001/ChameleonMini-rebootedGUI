@@ -151,17 +151,17 @@
       <DependentUpon>SplashScreen.cs</DependentUpon>
     </Compile>
     <Compile Include="Templating.cs" />
-    <Compile Include="TextFlow.cs">
+    <Compile Include="UserControls\UcTextFlow.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="TextFlow.Designer.cs">
-      <DependentUpon>TextFlow.cs</DependentUpon>
+    <Compile Include="UserControls\UcTextFlow.Designer.cs">
+      <DependentUpon>UcTextFlow.cs</DependentUpon>
     </Compile>
     <Compile Include="ThreadHelperClass.cs" />
-    <Compile Include="UcExplorer.cs">
+    <Compile Include="UserControls\UcExplorer.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UcExplorer.Designer.cs">
+    <Compile Include="UserControls\UcExplorer.Designer.cs">
       <DependentUpon>UcExplorer.cs</DependentUpon>
     </Compile>
     <Compile Include="XMODEM.cs" />
@@ -214,10 +214,10 @@
     <EmbeddedResource Include="SplashScreen.resx">
       <DependentUpon>SplashScreen.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="TextFlow.resx">
-      <DependentUpon>TextFlow.cs</DependentUpon>
+    <EmbeddedResource Include="UserControls\UcTextFlow.resx">
+      <DependentUpon>UcTextFlow.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UcExplorer.resx">
+    <EmbeddedResource Include="UserControls\UcExplorer.resx">
       <DependentUpon>UcExplorer.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />

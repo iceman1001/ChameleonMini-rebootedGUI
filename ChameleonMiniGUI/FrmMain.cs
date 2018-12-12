@@ -45,8 +45,6 @@ namespace ChameleonMiniGUI
 
         private int _tagslotIndexOffset = 0;
 
-        private uint _supportedSlots = 0;
-
         private const int REVGDefaultComboWidth = 80;
         private const int REVEDefaultComboWidth = 175;
 
@@ -98,7 +96,6 @@ namespace ChameleonMiniGUI
 
             LoadSettings();
             InitTimer();
-            _supportedSlots = (uint)FindControls<GroupBoxEnhanced>(Controls, "gb_tagslot").Count;
 
             SplashScreen.CloseForm();
         }

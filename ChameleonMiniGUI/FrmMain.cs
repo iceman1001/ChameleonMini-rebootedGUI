@@ -1302,41 +1302,43 @@ namespace ChameleonMiniGUI
                     txt_output.Text = $"Failed {comPortStr}{Environment.NewLine}";
                 }
 
-                if (_comport.IsOpen)
+                if (!_comport.IsOpen) continue;
+
+
+                _deviceIdentification = "Unknown Version";
+                _tagslotIndexOffset = 1;
+
+                FirmwareVersion = SendCommand("VERSION?") as string;
+                if (!string.IsNullOrEmpty(_firmwareVersion) && _firmwareVersion.Contains("Chameleon"))
                 {
-
-                    _deviceIdentification = "Unknown Version";
-                    pb_device.Image = (Bitmap)Properties.Resources.ResourceManager.GetObject("warning");
-                    _CurrentDevType = DeviceType.RevE;
-                    _tagslotIndexOffset = 1;
-                    ConfigHMIForRevE();
-
-
-                    // try without the "MY" extension first
-                    FirmwareVersion = SendCommand("VERSION?") as string;
-                    if (!string.IsNullOrEmpty(_firmwareVersion) && _firmwareVersion.Contains("Chameleon"))
-                    {
-                        _cmdExtension = string.Empty;
-                        txt_output.Text = $"Success, found Chameleon Mini device on '{comPortStr}' with {_deviceIdentification} installed{Environment.NewLine}";
-                        _current_comport = comPortStr;
-                        this.Cursor = Cursors.Default;
-                        return;
-                    }
-
-                    FirmwareVersion = SendCommand("VERSIONMY?") as string;
-                    if (!string.IsNullOrEmpty(_firmwareVersion) && _firmwareVersion.Contains("Chameleon"))
-                    {
-                        _cmdExtension = "MY";
-                        txt_output.Text = $"Success, found Chameleon Mini device on '{comPortStr}' with {_deviceIdentification} installed{Environment.NewLine}";
-                        _current_comport = comPortStr;
-                        this.Cursor = Cursors.Default;
-                        return;
-                    }
-
-                    // wrong comport.
-                    _comport.Close();
-                    txt_output.Text += $"Didn't find a Chameleon on '{comPortStr}'{Environment.NewLine}";
+                    _cmdExtension = string.Empty;
+                    pb_device.Image = (Bitmap)Properties.Resources.ResourceManager.GetObject("chamRevG1");
+                    txt_output.Text = $"Success, found Chameleon Mini device on '{comPortStr}' with {_deviceIdentification} installed{Environment.NewLine}";
+                    _current_comport = comPortStr;
+                    _CurrentDevType = DeviceType.RevG;
+                    ConfigHMIForRevG();
+                    this.Cursor = Cursors.Default;
+                    return;
                 }
+
+                FirmwareVersion = SendCommand("VERSIONMY?") as string;
+                if (!string.IsNullOrEmpty(_firmwareVersion) && _firmwareVersion.Contains("Chameleon"))
+                {
+                    _cmdExtension = "MY";
+                    pb_device.Image = (Bitmap)Properties.Resources.ResourceManager.GetObject("chamRevE");
+                    txt_output.Text = $"Success, found Chameleon Mini device on '{comPortStr}' with {_deviceIdentification} installed{Environment.NewLine}";
+                    _current_comport = comPortStr;
+                    _CurrentDevType = DeviceType.RevE;
+                    ConfigHMIForRevE();
+                    this.Cursor = Cursors.Default;
+                    return;
+                }
+
+                pb_device.Image = (Bitmap)Properties.Resources.ResourceManager.GetObject("usbWarning");
+
+                _comport.Close();
+
+                txt_output.Text += $"Didn't find a Chameleon on '{comPortStr}'{Environment.NewLine}";
             }
             _current_comport = string.Empty;
             this.Cursor = Cursors.Default;

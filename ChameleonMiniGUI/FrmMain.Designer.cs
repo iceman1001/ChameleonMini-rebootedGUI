@@ -250,6 +250,10 @@ namespace ChameleonMiniGUI
             this.ucExplorer1 = new ChameleonMiniGUI.UcExplorer();
             this.tpSerial = new System.Windows.Forms.TabPage();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.gbAvailableCmds = new System.Windows.Forms.GroupBox();
+            this.tfSerialHelp = new ChameleonMiniGUI.UcTextFlow();
+            this.linkRevG = new System.Windows.Forms.LinkLabel();
+            this.linkRevE = new System.Windows.Forms.LinkLabel();
             this.gbSerial_interface = new System.Windows.Forms.GroupBox();
             this.btnSerialSend = new System.Windows.Forms.Button();
             this.tbSerialCmd = new System.Windows.Forms.TextBox();
@@ -258,10 +262,6 @@ namespace ChameleonMiniGUI
             this.menuClear = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_clear = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_copy = new System.Windows.Forms.ToolStripMenuItem();
-            this.gbAvailableCmds = new System.Windows.Forms.GroupBox();
-            this.tfSerialHelp = new ChameleonMiniGUI.UcTextFlow();
-            this.linkRevG = new System.Windows.Forms.LinkLabel();
-            this.linkRevE = new System.Windows.Forms.LinkLabel();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
@@ -292,9 +292,9 @@ namespace ChameleonMiniGUI
             this.tpUtils.SuspendLayout();
             this.tpSerial.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
+            this.gbAvailableCmds.SuspendLayout();
             this.gbSerial_interface.SuspendLayout();
             this.menuClear.SuspendLayout();
-            this.gbAvailableCmds.SuspendLayout();
             this.SuspendLayout();
             // 
             // txt_output
@@ -3173,8 +3173,8 @@ namespace ChameleonMiniGUI
             // 
             // flowLayoutPanel1
             // 
-            this.flowLayoutPanel1.Controls.Add(this.gbSerial_interface);
             this.flowLayoutPanel1.Controls.Add(this.gbAvailableCmds);
+            this.flowLayoutPanel1.Controls.Add(this.gbSerial_interface);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
@@ -3182,104 +3182,30 @@ namespace ChameleonMiniGUI
             this.flowLayoutPanel1.Size = new System.Drawing.Size(1273, 659);
             this.flowLayoutPanel1.TabIndex = 9;
             // 
-            // gbSerial_interface
-            // 
-            this.gbSerial_interface.Controls.Add(this.btnSerialSend);
-            this.gbSerial_interface.Controls.Add(this.tbSerialCmd);
-            this.gbSerial_interface.Controls.Add(this.btnClearCmd);
-            this.gbSerial_interface.Controls.Add(this.tbSerialOutput);
-            this.gbSerial_interface.Location = new System.Drawing.Point(13, 13);
-            this.gbSerial_interface.Name = "gbSerial_interface";
-            this.gbSerial_interface.Size = new System.Drawing.Size(653, 629);
-            this.gbSerial_interface.TabIndex = 8;
-            this.gbSerial_interface.TabStop = false;
-            this.gbSerial_interface.Text = "Serial interface";
-            // 
-            // btnSerialSend
-            // 
-            this.btnSerialSend.Location = new System.Drawing.Point(253, 39);
-            this.btnSerialSend.Name = "btnSerialSend";
-            this.btnSerialSend.Size = new System.Drawing.Size(75, 23);
-            this.btnSerialSend.TabIndex = 3;
-            this.btnSerialSend.Text = "Send";
-            this.btnSerialSend.UseVisualStyleBackColor = true;
-            this.btnSerialSend.Click += new System.EventHandler(this.btnSerialSend_Click);
-            // 
-            // tbSerialCmd
-            // 
-            this.tbSerialCmd.Location = new System.Drawing.Point(14, 41);
-            this.tbSerialCmd.Name = "tbSerialCmd";
-            this.tbSerialCmd.Size = new System.Drawing.Size(229, 20);
-            this.tbSerialCmd.TabIndex = 1;
-            this.tbSerialCmd.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbSerialCmd_KeyPress);
-            // 
-            // btnClearCmd
-            // 
-            this.btnClearCmd.Location = new System.Drawing.Point(556, 39);
-            this.btnClearCmd.Name = "btnClearCmd";
-            this.btnClearCmd.Size = new System.Drawing.Size(75, 23);
-            this.btnClearCmd.TabIndex = 2;
-            this.btnClearCmd.Text = "Clear";
-            this.btnClearCmd.UseVisualStyleBackColor = true;
-            this.btnClearCmd.Click += new System.EventHandler(this.btnClearCmd_Click);
-            // 
-            // tbSerialOutput
-            // 
-            this.tbSerialOutput.ContextMenuStrip = this.menuClear;
-            this.tbSerialOutput.Location = new System.Drawing.Point(14, 71);
-            this.tbSerialOutput.Margin = new System.Windows.Forms.Padding(10);
-            this.tbSerialOutput.Multiline = true;
-            this.tbSerialOutput.Name = "tbSerialOutput";
-            this.tbSerialOutput.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.tbSerialOutput.Size = new System.Drawing.Size(617, 545);
-            this.tbSerialOutput.TabIndex = 0;
-            // 
-            // menuClear
-            // 
-            this.menuClear.ImageScalingSize = new System.Drawing.Size(24, 24);
-            this.menuClear.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmi_clear,
-            this.tsmi_copy});
-            this.menuClear.Name = "menuClear";
-            this.menuClear.Size = new System.Drawing.Size(103, 48);
-            this.menuClear.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuClear_ItemClicked);
-            // 
-            // tsmi_clear
-            // 
-            this.tsmi_clear.Name = "tsmi_clear";
-            this.tsmi_clear.Size = new System.Drawing.Size(102, 22);
-            this.tsmi_clear.Text = "Clear";
-            // 
-            // tsmi_copy
-            // 
-            this.tsmi_copy.Name = "tsmi_copy";
-            this.tsmi_copy.Size = new System.Drawing.Size(102, 22);
-            this.tsmi_copy.Text = "Copy";
-            // 
             // gbAvailableCmds
             // 
             this.gbAvailableCmds.Controls.Add(this.tfSerialHelp);
             this.gbAvailableCmds.Controls.Add(this.linkRevG);
             this.gbAvailableCmds.Controls.Add(this.linkRevE);
-            this.gbAvailableCmds.Location = new System.Drawing.Point(672, 13);
+            this.gbAvailableCmds.Location = new System.Drawing.Point(13, 13);
             this.gbAvailableCmds.Name = "gbAvailableCmds";
-            this.gbAvailableCmds.Size = new System.Drawing.Size(238, 629);
+            this.gbAvailableCmds.Size = new System.Drawing.Size(190, 629);
             this.gbAvailableCmds.TabIndex = 7;
             this.gbAvailableCmds.TabStop = false;
             this.gbAvailableCmds.Text = "Available commands";
+            this.toolTip1.SetToolTip(this.gbAvailableCmds, "Did you know that you can click on the command below to copy it to the command te" +
+        "xtbox?");
             // 
             // tfSerialHelp
             // 
-            this.tfSerialHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.tfSerialHelp.AutoScroll = true;
             this.tfSerialHelp.AutoSize = true;
             this.tfSerialHelp.AvailableCommands = null;
             this.tfSerialHelp.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.tfSerialHelp.Location = new System.Drawing.Point(6, 84);
+            this.tfSerialHelp.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.tfSerialHelp.Location = new System.Drawing.Point(3, 71);
             this.tfSerialHelp.Name = "tfSerialHelp";
-            this.tfSerialHelp.Size = new System.Drawing.Size(226, 539);
+            this.tfSerialHelp.Size = new System.Drawing.Size(184, 555);
             this.tfSerialHelp.TabIndex = 8;
             this.tfSerialHelp.TextClick += new ChameleonMiniGUI.UcTextFlow.ClickHandler(this.tfSerialHelp_TextClick);
             // 
@@ -3304,6 +3230,82 @@ namespace ChameleonMiniGUI
             this.linkRevE.TabStop = true;
             this.linkRevE.Text = "Rev E rebooted Wiki";
             this.linkRevE.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkRevE_LinkClicked);
+            // 
+            // gbSerial_interface
+            // 
+            this.gbSerial_interface.Controls.Add(this.btnSerialSend);
+            this.gbSerial_interface.Controls.Add(this.tbSerialCmd);
+            this.gbSerial_interface.Controls.Add(this.btnClearCmd);
+            this.gbSerial_interface.Controls.Add(this.tbSerialOutput);
+            this.gbSerial_interface.Location = new System.Drawing.Point(209, 13);
+            this.gbSerial_interface.Name = "gbSerial_interface";
+            this.gbSerial_interface.Size = new System.Drawing.Size(653, 629);
+            this.gbSerial_interface.TabIndex = 8;
+            this.gbSerial_interface.TabStop = false;
+            this.gbSerial_interface.Text = "Serial interface";
+            // 
+            // btnSerialSend
+            // 
+            this.btnSerialSend.Enabled = false;
+            this.btnSerialSend.Location = new System.Drawing.Point(252, 20);
+            this.btnSerialSend.Name = "btnSerialSend";
+            this.btnSerialSend.Size = new System.Drawing.Size(75, 23);
+            this.btnSerialSend.TabIndex = 3;
+            this.btnSerialSend.Text = "Send";
+            this.btnSerialSend.UseVisualStyleBackColor = true;
+            this.btnSerialSend.Click += new System.EventHandler(this.btnSerialSend_Click);
+            // 
+            // tbSerialCmd
+            // 
+            this.tbSerialCmd.Location = new System.Drawing.Point(3, 22);
+            this.tbSerialCmd.Name = "tbSerialCmd";
+            this.tbSerialCmd.Size = new System.Drawing.Size(229, 20);
+            this.tbSerialCmd.TabIndex = 1;
+            this.tbSerialCmd.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbSerialCmd_KeyPress);
+            // 
+            // btnClearCmd
+            // 
+            this.btnClearCmd.Location = new System.Drawing.Point(556, 20);
+            this.btnClearCmd.Name = "btnClearCmd";
+            this.btnClearCmd.Size = new System.Drawing.Size(75, 23);
+            this.btnClearCmd.TabIndex = 2;
+            this.btnClearCmd.Text = "Clear";
+            this.btnClearCmd.UseVisualStyleBackColor = true;
+            this.btnClearCmd.Click += new System.EventHandler(this.btnClearCmd_Click);
+            // 
+            // tbSerialOutput
+            // 
+            this.tbSerialOutput.ContextMenuStrip = this.menuClear;
+            this.tbSerialOutput.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.tbSerialOutput.Location = new System.Drawing.Point(3, 53);
+            this.tbSerialOutput.Margin = new System.Windows.Forms.Padding(10);
+            this.tbSerialOutput.Multiline = true;
+            this.tbSerialOutput.Name = "tbSerialOutput";
+            this.tbSerialOutput.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.tbSerialOutput.Size = new System.Drawing.Size(647, 573);
+            this.tbSerialOutput.TabIndex = 0;
+            // 
+            // menuClear
+            // 
+            this.menuClear.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.menuClear.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmi_clear,
+            this.tsmi_copy});
+            this.menuClear.Name = "menuClear";
+            this.menuClear.Size = new System.Drawing.Size(103, 48);
+            this.menuClear.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuClear_ItemClicked);
+            // 
+            // tsmi_clear
+            // 
+            this.tsmi_clear.Name = "tsmi_clear";
+            this.tsmi_clear.Size = new System.Drawing.Size(102, 22);
+            this.tsmi_clear.Text = "Clear";
+            // 
+            // tsmi_copy
+            // 
+            this.tsmi_copy.Name = "tsmi_copy";
+            this.tsmi_copy.Size = new System.Drawing.Size(102, 22);
+            this.tsmi_copy.Text = "Copy";
             // 
             // openFileDialog2
             // 
@@ -3369,11 +3371,11 @@ namespace ChameleonMiniGUI
             this.tpUtils.ResumeLayout(false);
             this.tpSerial.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);
+            this.gbAvailableCmds.ResumeLayout(false);
+            this.gbAvailableCmds.PerformLayout();
             this.gbSerial_interface.ResumeLayout(false);
             this.gbSerial_interface.PerformLayout();
             this.menuClear.ResumeLayout(false);
-            this.gbAvailableCmds.ResumeLayout(false);
-            this.gbAvailableCmds.PerformLayout();
             this.ResumeLayout(false);
 
         }

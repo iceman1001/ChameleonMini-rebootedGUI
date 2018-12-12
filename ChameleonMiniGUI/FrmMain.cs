@@ -15,13 +15,14 @@ using System.Diagnostics;
 using Be.Windows.Forms;
 using System.Drawing;
 using System.Reflection;
+using System.Runtime.Remoting.Messaging;
 using System.Threading.Tasks;
 using ChameleonMiniGUI.Dump;
 using ChameleonMiniGUI.Json;
 
 namespace ChameleonMiniGUI
 {
-    enum DeviceType { RevE, RevG };
+    enum DeviceType { Unknown , RevE, RevG };
 
     public partial class frm_main : Form
     {
@@ -63,15 +64,15 @@ namespace ChameleonMiniGUI
             }
         }
 
+        public string SoftwareVersion => $"Chameleon Mini GUI - {Properties.Settings.Default.version} - Iceman Edition 冰人";
+
         private List<string> AvailableCommands { get; set; }
 
         public frm_main()
         {
             InitializeComponent();
 
-            var software_version = Properties.Settings.Default.version;
-        
-            this.Text = $"Chameleon Mini GUI - {software_version} - iceman edition 冰人";
+            this.Text = SoftwareVersion;
 
             AvailableCommands = new List<string>();
         }
@@ -81,8 +82,6 @@ namespace ChameleonMiniGUI
         {
             txt_output.SelectionStart = 0;
 
-            // Find the COM port of the Chameleon (wait reply of VERSIONMY? from every available port)
-            //ConnectToChameleon();
             OpenChameleonSerialPort();
 
             if (_comport != null && _comport.IsOpen)
@@ -97,10 +96,7 @@ namespace ChameleonMiniGUI
                 cb.Checked = false;
             }
 
-            // Load the saved settings
             LoadSettings();
-
-            // Initialize timer
             InitTimer();
             _supportedSlots = (uint)FindControls<GroupBoxEnhanced>(Controls, "gb_tagslot").Count;
 
@@ -659,6 +655,7 @@ namespace ChameleonMiniGUI
                         return;
 
                     DeviceConnected();
+                    InitHelp();
                 }
             }
         }
@@ -709,6 +706,7 @@ namespace ChameleonMiniGUI
                 btn_keycalc.Enabled = false;
                 btn_upload.Enabled = false;
                 btn_download.Enabled = false;
+                btn_identify.Enabled = false;
             }
         }
 
@@ -800,7 +798,6 @@ namespace ChameleonMiniGUI
 
             disconnectPressed = false;
             DeviceConnected();
-            GetAvailableCommands();
             InitHelp();
         }
 
@@ -1031,6 +1028,17 @@ namespace ChameleonMiniGUI
             this.Cursor = Cursors.Default;
         }
 
+        private void tfSerialHelp_TextClick(object sender, EventArgs e)
+        {
+            var tbClicked = sender as TextBox;
+            if (tbClicked == null) return;
+
+            tbSerialCmd.Text = tbClicked.Text;
+            tbSerialCmd.SelectionStart = tbSerialCmd.Text.Length;
+            tbSerialCmd.SelectionLength = 0;
+            this.ActiveControl = tbSerialCmd;
+        }
+
         #endregion
 
         #region Helper methods
@@ -1069,7 +1077,7 @@ namespace ChameleonMiniGUI
             {
                 ident = $"({_deviceIdentification})";
             }
-            this.Text = $"Connected {_current_comport} [{ident}] - {Environment.OSVersion.VersionString}";
+            this.Text = $"{SoftwareVersion} ---> Connected {_current_comport} {ident} - {Environment.OSVersion.VersionString}";
         }
 
         private void SetCheckBox(bool value)
@@ -1103,7 +1111,7 @@ namespace ChameleonMiniGUI
                 _comport = null;
             }
 
-            this.Text = "Device disconnected";
+            this.Text = $"{SoftwareVersion} ---> Device disconnected";
 
             pb_device.Image = pb_device.InitialImage;
             FirmwareVersion = string.Empty;
@@ -1128,6 +1136,7 @@ namespace ChameleonMiniGUI
             btn_refresh.Enabled = false;
             btn_clear.Enabled = false;
             btn_setactive.Enabled = false;
+            btn_identify.Enabled = false;
             btn_keycalc.Enabled = false;
             btn_upload.Enabled = false;
             btn_download.Enabled = false;
@@ -1182,6 +1191,7 @@ namespace ChameleonMiniGUI
             btn_clear.Enabled = false;
             btn_setactive.Enabled = false;
             btn_keycalc.Enabled = false;
+            btn_identify.Enabled = false;
             btn_upload.Enabled = false;
             btn_download.Enabled = false;
 
@@ -1196,6 +1206,7 @@ namespace ChameleonMiniGUI
             // tab Serial
             btnSerialSend.Enabled = true;
             tbSerialCmd.Enabled = true;
+
             GetAvailableCommands();
             this.Cursor = Cursors.Default;
         }
@@ -1206,9 +1217,6 @@ namespace ChameleonMiniGUI
             pb_device.Image = pb_device.InitialImage;
             txt_output.Text = string.Empty;
 
-            //var searcher = new ManagementObjectSearcher("select DeviceID from Win32_SerialPort where Description = \"ChameleonMini Virtual Serial Port\"");
-
-            //first search for known PNP ID's
             var searcher = new ManagementObjectSearcher("select Name, DeviceID, PNPDeviceID from Win32_SerialPort where PNPDeviceID like '%VID_03EB&PID_2044%' or PNPDeviceID like '%VID_16D0&PID_04B2%'");
 
             foreach (var obj in searcher.Get())
@@ -1306,41 +1314,44 @@ namespace ChameleonMiniGUI
                     txt_output.Text = $"Failed {comPortStr}{Environment.NewLine}";
                 }
 
-                if (_comport.IsOpen)
+                if (!_comport.IsOpen) continue;
+
+
+                _deviceIdentification = "Unknown Version";
+                _CurrentDevType = DeviceType.Unknown;
+                _tagslotIndexOffset = 1;
+
+                FirmwareVersion = SendCommand("VERSION?") as string;
+                if (!string.IsNullOrEmpty(_firmwareVersion) && _firmwareVersion.Contains("Chameleon"))
                 {
-
-                    _deviceIdentification = "Unknown Version";
-                    pb_device.Image = (Bitmap)Properties.Resources.ResourceManager.GetObject("warning");
-                    _CurrentDevType = DeviceType.RevE;
-                    _tagslotIndexOffset = 1;
-                    ConfigHMIForRevE();
-
-
-                    // try without the "MY" extension first
-                    FirmwareVersion = SendCommand("VERSION?") as string;
-                    if (!string.IsNullOrEmpty(_firmwareVersion) && _firmwareVersion.Contains("Chameleon"))
-                    {
-                        _cmdExtension = string.Empty;
-                        txt_output.Text = $"Success, found Chameleon Mini device on '{comPortStr}' with {_deviceIdentification} installed{Environment.NewLine}";
-                        _current_comport = comPortStr;
-                        this.Cursor = Cursors.Default;
-                        return;
-                    }
-
-                    FirmwareVersion = SendCommand("VERSIONMY?") as string;
-                    if (!string.IsNullOrEmpty(_firmwareVersion) && _firmwareVersion.Contains("Chameleon"))
-                    {
-                        _cmdExtension = "MY";
-                        txt_output.Text = $"Success, found Chameleon Mini device on '{comPortStr}' with {_deviceIdentification} installed{Environment.NewLine}";
-                        _current_comport = comPortStr;
-                        this.Cursor = Cursors.Default;
-                        return;
-                    }
-
-                    // wrong comport.
-                    _comport.Close();
-                    txt_output.Text += $"Didn't find a Chameleon on '{comPortStr}'{Environment.NewLine}";
+                    _cmdExtension = string.Empty;
+                    pb_device.Image = (Bitmap)Properties.Resources.ResourceManager.GetObject("chamRevG1");
+                    txt_output.Text = $"Success, found Chameleon Mini device on '{comPortStr}' with {_deviceIdentification} installed{Environment.NewLine}";
+                    _current_comport = comPortStr;
+                    _CurrentDevType = DeviceType.RevG;
+                    ConfigHMIForRevG();
+                    this.Cursor = Cursors.Default;
+                    return;
                 }
+
+                FirmwareVersion = SendCommand("VERSIONMY?") as string;
+                if (!string.IsNullOrEmpty(_firmwareVersion) && _firmwareVersion.Contains("Chameleon"))
+                {
+                    _cmdExtension = "MY";
+                    pb_device.Image = (Bitmap)Properties.Resources.ResourceManager.GetObject("chamRevE");
+                    txt_output.Text = $"Success, found Chameleon Mini device on '{comPortStr}' with {_deviceIdentification} installed{Environment.NewLine}";
+                    _current_comport = comPortStr;
+                    _CurrentDevType = DeviceType.RevE;
+                    ConfigHMIForRevE();
+                    this.Cursor = Cursors.Default;
+                    return;
+                }
+
+                pb_device.Image = (Bitmap)Properties.Resources.ResourceManager.GetObject("usbWarning");
+
+                _comport.Close();
+
+                txt_output.Text += $"Didn't find a Chameleon on '{comPortStr}'{Environment.NewLine}";
             }
             _current_comport = string.Empty;
             this.Cursor = Cursors.Default;
@@ -1389,8 +1400,8 @@ namespace ChameleonMiniGUI
                 }
                 else
                 {
-                    string read_response = "";
-                    DateTime start = DateTime.Now;
+                    var read_response = string.Empty;
+                    var start = DateTime.Now;
 
                     while (((read_response == "") || (read_response == null)) && (DateTime.Now.Subtract(start).TotalMilliseconds < 1000))
                     {
@@ -1410,23 +1421,23 @@ namespace ChameleonMiniGUI
         private object SendCommandWithMultilineResponse(string cmdText)
         {
             if (!SendCommandPossible(cmdText)) return string.Empty;
-            string full_response = "";
+            var full_response = string.Empty;
             try
             {
                 _comport.DiscardInBuffer();
                 // send command
                 SendCommandWithoutResult(cmdText);
-                string read_response = "";
-                bool receptionStarted = false;
+                var read_response = string.Empty;
+                var receptionStarted = false;
 
-                DateTime start = DateTime.Now;
-                DateTime segment = DateTime.Now;
+                var start = DateTime.Now;
+                var segment = DateTime.Now;
 
                 // Read until no more data is received for 50ms
                 while ((DateTime.Now.Subtract(start).TotalMilliseconds < 5000) || (receptionStarted && (DateTime.Now.Subtract(segment).TotalMilliseconds < 100)))
                 {
                     read_response = _comport.ReadExisting();
-                    if ((read_response != null) && (read_response != ""))
+                    if (!string.IsNullOrWhiteSpace(read_response))
                     {
                         full_response += read_response;
                         segment = DateTime.Now;
@@ -1445,14 +1456,7 @@ namespace ChameleonMiniGUI
 
         private bool SendCommandPossible(string cmdText)
         {
-            bool retVal = true;
-
-            if ((_comport == null) || (!_comport.IsOpen) || string.IsNullOrWhiteSpace(cmdText))
-            {
-                retVal = false;
-            }
-
-            return retVal;
+            return !((_comport == null) || (!_comport.IsOpen) || string.IsNullOrWhiteSpace(cmdText));
         }
 
         private async Task<object> SendCommand_ICE(string cmdText)
@@ -1711,7 +1715,6 @@ namespace ChameleonMiniGUI
 
             if (!string.IsNullOrEmpty(modesStr))
             {
-                // split by comma
                 _modesArray = modesStr.Split(',');
                 if (_modesArray.Any())
                 {
@@ -1727,7 +1730,6 @@ namespace ChameleonMiniGUI
             var lbuttonModesStr = SendCommand($"LBUTTON{_cmdExtension}=?").ToString();
             if (string.IsNullOrEmpty(lbuttonModesStr)) return;
 
-            // split by comma
             _lbuttonModesArray = lbuttonModesStr.Split(',');
             if (!_lbuttonModesArray.Any()) return;
 
@@ -1742,7 +1744,6 @@ namespace ChameleonMiniGUI
             var rbuttonModesStr = SendCommand($"RBUTTON{_cmdExtension}=?").ToString();
             if (string.IsNullOrEmpty(rbuttonModesStr)) return;
 
-            // split by comma
             _rbuttonModesArray = rbuttonModesStr.Split(',');
             if (!_rbuttonModesArray.Any()) return;
 
@@ -1768,7 +1769,6 @@ namespace ChameleonMiniGUI
             }
             else
             {
-                // split by comma
                 _lbuttonLongModesArray = lbuttonLongModesStr.Split(',');
 
                 if (!_lbuttonLongModesArray.Any()) return;
@@ -1796,7 +1796,6 @@ namespace ChameleonMiniGUI
                 }
                 else
                 {
-                    // split by comma
                     _rbuttonLongModesArray = rbuttonLongModesStr.Split(',');
 
                     if (!_rbuttonLongModesArray.Any()) return;
@@ -1815,7 +1814,6 @@ namespace ChameleonMiniGUI
             var LEDGreenModesStr = SendCommand($"LEDGREEN{_cmdExtension}=?").ToString();
             if (string.IsNullOrEmpty(LEDGreenModesStr)) return;
 
-            // split by comma
             _LEDGreenModesArray = LEDGreenModesStr.Split(',');
             if (!_LEDGreenModesArray.Any()) return;
 
@@ -1830,7 +1828,6 @@ namespace ChameleonMiniGUI
             var LEDRedModesStr = SendCommand($"LEDRED{_cmdExtension}=?").ToString();
             if (string.IsNullOrEmpty(LEDRedModesStr)) return;
 
-            // split by comma
             _LEDRedModesArray = LEDRedModesStr.Split(',');
             if (!_LEDRedModesArray.Any()) return;
 
@@ -1916,10 +1913,9 @@ namespace ChameleonMiniGUI
                 case DeviceType.RevG:
                     SetRevGButtons();
                     break;
-                default:
+                case DeviceType.RevE:                
                     SetRevEButtons();
                     break;
-
             }
         }
 
@@ -1928,14 +1924,11 @@ namespace ChameleonMiniGUI
             var cmd = $"HELP{_cmdExtension}";
 
             var result = SendCommand(cmd).ToString();
-            if (string.IsNullOrEmpty(result))
-                return;
+            if (string.IsNullOrEmpty(result)) return;
 
-            // split by comma
             var helpArray = result.Split(',');
             if (!helpArray.Any()) return;
 
-            // Set 
             AvailableCommands.Clear();
             AvailableCommands.AddRange(helpArray);
         }
@@ -2059,16 +2052,9 @@ namespace ChameleonMiniGUI
             timer1 = new System.Windows.Forms.Timer();
             timer1.Tick += timer1_Tick;
 
-            int.TryParse(txt_interval.Text, out tickInterval);
+            if (!int.TryParse(txt_interval.Text, out tickInterval)) return;
 
-            if (tickInterval > 0)
-            {
-                timer1.Interval = tickInterval;
-            }
-            else
-            {
-                timer1.Interval = 2000; // default value
-            }
+            timer1.Interval = tickInterval > 0 ? tickInterval : 2000;
 
             timer1.Start();
         }
@@ -2077,7 +2063,9 @@ namespace ChameleonMiniGUI
         {
             if (hexBox.ByteProvider == null) return;
 
-            var idx = int.Parse(hexBox.Name.Substring(hexBox.Name.Length - 1));
+            int idx = 0;
+            if (!int.TryParse(hexBox.Name.Substring(hexBox.Name.Length - 1), out idx)) return;
+
             var l = FindControls<Label>(Controls, $"lbl_hbfilename{idx}").FirstOrDefault();
 
             try
@@ -2264,7 +2252,6 @@ namespace ChameleonMiniGUI
         {
             if (hexBox1.ByteProvider.ReadByte(byteIndex) != hexBox2.ByteProvider.ReadByte(byteIndex))
             {
-                //Console.WriteLine("Byte " + i + " is different.");
                 hexBox1.AddHighlight(byteIndex, 1, Color.Blue, Color.LightGreen);
                 hexBox2.AddHighlight(byteIndex, 1, Color.Red, Color.LightGreen);
             }
@@ -2362,7 +2349,7 @@ namespace ChameleonMiniGUI
                 c.Enabled = false;
             }));
 
-            btn_identify.Enabled = false;
+            btn_identify.Visible = false;
             btn_keycalc.Visible = true;
         }
 
@@ -2421,16 +2408,16 @@ namespace ChameleonMiniGUI
                 var tagslotIndex = int.Parse(gb.Name.Substring(gb.Name.Length - 1));
                 if (tagslotIndex <= 0) continue;
 
-                gb.BorderColor = SystemColors.ControlLight;
-                gb.BorderColorLight = SystemColors.ControlLightLight;
-                gb.BorderWidth = 1;
-            }
-            var gb_active = FindControls<GroupBoxEnhanced>(Controls, $"gb_tagslot{_active_selected_slot}").FirstOrDefault();
-            if (gb_active != null)
-            {
-                gb_active.BorderColor = Color.Green;
-                gb_active.BorderColorLight = Color.AntiqueWhite;
-                gb_active.BorderWidth = 1;
+                if (gb.Name.ToLower().StartsWith($"gb_tagslot{_active_selected_slot}"))
+                {
+                    gb.BorderColor = Color.Green;
+                    gb.BorderColorLight = Color.AntiqueWhite;
+                }
+                else
+                {
+                    gb.BorderColor = SystemColors.ControlLight;
+                    gb.BorderColorLight = SystemColors.ControlLightLight;
+                }
             }
             GroupBoxEnhanced.RedrawGroupBoxDisplay(tpOperation);
         }
@@ -2458,16 +2445,7 @@ namespace ChameleonMiniGUI
             HighlightActiveSlot();
         }
      
-        private void tfSerialHelp_TextClick(object sender, EventArgs e)
-        {
-            var tbClicked = sender as TextBox;
-            if (tbClicked == null) return;
 
-            tbSerialCmd.Text = tbClicked.Text;
-            tbSerialCmd.SelectionStart = tbSerialCmd.Text.Length;
-            tbSerialCmd.SelectionLength = 0;
-            this.ActiveControl = tbSerialCmd;
-        }
         #endregion
     }
 }

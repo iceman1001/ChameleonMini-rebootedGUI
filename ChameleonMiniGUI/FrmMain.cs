@@ -711,7 +711,7 @@ namespace ChameleonMiniGUI
         private void btn_reset_Click(object sender, EventArgs e)
         {
             // Send the RESETMY command
-            SendCommandWithoutResult("RESETMY");
+            SendCommandWithoutResult($"RESET{_cmdExtension}");
         }
 
         private void btn_rssirefresh_Click(object sender, EventArgs e)
@@ -859,8 +859,8 @@ namespace ChameleonMiniGUI
             }
             hexBox1.Focus();
         }
-
-        private void byteWidthCheckBoxes_CheckedChanged(Object sender, EventArgs e)
+        
+        private void byteWidthCheckBoxes_CheckedChanged(object sender, EventArgs e)
         {
             var rb = sender as RadioButton;
             if (rb == null) return;
@@ -1013,19 +1013,19 @@ namespace ChameleonMiniGUI
             GroupBoxEnhanced.RedrawGroupBoxDisplay(tpOperation);
         }
 
-        private void btn_Identify_Click(object sender, EventArgs e)
+        private void btn_identify_Click(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;
             SaveActiveSlot();
 
             SendCommandWithoutResult($"CONFIG{_cmdExtension}=ISO14443A_READER");
 
-            txt_output.Text += SendCommandWithMultilineResponse($"IDENTIFY{_cmdExtension}").ToString();
+            var s = SendCommandWithMultilineResponse($"IDENTIFY{_cmdExtension}").ToString();
+            txt_output.Text += $"{s}{Environment.NewLine}"; 
 
             RestoreActiveSlot();
             this.Cursor = Cursors.Default;
         }
-
 
         #endregion
 
@@ -2365,7 +2365,7 @@ namespace ChameleonMiniGUI
                 c.Enabled = false;
             }));
 
-            btn_identify.Visible = false;
+            btn_identify.Enabled = false;
             btn_keycalc.Visible = true;
         }
 
@@ -2473,5 +2473,6 @@ namespace ChameleonMiniGUI
             this.ActiveControl = tbSerialCmd;
         }
         #endregion
+
     }
 }

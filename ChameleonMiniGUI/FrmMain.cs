@@ -1013,17 +1013,17 @@ namespace ChameleonMiniGUI
             GroupBoxEnhanced.RedrawGroupBoxDisplay(tpOperation);
         }
 
-        private void btn_Identify_Click(object sender, EventArgs e)
+        private void btn_identify_Click(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;
-            var originalConfig = SendCommand($"CONFIG{ _cmdExtension}?");
+            SaveActiveSlot();
 
             SendCommandWithoutResult($"CONFIG{_cmdExtension}=ISO14443A_READER");
 
             var s = SendCommandWithMultilineResponse($"IDENTIFY{_cmdExtension}").ToString();
             txt_output.Text += $"{s}{Environment.NewLine}"; 
 
-            SendCommandWithoutResult($"CONFIG{ _cmdExtension}={originalConfig}");
+            RestoreActiveSlot();
             this.Cursor = Cursors.Default;
         }
 
@@ -2348,7 +2348,8 @@ namespace ChameleonMiniGUI
                 c.Enabled = false;
             }));
 
-            btn_Identify.Enabled = false;
+            btn_identify.Enabled = false;
+            btn_keycalc.Visible = true;
         }
 
         private void ConfigHMIForRevG()
@@ -2396,7 +2397,8 @@ namespace ChameleonMiniGUI
                 c.Enabled = true;
             }));
 
-            btn_Identify.Enabled = true;
+            btn_identify.Visible = true;
+            btn_keycalc.Visible = false;
         }
 
         private void HighlightActiveSlot()

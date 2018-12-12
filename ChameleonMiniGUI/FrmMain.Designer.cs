@@ -76,7 +76,7 @@ namespace ChameleonMiniGUI
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.gb_actions = new System.Windows.Forms.GroupBox();
-            this.btn_Identify = new System.Windows.Forms.Button();
+            this.btn_identify = new System.Windows.Forms.Button();
             this.btn_setactive = new System.Windows.Forms.Button();
             this.btn_selectnone = new System.Windows.Forms.Button();
             this.btn_selectall = new System.Windows.Forms.Button();
@@ -784,7 +784,7 @@ namespace ChameleonMiniGUI
             // 
             // gb_actions
             // 
-            this.gb_actions.Controls.Add(this.btn_Identify);
+            this.gb_actions.Controls.Add(this.btn_identify);
             this.gb_actions.Controls.Add(this.btn_setactive);
             this.gb_actions.Controls.Add(this.btn_selectnone);
             this.gb_actions.Controls.Add(this.btn_selectall);
@@ -801,16 +801,16 @@ namespace ChameleonMiniGUI
             this.gb_actions.TabStop = false;
             this.gb_actions.Text = "Available Actions";
             // 
-            // btn_Identify
+            // btn_identify
             // 
-            this.btn_Identify.Location = new System.Drawing.Point(758, 24);
-            this.btn_Identify.Name = "btn_Identify";
-            this.btn_Identify.Size = new System.Drawing.Size(75, 23);
-            this.btn_Identify.TabIndex = 18;
-            this.btn_Identify.Text = "Identify";
-            this.toolTip1.SetToolTip(this.btn_Identify, "Identify Card at Reader");
-            this.btn_Identify.UseVisualStyleBackColor = true;
-            this.btn_Identify.Click += new System.EventHandler(this.btn_Identify_Click);
+            this.btn_identify.Location = new System.Drawing.Point(758, 24);
+            this.btn_identify.Name = "btn_identify";
+            this.btn_identify.Size = new System.Drawing.Size(75, 23);
+            this.btn_identify.TabIndex = 18;
+            this.btn_identify.Text = "Identify";
+            this.toolTip1.SetToolTip(this.btn_identify, "Identify Card at Reader");
+            this.btn_identify.UseVisualStyleBackColor = true;
+            this.btn_identify.Click += new System.EventHandler(this.btn_identify_Click);
             // 
             // btn_setactive
             // 
@@ -3614,6 +3614,6 @@ namespace ChameleonMiniGUI
         private System.Windows.Forms.Label lb_ledledgreen8;
         private System.Windows.Forms.ToolTip toolTip1;
         private UcTextFlow tfSerialHelp;
-        private System.Windows.Forms.Button btn_Identify;
+        private System.Windows.Forms.Button btn_identify;
     }
 }

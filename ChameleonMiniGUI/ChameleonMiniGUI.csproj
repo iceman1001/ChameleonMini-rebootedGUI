@@ -186,6 +186,9 @@
     <Content Include="Languages\English.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Languages\German.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Resources\cdrom.ico" />
     <None Include="Resources\folder-close.ico" />
     <None Include="Resources\folder-open.ico" />

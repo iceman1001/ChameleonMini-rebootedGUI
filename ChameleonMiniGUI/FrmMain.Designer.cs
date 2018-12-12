@@ -3246,6 +3246,7 @@ namespace ChameleonMiniGUI
             // 
             // btnSerialSend
             // 
+            this.btnSerialSend.Enabled = false;
             this.btnSerialSend.Location = new System.Drawing.Point(252, 20);
             this.btnSerialSend.Name = "btnSerialSend";
             this.btnSerialSend.Size = new System.Drawing.Size(75, 23);

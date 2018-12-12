@@ -15,13 +15,14 @@ using System.Diagnostics;
 using Be.Windows.Forms;
 using System.Drawing;
 using System.Reflection;
+using System.Runtime.Remoting.Messaging;
 using System.Threading.Tasks;
 using ChameleonMiniGUI.Dump;
 using ChameleonMiniGUI.Json;
 
 namespace ChameleonMiniGUI
 {
-    enum DeviceType { RevE, RevG };
+    enum DeviceType { Unknown , RevE, RevG };
 
     public partial class frm_main : Form
     {
@@ -79,8 +80,6 @@ namespace ChameleonMiniGUI
         {
             txt_output.SelectionStart = 0;
 
-            // Find the COM port of the Chameleon (wait reply of VERSIONMY? from every available port)
-            //ConnectToChameleon();
             OpenChameleonSerialPort();
 
             if (_comport != null && _comport.IsOpen)
@@ -95,10 +94,7 @@ namespace ChameleonMiniGUI
                 cb.Checked = false;
             }
 
-            // Load the saved settings
             LoadSettings();
-
-            // Initialize timer
             InitTimer();
             SplashScreen.CloseForm();
         }
@@ -655,6 +651,7 @@ namespace ChameleonMiniGUI
                         return;
 
                     DeviceConnected();
+                    InitHelp();
                 }
             }
         }
@@ -705,6 +702,7 @@ namespace ChameleonMiniGUI
                 btn_keycalc.Enabled = false;
                 btn_upload.Enabled = false;
                 btn_download.Enabled = false;
+                btn_identify.Enabled = false;
             }
         }
 
@@ -796,7 +794,6 @@ namespace ChameleonMiniGUI
 
             disconnectPressed = false;
             DeviceConnected();
-            GetAvailableCommands();
             InitHelp();
         }
 
@@ -1027,6 +1024,17 @@ namespace ChameleonMiniGUI
             this.Cursor = Cursors.Default;
         }
 
+        private void tfSerialHelp_TextClick(object sender, EventArgs e)
+        {
+            var tbClicked = sender as TextBox;
+            if (tbClicked == null) return;
+
+            tbSerialCmd.Text = tbClicked.Text;
+            tbSerialCmd.SelectionStart = tbSerialCmd.Text.Length;
+            tbSerialCmd.SelectionLength = 0;
+            this.ActiveControl = tbSerialCmd;
+        }
+
         #endregion
 
         #region Helper methods
@@ -1124,6 +1132,7 @@ namespace ChameleonMiniGUI
             btn_refresh.Enabled = false;
             btn_clear.Enabled = false;
             btn_setactive.Enabled = false;
+            btn_identify.Enabled = false;
             btn_keycalc.Enabled = false;
             btn_upload.Enabled = false;
             btn_download.Enabled = false;
@@ -1178,6 +1187,7 @@ namespace ChameleonMiniGUI
             btn_clear.Enabled = false;
             btn_setactive.Enabled = false;
             btn_keycalc.Enabled = false;
+            btn_identify.Enabled = false;
             btn_upload.Enabled = false;
             btn_download.Enabled = false;
 
@@ -1192,6 +1202,7 @@ namespace ChameleonMiniGUI
             // tab Serial
             btnSerialSend.Enabled = true;
             tbSerialCmd.Enabled = true;
+
             GetAvailableCommands();
             this.Cursor = Cursors.Default;
         }
@@ -1202,9 +1213,6 @@ namespace ChameleonMiniGUI
             pb_device.Image = pb_device.InitialImage;
             txt_output.Text = string.Empty;
 
-            //var searcher = new ManagementObjectSearcher("select DeviceID from Win32_SerialPort where Description = \"ChameleonMini Virtual Serial Port\"");
-
-            //first search for known PNP ID's
             var searcher = new ManagementObjectSearcher("select Name, DeviceID, PNPDeviceID from Win32_SerialPort where PNPDeviceID like '%VID_03EB&PID_2044%' or PNPDeviceID like '%VID_16D0&PID_04B2%'");
 
             foreach (var obj in searcher.Get())
@@ -1306,6 +1314,7 @@ namespace ChameleonMiniGUI
 
 
                 _deviceIdentification = "Unknown Version";
+                _CurrentDevType = DeviceType.Unknown;
                 _tagslotIndexOffset = 1;
 
                 FirmwareVersion = SendCommand("VERSION?") as string;
@@ -1907,10 +1916,9 @@ namespace ChameleonMiniGUI
                 case DeviceType.RevG:
                     SetRevGButtons();
                     break;
-                default:
+                case DeviceType.RevE:                
                     SetRevEButtons();
                     break;
-
             }
         }
 
@@ -2047,16 +2055,9 @@ namespace ChameleonMiniGUI
             timer1 = new System.Windows.Forms.Timer();
             timer1.Tick += timer1_Tick;
 
-            int.TryParse(txt_interval.Text, out tickInterval);
+            if (!int.TryParse(txt_interval.Text, out tickInterval)) return;
 
-            if (tickInterval > 0)
-            {
-                timer1.Interval = tickInterval;
-            }
-            else
-            {
-                timer1.Interval = 2000; // default value
-            }
+            timer1.Interval = tickInterval > 0 ? tickInterval : 2000;
 
             timer1.Start();
         }
@@ -2065,7 +2066,9 @@ namespace ChameleonMiniGUI
         {
             if (hexBox.ByteProvider == null) return;
 
-            var idx = int.Parse(hexBox.Name.Substring(hexBox.Name.Length - 1));
+            int idx = 0;
+            if (!int.TryParse(hexBox.Name.Substring(hexBox.Name.Length - 1), out idx)) return;
+
             var l = FindControls<Label>(Controls, $"lbl_hbfilename{idx}").FirstOrDefault();
 
             try
@@ -2252,7 +2255,6 @@ namespace ChameleonMiniGUI
         {
             if (hexBox1.ByteProvider.ReadByte(byteIndex) != hexBox2.ByteProvider.ReadByte(byteIndex))
             {
-                //Console.WriteLine("Byte " + i + " is different.");
                 hexBox1.AddHighlight(byteIndex, 1, Color.Blue, Color.LightGreen);
                 hexBox2.AddHighlight(byteIndex, 1, Color.Red, Color.LightGreen);
             }
@@ -2350,7 +2352,7 @@ namespace ChameleonMiniGUI
                 c.Enabled = false;
             }));
 
-            btn_identify.Enabled = false;
+            btn_identify.Visible = false;
             btn_keycalc.Visible = true;
         }
 
@@ -2447,16 +2449,7 @@ namespace ChameleonMiniGUI
             HighlightActiveSlot();
         }
      
-        private void tfSerialHelp_TextClick(object sender, EventArgs e)
-        {
-            var tbClicked = sender as TextBox;
-            if (tbClicked == null) return;
 
-            tbSerialCmd.Text = tbClicked.Text;
-            tbSerialCmd.SelectionStart = tbSerialCmd.Text.Length;
-            tbSerialCmd.SelectionLength = 0;
-            this.ActiveControl = tbSerialCmd;
-        }
         #endregion
 
     }

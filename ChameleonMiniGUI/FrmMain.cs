@@ -1016,13 +1016,13 @@ namespace ChameleonMiniGUI
         private void btn_Identify_Click(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;
-            var originalConfig = SendCommand($"CONFIG{ _cmdExtension}?");
+            SaveActiveSlot();
 
             SendCommandWithoutResult($"CONFIG{_cmdExtension}=ISO14443A_READER");
 
-            tbIdentify.Text = SendCommandWithMultilineResponse($"IDENTIFY{_cmdExtension}").ToString();
+            txt_output.Text += SendCommandWithMultilineResponse($"IDENTIFY{_cmdExtension}").ToString();
 
-            SendCommandWithoutResult($"CONFIG{ _cmdExtension}={originalConfig}");
+            RestoreActiveSlot();
             this.Cursor = Cursors.Default;
         }
 
@@ -2365,7 +2365,8 @@ namespace ChameleonMiniGUI
                 c.Enabled = false;
             }));
 
-            tbIdentify.Visible = false;
+            btn_identify.Visible = false;
+            btn_keycalc.Visible = true;
         }
 
         private void ConfigHMIForRevG()
@@ -2413,7 +2414,8 @@ namespace ChameleonMiniGUI
                 c.Enabled = true;
             }));
 
-            tbIdentify.Visible = true;
+            btn_identify.Visible = true;
+            btn_keycalc.Visible = false;
         }
 
         private void HighlightActiveSlot()

@@ -61,15 +61,15 @@ namespace ChameleonMiniGUI
             }
         }
 
+        public string SoftwareVersion => $"Chameleon Mini GUI - {Properties.Settings.Default.version} - Iceman Edition 冰人";
+
         private List<string> AvailableCommands { get; set; }
 
         public frm_main()
         {
             InitializeComponent();
 
-            var software_version = Properties.Settings.Default.version;
-        
-            this.Text = $"Chameleon Mini GUI - {software_version} - iceman edition 冰人";
+            this.Text = SoftwareVersion;
 
             AvailableCommands = new List<string>();
         }
@@ -1065,7 +1065,7 @@ namespace ChameleonMiniGUI
             {
                 ident = $"({_deviceIdentification})";
             }
-            this.Text = $"Connected {_current_comport} [{ident}] - {Environment.OSVersion.VersionString}";
+            this.Text = $"{SoftwareVersion} ---> Connected {_current_comport} {ident} - {Environment.OSVersion.VersionString}";
         }
 
         private void SetCheckBox(bool value)
@@ -1099,7 +1099,7 @@ namespace ChameleonMiniGUI
                 _comport = null;
             }
 
-            this.Text = "Device disconnected";
+            this.Text = $"{SoftwareVersion} ---> Device disconnected";
 
             pb_device.Image = pb_device.InitialImage;
             FirmwareVersion = string.Empty;

@@ -11,6 +11,7 @@ btn_selectnone.Text=Unselect All
 btn_selectall.Text=Select All
 btn_refresh.Text=Refresh
 btn_clear.Text=Clear
+btn_identify.Text=Identify
 btn_keycalc.Text=mfkey32
 btn_apply.Text=Apply
 btn_download.Text=Download Dump
@@ -93,9 +94,12 @@ lbl_buttonlong7.Text=Btn Long
 lbl_buttonlong8.Text=Btn Long
 btnStartlocation.Text=Open location
 lbl_template.Text=Template
+
+tpUtils.Text=Utils
 #
 # tab Serial
 #
+tpSerial.Text=Serial
 gbAvailableCmds.Text=Available commands
 gbSerial_interface.Text=Serial interface
 btnClearCmd.Text=Clear

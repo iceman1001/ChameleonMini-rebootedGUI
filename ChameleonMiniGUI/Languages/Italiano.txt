@@ -11,6 +11,7 @@ btn_selectnone.Text=Deseleziona Tutto
 btn_selectall.Text=Seleziona Tutto
 btn_refresh.Text=Aggiorna
 btn_clear.Text=Pulisci
+btn_identify.Text=Identify
 btn_keycalc.Text=mfkey32
 btn_apply.Text=Applica
 btn_download.Text=Scarica Dump
@@ -93,9 +94,11 @@ lbl_buttonlong7.Text=Pulsante a Lungo
 lbl_buttonlong8.Text=Pulsante a Lungo
 btnStartlocation.Text=Apri percorso
 lbl_template.Text=Modello
+tpUtils.Text=Utils
 #
 # tab Serial
 #
+tpSerial.Text=Seriale
 gbAvailableCmds.Text=Comandi disponibili
 gbSerial_interface.Text=Interfaccia Seriale
 btnClearCmd.Text=Pulisci

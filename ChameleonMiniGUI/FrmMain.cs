@@ -1385,8 +1385,8 @@ namespace ChameleonMiniGUI
                 }
                 else
                 {
-                    string read_response = "";
-                    DateTime start = DateTime.Now;
+                    var read_response = string.Empty;
+                    var start = DateTime.Now;
 
                     while (((read_response == "") || (read_response == null)) && (DateTime.Now.Subtract(start).TotalMilliseconds < 1000))
                     {
@@ -1406,23 +1406,23 @@ namespace ChameleonMiniGUI
         private object SendCommandWithMultilineResponse(string cmdText)
         {
             if (!SendCommandPossible(cmdText)) return string.Empty;
-            string full_response = "";
+            var full_response = string.Empty;
             try
             {
                 _comport.DiscardInBuffer();
                 // send command
                 SendCommandWithoutResult(cmdText);
-                string read_response = "";
-                bool receptionStarted = false;
+                var read_response = string.Empty;
+                var receptionStarted = false;
 
-                DateTime start = DateTime.Now;
-                DateTime segment = DateTime.Now;
+                var start = DateTime.Now;
+                var segment = DateTime.Now;
 
                 // Read until no more data is received for 50ms
                 while ((DateTime.Now.Subtract(start).TotalMilliseconds < 5000) || (receptionStarted && (DateTime.Now.Subtract(segment).TotalMilliseconds < 100)))
                 {
                     read_response = _comport.ReadExisting();
-                    if ((read_response != null) && (read_response != ""))
+                    if (!string.IsNullOrWhiteSpace(read_response))
                     {
                         full_response += read_response;
                         segment = DateTime.Now;
@@ -1441,14 +1441,7 @@ namespace ChameleonMiniGUI
 
         private bool SendCommandPossible(string cmdText)
         {
-            bool retVal = true;
-
-            if ((_comport == null) || (!_comport.IsOpen) || string.IsNullOrWhiteSpace(cmdText))
-            {
-                retVal = false;
-            }
-
-            return retVal;
+            return !((_comport == null) || (!_comport.IsOpen) || string.IsNullOrWhiteSpace(cmdText));
         }
 
         private async Task<object> SendCommand_ICE(string cmdText)
@@ -1714,7 +1707,6 @@ namespace ChameleonMiniGUI
 
             if (!string.IsNullOrEmpty(modesStr))
             {
-                // split by comma
                 _modesArray = modesStr.Split(',');
                 if (_modesArray.Any())
                 {
@@ -1730,7 +1722,6 @@ namespace ChameleonMiniGUI
             var lbuttonModesStr = SendCommand($"LBUTTON{_cmdExtension}=?").ToString();
             if (string.IsNullOrEmpty(lbuttonModesStr)) return;
 
-            // split by comma
             _lbuttonModesArray = lbuttonModesStr.Split(',');
             if (!_lbuttonModesArray.Any()) return;
 
@@ -1745,7 +1736,6 @@ namespace ChameleonMiniGUI
             var rbuttonModesStr = SendCommand($"RBUTTON{_cmdExtension}=?").ToString();
             if (string.IsNullOrEmpty(rbuttonModesStr)) return;
 
-            // split by comma
             _rbuttonModesArray = rbuttonModesStr.Split(',');
             if (!_rbuttonModesArray.Any()) return;
 
@@ -1771,7 +1761,6 @@ namespace ChameleonMiniGUI
             }
             else
             {
-                // split by comma
                 _lbuttonLongModesArray = lbuttonLongModesStr.Split(',');
 
                 if (!_lbuttonLongModesArray.Any()) return;
@@ -1799,7 +1788,6 @@ namespace ChameleonMiniGUI
                 }
                 else
                 {
-                    // split by comma
                     _rbuttonLongModesArray = rbuttonLongModesStr.Split(',');
 
                     if (!_rbuttonLongModesArray.Any()) return;
@@ -1818,7 +1806,6 @@ namespace ChameleonMiniGUI
             var LEDGreenModesStr = SendCommand($"LEDGREEN{_cmdExtension}=?").ToString();
             if (string.IsNullOrEmpty(LEDGreenModesStr)) return;
 
-            // split by comma
             _LEDGreenModesArray = LEDGreenModesStr.Split(',');
             if (!_LEDGreenModesArray.Any()) return;
 
@@ -1833,7 +1820,6 @@ namespace ChameleonMiniGUI
             var LEDRedModesStr = SendCommand($"LEDRED{_cmdExtension}=?").ToString();
             if (string.IsNullOrEmpty(LEDRedModesStr)) return;
 
-            // split by comma
             _LEDRedModesArray = LEDRedModesStr.Split(',');
             if (!_LEDRedModesArray.Any()) return;
 
@@ -1931,14 +1917,11 @@ namespace ChameleonMiniGUI
             var cmd = $"HELP{_cmdExtension}";
 
             var result = SendCommand(cmd).ToString();
-            if (string.IsNullOrEmpty(result))
-                return;
+            if (string.IsNullOrEmpty(result)) return;
 
-            // split by comma
             var helpArray = result.Split(',');
             if (!helpArray.Any()) return;
 
-            // Set 
             AvailableCommands.Clear();
             AvailableCommands.AddRange(helpArray);
         }
@@ -2423,16 +2406,16 @@ namespace ChameleonMiniGUI
                 var tagslotIndex = int.Parse(gb.Name.Substring(gb.Name.Length - 1));
                 if (tagslotIndex <= 0) continue;
 
-                gb.BorderColor = SystemColors.ControlLight;
-                gb.BorderColorLight = SystemColors.ControlLightLight;
-                gb.BorderWidth = 1;
-            }
-            var gb_active = FindControls<GroupBoxEnhanced>(Controls, $"gb_tagslot{_active_selected_slot}").FirstOrDefault();
-            if (gb_active != null)
-            {
-                gb_active.BorderColor = Color.Green;
-                gb_active.BorderColorLight = Color.AntiqueWhite;
-                gb_active.BorderWidth = 1;
+                if (gb.Name.ToLower().StartsWith($"gb_tagslot{_active_selected_slot}"))
+                {
+                    gb.BorderColor = Color.Green;
+                    gb.BorderColorLight = Color.AntiqueWhite;
+                }
+                else
+                {
+                    gb.BorderColor = SystemColors.ControlLight;
+                    gb.BorderColorLight = SystemColors.ControlLightLight;
+                }
             }
             GroupBoxEnhanced.RedrawGroupBoxDisplay(tpOperation);
         }

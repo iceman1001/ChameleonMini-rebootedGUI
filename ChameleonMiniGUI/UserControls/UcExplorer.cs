@@ -148,21 +148,20 @@ namespace ChameleonMiniGUI
             listView1.ContextMenuStrip = contextMenuStrip1;
         }
 
-        private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        private void UpdateListView( TreeNode n)
         {
-            var newSelected = e.Node;
             listView1.Items.Clear();
 
             DirectoryInfo di;
 
-            var tag = newSelected.Tag as DriveInfo;
+            var tag = n.Tag as DriveInfo;
             if (tag != null)
             {
                 di = tag.RootDirectory;
             }
             else
             {
-                di = newSelected.Tag as DirectoryInfo;
+                di = n.Tag as DirectoryInfo;
             }
 
 
@@ -199,6 +198,10 @@ namespace ChameleonMiniGUI
             }
 
             listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+        }
+        private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            UpdateListView(e.Node);
         }
 
         private void treeView1_BeforeExpand(object sender, TreeViewCancelEventArgs e)
@@ -247,9 +250,10 @@ namespace ChameleonMiniGUI
 
         private void contextMenuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-            // something
             var type = (DumpType)e.ClickedItem.Tag;
             ConvertFile((FileInfo)listView1.FocusedItem.Tag, type);
+
+            UpdateListView( treeView1.SelectedNode);
         }
 
         private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)

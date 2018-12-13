@@ -8,15 +8,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ChameleonMiniGUI.Dump;
 
 namespace ChameleonMiniGUI
 {
-    public enum ConvertFileEnum
-    {
-        Eml,
-        Bin,
-        Mfd
-    }
     public partial class UcExplorer : UserControl
     {
         public UcExplorer()
@@ -39,7 +34,7 @@ namespace ChameleonMiniGUI
             {
                 if (_treeImagelist == null)
                 {
-                    _treeImagelist =new ImageList();
+                    _treeImagelist = new ImageList();
                     _treeImagelist.Images.Add("Harddrive", Properties.Resources.hardDrive);
                     _treeImagelist.Images.Add("CDrom", Properties.Resources.cdrom);
                     _treeImagelist.Images.Add("Networkdrive", Properties.Resources.networkDrive);
@@ -61,7 +56,7 @@ namespace ChameleonMiniGUI
                 {
                     Tag = dir,
                     ImageIndex = 3,
-                    SelectedImageIndex = 4                    
+                    SelectedImageIndex = 4
                 };
                 try
                 {
@@ -86,13 +81,13 @@ namespace ChameleonMiniGUI
         private void AddSpecialFolder(string name, TreeView parent)
         {
             if (string.IsNullOrWhiteSpace(name))
-                return; 
+                return;
 
             var di = new DirectoryInfo(name);
             var node = new TreeNode(di.Name, 3, 4) { Tag = di };
 
             //
-            if ( di.GetDirectories().Any() )
+            if (di.GetDirectories().Any())
                 node.Nodes.Add(null, "...", 5, 5);
 
             parent.Nodes.Add(node);
@@ -102,7 +97,7 @@ namespace ChameleonMiniGUI
         {
             // Add Chameleon Mini application folder 
             AddSpecialFolder(@"../..", parent);
-            
+
             // Some special folders
             AddSpecialFolder(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), parent);
             AddSpecialFolder(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), parent);
@@ -137,7 +132,7 @@ namespace ChameleonMiniGUI
                         selectectimage = 0;
                         break;
                 }
-                var node = new TreeNode(drive.Substring(0, 1), image, selectectimage) {Tag = di};
+                var node = new TreeNode(drive.Substring(0, 1), image, selectectimage) { Tag = di };
 
                 if (di.IsReady)
                 {
@@ -153,21 +148,20 @@ namespace ChameleonMiniGUI
             listView1.ContextMenuStrip = contextMenuStrip1;
         }
 
-        private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        private void UpdateListView( TreeNode n)
         {
-            var newSelected = e.Node;
             listView1.Items.Clear();
 
             DirectoryInfo di;
 
-            var tag = newSelected.Tag as DriveInfo;
+            var tag = n.Tag as DriveInfo;
             if (tag != null)
             {
                 di = tag.RootDirectory;
             }
             else
             {
-                di = newSelected.Tag as DirectoryInfo;
+                di = n.Tag as DirectoryInfo;
             }
 
 
@@ -191,7 +185,7 @@ namespace ChameleonMiniGUI
             foreach (var file in di.GetFiles())
             {
                 var len = $"{ (file.Length / 1024)} kb";
-                item = new ListViewItem(file.Name, 1) {Tag = file};
+                item = new ListViewItem(file.Name, 1) { Tag = file };
                 subItems = new[]
                 {
                     new ListViewItem.ListViewSubItem(item, "File"),
@@ -204,6 +198,10 @@ namespace ChameleonMiniGUI
             }
 
             listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+        }
+        private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            UpdateListView(e.Node);
         }
 
         private void treeView1_BeforeExpand(object sender, TreeViewCancelEventArgs e)
@@ -252,23 +250,12 @@ namespace ChameleonMiniGUI
 
         private void contextMenuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-            // something
-            var tmp = e.ClickedItem.Text.ToLowerInvariant().Replace("to ", "");
-            switch (tmp)
-            {
-                case "eml":
-                    ConvertFile( (FileInfo)listView1.FocusedItem.Tag, ConvertFileEnum.Eml);
-                    break;
-                case "bin":
-                    ConvertFile((FileInfo)listView1.FocusedItem.Tag, ConvertFileEnum.Bin);
-                    break;
-                case "mfd":
-                    ConvertFile((FileInfo)listView1.FocusedItem.Tag, ConvertFileEnum.Mfd);
-                    break;
+            var type = (DumpType)e.ClickedItem.Tag;
+            ConvertFile((FileInfo)listView1.FocusedItem.Tag, type);
 
-            }
+            UpdateListView( treeView1.SelectedNode);
         }
-    
+
         private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
         {
             // directories can't be converted :)
@@ -276,87 +263,43 @@ namespace ChameleonMiniGUI
                 return;
 
 
-            var emllabel = new ToolStripMenuItem { Text = "To EML" };
-            var binlabel = new ToolStripMenuItem { Text = "To BIN" };
-            var mfdlabel = new ToolStripMenuItem { Text = "To MFD" };
+            var binLabel = new ToolStripMenuItem { Text = "To BIN", Tag = DumpType.Bin };
+            var jsonLabel = new ToolStripMenuItem { Text = "To JSON", Tag = DumpType.Json };
+            var emlLabel = new ToolStripMenuItem { Text = "To EML", Tag = DumpType.Eml };
+            var mctLabel = new ToolStripMenuItem { Text = "To MCT", Tag = DumpType.Mct };
 
             contextMenuStrip1.Items.Clear();
-            contextMenuStrip1.Items.AddRange(new ToolStripItem[] { emllabel, binlabel, mfdlabel });
+            contextMenuStrip1.Items.AddRange(new ToolStripItem[] { binLabel, jsonLabel, emlLabel, mctLabel });
 
             var tmp = listView1.FocusedItem.Text.ToLowerInvariant();
 
-            if (tmp.Contains(".eml"))
+            if (tmp.Contains(".bin"))
             {
-                contextMenuStrip1.Items.Remove( emllabel);
-            } else if (tmp.Contains(".bin"))
+                contextMenuStrip1.Items.Remove(binLabel);
+            }
+            else if (tmp.Contains(".json"))
             {
-                contextMenuStrip1.Items.Remove(binlabel);
-
-            } else if (tmp.Contains(".mfd"))
+                contextMenuStrip1.Items.Remove(jsonLabel);
+            }
+            else if (tmp.Contains(".eml"))
             {
-                contextMenuStrip1.Items.Remove(mfdlabel);
+                contextMenuStrip1.Items.Remove(emlLabel);
+            }
+            else if (tmp.Contains(".mct"))
+            {
+                contextMenuStrip1.Items.Remove(mctLabel);
             }
         }
 
-        private void ConvertFile( FileInfo fi, ConvertFileEnum to)
+        private void ConvertFile(FileInfo fi, DumpType to)
         {
-            if ( fi == null)
+            if (fi == null)
                 return;
-
-            switch (to)
-            {
-                case ConvertFileEnum.Eml:
-                {
-                    var bytes = File.ReadAllBytes( fi.FullName);
-
-                    // read bytes & convert to ascii
-                    var bytesleft = bytes.Length;
-                    var pos = 0;
-                    var rows = new List<string>();
-                    while ( bytesleft > 0 )
-                    {
-                        var len = Math.Min(bytesleft, 16);
-                        rows.Add( BitConverter.ToString( bytes, pos, len ).Replace("-", " "));
-                        pos += len;
-                        bytesleft -= len;
-                    }
-
-                    // save text file
-                    var sfilename = fi.FullName.Replace(fi.Extension, ".eml");
-                    File.WriteAllLines(sfilename, rows, Encoding.ASCII);
-                    break;
-                }
-                case ConvertFileEnum.Bin:
-                {
-                    var rows = File.ReadAllLines( fi.FullName);
-
-                    var sfilename = fi.FullName.Replace(fi.Extension, ".bin");
-
-                    using ( var w = new BinaryWriter( new FileStream(sfilename, FileMode.Create)))
-                    {
-                        foreach (var row in rows)
-                        {
-                            var clean = row.Replace(":", "").Replace(" ", "");
-
-                            if (string.IsNullOrWhiteSpace(clean))
-                                continue;
-
-
-                            int pos = 0;
-                            var bytes = new byte[clean.Length >> 1];
-                            for (int i = 0; i < clean.Length; i += 2)
-                            {
-                                var b = Convert.ToByte(clean.Substring(i, 2), 16);
-                                bytes[pos++] = b;
-                            }
-
-                            w.Write(bytes);
-                        }
-                    }
-
-                    break;
-                }
-            }           
+            var fromDumpStrategy = DumpStrategyFactory.Create(fi.FullName);
+            var toDumpStrategy = DumpStrategyFactory.Create(to);
+            toDumpStrategy.FileName = Path.ChangeExtension(fi.FullName, toDumpStrategy.Extension);
+            var data = fromDumpStrategy.Read();
+            toDumpStrategy.Save(data);
         }
     }
 }

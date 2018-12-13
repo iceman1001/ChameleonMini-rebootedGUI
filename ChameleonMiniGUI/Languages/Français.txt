@@ -11,6 +11,7 @@ btn_selectnone.Text=Tout désélectionner
 btn_selectall.Text=Tout sélectionner
 btn_refresh.Text=Rafraichir
 btn_clear.Text=Effacer
+btn_identify.Text=Identify
 btn_keycalc.Text=mfkey32
 btn_apply.Text=Appliquer
 btn_download.Text=Downloader Dump
@@ -93,9 +94,12 @@ lbl_buttonlong7.Text=Btn Long
 lbl_buttonlong8.Text=Btn Long
 btnStartlocation.Text=Ouvrir Emplacement
 lbl_template.Text=Modéles
+
+tpUtils.Text=Utils
 #
 # tab Terminal
 #
+tpSerial.Text=Terminal
 gbAvailableCmds.Text=Commandes disponibles
 gbSerial_interface.Text=Terminal de commande
 btnClearCmd.Text=Effacer

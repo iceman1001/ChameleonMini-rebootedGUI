@@ -11,7 +11,6 @@ namespace ChameleonMiniGUI.Json
     public class MifareClassicSectorKey
     {
         MifareClassicModel mfc;
-        int sector;
 
         public MifareClassicSectorKey()
         { }
@@ -19,17 +18,19 @@ namespace ChameleonMiniGUI.Json
         public MifareClassicSectorKey(MifareClassicModel mfc, int sector)
         {
             this.mfc = mfc;
-            this.sector = sector;
+            this.SectorNumber = sector;
         }
 
-        int FirstBlockNumber
+        public int SectorNumber { get; set; }
+
+        public int FirstBlockNumber
         {
             get
             {
-                if (sector < 32)
-                    return sector * 4;
+                if (SectorNumber < 32)
+                    return SectorNumber * 4;
                 else
-                    return 32 * 4 + (sector - 32) * 16;
+                    return 32 * 4 + (SectorNumber - 32) * 16;
             }
         }
 
@@ -37,10 +38,18 @@ namespace ChameleonMiniGUI.Json
         {
             get
             {
-                if (sector < 32)
-                    return sector * 4 + 3;
+                if (SectorNumber < 32)
+                    return SectorNumber * 4 + 3;
                 else
-                    return 32 * 4 + (sector - 32) * 16 + 15;
+                    return 32 * 4 + (SectorNumber - 32) * 16 + 15;
+            }
+        }
+
+        public int BlockCount
+        {
+            get
+            {
+                return SectorNumber < 32 ? 4 : 16;
             }
         }
 
@@ -77,7 +86,7 @@ namespace ChameleonMiniGUI.Json
         string GetBlockNameByConditionNumber(int i)
         {
             var start = FirstBlockNumber;
-            if (sector < 32)
+            if (SectorNumber < 32)
                 return "block" + (start + i);
             return $"block{start + i * 5}~block{start + i * 5 + 4}";
         }

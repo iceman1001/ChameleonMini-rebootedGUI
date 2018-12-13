@@ -13,5 +13,7 @@ namespace ChameleonMiniGUI.Dump
         public abstract byte[] Read();
 
         public abstract void Save(byte[] data);
+
+        public abstract string Extension { get; }
     }
 }

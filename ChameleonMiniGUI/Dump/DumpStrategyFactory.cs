@@ -19,6 +19,8 @@ namespace ChameleonMiniGUI.Dump
                     return new JsonDumpStrategy(fileName);
                 case DumpType.Eml:
                     return new EmlDumpStrategy(fileName);
+                case DumpType.Mct:
+                    return new MctDumpStrategy(fileName);
                 default:
                     return new BinaryDumpStrategy(fileName);
             }
@@ -37,6 +39,8 @@ namespace ChameleonMiniGUI.Dump
                     return new JsonDumpStrategy(fileName);
                 case ".eml":
                     return new EmlDumpStrategy(fileName);
+                case ".mct":
+                    return new MctDumpStrategy(fileName);
                 default:
                     return new BinaryDumpStrategy(fileName);
             }

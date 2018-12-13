@@ -459,6 +459,9 @@ namespace ChameleonMiniGUI
                             case 3:
                                 dumpFilename = !dumpFilename.ToLower().EndsWith(".eml") ? dumpFilename + ".eml" : dumpFilename;
                                 break;
+                            case 4:
+                                dumpFilename = !dumpFilename.ToLower().EndsWith(".mct") ? dumpFilename + ".mct" : dumpFilename;
+                                break;
                             default:
                                 break;
                         }

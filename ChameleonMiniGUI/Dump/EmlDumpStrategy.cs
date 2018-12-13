@@ -14,6 +14,12 @@ namespace ChameleonMiniGUI.Dump
             FileName = fileName;
         }
 
+        public override string Extension
+        {
+            get
+            { return ".eml"; }
+        }
+
         public override byte[] Read()
         {
             var rows = File.ReadAllLines(FileName);

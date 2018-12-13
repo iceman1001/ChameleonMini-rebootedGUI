@@ -18,6 +18,12 @@ namespace ChameleonMiniGUI.Dump
             FileName = fileName;
         }
 
+        public override string Extension
+        {
+            get
+            { return ".mct"; }
+        }
+
         public override byte[] Read()
         {
             var lines = File.ReadLines(FileName)

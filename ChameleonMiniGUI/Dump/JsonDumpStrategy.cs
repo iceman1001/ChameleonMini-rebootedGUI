@@ -23,6 +23,12 @@ namespace ChameleonMiniGUI.Dump
             Serializer = new DataContractJsonSerializer(typeof(MifareClassicModel), settings);
         }
 
+        public override string Extension
+        {
+            get
+            { return ".json"; }
+        }
+
         public override byte[] Read()
         {
             using (var fs = File.OpenRead(FileName))

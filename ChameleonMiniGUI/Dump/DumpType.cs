@@ -10,6 +10,7 @@ namespace ChameleonMiniGUI.Dump
     {
         Bin,
         Json,
-        Eml
+        Eml,
+        Mct
     }
 }

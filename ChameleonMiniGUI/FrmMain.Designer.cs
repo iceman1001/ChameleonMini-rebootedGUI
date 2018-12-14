@@ -258,7 +258,7 @@ namespace ChameleonMiniGUI
             this.btnSerialSend = new System.Windows.Forms.Button();
             this.tbSerialCmd = new System.Windows.Forms.TextBox();
             this.btnClearCmd = new System.Windows.Forms.Button();
-            this.tbSerialOutput = new System.Windows.Forms.TextBox();
+            this.tbSerialOutput = new System.Windows.Forms.RichTextBox();
             this.menuClear = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_clear = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_copy = new System.Windows.Forms.ToolStripMenuItem();
@@ -3276,15 +3276,17 @@ namespace ChameleonMiniGUI
             // 
             // tbSerialOutput
             // 
+            this.tbSerialOutput.BackColor = System.Drawing.Color.Gray;
             this.tbSerialOutput.ContextMenuStrip = this.menuClear;
             this.tbSerialOutput.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.tbSerialOutput.Font = new System.Drawing.Font("Courier New", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbSerialOutput.ForeColor = System.Drawing.Color.White;
             this.tbSerialOutput.Location = new System.Drawing.Point(3, 53);
             this.tbSerialOutput.Margin = new System.Windows.Forms.Padding(10);
-            this.tbSerialOutput.Multiline = true;
             this.tbSerialOutput.Name = "tbSerialOutput";
-            this.tbSerialOutput.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.tbSerialOutput.Size = new System.Drawing.Size(647, 573);
             this.tbSerialOutput.TabIndex = 0;
+            this.tbSerialOutput.Text = "";
             // 
             // menuClear
             // 
@@ -3546,7 +3548,7 @@ namespace ChameleonMiniGUI
         private System.Windows.Forms.Button btnStartlocation;
         private System.Windows.Forms.Label lbl_template;
         private System.Windows.Forms.TabPage tpSerial;
-        private System.Windows.Forms.TextBox tbSerialOutput;
+        private System.Windows.Forms.RichTextBox tbSerialOutput;
         private System.Windows.Forms.TextBox tbSerialCmd;
         private System.Windows.Forms.Button btnClearCmd;
         private System.Windows.Forms.GroupBox gbAvailableCmds;

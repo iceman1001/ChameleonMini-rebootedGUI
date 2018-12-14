@@ -8,20 +8,23 @@ using System.Threading.Tasks;
 namespace ChameleonMiniGUI.Json
 {
     [DataContract]
-    public class MifareClassicCardInfo
+    public class MifareClassicCardInfo : MifareCardInfo
     {
-        MifareClassicModel mfc;
+        MifareClassicModel mfc
+        {
+            get { return Mifare as MifareClassicModel; }
+        }
 
         public MifareClassicCardInfo()
         { }
 
         public MifareClassicCardInfo(MifareClassicModel mfc)
         {
-            this.mfc = mfc;
+            Mifare = mfc;
         }
 
         [DataMember(Name = "UID", Order = 0)]
-        public string Uid
+        public override string Uid
         {
             get { return MifareClassicModel.ByteArrayToString(mfc.Blocks[0].Take(4)); }
             set { }

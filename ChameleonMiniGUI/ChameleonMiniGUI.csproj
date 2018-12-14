@@ -131,9 +131,14 @@
     </Compile>
     <Compile Include="Json\BlockSurrogate.cs" />
     <Compile Include="Dump\DumpFileByteProvider.cs" />
+    <Compile Include="Json\MifareCardInfo.cs" />
     <Compile Include="Json\MifareClassicCardInfo.cs" />
     <Compile Include="Json\MifareClassicModel.cs" />
     <Compile Include="Json\MifareClassicSectorKey.cs" />
+    <Compile Include="Json\MifareDataContractResolver.cs" />
+    <Compile Include="Json\MifareModel.cs" />
+    <Compile Include="Json\MifareUltralightCardInfo.cs" />
+    <Compile Include="Json\MifareUltralightModel.cs" />
     <Compile Include="Legend\IlegendItem.cs" />
     <Compile Include="Legend\Legend.cs" />
     <Compile Include="Legend\UcLegend.cs">

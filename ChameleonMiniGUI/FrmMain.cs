@@ -52,6 +52,29 @@ namespace ChameleonMiniGUI
         private DeviceType _CurrentDevType = DeviceType.RevG;
         private int _active_selected_slot;
 
+
+
+        private double ByteWidth
+        {
+            get
+            {
+                var width = (tbSerialOutput.Width / (tbSerialOutput.Font.SizeInPoints * 2.5));
+
+                if (width > 32)
+                {
+                    width = 32;
+                }
+                else if (width > 16)
+                {
+                    width = 16;
+                }
+                else
+                {
+                    width = 8;
+                }
+                return width;
+            }
+        }
         public string FirmwareVersion
         {
             get { return _firmwareVersion; }
@@ -1045,7 +1068,7 @@ namespace ChameleonMiniGUI
 
         private async void Send(string cmd)
         {
-            var prompt = "--> ";
+            const string prompt = "--> ";
             var c = tbSerialOutput;
 
             c.Focus();
@@ -1055,8 +1078,16 @@ namespace ChameleonMiniGUI
             c.AppendText($"{Environment.NewLine}{prompt}{cmd}");
             c.ScrollToCaret();
 
-            //determine if command has return data? 
-            var res = await SendCommand_ICE(cmd);
+            string res;
+            if (cmd.ToLower().StartsWith("upload"))
+            {
+                res = "This command is not supported in this serial interface. Use Operations tag to upload.";
+            }
+            else
+            {
+                var o = await SendCommand_ICE(cmd);
+                res = o.ToString();
+            }
 
             c.SelectedText = string.Empty;
             c.SelectionStart = c.TextLength;
@@ -1249,11 +1280,11 @@ namespace ChameleonMiniGUI
                 {
                     _comport.Open();
                     var name = obj["Name"].ToString();
-                    txt_output.Text += $"Connecting to {name} at {comPortStr}{Environment.NewLine}";
+                    txt_output.Text += $"[=] Connecting to {name} at {comPortStr}{Environment.NewLine}";
                 }
                 catch (Exception)
                 {
-                    txt_output.Text = $"Failed {comPortStr}{Environment.NewLine}";
+                    txt_output.Text = $"[!] Failed {comPortStr}{Environment.NewLine}";
                 }
 
                 if (_comport.IsOpen)
@@ -1284,7 +1315,7 @@ namespace ChameleonMiniGUI
                     if (!string.IsNullOrEmpty(_firmwareVersion) && _firmwareVersion.Contains("Chameleon"))
                     {
                         _cmdExtension = string.Empty;
-                        txt_output.Text = $"Success, found Chameleon Mini device on '{comPortStr}' with {_deviceIdentification} installed{Environment.NewLine}";
+                        txt_output.Text = $"[+] Success, found Chameleon Mini device on '{comPortStr}' with {_deviceIdentification} installed{Environment.NewLine}";
                         _current_comport = comPortStr;
                         this.Cursor = Cursors.Default;
                         return;
@@ -1294,7 +1325,7 @@ namespace ChameleonMiniGUI
                     if (!string.IsNullOrEmpty(_firmwareVersion) && _firmwareVersion.Contains("Chameleon"))
                     {
                         _cmdExtension = "MY";
-                        txt_output.Text = $"Success, found Chameleon Mini device on '{comPortStr}' with {_deviceIdentification} installed{Environment.NewLine}";
+                        txt_output.Text = $"[+] Success, found Chameleon Mini device on '{comPortStr}' with {_deviceIdentification} installed{Environment.NewLine}";
                         _current_comport = comPortStr;
                         this.Cursor = Cursors.Default;
                         return;
@@ -1320,11 +1351,11 @@ namespace ChameleonMiniGUI
                 {
                     _comport.Open();
                     var name = obj["Name"].ToString();
-                    txt_output.Text += $"Connecting to {name} at {comPortStr}{Environment.NewLine}";
+                    txt_output.Text += $"[=] Connecting to {name} at {comPortStr}{Environment.NewLine}";
                 }
                 catch (Exception)
                 {
-                    txt_output.Text = $"Failed {comPortStr}{Environment.NewLine}";
+                    txt_output.Text = $"[!] Failed {comPortStr}{Environment.NewLine}";
                 }
 
                 if (!_comport.IsOpen) continue;
@@ -1339,7 +1370,7 @@ namespace ChameleonMiniGUI
                 {
                     _cmdExtension = string.Empty;
                     pb_device.Image = (Bitmap)Properties.Resources.ResourceManager.GetObject("chamRevG1");
-                    txt_output.Text = $"Success, found Chameleon Mini device on '{comPortStr}' with {_deviceIdentification} installed{Environment.NewLine}";
+                    txt_output.Text = $"[+] Success, found Chameleon Mini device on '{comPortStr}' with {_deviceIdentification} installed{Environment.NewLine}";
                     _current_comport = comPortStr;
                     _CurrentDevType = DeviceType.RevG;
                     ConfigHMIForRevG();
@@ -1352,7 +1383,7 @@ namespace ChameleonMiniGUI
                 {
                     _cmdExtension = "MY";
                     pb_device.Image = (Bitmap)Properties.Resources.ResourceManager.GetObject("chamRevE");
-                    txt_output.Text = $"Success, found Chameleon Mini device on '{comPortStr}' with {_deviceIdentification} installed{Environment.NewLine}";
+                    txt_output.Text = $"[+] Success, found Chameleon Mini device on '{comPortStr}' with {_deviceIdentification} installed{Environment.NewLine}";
                     _current_comport = comPortStr;
                     _CurrentDevType = DeviceType.RevE;
                     ConfigHMIForRevE();
@@ -1377,13 +1408,15 @@ namespace ChameleonMiniGUI
 
             try
             {
-                // send command
                 var tx_data = Encoding.ASCII.GetBytes(cmdText);
                 _comport.Write(tx_data, 0, tx_data.Length);
                 _comport.Write("\r\n");
             }
-            catch (Exception)
-            { }
+            catch (Exception ex)
+            {
+                var msg = $"{Environment.NewLine}[!] {ex.Message}{Environment.NewLine}";
+                txt_output.Text += msg;
+            }
         }
 
         private object SendCommand(string cmdText)
@@ -1479,15 +1512,14 @@ namespace ChameleonMiniGUI
 
             try
             {
-                // send command
                 var tx_data = Encoding.ASCII.GetBytes(cmdText);
                 _comport.Write(tx_data, 0, tx_data.Length);
                 _comport.Write("\r\n");
 
                 // wait to make sure data is transmitted
                 Thread.Sleep(100);
-                string s = "";
                 int blockLimit = 275;
+
                 var cts = new CancellationTokenSource();
                 var rx_data = new byte[blockLimit];
 
@@ -1502,56 +1534,43 @@ namespace ChameleonMiniGUI
                 {
                     var foo = new byte[bytesread];
                     Array.Copy(rx_data, 8, foo, 0, bytesread - 7);
-                    return foo;
+                    var str = BitConverter.ToString(foo).Replace("-", " ");
+
+                    return $"{Environment.NewLine}{str}{Environment.NewLine}";
                 }
 
-                s = new string(Encoding.ASCII.GetChars(received));
                 // Check if chameleon wants to start XMODEM-Transfer
+                var s = new string(Encoding.ASCII.GetChars(received));
                 if (s.Contains("110:WAITING FOR XMODEM"))
                 {
-                    s= $"110:WAITING FOR XMODEM\r\n";
+                    s = $"110:WAITING FOR XMODEM{Environment.NewLine}";
                     var result = ReceiveXModemData();
                     var hex = new StringBuilder(result.Length * 2);
-                    hex.Append("[\r\n");
+                    hex.Append($"{Environment.NewLine}");
                     var counter = 0;
 
-                    var ByteWidth = (tbSerialOutput.Width / ( tbSerialOutput.Font.SizeInPoints * 3) );
-
-                    if (ByteWidth > 32)
-                    {
-                        ByteWidth = 32;
-                    }
-                    else if (ByteWidth > 16)
-                    {
-                        ByteWidth = 16;
-                    }
-                    else
-                    {
-                        ByteWidth = 8;
-                    }
-
-                    foreach (byte b in result)
+                    foreach (var b in result)
                     {
                         hex.AppendFormat("{0:x2} ", b);
                         counter++;
 
-                        if (counter> ByteWidth-1)
+                        if (counter > this.ByteWidth - 1 )
                         {
                             counter = 0;
-                            hex.Append("\r\n");
+                            hex.Append(Environment.NewLine);
                         }
                     }
-                    hex.Append("]");
 
                     s += hex.ToString();
                 }
                 return s;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                var msg = $"{Environment.NewLine}[!] {ex.Message}{Environment.NewLine}";
+                txt_output.Text += msg;
                 return string.Empty;
             }
-
         }
 
         private bool IsUidValid(string uid, string selectedMode)
@@ -1998,15 +2017,14 @@ namespace ChameleonMiniGUI
 
         internal void UploadDump(string filename)
         {
-            // Load the file into a memory block
             var bytes = ReadFileIntoByteArray(filename);
 
-            // Set up an XMODEM object
             var xmodem = new XMODEM(_comport, XMODEM.Variants.XModemChecksum);
 
-            // First send the upload command
             SendCommandWithoutResult($"UPLOAD{_cmdExtension}");
-            _comport.ReadLine(); // For the "110:WAITING FOR XMODEM" text
+
+            // For the "110:WAITING FOR XMODEM" text
+            _comport.ReadLine(); 
 
             int numBytesSuccessfullySent = xmodem.Send(bytes);
 
@@ -2030,7 +2048,8 @@ namespace ChameleonMiniGUI
             // First get the current memory size of the slot
             var memsizeStr = SendCommand($"MEMSIZE{_cmdExtension}?");
 
-            int memsize = 4096; // Default value
+            // Default value
+            int memsize = 4096;
 
             if (!string.IsNullOrEmpty((string)memsizeStr))
             {
@@ -2043,7 +2062,8 @@ namespace ChameleonMiniGUI
             {
                 if (memsize < 4069)
                 {
-                    memsize += 3 * 4; // 3 more pages
+                    // 3 more pages
+                    memsize += 3 * 4; 
                 }
             }
 
@@ -2054,8 +2074,6 @@ namespace ChameleonMiniGUI
             _comport.ReadLine();
 
             var bytes = ReceiveXModemData();
-
-
             if (bytes != null)
             {
                 var msg = $"[+] File download from device ok{Environment.NewLine}";
@@ -2092,15 +2110,13 @@ namespace ChameleonMiniGUI
         private byte [] ReceiveXModemData()
         {
             byte[] response;
-            // Set up an XMODEM object
-            var xmodem = new XMODEM(_comport, XMODEM.Variants.XModemChecksum);
 
+            var xmodem = new XMODEM(_comport, XMODEM.Variants.XModemChecksum);
             var ms = new MemoryStream();
             var reason = xmodem.Receive(ms);
 
             if (reason == XMODEM.TerminationReasonEnum.EndOfFile)
             {
-                // Transfer successful, so convert MemoryStream to byte array
                 var bytes = ms.ToArray();
 
                 // Strip away the SUB (byte value 26) padding bytes
@@ -2516,8 +2532,6 @@ namespace ChameleonMiniGUI
             SendCommandWithoutResult($"SETTING{_cmdExtension}={_active_selected_slot - _tagslotIndexOffset}");
             HighlightActiveSlot();
         }
-     
-
         #endregion
     }
 }

@@ -3240,7 +3240,7 @@ namespace ChameleonMiniGUI
             this.gbSerial_interface.Controls.Add(this.tbSerialOutput);
             this.gbSerial_interface.Location = new System.Drawing.Point(209, 13);
             this.gbSerial_interface.Name = "gbSerial_interface";
-            this.gbSerial_interface.Size = new System.Drawing.Size(653, 629);
+            this.gbSerial_interface.Size = new System.Drawing.Size(1050, 629);
             this.gbSerial_interface.TabIndex = 8;
             this.gbSerial_interface.TabStop = false;
             this.gbSerial_interface.Text = "Serial interface";
@@ -3266,7 +3266,7 @@ namespace ChameleonMiniGUI
             // 
             // btnClearCmd
             // 
-            this.btnClearCmd.Location = new System.Drawing.Point(556, 20);
+            this.btnClearCmd.Location = new System.Drawing.Point(465, 20);
             this.btnClearCmd.Name = "btnClearCmd";
             this.btnClearCmd.Size = new System.Drawing.Size(75, 23);
             this.btnClearCmd.TabIndex = 2;
@@ -3278,13 +3278,12 @@ namespace ChameleonMiniGUI
             // 
             this.tbSerialOutput.BackColor = System.Drawing.Color.Gray;
             this.tbSerialOutput.ContextMenuStrip = this.menuClear;
-            this.tbSerialOutput.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tbSerialOutput.Font = new System.Drawing.Font("Courier New", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbSerialOutput.ForeColor = System.Drawing.Color.White;
             this.tbSerialOutput.Location = new System.Drawing.Point(3, 53);
             this.tbSerialOutput.Margin = new System.Windows.Forms.Padding(10);
             this.tbSerialOutput.Name = "tbSerialOutput";
-            this.tbSerialOutput.Size = new System.Drawing.Size(647, 573);
+            this.tbSerialOutput.Size = new System.Drawing.Size(806, 573);
             this.tbSerialOutput.TabIndex = 0;
             this.tbSerialOutput.Text = "";
             // 

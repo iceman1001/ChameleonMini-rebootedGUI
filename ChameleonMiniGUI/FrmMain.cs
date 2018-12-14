@@ -52,8 +52,6 @@ namespace ChameleonMiniGUI
         private DeviceType _CurrentDevType = DeviceType.RevG;
         private int _active_selected_slot;
 
-
-
         private double ByteWidth
         {
             get
@@ -2194,7 +2192,9 @@ namespace ChameleonMiniGUI
 
             var fi = new FileInfo(fileName);
 
-            //
+
+            var detect_width = false;
+
             rbtn_bytewidth04.Checked = false;
             rbtn_bytewidth08.Checked = false;
             rbtn_bytewidth16.Checked = false;
@@ -2203,18 +2203,17 @@ namespace ChameleonMiniGUI
             if (fileName.ToLower().Contains("iclass"))
             {
                 rbtn_bytewidth08.Checked = true;
+                detect_width = true;
             }
-            else
+            else if (fileName.ToLower().Contains("hf-mf"))
             {
-                // generic rule, larger than 256bytes,  16byte width
-                if (fi.Length >= 256)
-                {
-                    rbtn_bytewidth16.Checked = true;
-                }
-                else
-                {
-                    rbtn_bytewidth04.Checked = true;
-                }
+                rbtn_bytewidth16.Checked = true;
+                detect_width = true;
+            }
+            else if (fileName.ToLower().Contains("hf-mfu"))
+            {
+                rbtn_bytewidth04.Checked = true;
+                detect_width = true;
             }
 
             try
@@ -2223,6 +2222,21 @@ namespace ChameleonMiniGUI
 
                 // try to open in write mode
                 hexBox.ByteProvider = new DumpFileByteProvider(fi.FullName);
+
+                if (!detect_width)
+                {
+                    switch (hexBox.ByteProvider.Length)
+                    {
+                        case 320:
+                        case 1024:
+                        case 4096:
+                            rbtn_bytewidth16.Checked = true;
+                            break;
+                        default:
+                            rbtn_bytewidth04.Checked = true;
+                            break;
+                    }
+                }
 
                 // Display info for the file
                 var hbIdx = int.Parse(hexBox.Name.Substring(hexBox.Name.Length - 1));

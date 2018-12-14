@@ -1486,7 +1486,7 @@ namespace ChameleonMiniGUI
 
                 // wait to make sure data is transmitted
                 Thread.Sleep(100);
-
+                string s = "";
                 int blockLimit = 275;
                 var cts = new CancellationTokenSource();
                 var rx_data = new byte[blockLimit];
@@ -1494,7 +1494,6 @@ namespace ChameleonMiniGUI
                 var bytesread = await _comport.BaseStream.ReadAsync(rx_data, 0, blockLimit, cts.Token);
 
                 if (bytesread <= 0) return string.Empty;
-
 
                 var received = new byte[bytesread];
                 Buffer.BlockCopy(rx_data, 0, received, 0, bytesread);
@@ -1505,7 +1504,47 @@ namespace ChameleonMiniGUI
                     Array.Copy(rx_data, 8, foo, 0, bytesread - 7);
                     return foo;
                 }
-                var s = new string(Encoding.ASCII.GetChars(received));
+
+                s = new string(Encoding.ASCII.GetChars(received));
+                // Check if chameleon wants to start XMODEM-Transfer
+                if (s.Contains("110:WAITING FOR XMODEM"))
+                {
+                    s= $"110:WAITING FOR XMODEM\r\n";
+                    var result = ReceiveXModemData();
+                    var hex = new StringBuilder(result.Length * 2);
+                    hex.Append("[\r\n");
+                    var counter = 0;
+
+                    var ByteWidth = (tbSerialOutput.Width / ( tbSerialOutput.Font.SizeInPoints * 3) );
+
+                    if (ByteWidth > 32)
+                    {
+                        ByteWidth = 32;
+                    }
+                    else if (ByteWidth > 16)
+                    {
+                        ByteWidth = 16;
+                    }
+                    else
+                    {
+                        ByteWidth = 8;
+                    }
+
+                    foreach (byte b in result)
+                    {
+                        hex.AppendFormat("{0:x2} ", b);
+                        counter++;
+
+                        if (counter> ByteWidth-1)
+                        {
+                            counter = 0;
+                            hex.Append("\r\n");
+                        }
+                    }
+                    hex.Append("]");
+
+                    s += hex.ToString();
+                }
                 return s;
             }
             catch (Exception)
@@ -1988,9 +2027,6 @@ namespace ChameleonMiniGUI
 
         internal void DownloadAndSaveDump(string filename)
         {
-            // Set up an XMODEM object
-            var xmodem = new XMODEM(_comport, XMODEM.Variants.XModemChecksum);
-
             // First get the current memory size of the slot
             var memsizeStr = SendCommand($"MEMSIZE{_cmdExtension}?");
 
@@ -2013,24 +2049,18 @@ namespace ChameleonMiniGUI
 
             // Then send the download command
             SendCommandWithoutResult($"DOWNLOAD{_cmdExtension}");
-
+            
             // For the "110:WAITING FOR XMODEM" text
             _comport.ReadLine();
 
-            var ms = new MemoryStream();
-            var reason = xmodem.Receive(ms);
+            var bytes = ReceiveXModemData();
 
-            if (reason == XMODEM.TerminationReasonEnum.EndOfFile)
+
+            if (bytes != null)
             {
                 var msg = $"[+] File download from device ok{Environment.NewLine}";
                 Console.WriteLine(msg);
                 txt_output.Text += msg;
-
-                // Transfer successful, so convert MemoryStream to byte array
-                var bytes = ms.ToArray();
-
-                // Strip away the SUB (byte value 26) padding bytes
-                bytes = xmodem.TrimPaddingBytesFromEnd(bytes);
 
                 byte[] neededBytes = bytes;
 
@@ -2057,6 +2087,35 @@ namespace ChameleonMiniGUI
                 MessageBox.Show(msg);
                 txt_output.Text += msg;
             }
+        }
+
+        private byte [] ReceiveXModemData()
+        {
+            byte[] response;
+            // Set up an XMODEM object
+            var xmodem = new XMODEM(_comport, XMODEM.Variants.XModemChecksum);
+
+            var ms = new MemoryStream();
+            var reason = xmodem.Receive(ms);
+
+            if (reason == XMODEM.TerminationReasonEnum.EndOfFile)
+            {
+                // Transfer successful, so convert MemoryStream to byte array
+                var bytes = ms.ToArray();
+
+                // Strip away the SUB (byte value 26) padding bytes
+                bytes = xmodem.TrimPaddingBytesFromEnd(bytes);
+
+                response = new byte[bytes.Length];
+
+                Array.Copy(bytes, response, response.Length);
+            }
+            else
+            {
+                // Something went wrong during the transfer
+                response = null;
+            }
+            return response;
         }
 
         private void InitTimer()

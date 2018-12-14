@@ -1046,11 +1046,25 @@ namespace ChameleonMiniGUI
         private async void Send(string cmd)
         {
             var prompt = "--> ";
+            var c = tbSerialOutput;
 
-            tbSerialOutput.AppendText($"{Environment.NewLine}{prompt}{cmd}");
+            c.Focus();
+            c.SelectedText = string.Empty;
+            c.SelectionStart = c.TextLength;
+            c.SelectionColor = Color.Goldenrod;
+            c.AppendText($"{Environment.NewLine}{prompt}{cmd}");
+            c.ScrollToCaret();
+
             //determine if command has return data? 
             var res = await SendCommand_ICE(cmd);
-            tbSerialOutput.AppendText($"{Environment.NewLine}{res}");
+
+            c.SelectedText = string.Empty;
+            c.SelectionStart = c.TextLength;
+            c.SelectionColor = c.ForeColor;
+            c.AppendText($"{Environment.NewLine}{res}");
+            c.ScrollToCaret();
+
+            tbSerialCmd.Focus();
         }
 
         private void ApplyByteWidthChange(int width)

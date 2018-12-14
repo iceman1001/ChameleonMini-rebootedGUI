@@ -3278,6 +3278,7 @@ namespace ChameleonMiniGUI
             // 
             this.tbSerialOutput.ContextMenuStrip = this.menuClear;
             this.tbSerialOutput.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.tbSerialOutput.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbSerialOutput.Location = new System.Drawing.Point(3, 53);
             this.tbSerialOutput.Margin = new System.Windows.Forms.Padding(10);
             this.tbSerialOutput.Multiline = true;

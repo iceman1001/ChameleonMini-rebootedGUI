@@ -1514,12 +1514,28 @@ namespace ChameleonMiniGUI
                     var hex = new StringBuilder(result.Length * 2);
                     hex.Append("[\r\n");
                     var counter = 0;
+
+                    var ByteWidth = (tbSerialOutput.Width / ( tbSerialOutput.Font.SizeInPoints * 3) );
+
+                    if (ByteWidth > 32)
+                    {
+                        ByteWidth = 32;
+                    }
+                    else if (ByteWidth > 16)
+                    {
+                        ByteWidth = 16;
+                    }
+                    else
+                    {
+                        ByteWidth = 8;
+                    }
+
                     foreach (byte b in result)
                     {
                         hex.AppendFormat("{0:x2} ", b);
                         counter++;
 
-                        if (counter>7)
+                        if (counter> ByteWidth-1)
                         {
                             counter = 0;
                             hex.Append("\r\n");

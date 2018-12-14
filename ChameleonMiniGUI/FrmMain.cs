@@ -1939,7 +1939,10 @@ namespace ChameleonMiniGUI
             if (fi.Exists)
             {
                 var dumpStrategy = DumpStrategyFactory.Create(fi.FullName);
-                return dumpStrategy?.Read();
+                var data = dumpStrategy.Read();
+                if (data.Length < 1024 && data.Length != 320)
+                    data = data.Skip(MifareUltralightCardInfo.PrefixLength).ToArray();
+                return data;
             }
             return null;
         }
@@ -2029,6 +2032,11 @@ namespace ChameleonMiniGUI
                     Array.Copy(bytes, neededBytes, neededBytes.Length);
                 }
 
+                if (neededBytes.Length < 1024 && neededBytes.Length != 320)
+                    neededBytes = Enumerable
+                        .Repeat((byte)0, MifareUltralightCardInfo.PrefixLength)
+                        .Concat(neededBytes)
+                        .ToArray();
                 // Write the actual file
                 var dumpStrategy = DumpStrategyFactory.Create(filename);
                 dumpStrategy?.Save(neededBytes);

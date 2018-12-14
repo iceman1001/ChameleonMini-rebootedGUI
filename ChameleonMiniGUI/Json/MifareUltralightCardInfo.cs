@@ -10,6 +10,8 @@ namespace ChameleonMiniGUI.Json
     [DataContract]
     public class MifareUltralightCardInfo : MifareCardInfo
     {
+        public const int PrefixLength = 48;
+
         MifareUltralightModel mfu { get { return Mifare as MifareUltralightModel; } }
 
         [DataMember(Name = "UID", Order = 0)]

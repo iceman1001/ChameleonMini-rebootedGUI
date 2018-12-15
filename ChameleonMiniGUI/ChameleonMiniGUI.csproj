@@ -33,7 +33,7 @@
     <MinimumRequiredVersion>1.2.0.0</MinimumRequiredVersion>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>7</ApplicationRevision>
+    <ApplicationRevision>9</ApplicationRevision>
     <ApplicationVersion>1.2.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -202,6 +202,9 @@
     <None Include="Resources\network-drive.ico" />
     <Content Include="Resources\chameleon.png" />
     <Content Include="Resources\warning.png" />
+    <Content Include="Templates\iClass-Black.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Templates\MIfare-S20-320b-Black.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

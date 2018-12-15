@@ -47,7 +47,7 @@
             this.gpLegend.MaximumSize = new System.Drawing.Size(180, 300);
             this.gpLegend.MinimumSize = new System.Drawing.Size(180, 24);
             this.gpLegend.Name = "gpLegend";
-            this.gpLegend.Size = new System.Drawing.Size(180, 59);
+            this.gpLegend.Size = new System.Drawing.Size(180, 42);
             this.gpLegend.TabIndex = 0;
             this.gpLegend.TabStop = false;
             this.gpLegend.Text = "Color legend";
@@ -57,10 +57,11 @@
             this.flpLegend.AutoScroll = true;
             this.flpLegend.AutoSize = true;
             this.flpLegend.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.flpLegend.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flpLegend.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flpLegend.Location = new System.Drawing.Point(3, 40);
+            this.flpLegend.Location = new System.Drawing.Point(3, 39);
             this.flpLegend.Name = "flpLegend";
-            this.flpLegend.Size = new System.Drawing.Size(0, 0);
+            this.flpLegend.Size = new System.Drawing.Size(174, 0);
             this.flpLegend.TabIndex = 0;
             this.flpLegend.WrapContents = false;
             // 
@@ -93,9 +94,10 @@
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.Controls.Add(this.gpLegend);
+            this.DoubleBuffered = true;
             this.MaximumSize = new System.Drawing.Size(180, 300);
             this.Name = "UcLegend";
-            this.Size = new System.Drawing.Size(180, 59);
+            this.Size = new System.Drawing.Size(180, 42);
             this.gpLegend.ResumeLayout(false);
             this.gpLegend.PerformLayout();
             this.panel2.ResumeLayout(false);

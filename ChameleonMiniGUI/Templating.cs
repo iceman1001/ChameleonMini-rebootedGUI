@@ -44,7 +44,7 @@ namespace ChameleonMiniGUI
                 var props = line.Split(';');
                 if (props.Length < 4)
                 {
-                    Console.WriteLine($"bad csv line. {props}");
+                    Console.WriteLine($"[-] Error, bad line in template file. {props}");
                     continue;
                 }
 
@@ -61,7 +61,7 @@ namespace ChameleonMiniGUI
 
                     var fg = props[2].Trim();
                     var bg = props[3].Trim();
-                    var desc = (props.Length == 5) ? props[4] : string.Empty;
+                    var desc = (props.Length == 5) ? props[4].Trim() : string.Empty;
 
                     var fgc = Color.FromName(fg);
                     var bgc = Color.FromName(bg);

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace ChameleonMiniGUI
@@ -33,12 +34,15 @@ namespace ChameleonMiniGUI
             this.Title = "Legend";
             this.Expanded = false;
             flpLegend.Visible = false;
+            flpLegend.AutoScroll = false;
         }
 
         private void Updatelegend()
         {
             flpLegend.Controls.Clear();
-            if (Items == null) return;
+            if (Items == null || !Items.Any()) return;
+
+            var w = gpLegend.ClientSize.Width;
 
             foreach (var item in Items)
             {
@@ -48,11 +52,11 @@ namespace ChameleonMiniGUI
                     ForeColor = Color.FromName(item.ForeGroundColor),
                     Text = item.Description,
                     TextAlign = ContentAlignment.MiddleLeft,
-                    Margin = new Padding(0, 1, 1, 0)
+                    Margin = new Padding(0, 1, 1, 0),
+                    Width = w
                 };
                 flpLegend.Controls.Add(o);
             }
-            flpLegend.Height = flpLegend.Height + 40;
         }
 
         private void button1_Click(object sender, EventArgs e)

@@ -11,13 +11,15 @@ namespace ChameleonMiniGUI.Json
 {
 
     [DataContract]
-    public class MifareClassicModel
+    [KnownType(typeof(MifareClassicCardInfo))]
+    public class MifareClassicModel : MifareModel
     {
-        [DataMember(Order = 0)]
-        public string Created { get; set; }
-
         [DataMember(Order = 1)]
-        public string FileType { get; set; }
+        public override string FileType
+        {
+            get { return "mfcard"; }
+            set { }
+        }
 
         [DataMember(Name = "blocks", Order = 2)]
         public byte[][] Blocks { get; set; }
@@ -41,6 +43,9 @@ namespace ChameleonMiniGUI.Json
             set { }
         }
 
+        public override byte[] ToByteArray()
+            => Blocks.SelectMany(bytes => bytes).ToArray();
+
         public static byte[] StringToByteArray(string hex)
             => Enumerable.Range(0, hex.Length)
                              .Where(x => x % 2 == 0)
@@ -50,14 +55,11 @@ namespace ChameleonMiniGUI.Json
         public static string ByteArrayToString(IEnumerable<byte> bytes)
             => string.Join("", bytes.Select(b => b.ToString("X2")));
 
-        public static byte[][] ToNestedByteArray(byte[] data)
+        public static byte[][] ToNestedByteArray(byte[] data, int blockSize = 16)
         {
-            return Enumerable.Range(0, data.Length / 16)
-                .Select(i => data.Skip(i * 16).Take(16).ToArray())
+            return Enumerable.Range(0, data.Length / blockSize)
+                .Select(i => data.Skip(i * blockSize).Take(blockSize).ToArray())
                 .ToArray();
         }
-
-        public byte[] ToByteArray()
-            => Blocks.SelectMany(bytes => bytes).ToArray();
     }
 }

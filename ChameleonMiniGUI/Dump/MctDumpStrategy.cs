@@ -11,8 +11,6 @@ namespace ChameleonMiniGUI.Dump
 {
     public class MctDumpStrategy : DumpStrategy
     {
-        private static readonly Regex hexPattern = new Regex("[0-9a-fA-F]{32}", RegexOptions.Compiled);
-
         public MctDumpStrategy(string fileName)
         {
             FileName = fileName;

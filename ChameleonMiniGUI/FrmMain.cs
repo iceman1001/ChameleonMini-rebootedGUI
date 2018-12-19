@@ -274,24 +274,14 @@ namespace ChameleonMiniGUI
                 var tagslotIndex = int.Parse(cb.Name.Substring(cb.Name.Length - 1));
                 if (tagslotIndex <= 0) continue;
 
-                //SETTINGMY=tagslotIndex-1
                 SendCommandWithoutResult($"SETTING{_cmdExtension}=" + (tagslotIndex - _tagslotIndexOffset));
 
-                //SETTINGMY? -> SHOULD BE "NO."+tagslotIndex
-                var selectedSlot = SendCommand($"SETTING{_cmdExtension}?").ToString();
-                if (!selectedSlot.Contains((tagslotIndex - _tagslotIndexOffset).ToString()))
-                {
-                    this.Cursor = Cursors.Default;
-                    return;
-                }
-
                 var selectedMode = string.Empty;
-
-                var cb_mode = FindControls<ComboBox>(Controls, $"cb_mode{tagslotIndex}").FirstOrDefault();
-                if (cb_mode != null)
+                var mode = FindControls<ComboBox>(Controls, $"cb_mode{tagslotIndex}").FirstOrDefault();
+                if (mode != null)
                 {
-                    SendCommandWithoutResult($"CONFIG{_cmdExtension}={cb_mode.SelectedItem}");
-                    selectedMode = cb_mode.SelectedItem.ToString();
+                    SendCommandWithoutResult($"CONFIG{_cmdExtension}={mode.SelectedItem}");
+                    selectedMode = mode.SelectedItem.ToString();
                 }
 
                 switch (_CurrentDevType)
@@ -318,7 +308,7 @@ namespace ChameleonMiniGUI
                 var txtUid = FindControls<TextBox>(Controls, $"txt_uid{tagslotIndex}").FirstOrDefault();
                 if (txtUid != null)
                 {
-                    string uid = txtUid.Text;
+                    var uid = txtUid.Text;
                     // always set UID,  either with user provided or random. Is that acceptable?
                     if (!string.IsNullOrEmpty(uid) && !string.IsNullOrEmpty(selectedMode) && IsUidValid(uid, selectedMode))
                     {
@@ -326,13 +316,26 @@ namespace ChameleonMiniGUI
                     }
                     else
                     {
-                        // set a random UID
-                        SendCommandWithoutResult($"UID{_cmdExtension}=?");
+                        var tmpuid = "11223344";
+                        if (selectedMode.StartsWith("MF_ULTRALIGHT"))
+                        {
+                            tmpuid = "11223344556677";
+                        }
+                        SendCommandWithoutResult($"UID{_cmdExtension}={tmpuid}");
                     }
                 }
-            }
 
+                // Set MEMSIZE
+                var slotMemSize = SendCommand($"MEMSIZE{_cmdExtension}?").ToString();
+                if (!string.IsNullOrEmpty(slotMemSize) && !slotMemSize.StartsWith("202:"))
+                {
+                    FindControls<TextBox>(Controls, $"txt_size{tagslotIndex}").ForEach(a => a.Text = slotMemSize);
+                }
+
+                RefreshSlot(tagslotIndex);
+            }
             RestoreActiveSlot();
+
             this.Cursor = Cursors.Default;
         }
 
@@ -496,7 +499,7 @@ namespace ChameleonMiniGUI
                 else
                 {
                     // Get UID first
-                    var uid = SendCommand("UID" + _cmdExtension + "?").ToString();
+                    var uid = SendCommand($"UID{_cmdExtension}?").ToString();
 
                     if (!string.IsNullOrEmpty(uid))
                     {
@@ -554,56 +557,49 @@ namespace ChameleonMiniGUI
             // Get all selected indices
             foreach (var cb in FindControls<CheckBox>(Controls, "checkBox"))
             {
-                if (cb.Checked)
+                if (!cb.Checked) continue;
+
+                var tagslotIndex = int.Parse(cb.Name.Substring(cb.Name.Length - 1));
+                if (tagslotIndex <= 0) continue;
+                
+                SendCommandWithoutResult($"SETTING{_cmdExtension}={tagslotIndex - _tagslotIndexOffset}");
+                SendCommandWithoutResult($"CLEAR{_cmdExtension}");
+
+                // Set every field to a default value
+                
+                FindControls<ComboBox>(Controls, $"cb_mode{tagslotIndex}").ForEach( a => SendCommandWithoutResult($"CONFIG{_cmdExtension}=CLOSED"));
+
+                switch (_CurrentDevType)
                 {
-                    var tagslotIndex = int.Parse(cb.Name.Substring(cb.Name.Length - 1));
-                    if (tagslotIndex <= 0)
+                    case DeviceType.RevG:
                     {
-                        this.Cursor = Cursors.Default;
-                        return;
+                        FindControls<ComboBox>(Controls, $"cb_Lbutton{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LBUTTON{_cmdExtension}={a.Items[0]}"));
+                        FindControls<ComboBox>(Controls, $"cb_Lbuttonlong{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LBUTTON_LONG{_cmdExtension}={a.Items[0]}"));
+                        FindControls<ComboBox>(Controls, $"cb_Rbutton{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"RBUTTON{_cmdExtension}={a.Items[0]}"));                                
+                        FindControls<ComboBox>(Controls, $"cb_Rbuttonlong{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"RBUTTON_LONG{_cmdExtension}={a.Items[0]}"));
+                        FindControls<ComboBox>(Controls, $"cb_ledgreen{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LEDGREEN{_cmdExtension}={a.Items[0]}"));
+                        FindControls<ComboBox>(Controls, $"cb_ledred{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LEDRED{_cmdExtension}={a.Items[0]}"));
+                        break;
                     }
-
-                    //SETTINGMY=tagslotIndex-1
-                    SendCommandWithoutResult($"SETTING{_cmdExtension}=" + (tagslotIndex - _tagslotIndexOffset));
-
-                    SendCommandWithoutResult($"DETECTION{_cmdExtension}=CLOSED");
-
-                    SendCommandWithoutResult($"CLEAR{_cmdExtension}");
-
-                    // Set every field to a default value
-                    FindControls<ComboBox>(Controls, $"cb_mode{tagslotIndex}").ForEach( a => SendCommandWithoutResult($"CONFIG{_cmdExtension}={a.Items[0]}"));
-
-                    switch (_CurrentDevType)
+                    default:
                     {
-                        case DeviceType.RevG:
+                        FindControls<ComboBox>(Controls, $"cb_Lbutton{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"BUTTON{_cmdExtension}=SWITCHCARD"));
+                        FindControls<ComboBox>(Controls, $"cb_Lbuttonlong{tagslotIndex}").ForEach( a =>
+                        { 
+                            if (a.Items.Count > 0)
                             {
-                                FindControls<ComboBox>(Controls, $"cb_Lbutton{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LBUTTON{_cmdExtension}={a.Items[0]}"));
-                                FindControls<ComboBox>(Controls, $"cb_Lbuttonlong{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LBUTTON_LONG{_cmdExtension}={a.Items[0]}"));
-                                FindControls<ComboBox>(Controls, $"cb_Rbutton{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"RBUTTON{_cmdExtension}={a.Items[0]}"));                                
-                                FindControls<ComboBox>(Controls, $"cb_Rbuttonlong{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"RBUTTON_LONG{_cmdExtension}={a.Items[0]}"));
-                                FindControls<ComboBox>(Controls, $"cb_ledgreen{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LEDGREEN{_cmdExtension}={a.Items[0]}"));
-                                FindControls<ComboBox>(Controls, $"cb_ledred{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LEDRED{_cmdExtension}={a.Items[0]}"));
-                                break;
+                                SendCommandWithoutResult($"BUTTON_LONG{_cmdExtension}={a.Items[0]}");
                             }
-                        default:
-                            {
-                                FindControls<ComboBox>(Controls, $"cb_Lbutton{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"BUTTON{_cmdExtension}={a.Items[0]}"));
-                                FindControls<ComboBox>(Controls, $"cb_Lbuttonlong{tagslotIndex}").ForEach(a =>
-                                {
-                                    if (a.Items.Count > 0)
-                                    {
-                                        SendCommandWithoutResult($"BUTTON_LONG{_cmdExtension}={a.Items[0]}");
-                                    }
 
-                                });
-                                break;
-                            }
+                        });
+                        break;
                     }
-                    RefreshSlot(tagslotIndex);
                 }
             }
-
             RestoreActiveSlot();
+
+            RefreshAllSlots();
+
             this.Cursor = Cursors.Default;
         }
 
@@ -1309,7 +1305,7 @@ namespace ChameleonMiniGUI
 
 
                     // try without the "MY" extension first
-                    FirmwareVersion = SendCommand("VERSION?") as string;
+                    FirmwareVersion = SendCommand("VERSION?").ToString();
                     if (!string.IsNullOrEmpty(_firmwareVersion) && _firmwareVersion.Contains("Chameleon"))
                     {
                         _cmdExtension = string.Empty;
@@ -1319,7 +1315,7 @@ namespace ChameleonMiniGUI
                         return;
                     }
 
-                    FirmwareVersion = SendCommand("VERSIONMY?") as string;
+                    FirmwareVersion = SendCommand("VERSIONMY?").ToString();
                     if (!string.IsNullOrEmpty(_firmwareVersion) && _firmwareVersion.Contains("Chameleon"))
                     {
                         _cmdExtension = "MY";
@@ -1363,7 +1359,7 @@ namespace ChameleonMiniGUI
                 _CurrentDevType = DeviceType.Unknown;
                 _tagslotIndexOffset = 1;
 
-                FirmwareVersion = SendCommand("VERSION?") as string;
+                FirmwareVersion = SendCommand("VERSION?").ToString();
                 if (!string.IsNullOrEmpty(_firmwareVersion) && _firmwareVersion.Contains("Chameleon"))
                 {
                     _cmdExtension = string.Empty;
@@ -1376,7 +1372,7 @@ namespace ChameleonMiniGUI
                     return;
                 }
 
-                FirmwareVersion = SendCommand("VERSIONMY?") as string;
+                FirmwareVersion = SendCommand("VERSIONMY?").ToString();
                 if (!string.IsNullOrEmpty(_firmwareVersion) && _firmwareVersion.Contains("Chameleon"))
                 {
                     _cmdExtension = "MY";
@@ -2047,19 +2043,19 @@ namespace ChameleonMiniGUI
         internal void DownloadAndSaveDump(string filename)
         {
             // First get the current memory size of the slot
-            var memsizeStr = SendCommand($"MEMSIZE{_cmdExtension}?");
+            var memsizeStr = SendCommand($"MEMSIZE{_cmdExtension}?").ToString();
 
             // Default value
             int memsize = 4096;
 
-            if (!string.IsNullOrEmpty((string)memsizeStr))
+            if (!string.IsNullOrEmpty(memsizeStr))
             {
-                int.TryParse((string)memsizeStr, out memsize);
+                int.TryParse(memsizeStr, out memsize);
             }
 
             // Also check if the tag is UL to save the counters too
-            var configStr = SendCommand($"CONFIG{_cmdExtension}?") as string;
-            if ((configStr != null) && (configStr.Contains("ULTRALIGHT")))
+            var configStr = SendCommand($"CONFIG{_cmdExtension}?").ToString();
+            if (!string.IsNullOrWhiteSpace(configStr) && (configStr.Contains("ULTRALIGHT")))
             {
                 if (memsize < 4069)
                 {
@@ -2555,5 +2551,10 @@ namespace ChameleonMiniGUI
             HighlightActiveSlot();
         }
         #endregion
+
+        private void cb_mode1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

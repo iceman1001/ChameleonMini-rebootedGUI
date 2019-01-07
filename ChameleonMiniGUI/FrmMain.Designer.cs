@@ -1358,6 +1358,7 @@ namespace ChameleonMiniGUI
             this.cb_mode1.Name = "cb_mode1";
             this.cb_mode1.Size = new System.Drawing.Size(175, 21);
             this.cb_mode1.TabIndex = 0;
+            this.cb_mode1.SelectedIndexChanged += new System.EventHandler(this.cb_mode1_SelectedIndexChanged);
             // 
             // txt_size1
             // 

@@ -103,6 +103,7 @@ gbAvailableCmds.Text=Verfügbare Befehle
 gbSerial_interface.Text=Serielle Schnittstelle
 btnClearCmd.Text=Löschen
 btnSerialSend.Text=Senden
+Resp_SerialCommandNotSupported=Dieser Befehl wird vom seriellen Interface nicht unterstützt. Nutze das Tab "Operations" für den Upload.
 #
 # tab Dumpmanagement context menu
 #

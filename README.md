@@ -20,7 +20,7 @@ This is hosted by me,  feel free to contribute with a donation for hosting costs
 
 ## Donate
 
-https://paypal.me/iceman1001/ Feel free to donate. All support is welcome.
+https://www.patreon.com/iceman1001  Feel free to donate. All support is welcome.
 
 monereo:  43mNJLpgBVaTvyZmX9ajcohpvVkaRy1kbZPm8tqAb7itZgfuYecgkRF36rXrKFUkwEGeZedPsASRxgv4HPBHvJwyJdyvQuP
 

@@ -342,16 +342,7 @@ namespace ChameleonMiniGUI
         private void btn_bootmode_Click(object sender, EventArgs e)
         {
             SendCommandWithoutResult($"UPGRADE{_cmdExtension}");
-
-            try
-            {
-                _comport.Close();
-            }
-            catch (Exception) { }
-
-            _comport = null;
-
-            DeviceDisconnected();
+            DisconnectDevice();
         }
 
         private void btn_exitboot_Click(object sender, EventArgs e)
@@ -788,16 +779,7 @@ namespace ChameleonMiniGUI
 
         private void btn_disconnect_Click(object sender, EventArgs e)
         {
-            if (!isConnected) return;
-
-            if (_comport != null && _comport.IsOpen)
-            {
-                _comport.Close();
-                _comport = null;
-
-                // Set that the disconnect button was pressed
-                disconnectPressed = true;
-            }
+            DisconnectDevice();
         }
 
         private void btn_connect_Click(object sender, EventArgs e)
@@ -1076,6 +1058,14 @@ namespace ChameleonMiniGUI
             if (cmd.ToLower().StartsWith("upload"))
             {
                 res = "This command is not supported in this serial interface. Use Operations tag to upload.";
+            }
+            else if(cmd.ToLower().StartsWith("upgrade"))
+            {
+                res = "Putting Chameleon into upgrade mode";
+
+                SendCommandWithoutResult($"UPGRADE{_cmdExtension}");
+
+                DisconnectDevice();
             }
             else
             {
@@ -2549,6 +2539,25 @@ namespace ChameleonMiniGUI
         {
             SendCommandWithoutResult($"SETTING{_cmdExtension}={_active_selected_slot - _tagslotIndexOffset}");
             HighlightActiveSlot();
+        }
+
+        // Disconnect device clean
+        private void DisconnectDevice()
+        {
+            if (!isConnected) return;
+
+            if (_comport != null && _comport.IsOpen)
+            {
+                try
+                {
+                    _comport.Close();
+                }
+                catch { }
+
+                _comport = null;
+                disconnectPressed = true;
+            }
+            DeviceDisconnected();
         }
         #endregion
 

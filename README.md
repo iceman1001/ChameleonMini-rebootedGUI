@@ -46,4 +46,4 @@ A list of those who contributed to this repo in order to make it work. The commu
 - @hiwanz
 - @kgamecarter
 - @Vrumfondel
-- @tu (spanish translations)
+- @neijpass (spanish translations)

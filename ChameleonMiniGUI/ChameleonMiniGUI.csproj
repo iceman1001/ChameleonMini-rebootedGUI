@@ -186,6 +186,7 @@
     <Content Include="Languages\Italiano.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Languages\Spanish.txt" />
     <Content Include="Languages\Svenska.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

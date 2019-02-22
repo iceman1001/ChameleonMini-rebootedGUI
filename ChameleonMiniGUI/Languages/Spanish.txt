@@ -11,7 +11,7 @@ btn_selectnone.Text=Deselecc. todo
 btn_selectall.Text=Selecc. todo
 btn_refresh.Text=Actualizar
 btn_clear.Text=Eliminar
-btn_identify.Text=Identify
+btn_identify.Text=Identificar
 btn_keycalc.Text=mfkey32
 btn_apply.Text=Aplicar
 btn_download.Text=Descargar Dump
@@ -94,7 +94,7 @@ lbl_buttonlong7.Text=Btn Largo
 lbl_buttonlong8.Text=Btn Largo
 btnStartlocation.Text=Abrir ubicación
 lbl_template.Text=Modelos
-tpUtils.Text=Utils
+tpUtils.Text=Utiles
 #
 # tab Terminal
 #
@@ -106,7 +106,7 @@ btnSerialSend.Text=Enviar
 #
 # tab Dumpmanagement context menu
 #
-toolStripMenuItem1.Text=Toggle Sync Scroll
+toolStripMenuItem1.Text=Alternar Sincron. desplazamiento
 toolStripMenuItem2.Text=Cierra todo
 btn_close1.Text=Cerrar
 btn_close2.Text=Cerrar

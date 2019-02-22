@@ -171,7 +171,7 @@ namespace ChameleonMiniGUI
                 lockFlag = true;
                 foreach (KeyValuePair<string, string> i in cb_languages.Items)
                 {
-                    if (i.Key.ToLowerInvariant() == lang)
+                    if (i.Key.ToLowerInvariant() == lang || i.Value.ToLowerInvariant() == lang)
                     {
                         cb_languages.SelectedItem = i;
                         break;

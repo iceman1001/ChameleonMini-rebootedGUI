@@ -1,11 +1,3 @@
-lbl_buttonlong1.Text=按钮长按设置
-lbl_buttonlong2.Text=按钮长按设置
-lbl_buttonlong3.Text=按钮长按设置
-lbl_buttonlong4.Text=按钮长按设置
-lbl_buttonlong5.Text=按钮长按设置
-lbl_buttonlong6.Text=按钮长按设置
-lbl_buttonlong7.Text=按钮长按设置
-lbl_buttonlong8.Text=按钮长按设置
 checkBox8.Text=卡位 8
 checkBox7.Text=卡位 7
 checkBox6.Text=卡位 6
@@ -19,6 +11,7 @@ btn_selectnone.Text=取消全选
 btn_selectall.Text=全部选择
 btn_refresh.Text=刷新状态
 btn_clear.Text=清空数据
+btn_identify.Text=Identify
 btn_keycalc.Text=计算侦测结果
 btn_apply.Text=应用设置
 btn_download.Text=下载数据文件
@@ -56,7 +49,7 @@ lbl_size8.Text=卡片大小
 lbl_button8.Text=按钮设置
 lbl_uid8.Text=UID卡号输入
 lbl_mode8.Text=模式选择
-tabPage1.Text=功能
+tpOperation.Text=功能
 chkSyncScroll.Text=左右同步
 lbl_hbfilename2.Text=无
 lbl_hbfilename1.Text=无
@@ -68,8 +61,7 @@ btn_save2.Text=保存
 btn_open2.Text=打开
 btn_save1.Text=保存
 btn_open1.Text=打开
-btnStartlocation.Text=打开程序根目录
-tabPage3.Text=数据文件对比
+tpDump.Text=数据文件对比
 btn_setInterval.Text=应用
 lbl_interval.Text=间隔时间 (ms)
 chk_keepalive.Text=自动检测设备断开
@@ -89,14 +81,33 @@ gb_defaultdownload.Text=默认保存位置
 btn_rssirefresh.Text=刷新
 lbl_rssi.Text=当前RSSI（天线电压）
 gb_rssi.Text=RSSI电压
-tabPage2.Text=设置
+tpSettings.Text=设置
 gb_output.Text=输出
 gb_language.Text=语言设置
-lbl_template.Text=Template
+lbl_buttonlong1.Text=按钮长按设置
+lbl_buttonlong2.Text=按钮长按设置
+lbl_buttonlong3.Text=按钮长按设置
+lbl_buttonlong4.Text=按钮长按设置
+lbl_buttonlong5.Text=按钮长按设置
+lbl_buttonlong6.Text=按钮长按设置
+lbl_buttonlong7.Text=按钮长按设置
+lbl_buttonlong8.Text=按钮长按设置
+btnStartlocation.Text=打开程序根目录
+lbl_template.Text=模板
+
+tpUtils.Text=工具
 #
 # tab Serial
 #
-gbAvailableCmds.Text=Available commands
-gbSerial_interface.Text=Serial interface
-btnClearCmd.Text=Clear
-btnSerialSend.Text=Send
+tpSerial.Text=串口
+gbAvailableCmds.Text=可用命令
+gbSerial_interface.Text=串口指令
+btnClearCmd.Text=清除
+btnSerialSend.Text=发送
+#
+# tab Dumpmanagement context menu
+#
+toolStripMenuItem1.Text=左右同步
+toolStripMenuItem2.Text=关闭全部
+btn_close1.Text=关闭
+btn_close2.Text=关闭

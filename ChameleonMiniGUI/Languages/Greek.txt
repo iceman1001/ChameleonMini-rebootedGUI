@@ -11,6 +11,7 @@ btn_selectnone.Text=Απεπιλογή όλων
 btn_selectall.Text=Επιλογή όλων
 btn_refresh.Text=Ανανέωση
 btn_clear.Text=Καθαρισμός
+btn_identify.Text=Identify
 btn_keycalc.Text=mfkey32
 btn_apply.Text=Εφαρμογή
 btn_download.Text=Λήψη Dump
@@ -48,7 +49,7 @@ lbl_size8.Text=Μέγεθος
 lbl_button8.Text=Κουμπί
 lbl_uid8.Text=UID
 lbl_mode8.Text=Λειτουργία
-tabPage1.Text=Γενική Λειτουργία
+tpOperation.Text=Γενική Λειτουργία
 chkSyncScroll.Text=Συγχρονισμός Κύλισης
 lbl_hbfilename2.Text=Μ/Δ
 lbl_hbfilename1.Text=Μ/Δ
@@ -60,7 +61,7 @@ btn_save2.Text=Αποθήκευση
 btn_open2.Text=Άνοιγμα
 btn_save1.Text=Αποθήκευση
 btn_open1.Text=Άνοιγμα
-tabPage3.Text=Διαχείριση Dump
+tpDump.Text=Διαχείριση Dump
 btn_setInterval.Text=Ορισμός
 lbl_interval.Text=Μεσοδιάστημα (ms)
 chk_keepalive.Text=Αποστολή μηνύματος ελέγχου διατήρησης σύνδεσης (εντολή VERSION)
@@ -80,7 +81,7 @@ gb_defaultdownload.Text=Διαδρομή λήψεων
 btn_rssirefresh.Text=Ανανέωση
 lbl_rssi.Text=Τρέχον RSSI
 gb_rssi.Text=Τάση RSSI
-tabPage2.Text=Ρυθμίσεις
+tpSettings.Text=Ρυθμίσεις
 gb_output.Text=Παράθυρο καταγραφής γεγονότων
 gb_language.Text=Γλώσσες && Θέματα
 lbl_buttonlong1.Text=Κουμπί παρατετ.
@@ -93,10 +94,19 @@ lbl_buttonlong7.Text=Κουμπί παρατετ.
 lbl_buttonlong8.Text=Κουμπί παρατετ.
 btnStartlocation.Text=Άνοιγμα τοποθεσίας
 lbl_template.Text=Θέμα
+tpUtils.Text=Utils
 #
 # tab Serial
 #
+tpSerial.Text=Σειριακή
 gbAvailableCmds.Text=Διαθέσιμες εντολές
 gbSerial_interface.Text=Σειριακή διεπαφή
 btnClearCmd.Text=Καθαρισμός
 btnSerialSend.Text=Αποστολή
+#
+# tab Dumpmanagement context menu
+#
+toolStripMenuItem1.Text=Συγχρονισμός Κύλισης
+toolStripMenuItem2.Text=Close All
+btn_close1.Text=Close
+btn_close2.Text=Close

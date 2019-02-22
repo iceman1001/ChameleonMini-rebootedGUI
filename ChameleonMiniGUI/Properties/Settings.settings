@@ -14,5 +14,8 @@
     <Setting Name="Language" Type="System.String" Scope="User">
       <Value Profile="(Default)">English</Value>
     </Setting>
+    <Setting Name="version" Type="System.String" Scope="User">
+      <Value Profile="(Default)">v1.2.0.9</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -46,32 +46,33 @@ namespace ChameleonMiniGUI
 
             if (!list.Any()) return;
 
-            var legendWidth = 0.0f;
-            var lineHeight = 0.0f;
+            var height = 0.0f;
+            var box_Width = 0.0f;
+            var box_height = 0.0f;
 
             foreach (var item in list)
             {
                 var size = g.MeasureString(item.Description, Legendfont);
 
-                if ((legendWidth < size.Width))
-                    legendWidth = size.Width;
+                if ((box_Width < size.Width))
+                    box_Width = size.Width;
 
-                if ((lineHeight < size.Height))
-                    lineHeight = size.Height;
+                if ((height < size.Height))
+                    height = size.Height;
             }
 
             // legendWidth += 10 + _spacing + _spacing
-            legendWidth += (_spacing + _spacing);
+            box_Width += (_spacing + _spacing);
 
-            float legendHeight = list.Count * lineHeight + 10.0F;   //  lite extra marginal
+            box_height = list.Count * height + 10.0F;   // add extra marginal
 
-            legendWidth += 26;
+            box_Width += 26;
 
             var offset = 16.0f;
             var xc = (legendPos.X + offset);
             float yc = legendPos.Y;
 
-            DrawLegend(g, xc, yc, legendWidth, legendHeight, lineHeight, list);
+            DrawLegend(g, xc, yc, box_Width, box_height, height, list);
         }
 
         public void DrawLegend(Graphics g, float pos_x, float pos_y, float legend_width, float legend_height, float lineHeight, List<IlegendItem> list)

@@ -11,6 +11,7 @@ btn_selectnone.Text=Unselect All
 btn_selectall.Text=Select All
 btn_refresh.Text=Refresh
 btn_clear.Text=Clear
+btn_identify.Text=Identify
 btn_keycalc.Text=mfkey32
 btn_apply.Text=Apply
 btn_download.Text=Download Dump
@@ -48,7 +49,7 @@ lbl_size8.Text=Size
 lbl_button8.Text=Button
 lbl_uid8.Text=UID
 lbl_mode8.Text=Mode
-tabPage1.Text=Operation
+tpOperation.Text=Operation
 chkSyncScroll.Text=Synchronize scrolling
 lbl_hbfilename2.Text=N/A
 lbl_hbfilename1.Text=N/A
@@ -60,7 +61,7 @@ btn_save2.Text=Save
 btn_open2.Text=Open
 btn_save1.Text=Save
 btn_open1.Text=Open
-tabPage3.Text=Dump Management
+tpDump.Text=Dump Management
 btn_setInterval.Text=Set
 lbl_interval.Text=Interval (ms)
 chk_keepalive.Text=Send keep-alive (VERSION command)
@@ -80,7 +81,7 @@ gb_defaultdownload.Text=Download Location
 btn_rssirefresh.Text=Refresh
 lbl_rssi.Text=Current RSSI
 gb_rssi.Text=RSSI Voltage
-tabPage2.Text=Settings
+tpSettings.Text=Settings
 gb_output.Text=Output
 gb_language.Text=Languages && Templates
 lbl_buttonlong1.Text=Btn Long
@@ -93,10 +94,20 @@ lbl_buttonlong7.Text=Btn Long
 lbl_buttonlong8.Text=Btn Long
 btnStartlocation.Text=Open location
 lbl_template.Text=Template
+
+tpUtils.Text=Utils
 #
 # tab Serial
 #
+tpSerial.Text=Serial
 gbAvailableCmds.Text=Available commands
 gbSerial_interface.Text=Serial interface
 btnClearCmd.Text=Clear
 btnSerialSend.Text=Send
+#
+# tab Dumpmanagement context menu
+#
+toolStripMenuItem1.Text=Toggle Sync Scroll
+toolStripMenuItem2.Text=Close All
+btn_close1.Text=Close
+btn_close2.Text=Close

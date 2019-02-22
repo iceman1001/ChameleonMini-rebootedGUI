@@ -1,0 +1,20 @@
+﻿#
+# this CSV file defines a color template for a binary file.
+#
+# This file targets:   iClass, 
+# 
+# 2018, iceman
+# block 0
+(0*8); 8; Turquoise; Black; CSN
+#block 1
+(1*8); 8; white; Black;  Config
+#block 2
+(2*8); 8; yellow; Black;  E-purse
+#block 3
+(3*8); 8; darkred; Black;  Debit Key (AA1)
+#block 4
+(4*8); 8; orange; Black;  Cebit Key (AA2)
+#block 5
+(5*8); 8; Aquamarine; Black;  Application Issuer Area (AIA)
+#block 6-11
+(6*8); (4*8); DeepSkyBlue; Black; Application Area 1 (AA1)

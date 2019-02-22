@@ -22,7 +22,7 @@
     <UpdateInterval>7</UpdateInterval>
     <UpdateIntervalUnits>Days</UpdateIntervalUnits>
     <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
+    <UpdateRequired>true</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>http://www.icesql.se/download/ChameleonMiniGUI/</InstallUrl>
     <SupportUrl>https://github.com/iceman1001/ChameleonMini-rebootedGUI/issues</SupportUrl>
@@ -30,10 +30,11 @@
     <ProductName>Chameleon Mini Rebooted GUI</ProductName>
     <PublisherName>Christian Herrmann</PublisherName>
     <SuiteName>The rebooted suite</SuiteName>
+    <MinimumRequiredVersion>1.2.0.0</MinimumRequiredVersion>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>25</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <ApplicationRevision>10</ApplicationRevision>
+    <ApplicationVersion>1.2.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -48,6 +49,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>6</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -77,12 +79,15 @@
     <ManifestKeyFile>ChameleonMiniGUI_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>chameleon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Crapto1Sharp, Version=1.2.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Crapto1Sharp.1.2.2\lib\net45\Crapto1Sharp.dll</HintPath>
+    </Reference>
     <Reference Include="DynamicExpresso.Core, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DynamicExpresso.Core.2.0.0\lib\net461\DynamicExpresso.Core.dll</HintPath>
       <Private>True</Private>
@@ -91,6 +96,7 @@
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Management" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -105,6 +111,13 @@
   <ItemGroup>
     <Compile Include="Communications\Command.cs" />
     <Compile Include="Crc\Crc.cs" />
+    <Compile Include="Dump\BinaryDumpStrategy.cs" />
+    <Compile Include="Dump\DumpStrategy.cs" />
+    <Compile Include="Dump\DumpStrategyFactory.cs" />
+    <Compile Include="Dump\DumpType.cs" />
+    <Compile Include="Dump\EmlDumpStrategy.cs" />
+    <Compile Include="Dump\JsonDumpStrategy.cs" />
+    <Compile Include="Dump\MctDumpStrategy.cs" />
     <Compile Include="FrmMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -113,6 +126,19 @@
     </Compile>
     <Compile Include="Comparers\KeyComparer.cs" />
     <Compile Include="Attacks\MfKeyAttacks.cs" />
+    <Compile Include="GroupBoxEnhanced.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Json\BlockSurrogate.cs" />
+    <Compile Include="Dump\DumpFileByteProvider.cs" />
+    <Compile Include="Json\MifareCardInfo.cs" />
+    <Compile Include="Json\MifareClassicCardInfo.cs" />
+    <Compile Include="Json\MifareClassicModel.cs" />
+    <Compile Include="Json\MifareClassicSectorKey.cs" />
+    <Compile Include="Json\MifareDataContractResolver.cs" />
+    <Compile Include="Json\MifareModel.cs" />
+    <Compile Include="Json\MifareUltralightCardInfo.cs" />
+    <Compile Include="Json\MifareUltralightModel.cs" />
     <Compile Include="Legend\IlegendItem.cs" />
     <Compile Include="Legend\Legend.cs" />
     <Compile Include="Legend\UcLegend.cs">
@@ -124,10 +150,31 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MultiLanguage.cs" />
+    <Compile Include="SplashScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SplashScreen.Designer.cs">
+      <DependentUpon>SplashScreen.cs</DependentUpon>
+    </Compile>
     <Compile Include="Templating.cs" />
+    <Compile Include="UserControls\UcTextFlow.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\UcTextFlow.Designer.cs">
+      <DependentUpon>UcTextFlow.cs</DependentUpon>
+    </Compile>
     <Compile Include="ThreadHelperClass.cs" />
+    <Compile Include="UserControls\UcExplorer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\UcExplorer.Designer.cs">
+      <DependentUpon>UcExplorer.cs</DependentUpon>
+    </Compile>
     <Compile Include="XMODEM.cs" />
     <Content Include="Languages\Chinese.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Languages\Dutch.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Languages\Français.txt">
@@ -136,23 +183,57 @@
     <Content Include="Languages\Greek.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Languages\Italiano.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Languages\Spanish.txt" />
     <Content Include="Languages\Svenska.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Languages\English.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Templates\MIfare-S20-320b.txt">
+    <Content Include="Languages\German.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Resources\cdrom.ico" />
+    <None Include="Resources\folder-close.ico" />
+    <None Include="Resources\folder-open.ico" />
+    <None Include="Resources\hard-drive.ico" />
+    <None Include="Resources\network-drive.ico" />
+    <Content Include="Resources\chameleon.png" />
+    <Content Include="Resources\warning.png" />
+    <Content Include="Templates\iClass-Black.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\MIfare-S20-320b-Black.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\MIfare-S20-320b.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\MIfare-S50-1k-Black.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Templates\MIfare-S50-1k.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\Ultralight-EV1-164B-Black.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Templates\Ultralight-EV1-164B.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="SplashScreen.resx">
+      <DependentUpon>SplashScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\UcTextFlow.resx">
+      <DependentUpon>UcTextFlow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\UcExplorer.resx">
+      <DependentUpon>UcExplorer.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
-    <None Include="Properties\DataSources\MultiLanguage.datasource" />
     <None Include="Resources\usb-warning.jpg" />
     <None Include="Resources\chamRevE.png" />
     <None Include="Resources\chamRevG1.png" />
@@ -217,10 +298,9 @@
       <Project>{26c5f25f-b450-4caf-ad8b-b8d11ae73457}</Project>
       <Name>Be.Windows.Forms.HexBox</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Crapto1\Crapto1.vcxproj">
-      <Project>{958af723-58d7-4d0d-bd67-e230c95401b6}</Project>
-      <Name>Crapto1</Name>
-    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\DataSources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

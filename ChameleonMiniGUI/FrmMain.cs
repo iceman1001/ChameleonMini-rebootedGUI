@@ -2447,6 +2447,16 @@ namespace ChameleonMiniGUI
 
             btn_identify.Visible = false;
             btn_keycalc.Visible = true;
+            
+            for (int cidx = 1; cidx < 9; cidx++) {
+                GroupBox gpbx = ((GroupBox)this.Controls.Find($"gb_tagslot{cidx}", true).First());
+                TableLayoutPanel pnl = ((TableLayoutPanel)gpbx.Controls[$"tableLayoutPanel{cidx}"]);
+                pnl.SetColumnSpan(pnl.Controls[$"cb_Lbutton{cidx}"], 2);
+                pnl.SetColumnSpan(pnl.Controls[$"cb_Lbuttonlong{cidx}"], 2);
+                pnl.RowStyles[4].Height = 0;
+                pnl.RowStyles[5].Height = 0;
+                gpbx.Size = new System.Drawing.Size(278, 181);
+            }
         }
 
         private void ConfigHMIForRevG()
@@ -2495,6 +2505,17 @@ namespace ChameleonMiniGUI
 
             btn_identify.Visible = true;
             btn_keycalc.Visible = false;
+
+            for (int cidx = 1; cidx < 9; cidx++)
+            {
+                GroupBox gpbx = ((GroupBox)this.Controls.Find($"gb_tagslot{cidx}", true).First());
+                TableLayoutPanel pnl = ((TableLayoutPanel)gpbx.Controls[$"tableLayoutPanel{cidx}"]);
+                pnl.SetColumnSpan(pnl.Controls[$"cb_Lbutton{cidx}"], 1);
+                pnl.SetColumnSpan(pnl.Controls[$"cb_Lbuttonlong{cidx}"], 1);
+                pnl.RowStyles[4].Height = 30;
+                pnl.RowStyles[5].Height = 30;
+                gpbx.Size = new System.Drawing.Size(278, 242);
+            }
         }
 
         private void HighlightActiveSlot()
@@ -2560,10 +2581,5 @@ namespace ChameleonMiniGUI
             DeviceDisconnected();
         }
         #endregion
-
-        private void cb_mode1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
     }
 }

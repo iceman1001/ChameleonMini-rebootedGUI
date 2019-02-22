@@ -4,6 +4,10 @@ This project uses the changelog in accordance with [keepchangelog](http://keepac
 
 ## [unreleased][unreleased]
 
+## [1.2.0.13] - 2019-02-22
+## Added
+- selected language in combobox (@iceman)
+
 ## [1.2.0.10] - 2019-02-22
 ## Added
 - Spanish translations (@neijpass)

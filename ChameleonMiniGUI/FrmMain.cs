@@ -14,11 +14,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Be.Windows.Forms;
 using System.Drawing;
-using System.Reflection;
-using System.Runtime.Remoting.Messaging;
 using System.Threading.Tasks;
 using ChameleonMiniGUI.Dump;
 using ChameleonMiniGUI.Json;
+using static ChameleonMiniGUI.Properties.Settings;
 
 namespace ChameleonMiniGUI
 {
@@ -83,7 +82,7 @@ namespace ChameleonMiniGUI
             }
         }
 
-        public string SoftwareVersion => $"Chameleon Mini GUI - {Properties.Settings.Default.version} - Iceman Edition 冰人";
+        public string SoftwareVersion => $"Chameleon Mini GUI - {Default.version} - Iceman Edition 冰人";
 
         private List<string> AvailableCommands { get; set; }
 
@@ -130,19 +129,19 @@ namespace ChameleonMiniGUI
         private void LoadSettings()
         {
             // Set the default download path if not empty and exists
-            if (!string.IsNullOrEmpty(Properties.Settings.Default.DownloadDumpPath))
+            if (!string.IsNullOrEmpty(Default.DownloadDumpPath))
             {
-                if (Directory.Exists(Properties.Settings.Default.DownloadDumpPath))
+                if (Directory.Exists(Default.DownloadDumpPath))
                 {
-                    txt_defaultdownload.Text = Properties.Settings.Default.DownloadDumpPath;
+                    txt_defaultdownload.Text = Default.DownloadDumpPath;
                 } // else create folder?
             }
 
             // Set the keep alive options
-            chk_keepalive.Checked = Properties.Settings.Default.EnableKeepAlive;
-            if (Properties.Settings.Default.KeepAliveInterval > 0)
+            chk_keepalive.Checked = Default.EnableKeepAlive;
+            if (Default.KeepAliveInterval > 0)
             {
-                txt_interval.Text = Properties.Settings.Default.KeepAliveInterval.ToString();
+                txt_interval.Text = Default.KeepAliveInterval.ToString();
             }
             else
             {
@@ -163,7 +162,7 @@ namespace ChameleonMiniGUI
             }
 
             // load prefered language
-            var lang = Properties.Settings.Default.Language;
+            var lang = Default.Language.ToLowerInvariant();
             if (!string.IsNullOrWhiteSpace(lang))
             {
                 ml.LoadLanguage(this.Controls, lang);
@@ -172,7 +171,7 @@ namespace ChameleonMiniGUI
                 lockFlag = true;
                 foreach (KeyValuePair<string, string> i in cb_languages.Items)
                 {
-                    if (i.Value == lang)
+                    if (i.Key.ToLowerInvariant() == lang)
                     {
                         cb_languages.SelectedItem = i;
                         break;
@@ -208,8 +207,8 @@ namespace ChameleonMiniGUI
             {
                 if (Directory.Exists(txt_defaultdownload.Text))
                 {
-                    Properties.Settings.Default.DownloadDumpPath = txt_defaultdownload.Text;
-                    Properties.Settings.Default.Save();
+                    Default.DownloadDumpPath = txt_defaultdownload.Text;
+                    Default.Save();
                 }
             }
         }
@@ -230,8 +229,8 @@ namespace ChameleonMiniGUI
             // Save language
             if (!string.IsNullOrEmpty(o.Value))
             {
-                Properties.Settings.Default.Language = o.Value;
-                Properties.Settings.Default.Save();
+                Default.Language = o.Value;
+                Default.Save();
             }
         }
 
@@ -742,8 +741,8 @@ namespace ChameleonMiniGUI
                 {
                     txt_defaultdownload.Text = selectedFolder;
                     // Save setting
-                    Properties.Settings.Default.DownloadDumpPath = selectedFolder;
-                    Properties.Settings.Default.Save();
+                    Default.DownloadDumpPath = selectedFolder;
+                    Default.Save();
                 }
             }
         }
@@ -767,9 +766,9 @@ namespace ChameleonMiniGUI
                 }
 
                 // Save in settings
-                Properties.Settings.Default.EnableKeepAlive = chk_keepalive.Checked;
-                Properties.Settings.Default.KeepAliveInterval = keepAliveInterval;
-                Properties.Settings.Default.Save();
+                Default.EnableKeepAlive = chk_keepalive.Checked;
+                Default.KeepAliveInterval = keepAliveInterval;
+                Default.Save();
             }
             else
             {

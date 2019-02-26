@@ -1987,18 +1987,42 @@ namespace ChameleonMiniGUI
             AvailableCommands.AddRange(helpArray);
         }
 
+
         private static byte[] ReadFileIntoByteArray(string filename)
         {
             var fi = new FileInfo(filename);
-            if (fi.Exists)
-            {
-                var dumpStrategy = DumpStrategyFactory.Create(fi.FullName);
-                var data = dumpStrategy.Read();
-                if (data.Length < 1024 && data.Length != 320)
-                    data = data.Skip(MifareUltralightCardInfo.PrefixLength).ToArray();
+            if (!fi.Exists) return null;
+
+            var dumpStrategy = DumpStrategyFactory.Create(fi.FullName);
+            var data = dumpStrategy.Read();
+
+            // most likely Mifare Classic card.
+            if (data.Length >= 1024 || data.Length == 320)
                 return data;
+
+            // detect mfu header. If probability of magic values is more than 50%, assume file has header.
+            var probability = 0d;
+            // first two bytes of version should be 0x00, 0x04
+            if (data[0] == 0x00 && data[1] == 0x04)
+                probability += 0.25;
+                        
+            // tbo should be ZERO
+            if (data[8] == 0x00 && data[9] == 0x00)
+                probability += 0.15;
+
+            // tbo1 should be ZERO
+            if (data[15] == 0x00)
+                probability += 0.15;
+
+            // tearing is normally 0xBD
+            if (data[10] == 0xBD || data[11] == 0xBD || data[12] == 0xBD)
+                probability += 0.35;
+
+            if (probability >= 0.50)
+            {
+                data = data.Skip(MifareUltralightCardInfo.PrefixLength).ToArray();
             }
-            return null;
+            return data;
         }
 
         internal void UploadDump(string filename)
@@ -2010,12 +2034,11 @@ namespace ChameleonMiniGUI
             SendCommandWithoutResult($"UPLOAD{_cmdExtension}");
 
             // For the "110:WAITING FOR XMODEM" text
-            _comport.ReadLine(); 
+            _comport.ReadLine();
 
             int numBytesSuccessfullySent = xmodem.Send(bytes);
 
-            if (numBytesSuccessfullySent == bytes.Length &&
-                xmodem.TerminationReason == XMODEM.TerminationReasonEnum.EndOfFile)
+            if (numBytesSuccessfullySent == bytes.Length && xmodem.TerminationReason == XMODEM.TerminationReasonEnum.EndOfFile)
             {
                 var msg = $"[+] File upload ok{Environment.NewLine}";
                 Console.WriteLine(msg);
@@ -2098,7 +2121,7 @@ namespace ChameleonMiniGUI
             }
         }
 
-        private byte [] ReceiveXModemData()
+        private byte[] ReceiveXModemData()
         {
             byte[] response;
 
@@ -2405,10 +2428,7 @@ namespace ChameleonMiniGUI
         private void ConfigHMIForRevE()
         {
             var list = FindControls<ComboBox>(Controls, "cb_Rbutton");
-            list.ForEach(a => ApplyAll(a, c =>
-            {
-                c.Visible = false;
-            }));
+            list.ForEach(a => ApplyAll(a, c => { c.Visible = false; }));
 
             list = FindControls<ComboBox>(Controls, "cb_Lbutton");
             list.ForEach(a => ApplyAll(a, c =>
@@ -2418,10 +2438,7 @@ namespace ChameleonMiniGUI
             }));
 
             list = FindControls<ComboBox>(Controls, "cb_Rbuttonlong");
-            list.ForEach(a => ApplyAll(a, c =>
-            {
-                c.Visible = false;
-            }));
+            list.ForEach(a => ApplyAll(a, c => { c.Visible = false; }));
 
             list = FindControls<ComboBox>(Controls, "cb_Lbuttonlong");
             list.ForEach(a => ApplyAll(a, c =>
@@ -2446,10 +2463,11 @@ namespace ChameleonMiniGUI
 
             btn_identify.Visible = false;
             btn_keycalc.Visible = true;
-            
-            for (int cidx = 1; cidx < 9; cidx++) {
-                var gpbx = (GroupBox)this.Controls.Find($"gb_tagslot{cidx}", true).First();
-                var pnl = (TableLayoutPanel)gpbx.Controls[$"tableLayoutPanel{cidx}"];
+
+            for (int cidx = 1; cidx < 9; cidx++)
+            {
+                var gpbx = (GroupBox) this.Controls.Find($"gb_tagslot{cidx}", true).First();
+                var pnl = (TableLayoutPanel) gpbx.Controls[$"tableLayoutPanel{cidx}"];
                 pnl.SetColumnSpan(pnl.Controls[$"cb_Lbutton{cidx}"], 2);
                 pnl.SetColumnSpan(pnl.Controls[$"cb_Lbuttonlong{cidx}"], 2);
                 pnl.RowStyles[4].Height = 0;
@@ -2463,8 +2481,8 @@ namespace ChameleonMiniGUI
             var list = FindControls<ComboBox>(Controls, "cb_Rbutton");
             list.ForEach(a => ApplyAll(a, c =>
             {
-             c.Visible = true;
-             c.Width = REVGDefaultComboWidth;
+                c.Visible = true;
+                c.Width = REVGDefaultComboWidth;
             }));
 
             list = FindControls<ComboBox>(Controls, "cb_Lbutton");
@@ -2507,8 +2525,8 @@ namespace ChameleonMiniGUI
 
             for (int cidx = 1; cidx < 9; cidx++)
             {
-                var gpbx = (GroupBox)this.Controls.Find($"gb_tagslot{cidx}", true).First();
-                var pnl = (TableLayoutPanel)gpbx.Controls[$"tableLayoutPanel{cidx}"];
+                var gpbx = (GroupBox) this.Controls.Find($"gb_tagslot{cidx}", true).First();
+                var pnl = (TableLayoutPanel) gpbx.Controls[$"tableLayoutPanel{cidx}"];
                 pnl.SetColumnSpan(pnl.Controls[$"cb_Lbutton{cidx}"], 1);
                 pnl.SetColumnSpan(pnl.Controls[$"cb_Lbuttonlong{cidx}"], 1);
                 pnl.RowStyles[4].Height = 30;
@@ -2572,13 +2590,16 @@ namespace ChameleonMiniGUI
                 {
                     _comport.Close();
                 }
-                catch { }
+                catch
+                {
+                }
 
                 _comport = null;
                 disconnectPressed = true;
             }
             DeviceDisconnected();
         }
+
         #endregion
     }
 }

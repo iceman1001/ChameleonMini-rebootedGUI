@@ -4,6 +4,19 @@ This project uses the changelog in accordance with [keepchangelog](http://keepac
 
 ## [unreleased][unreleased]
 
+## [1.2.0.13] - 2019-02-22
+## Added
+- selected language in combobox (@iceman)
+
+## [1.2.0.10] - 2019-02-22
+## Added
+- Spanish translations (@neijpass)
+- Tablelayout adaptive regarding device (@bogito)
+
+## [1.2.0.9] - 2019-02-01
+## Added
+- German translations (@vrumfondel)
+
 ## [1.2.0.8] - 2018-12-17
 ## Added 
 - General stability bug fixes

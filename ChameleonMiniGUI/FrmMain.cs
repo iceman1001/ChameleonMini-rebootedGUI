@@ -14,11 +14,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Be.Windows.Forms;
 using System.Drawing;
-using System.Reflection;
-using System.Runtime.Remoting.Messaging;
 using System.Threading.Tasks;
 using ChameleonMiniGUI.Dump;
 using ChameleonMiniGUI.Json;
+using static ChameleonMiniGUI.Properties.Settings;
 
 namespace ChameleonMiniGUI
 {
@@ -83,7 +82,7 @@ namespace ChameleonMiniGUI
             }
         }
 
-        public string SoftwareVersion => $"Chameleon Mini GUI - {Properties.Settings.Default.version} - Iceman Edition 冰人";
+        public string SoftwareVersion => $"Chameleon Mini GUI - {Default.version} - Iceman Edition 冰人";
 
         private List<string> AvailableCommands { get; set; }
 
@@ -130,19 +129,19 @@ namespace ChameleonMiniGUI
         private void LoadSettings()
         {
             // Set the default download path if not empty and exists
-            if (!string.IsNullOrEmpty(Properties.Settings.Default.DownloadDumpPath))
+            if (!string.IsNullOrEmpty(Default.DownloadDumpPath))
             {
-                if (Directory.Exists(Properties.Settings.Default.DownloadDumpPath))
+                if (Directory.Exists(Default.DownloadDumpPath))
                 {
-                    txt_defaultdownload.Text = Properties.Settings.Default.DownloadDumpPath;
+                    txt_defaultdownload.Text = Default.DownloadDumpPath;
                 } // else create folder?
             }
 
             // Set the keep alive options
-            chk_keepalive.Checked = Properties.Settings.Default.EnableKeepAlive;
-            if (Properties.Settings.Default.KeepAliveInterval > 0)
+            chk_keepalive.Checked = Default.EnableKeepAlive;
+            if (Default.KeepAliveInterval > 0)
             {
-                txt_interval.Text = Properties.Settings.Default.KeepAliveInterval.ToString();
+                txt_interval.Text = Default.KeepAliveInterval.ToString();
             }
             else
             {
@@ -163,7 +162,7 @@ namespace ChameleonMiniGUI
             }
 
             // load prefered language
-            var lang = Properties.Settings.Default.Language;
+            var lang = Default.Language.ToLowerInvariant();
             if (!string.IsNullOrWhiteSpace(lang))
             {
                 ml.LoadLanguage(this.Controls, lang);
@@ -172,7 +171,7 @@ namespace ChameleonMiniGUI
                 lockFlag = true;
                 foreach (KeyValuePair<string, string> i in cb_languages.Items)
                 {
-                    if (i.Value == lang)
+                    if (i.Key.ToLowerInvariant() == lang || i.Value.ToLowerInvariant() == lang)
                     {
                         cb_languages.SelectedItem = i;
                         break;
@@ -208,8 +207,8 @@ namespace ChameleonMiniGUI
             {
                 if (Directory.Exists(txt_defaultdownload.Text))
                 {
-                    Properties.Settings.Default.DownloadDumpPath = txt_defaultdownload.Text;
-                    Properties.Settings.Default.Save();
+                    Default.DownloadDumpPath = txt_defaultdownload.Text;
+                    Default.Save();
                 }
             }
         }
@@ -230,8 +229,8 @@ namespace ChameleonMiniGUI
             // Save language
             if (!string.IsNullOrEmpty(o.Value))
             {
-                Properties.Settings.Default.Language = o.Value;
-                Properties.Settings.Default.Save();
+                Default.Language = o.Value;
+                Default.Save();
             }
         }
 
@@ -742,8 +741,8 @@ namespace ChameleonMiniGUI
                 {
                     txt_defaultdownload.Text = selectedFolder;
                     // Save setting
-                    Properties.Settings.Default.DownloadDumpPath = selectedFolder;
-                    Properties.Settings.Default.Save();
+                    Default.DownloadDumpPath = selectedFolder;
+                    Default.Save();
                 }
             }
         }
@@ -767,9 +766,9 @@ namespace ChameleonMiniGUI
                 }
 
                 // Save in settings
-                Properties.Settings.Default.EnableKeepAlive = chk_keepalive.Checked;
-                Properties.Settings.Default.KeepAliveInterval = keepAliveInterval;
-                Properties.Settings.Default.Save();
+                Default.EnableKeepAlive = chk_keepalive.Checked;
+                Default.KeepAliveInterval = keepAliveInterval;
+                Default.Save();
             }
             else
             {
@@ -1988,18 +1987,42 @@ namespace ChameleonMiniGUI
             AvailableCommands.AddRange(helpArray);
         }
 
+
         private static byte[] ReadFileIntoByteArray(string filename)
         {
             var fi = new FileInfo(filename);
-            if (fi.Exists)
-            {
-                var dumpStrategy = DumpStrategyFactory.Create(fi.FullName);
-                var data = dumpStrategy.Read();
-                if (data.Length < 1024 && data.Length != 320)
-                    data = data.Skip(MifareUltralightCardInfo.PrefixLength).ToArray();
+            if (!fi.Exists) return null;
+
+            var dumpStrategy = DumpStrategyFactory.Create(fi.FullName);
+            var data = dumpStrategy.Read();
+
+            // most likely Mifare Classic card.
+            if (data.Length >= 1024 || data.Length == 320)
                 return data;
+
+            // detect mfu header. If probability of magic values is more than 50%, assume file has header.
+            var probability = 0d;
+            // first two bytes of version should be 0x00, 0x04
+            if (data[0] == 0x00 && data[1] == 0x04)
+                probability += 0.25;
+                        
+            // tbo should be ZERO
+            if (data[8] == 0x00 && data[9] == 0x00)
+                probability += 0.15;
+
+            // tbo1 should be ZERO
+            if (data[15] == 0x00)
+                probability += 0.15;
+
+            // tearing is normally 0xBD
+            if (data[10] == 0xBD || data[11] == 0xBD || data[12] == 0xBD)
+                probability += 0.35;
+
+            if (probability >= 0.50)
+            {
+                data = data.Skip(MifareUltralightCardInfo.PrefixLength).ToArray();
             }
-            return null;
+            return data;
         }
 
         internal void UploadDump(string filename)
@@ -2011,12 +2034,11 @@ namespace ChameleonMiniGUI
             SendCommandWithoutResult($"UPLOAD{_cmdExtension}");
 
             // For the "110:WAITING FOR XMODEM" text
-            _comport.ReadLine(); 
+            _comport.ReadLine();
 
             int numBytesSuccessfullySent = xmodem.Send(bytes);
 
-            if (numBytesSuccessfullySent == bytes.Length &&
-                xmodem.TerminationReason == XMODEM.TerminationReasonEnum.EndOfFile)
+            if (numBytesSuccessfullySent == bytes.Length && xmodem.TerminationReason == XMODEM.TerminationReasonEnum.EndOfFile)
             {
                 var msg = $"[+] File upload ok{Environment.NewLine}";
                 Console.WriteLine(msg);
@@ -2099,7 +2121,7 @@ namespace ChameleonMiniGUI
             }
         }
 
-        private byte [] ReceiveXModemData()
+        private byte[] ReceiveXModemData()
         {
             byte[] response;
 
@@ -2406,10 +2428,7 @@ namespace ChameleonMiniGUI
         private void ConfigHMIForRevE()
         {
             var list = FindControls<ComboBox>(Controls, "cb_Rbutton");
-            list.ForEach(a => ApplyAll(a, c =>
-            {
-                c.Visible = false;
-            }));
+            list.ForEach(a => ApplyAll(a, c => { c.Visible = false; }));
 
             list = FindControls<ComboBox>(Controls, "cb_Lbutton");
             list.ForEach(a => ApplyAll(a, c =>
@@ -2419,10 +2438,7 @@ namespace ChameleonMiniGUI
             }));
 
             list = FindControls<ComboBox>(Controls, "cb_Rbuttonlong");
-            list.ForEach(a => ApplyAll(a, c =>
-            {
-                c.Visible = false;
-            }));
+            list.ForEach(a => ApplyAll(a, c => { c.Visible = false; }));
 
             list = FindControls<ComboBox>(Controls, "cb_Lbuttonlong");
             list.ForEach(a => ApplyAll(a, c =>
@@ -2447,15 +2463,16 @@ namespace ChameleonMiniGUI
 
             btn_identify.Visible = false;
             btn_keycalc.Visible = true;
-            
-            for (int cidx = 1; cidx < 9; cidx++) {
-                GroupBox gpbx = ((GroupBox)this.Controls.Find($"gb_tagslot{cidx}", true).First());
-                TableLayoutPanel pnl = ((TableLayoutPanel)gpbx.Controls[$"tableLayoutPanel{cidx}"]);
+
+            for (int cidx = 1; cidx < 9; cidx++)
+            {
+                var gpbx = (GroupBox) this.Controls.Find($"gb_tagslot{cidx}", true).First();
+                var pnl = (TableLayoutPanel) gpbx.Controls[$"tableLayoutPanel{cidx}"];
                 pnl.SetColumnSpan(pnl.Controls[$"cb_Lbutton{cidx}"], 2);
                 pnl.SetColumnSpan(pnl.Controls[$"cb_Lbuttonlong{cidx}"], 2);
                 pnl.RowStyles[4].Height = 0;
                 pnl.RowStyles[5].Height = 0;
-                gpbx.Size = new System.Drawing.Size(278, 181);
+                gpbx.Size = new Size(278, 181);
             }
         }
 
@@ -2464,8 +2481,8 @@ namespace ChameleonMiniGUI
             var list = FindControls<ComboBox>(Controls, "cb_Rbutton");
             list.ForEach(a => ApplyAll(a, c =>
             {
-             c.Visible = true;
-             c.Width = REVGDefaultComboWidth;
+                c.Visible = true;
+                c.Width = REVGDefaultComboWidth;
             }));
 
             list = FindControls<ComboBox>(Controls, "cb_Lbutton");
@@ -2508,13 +2525,13 @@ namespace ChameleonMiniGUI
 
             for (int cidx = 1; cidx < 9; cidx++)
             {
-                GroupBox gpbx = ((GroupBox)this.Controls.Find($"gb_tagslot{cidx}", true).First());
-                TableLayoutPanel pnl = ((TableLayoutPanel)gpbx.Controls[$"tableLayoutPanel{cidx}"]);
+                var gpbx = (GroupBox) this.Controls.Find($"gb_tagslot{cidx}", true).First();
+                var pnl = (TableLayoutPanel) gpbx.Controls[$"tableLayoutPanel{cidx}"];
                 pnl.SetColumnSpan(pnl.Controls[$"cb_Lbutton{cidx}"], 1);
                 pnl.SetColumnSpan(pnl.Controls[$"cb_Lbuttonlong{cidx}"], 1);
                 pnl.RowStyles[4].Height = 30;
                 pnl.RowStyles[5].Height = 30;
-                gpbx.Size = new System.Drawing.Size(278, 242);
+                gpbx.Size = new Size(278, 242);
             }
         }
 
@@ -2573,13 +2590,16 @@ namespace ChameleonMiniGUI
                 {
                     _comport.Close();
                 }
-                catch { }
+                catch
+                {
+                }
 
                 _comport = null;
                 disconnectPressed = true;
             }
             DeviceDisconnected();
         }
+
         #endregion
     }
 }

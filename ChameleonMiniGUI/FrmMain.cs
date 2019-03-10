@@ -1412,7 +1412,7 @@ namespace ChameleonMiniGUI
                 // send command
                 SendCommandWithoutResult(cmdText);
 
-                if (cmdText.Contains("DETECTIONMY?"))
+                if (cmdText.Contains($"DETECTION{_cmdExtension}?"))
                 {
                     // wait to make sure data is transmitted
                     Thread.Sleep(100);
@@ -1513,7 +1513,7 @@ namespace ChameleonMiniGUI
                 var received = new byte[bytesread];
                 Buffer.BlockCopy(rx_data, 0, received, 0, bytesread);
 
-                if (cmdText.Contains("DETECTIONMY?"))
+                if (cmdText.Contains($"DETECTION{_cmdExtension}?"))
                 {
                     var foo = new byte[bytesread];
                     Array.Copy(rx_data, 8, foo, 0, bytesread - 7);

@@ -3157,6 +3157,7 @@ namespace ChameleonMiniGUI
             // 
             this.tpDump.AllowDrop = true;
             this.tpDump.ContextMenuStrip = this.menuScroll;
+            this.tpDump.Controls.Add(this.ucLegend1);
             this.tpDump.Controls.Add(this.btn_close2);
             this.tpDump.Controls.Add(this.btn_close1);
             this.tpDump.Controls.Add(this.lbl_template);
@@ -3174,7 +3175,6 @@ namespace ChameleonMiniGUI
             this.tpDump.Controls.Add(this.btn_open1);
             this.tpDump.Controls.Add(this.hexBox2);
             this.tpDump.Controls.Add(this.hexBox1);
-            this.tpDump.Controls.Add(this.ucLegend1);
             this.tpDump.Location = new System.Drawing.Point(4, 22);
             this.tpDump.Name = "tpDump";
             this.tpDump.Size = new System.Drawing.Size(1279, 665);

@@ -4,6 +4,10 @@ This project uses the changelog in accordance with [keepchangelog](http://keepac
 
 ## [unreleased][unreleased]
 
+## [1.2.0.18] - 2019-03-11
+## Added
+- moved legend to font
+
 ## [1.2.0.17] - 2019-03-11
 ## Added
 - support for RevE firmware with or without MY-extensions. (@bogito)

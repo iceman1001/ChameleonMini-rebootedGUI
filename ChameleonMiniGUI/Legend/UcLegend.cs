@@ -69,6 +69,7 @@ namespace ChameleonMiniGUI
             else
             {
                 flpLegend.Visible = true;
+                flpLegend.BringToFront();
                 btnToggle.Text = "-";
             }
             Expanded = !Expanded;

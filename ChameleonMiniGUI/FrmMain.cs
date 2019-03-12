@@ -1987,6 +1987,41 @@ namespace ChameleonMiniGUI
             AvailableCommands.AddRange(helpArray);
         }
 
+        private static bool HasUltralightHeader(IReadOnlyList<byte> bytes)
+        {
+            // empty header
+            var empty_header = new byte[]
+            {
+                0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+            };
+
+            if (bytes.SequenceEqual(empty_header))
+            {
+                return true;
+            }
+
+            // detect mfu header. If probability of magic values is more than 50%, assume file has header.
+            var probability = 0d;
+            // first two bytes of version should be 0x00, 0x04
+            if (bytes[0] == 0x00 && bytes[1] == 0x04)
+                probability += 0.25;
+
+            // tbo should be ZERO
+            if (bytes[8] == 0x00 && bytes[9] == 0x00)
+                probability += 0.15;
+
+            // tbo1 should be ZERO
+            if (bytes[15] == 0x00)
+                probability += 0.15;
+
+            // tearing is normally 0xBD
+            if (bytes[10] == 0xBD || bytes[11] == 0xBD || bytes[12] == 0xBD)
+                probability += 0.35;
+
+            return (probability >= 0.50);
+        }
 
         private static byte[] ReadFileIntoByteArray(string filename)
         {
@@ -2000,25 +2035,8 @@ namespace ChameleonMiniGUI
             if (data.Length >= 1024 || data.Length == 320)
                 return data;
 
-            // detect mfu header. If probability of magic values is more than 50%, assume file has header.
-            var probability = 0d;
-            // first two bytes of version should be 0x00, 0x04
-            if (data[0] == 0x00 && data[1] == 0x04)
-                probability += 0.25;
-                        
-            // tbo should be ZERO
-            if (data[8] == 0x00 && data[9] == 0x00)
-                probability += 0.15;
-
-            // tbo1 should be ZERO
-            if (data[15] == 0x00)
-                probability += 0.15;
-
-            // tearing is normally 0xBD
-            if (data[10] == 0xBD || data[11] == 0xBD || data[12] == 0xBD)
-                probability += 0.35;
-
-            if (probability >= 0.50)
+            // ultralight/ntag based dump might have a header
+            if (HasUltralightHeader(data) )
             {
                 data = data.Skip(MifareUltralightCardInfo.PrefixLength).ToArray();
             }
@@ -2100,10 +2118,15 @@ namespace ChameleonMiniGUI
                 }
 
                 if (neededBytes.Length < 1024 && neededBytes.Length != 320)
+                {
+                    if (HasUltralightHeader(neededBytes))
+                    {
                     neededBytes = Enumerable
                         .Repeat((byte)0, MifareUltralightCardInfo.PrefixLength)
                         .Concat(neededBytes)
                         .ToArray();
+                    }
+                }
                 // Write the actual file
                 var dumpStrategy = DumpStrategyFactory.Create(filename);
                 dumpStrategy?.Save(neededBytes);
@@ -2165,7 +2188,7 @@ namespace ChameleonMiniGUI
         {
             if (hexBox.ByteProvider == null) return;
 
-            int idx = 0;
+            int idx;
             if (!int.TryParse(hexBox.Name.Substring(hexBox.Name.Length - 1), out idx)) return;
 
             var l = FindControls<Label>(Controls, $"lbl_hbfilename{idx}").FirstOrDefault();

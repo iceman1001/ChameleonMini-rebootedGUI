@@ -456,7 +456,7 @@ namespace ChameleonMiniGUI
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(185, 78);
+            this.label1.Location = new System.Drawing.Point(175, 118);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(86, 13);
             this.label1.TabIndex = 7;
@@ -477,26 +477,26 @@ namespace ChameleonMiniGUI
             // tb_firmware
             // 
             this.tb_firmware.Enabled = false;
-            this.tb_firmware.Location = new System.Drawing.Point(188, 94);
+            this.tb_firmware.Location = new System.Drawing.Point(178, 134);
             this.tb_firmware.Name = "tb_firmware";
             this.tb_firmware.ReadOnly = true;
-            this.tb_firmware.Size = new System.Drawing.Size(165, 20);
+            this.tb_firmware.Size = new System.Drawing.Size(256, 20);
             this.tb_firmware.TabIndex = 6;
             // 
             // txt_constatus
             // 
-            this.txt_constatus.Location = new System.Drawing.Point(188, 54);
+            this.txt_constatus.Location = new System.Drawing.Point(178, 70);
             this.txt_constatus.Margin = new System.Windows.Forms.Padding(8);
             this.txt_constatus.Name = "txt_constatus";
             this.txt_constatus.ReadOnly = true;
-            this.txt_constatus.Size = new System.Drawing.Size(129, 20);
+            this.txt_constatus.Size = new System.Drawing.Size(256, 20);
             this.txt_constatus.TabIndex = 5;
             this.txt_constatus.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // btn_disconnect
             // 
             this.btn_disconnect.Enabled = false;
-            this.btn_disconnect.Location = new System.Drawing.Point(373, 88);
+            this.btn_disconnect.Location = new System.Drawing.Point(349, 29);
             this.btn_disconnect.Name = "btn_disconnect";
             this.btn_disconnect.Size = new System.Drawing.Size(85, 30);
             this.btn_disconnect.TabIndex = 1;
@@ -506,7 +506,7 @@ namespace ChameleonMiniGUI
             // 
             // btn_connect
             // 
-            this.btn_connect.Location = new System.Drawing.Point(373, 50);
+            this.btn_connect.Location = new System.Drawing.Point(178, 29);
             this.btn_connect.Name = "btn_connect";
             this.btn_connect.Size = new System.Drawing.Size(85, 30);
             this.btn_connect.TabIndex = 0;
@@ -3157,6 +3157,7 @@ namespace ChameleonMiniGUI
             // 
             this.tpDump.AllowDrop = true;
             this.tpDump.ContextMenuStrip = this.menuScroll;
+            this.tpDump.Controls.Add(this.ucLegend1);
             this.tpDump.Controls.Add(this.btn_close2);
             this.tpDump.Controls.Add(this.btn_close1);
             this.tpDump.Controls.Add(this.lbl_template);
@@ -3174,7 +3175,6 @@ namespace ChameleonMiniGUI
             this.tpDump.Controls.Add(this.btn_open1);
             this.tpDump.Controls.Add(this.hexBox2);
             this.tpDump.Controls.Add(this.hexBox1);
-            this.tpDump.Controls.Add(this.ucLegend1);
             this.tpDump.Location = new System.Drawing.Point(4, 22);
             this.tpDump.Name = "tpDump";
             this.tpDump.Size = new System.Drawing.Size(1279, 665);
@@ -3192,19 +3192,19 @@ namespace ChameleonMiniGUI
             this.toolStripMenuItem1,
             this.toolStripMenuItem2});
             this.menuScroll.Name = "menuScroll";
-            this.menuScroll.Size = new System.Drawing.Size(171, 48);
+            this.menuScroll.Size = new System.Drawing.Size(172, 48);
             this.menuScroll.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuScroll_ItemClicked);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(170, 22);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(171, 22);
             this.toolStripMenuItem1.Text = "Toggle Sync Scroll";
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(170, 22);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(171, 22);
             this.toolStripMenuItem2.Text = "Close Files";
             // 
             // btn_close2

@@ -14,11 +14,7 @@ namespace ChameleonMiniGUI.Dump
             FileName = fileName;
         }
 
-        public override string Extension
-        {
-            get
-            { return ".bin"; }
-        }
+        public override string Extension => ".bin";
 
         public override byte[] Read() =>
             File.ReadAllBytes(FileName);

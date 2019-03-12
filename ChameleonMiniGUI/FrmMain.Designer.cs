@@ -235,6 +235,7 @@ namespace ChameleonMiniGUI
             this.menuScroll = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.ucLegend1 = new ChameleonMiniGUI.UcLegend();
             this.btn_close2 = new System.Windows.Forms.Button();
             this.btn_close1 = new System.Windows.Forms.Button();
             this.lbl_template = new System.Windows.Forms.Label();
@@ -253,7 +254,6 @@ namespace ChameleonMiniGUI
             this.btn_open1 = new System.Windows.Forms.Button();
             this.hexBox2 = new Be.Windows.Forms.HexBox();
             this.hexBox1 = new Be.Windows.Forms.HexBox();
-            this.ucLegend1 = new ChameleonMiniGUI.UcLegend();
             this.tpUtils = new System.Windows.Forms.TabPage();
             this.ucExplorer1 = new ChameleonMiniGUI.UcExplorer();
             this.tpSerial = new System.Windows.Forms.TabPage();
@@ -3192,20 +3192,34 @@ namespace ChameleonMiniGUI
             this.toolStripMenuItem1,
             this.toolStripMenuItem2});
             this.menuScroll.Name = "menuScroll";
-            this.menuScroll.Size = new System.Drawing.Size(172, 48);
+            this.menuScroll.Size = new System.Drawing.Size(171, 48);
             this.menuScroll.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuScroll_ItemClicked);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(171, 22);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(170, 22);
             this.toolStripMenuItem1.Text = "Toggle Sync Scroll";
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(171, 22);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(170, 22);
             this.toolStripMenuItem2.Text = "Close Files";
+            // 
+            // ucLegend1
+            // 
+            this.ucLegend1.AutoSize = true;
+            this.ucLegend1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.ucLegend1.Expanded = false;
+            this.ucLegend1.Items = null;
+            this.ucLegend1.Location = new System.Drawing.Point(978, 3);
+            this.ucLegend1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.ucLegend1.MaximumSize = new System.Drawing.Size(180, 300);
+            this.ucLegend1.Name = "ucLegend1";
+            this.ucLegend1.Size = new System.Drawing.Size(180, 42);
+            this.ucLegend1.TabIndex = 22;
+            this.ucLegend1.Title = "Legend";
             // 
             // btn_close2
             // 
@@ -3400,20 +3414,6 @@ namespace ChameleonMiniGUI
             this.hexBox1.ToggleSyncScrollPressed += new System.EventHandler(this.toggleSyncScrollPressed);
             this.hexBox1.MouseEnter += new System.EventHandler(this.hexBox_MouseEnter);
             // 
-            // ucLegend1
-            // 
-            this.ucLegend1.AutoSize = true;
-            this.ucLegend1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ucLegend1.Expanded = false;
-            this.ucLegend1.Items = null;
-            this.ucLegend1.Location = new System.Drawing.Point(978, 3);
-            this.ucLegend1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.ucLegend1.MaximumSize = new System.Drawing.Size(180, 300);
-            this.ucLegend1.Name = "ucLegend1";
-            this.ucLegend1.Size = new System.Drawing.Size(180, 42);
-            this.ucLegend1.TabIndex = 22;
-            this.ucLegend1.Title = "Legend";
-            // 
             // tpUtils
             // 
             this.tpUtils.Controls.Add(this.ucExplorer1);
@@ -3589,12 +3589,13 @@ namespace ChameleonMiniGUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1302, 890);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.gb_output);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(1318, 929);
             this.Name = "frm_main";
             this.Activated += new System.EventHandler(this.frm_main_Activated);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frm_main_FormClosed);

@@ -4,6 +4,10 @@ This project uses the changelog in accordance with [keepchangelog](http://keepac
 
 ## [unreleased][unreleased]
 
+## [1.2.0.19] - 2019-03-12
+## Added
+- added scrollbars / resizeing of gui possible (@bogito)
+
 ## [1.2.0.18] - 2019-03-11
 ## Added
 - moved legend to font

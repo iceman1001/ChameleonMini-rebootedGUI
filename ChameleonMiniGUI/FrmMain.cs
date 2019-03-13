@@ -1037,6 +1037,37 @@ namespace ChameleonMiniGUI
             this.ActiveControl = tbSerialCmd;
         }
 
+        private void tableLayoutPanel_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+                e.Effect = DragDropEffects.Copy;
+            else
+                e.Effect = DragDropEffects.None;
+        }
+
+        private void tableLayoutPanel_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] s = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+            if (s.Length > 0)
+            {
+                var dumpFileName = s[0];
+                if (File.Exists(dumpFileName))
+                {
+                    // Get the tagslot index
+                    var tagslotIndex = int.Parse(((TableLayoutPanel)sender).Name.Substring(((TableLayoutPanel)sender).Name.Length - 1));
+                    if (tagslotIndex <= 0) return;
+
+                    // Select the corresponding slot
+                    SendCommandWithoutResult($"SETTING{_cmdExtension}={tagslotIndex - _tagslotIndexOffset}");
+
+                    // Load the dump
+                    UploadDump(dumpFileName);
+
+                    // Refresh slot
+                    RefreshSlot(tagslotIndex);
+                }
+            }
+        }
         #endregion
 
         #region Helper methods
@@ -2624,5 +2655,6 @@ namespace ChameleonMiniGUI
         }
 
         #endregion
+
     }
 }

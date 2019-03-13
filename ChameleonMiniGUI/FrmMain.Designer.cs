@@ -938,6 +938,7 @@ namespace ChameleonMiniGUI
             // 
             // tableLayoutPanel6
             // 
+            this.tableLayoutPanel6.AllowDrop = true;
             this.tableLayoutPanel6.ColumnCount = 3;
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35F));
@@ -970,6 +971,8 @@ namespace ChameleonMiniGUI
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel6.Size = new System.Drawing.Size(254, 213);
             this.tableLayoutPanel6.TabIndex = 26;
+            this.tableLayoutPanel6.DragDrop += new System.Windows.Forms.DragEventHandler(this.tableLayoutPanel_DragDrop);
+            this.tableLayoutPanel6.DragEnter += new System.Windows.Forms.DragEventHandler(this.tableLayoutPanel_DragEnter);
             // 
             // lbl_mode6
             // 
@@ -1228,6 +1231,7 @@ namespace ChameleonMiniGUI
             // 
             // tableLayoutPanel1
             // 
+            this.tableLayoutPanel1.AllowDrop = true;
             this.tableLayoutPanel1.ColumnCount = 3;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35F));
@@ -1260,6 +1264,8 @@ namespace ChameleonMiniGUI
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(254, 213);
             this.tableLayoutPanel1.TabIndex = 37;
+            this.tableLayoutPanel1.DragDrop += new System.Windows.Forms.DragEventHandler(this.tableLayoutPanel_DragDrop);
+            this.tableLayoutPanel1.DragEnter += new System.Windows.Forms.DragEventHandler(this.tableLayoutPanel_DragEnter);
             // 
             // lbl_uid1
             // 
@@ -1517,6 +1523,7 @@ namespace ChameleonMiniGUI
             // 
             // tableLayoutPanel2
             // 
+            this.tableLayoutPanel2.AllowDrop = true;
             this.tableLayoutPanel2.ColumnCount = 3;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35F));
@@ -1549,6 +1556,8 @@ namespace ChameleonMiniGUI
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(254, 213);
             this.tableLayoutPanel2.TabIndex = 22;
+            this.tableLayoutPanel2.DragDrop += new System.Windows.Forms.DragEventHandler(this.tableLayoutPanel_DragDrop);
+            this.tableLayoutPanel2.DragEnter += new System.Windows.Forms.DragEventHandler(this.tableLayoutPanel_DragEnter);
             // 
             // lbl_mode2
             // 
@@ -1790,6 +1799,7 @@ namespace ChameleonMiniGUI
             // 
             // tableLayoutPanel4
             // 
+            this.tableLayoutPanel4.AllowDrop = true;
             this.tableLayoutPanel4.ColumnCount = 3;
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35F));
@@ -1822,6 +1832,8 @@ namespace ChameleonMiniGUI
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel4.Size = new System.Drawing.Size(254, 213);
             this.tableLayoutPanel4.TabIndex = 22;
+            this.tableLayoutPanel4.DragDrop += new System.Windows.Forms.DragEventHandler(this.tableLayoutPanel_DragDrop);
+            this.tableLayoutPanel4.DragEnter += new System.Windows.Forms.DragEventHandler(this.tableLayoutPanel_DragEnter);
             // 
             // lbl_mode4
             // 
@@ -2063,6 +2075,7 @@ namespace ChameleonMiniGUI
             // 
             // tableLayoutPanel3
             // 
+            this.tableLayoutPanel3.AllowDrop = true;
             this.tableLayoutPanel3.ColumnCount = 3;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35F));
@@ -2095,6 +2108,8 @@ namespace ChameleonMiniGUI
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel3.Size = new System.Drawing.Size(254, 213);
             this.tableLayoutPanel3.TabIndex = 22;
+            this.tableLayoutPanel3.DragDrop += new System.Windows.Forms.DragEventHandler(this.tableLayoutPanel_DragDrop);
+            this.tableLayoutPanel3.DragEnter += new System.Windows.Forms.DragEventHandler(this.tableLayoutPanel_DragEnter);
             // 
             // lbl_mode3
             // 
@@ -2336,6 +2351,7 @@ namespace ChameleonMiniGUI
             // 
             // tableLayoutPanel5
             // 
+            this.tableLayoutPanel5.AllowDrop = true;
             this.tableLayoutPanel5.ColumnCount = 3;
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35F));
@@ -2368,6 +2384,8 @@ namespace ChameleonMiniGUI
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel5.Size = new System.Drawing.Size(254, 213);
             this.tableLayoutPanel5.TabIndex = 24;
+            this.tableLayoutPanel5.DragDrop += new System.Windows.Forms.DragEventHandler(this.tableLayoutPanel_DragDrop);
+            this.tableLayoutPanel5.DragEnter += new System.Windows.Forms.DragEventHandler(this.tableLayoutPanel_DragEnter);
             // 
             // lbl_mode5
             // 
@@ -2609,6 +2627,7 @@ namespace ChameleonMiniGUI
             // 
             // tableLayoutPanel7
             // 
+            this.tableLayoutPanel7.AllowDrop = true;
             this.tableLayoutPanel7.ColumnCount = 3;
             this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
             this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35F));
@@ -2641,6 +2660,8 @@ namespace ChameleonMiniGUI
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel7.Size = new System.Drawing.Size(254, 213);
             this.tableLayoutPanel7.TabIndex = 26;
+            this.tableLayoutPanel7.DragDrop += new System.Windows.Forms.DragEventHandler(this.tableLayoutPanel_DragDrop);
+            this.tableLayoutPanel7.DragEnter += new System.Windows.Forms.DragEventHandler(this.tableLayoutPanel_DragEnter);
             // 
             // lbl_mode7
             // 
@@ -2882,6 +2903,7 @@ namespace ChameleonMiniGUI
             // 
             // tableLayoutPanel8
             // 
+            this.tableLayoutPanel8.AllowDrop = true;
             this.tableLayoutPanel8.ColumnCount = 3;
             this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
             this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35F));
@@ -2914,6 +2936,8 @@ namespace ChameleonMiniGUI
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel8.Size = new System.Drawing.Size(254, 213);
             this.tableLayoutPanel8.TabIndex = 26;
+            this.tableLayoutPanel8.DragDrop += new System.Windows.Forms.DragEventHandler(this.tableLayoutPanel_DragDrop);
+            this.tableLayoutPanel8.DragEnter += new System.Windows.Forms.DragEventHandler(this.tableLayoutPanel_DragEnter);
             // 
             // lbl_mode8
             // 

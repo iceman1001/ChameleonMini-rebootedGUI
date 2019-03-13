@@ -1037,6 +1037,37 @@ namespace ChameleonMiniGUI
             this.ActiveControl = tbSerialCmd;
         }
 
+        private void tableLayoutPanel_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+                e.Effect = DragDropEffects.Copy;
+            else
+                e.Effect = DragDropEffects.None;
+        }
+
+        private void tableLayoutPanel_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] s = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+            if (s.Length > 0)
+            {
+                var dumpFileName = s[0];
+                if (File.Exists(dumpFileName))
+                {
+                    // Get the tagslot index
+                    var tagslotIndex = int.Parse(((TableLayoutPanel)sender).Name.Substring(((TableLayoutPanel)sender).Name.Length - 1));
+                    if (tagslotIndex <= 0) return;
+
+                    // Select the corresponding slot
+                    SendCommandWithoutResult($"SETTING{_cmdExtension}={tagslotIndex - _tagslotIndexOffset}");
+
+                    // Load the dump
+                    UploadDump(dumpFileName);
+
+                    // Refresh slot
+                    RefreshSlot(tagslotIndex);
+                }
+            }
+        }
         #endregion
 
         #region Helper methods
@@ -2047,6 +2078,9 @@ namespace ChameleonMiniGUI
         {
             var bytes = ReadFileIntoByteArray(filename);
 
+            // Try to identify the dump type
+            IndentifyDumpTypeBySize(bytes.Length);
+
             var xmodem = new XMODEM(_comport, XMODEM.Variants.XModemChecksum);
 
             SendCommandWithoutResult($"UPLOAD{_cmdExtension}");
@@ -2067,6 +2101,28 @@ namespace ChameleonMiniGUI
                 var msg = $"[!] Failed to upload file{Environment.NewLine}";
                 MessageBox.Show(msg);
                 txt_output.Text += msg;
+            }
+        }
+
+        private void IndentifyDumpTypeBySize(int byteLength)
+        {
+            switch (byteLength)
+            {
+                case 4096:
+                    SendCommandWithoutResult($"CONFIG{_cmdExtension}=MF_CLASSIC_4K");
+                    break;
+                case 64:
+                    SendCommandWithoutResult($"CONFIG{_cmdExtension}=MF_ULTRALIGHT");
+                    break;
+                case 80:
+                    SendCommandWithoutResult($"CONFIG{_cmdExtension}=MF_ULTRALIGHT_EV1_80B");
+                    break;
+                case 164:
+                    SendCommandWithoutResult($"CONFIG{_cmdExtension}=MF_ULTRALIGHT_EV1_164B");
+                    break;
+                default:
+                    SendCommandWithoutResult($"CONFIG{_cmdExtension}=MF_CLASSIC_1K");
+                    break;
             }
         }
 

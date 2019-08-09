@@ -31,30 +31,27 @@ namespace ChameleonMiniGUI.Json
         public string TBO_0 { get; set; }
 
         [DataMember(Order = 3)]
-        public string Pack { get; set; }
-
-        [DataMember(Order = 4)]
         public string TBO_1 { get; set; }
 
-        [DataMember(Order = 5)]
+        [DataMember(Order = 4)]
         public string Signature { get; set; }
 
-        [DataMember(Order = 6)]
+        [DataMember(Order = 5)]
         public string Counter0 { get; set; }
 
-        [DataMember(Order = 7)]
+        [DataMember(Order = 6)]
         public string Tearing0 { get; set; }
 
-        [DataMember(Order = 8)]
+        [DataMember(Order = 7)]
         public string Counter1 { get; set; }
 
-        [DataMember(Order = 9)]
+        [DataMember(Order = 8)]
         public string Tearing1 { get; set; }
 
-        [DataMember(Order = 10)]
+        [DataMember(Order = 9)]
         public string Counter2 { get; set; }
 
-        [DataMember(Order = 11)]
+        [DataMember(Order = 10)]
         public string Tearing2 { get; set; }
     }
 }

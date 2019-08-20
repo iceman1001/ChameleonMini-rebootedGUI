@@ -1273,7 +1273,7 @@ namespace ChameleonMiniGUI
         {
             this.Cursor = Cursors.WaitCursor;
             pb_device.Image = pb_device.InitialImage;
-            txt_output.Text = string.Empty;
+            txt_output.Text += $"{Environment.NewLine}"; // add empty line into log output
 
             var searcher = new ManagementObjectSearcher("select Name, DeviceID, PNPDeviceID from Win32_SerialPort where PNPDeviceID like '%VID_03EB&PID_2044%' or PNPDeviceID like '%VID_16D0&PID_04B2%'");
 
@@ -1292,13 +1292,13 @@ namespace ChameleonMiniGUI
 
                 try
                 {
-                    _comport.Open();
                     var name = obj["Name"].ToString();
                     txt_output.Text += $"[=] Connecting to {name} at {comPortStr}{Environment.NewLine}";
+                    _comport.Open();
                 }
                 catch (Exception)
                 {
-                    txt_output.Text = $"[!] Failed {comPortStr}{Environment.NewLine}";
+                    txt_output.Text += $"[!] Failed {comPortStr}{Environment.NewLine}";
                 }
 
                 if (_comport.IsOpen)
@@ -1329,7 +1329,7 @@ namespace ChameleonMiniGUI
                     if (!string.IsNullOrEmpty(_firmwareVersion) && _firmwareVersion.Contains("Chameleon"))
                     {
                         _cmdExtension = string.Empty;
-                        txt_output.Text = $"[+] Success, found Chameleon Mini device on '{comPortStr}' with {_deviceIdentification} installed{Environment.NewLine}";
+                        txt_output.Text += $"[+] Success, found Chameleon Mini device on '{comPortStr}' with {_deviceIdentification} installed{Environment.NewLine}";
                         _current_comport = comPortStr;
                         this.Cursor = Cursors.Default;
                         return;
@@ -1339,7 +1339,7 @@ namespace ChameleonMiniGUI
                     if (!string.IsNullOrEmpty(_firmwareVersion) && _firmwareVersion.Contains("Chameleon"))
                     {
                         _cmdExtension = "MY";
-                        txt_output.Text = $"[+] Success, found Chameleon Mini device on '{comPortStr}' with {_deviceIdentification} installed{Environment.NewLine}";
+                        txt_output.Text += $"[+] Success, found Chameleon Mini device on '{comPortStr}' with {_deviceIdentification} installed{Environment.NewLine}";
                         _current_comport = comPortStr;
                         this.Cursor = Cursors.Default;
                         return;
@@ -1363,13 +1363,13 @@ namespace ChameleonMiniGUI
 
                 try
                 {
-                    _comport.Open();
                     var name = obj["Name"].ToString();
                     txt_output.Text += $"[=] Connecting to {name} at {comPortStr}{Environment.NewLine}";
+                    _comport.Open();
                 }
                 catch (Exception)
                 {
-                    txt_output.Text = $"[!] Failed {comPortStr}{Environment.NewLine}";
+                    txt_output.Text += $"[!] Failed {comPortStr}{Environment.NewLine}";
                 }
 
                 if (!_comport.IsOpen) continue;
@@ -1384,7 +1384,7 @@ namespace ChameleonMiniGUI
                 {
                     _cmdExtension = string.Empty;
                     pb_device.Image = (Bitmap)Properties.Resources.ResourceManager.GetObject("chamRevG1");
-                    txt_output.Text = $"[+] Success, found Chameleon Mini device on '{comPortStr}' with {_deviceIdentification} installed{Environment.NewLine}";
+                    txt_output.Text += $"[+] Success, found Chameleon Mini device on '{comPortStr}' with {_deviceIdentification} installed{Environment.NewLine}";
                     _current_comport = comPortStr;
                     _CurrentDevType = DeviceType.RevG;
                     ConfigHMIForRevG();
@@ -1397,7 +1397,7 @@ namespace ChameleonMiniGUI
                 {
                     _cmdExtension = "MY";
                     pb_device.Image = (Bitmap)Properties.Resources.ResourceManager.GetObject("chamRevE");
-                    txt_output.Text = $"[+] Success, found Chameleon Mini device on '{comPortStr}' with {_deviceIdentification} installed{Environment.NewLine}";
+                    txt_output.Text += $"[+] Success, found Chameleon Mini device on '{comPortStr}' with {_deviceIdentification} installed{Environment.NewLine}";
                     _current_comport = comPortStr;
                     _CurrentDevType = DeviceType.RevE;
                     ConfigHMIForRevE();
@@ -2663,6 +2663,9 @@ namespace ChameleonMiniGUI
             // Determine which slot is active
             var actSetting = SendCommand($"SETTING{_cmdExtension}?").ToString();
 
+            // return false if empty answer or set default value (ex. 0)
+            if (actSetting.Length <= 0) return false;// or actSetting = "NO.0";
+
             int slotindex;
             if (int.TryParse(actSetting.Substring(actSetting.Length - 1), out slotindex))
             {
@@ -2674,6 +2677,10 @@ namespace ChameleonMiniGUI
 
         private void RestoreActiveSlot()
         {
+            // Check if saved active slot is within the limit (0...7)
+            if (_active_selected_slot < _tagslotIndexOffset) _active_selected_slot = _tagslotIndexOffset;
+            if (_active_selected_slot > _tagslotIndexOffset+7) _active_selected_slot = _tagslotIndexOffset+7;
+            
             SendCommandWithoutResult($"SETTING{_cmdExtension}={_active_selected_slot - _tagslotIndexOffset}");
             HighlightActiveSlot();
         }

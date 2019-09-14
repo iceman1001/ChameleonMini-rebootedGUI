@@ -46,6 +46,7 @@ namespace ChameleonMiniGUI
 
         private const int REVGDefaultComboWidth = 80;
         private const int REVEDefaultComboWidth = 175;
+        private const int SerialRWTimeoutMs = 10000;
 
         private bool lockFlag = false;
         private DeviceType _CurrentDevType = DeviceType.RevG;
@@ -1284,8 +1285,8 @@ namespace ChameleonMiniGUI
 
                 _comport = new SerialPort(comPortStr, 115200)
                 {
-                    ReadTimeout = 4000,
-                    WriteTimeout = 6000,
+                    ReadTimeout = SerialRWTimeoutMs,
+                    WriteTimeout = SerialRWTimeoutMs,
                     DtrEnable = true,
                     RtsEnable = true,
                 };

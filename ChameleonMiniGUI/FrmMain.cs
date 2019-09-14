@@ -545,50 +545,49 @@ namespace ChameleonMiniGUI
             this.Cursor = Cursors.WaitCursor;
             SaveActiveSlot();
 
-            // Get all selected indices
-            foreach (var cb in FindControls<CheckBox>(Controls, "checkBox"))
+            // Get all selected checkboxes
+            List<CheckBox> selectedCheckBoxes = new List<CheckBox>();
+            List<CheckBox> allSlotsCheckBoxes = FindControls<CheckBox>(Controls, "checkBox");
+            foreach (var cb in allSlotsCheckBoxes)
             {
-                if (!cb.Checked) continue;
-
-                var tagslotIndex = int.Parse(cb.Name.Substring(cb.Name.Length - 1));
-                if (tagslotIndex <= 0) continue;
-
-                SendCommandWithoutResult($"SETTING{_cmdExtension}={tagslotIndex - _tagslotIndexOffset}");
-                SendCommandWithoutResult($"CLEAR{_cmdExtension}");
-
-                // Set every field to a default value
-
-                FindControls<ComboBox>(Controls, $"cb_mode{tagslotIndex}").ForEach( a => SendCommandWithoutResult($"CONFIG{_cmdExtension}=CLOSED"));
-
-                switch (_CurrentDevType)
+                if(cb.Checked)
                 {
-                    case DeviceType.RevG:
+                    selectedCheckBoxes.Add(cb);
+                }
+            }
+
+            // RevE-rebooted has ability to "CLEARALL" at once so if all CheckBoxes are selected and CLEARALL available, we do
+            if ((_CurrentDevType == DeviceType.RevE) && (selectedCheckBoxes.Count == allSlotsCheckBoxes.Count) && AvailableCommands.Contains("CLEARALL"))
+            {
+                SendCommandWithoutResult($"CLEARALL");
+            }
+            // Else we clear all selected slots one by one
+            else
+            {
+                foreach (var cb in selectedCheckBoxes)
+                {
+                    var tagslotIndex = int.Parse(cb.Name.Substring(cb.Name.Length - 1));
+                    if (tagslotIndex <= 0) continue;
+
+                    SendCommandWithoutResult($"SETTING{_cmdExtension}={tagslotIndex - _tagslotIndexOffset}");
+                    SendCommandWithoutResult($"CLEAR{_cmdExtension}");
+
+                    // The firmware of RevE-rebooted will deal with proper init to defaults after CLEAR/CLEARALL command
+                    // For RevG, we manually set default values
+                    if (_CurrentDevType == DeviceType.RevG)
                     {
+                        FindControls<ComboBox>(Controls, $"cb_mode{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"CONFIG{_cmdExtension}=CLOSED"));
                         FindControls<ComboBox>(Controls, $"cb_Lbutton{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LBUTTON{_cmdExtension}={a.Items[0]}"));
                         FindControls<ComboBox>(Controls, $"cb_Lbuttonlong{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LBUTTON_LONG{_cmdExtension}={a.Items[0]}"));
                         FindControls<ComboBox>(Controls, $"cb_Rbutton{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"RBUTTON{_cmdExtension}={a.Items[0]}"));
                         FindControls<ComboBox>(Controls, $"cb_Rbuttonlong{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"RBUTTON_LONG{_cmdExtension}={a.Items[0]}"));
                         FindControls<ComboBox>(Controls, $"cb_ledgreen{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LEDGREEN{_cmdExtension}={a.Items[0]}"));
                         FindControls<ComboBox>(Controls, $"cb_ledred{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LEDRED{_cmdExtension}={a.Items[0]}"));
-                        break;
-                    }
-                    default:
-                    {
-                        FindControls<ComboBox>(Controls, $"cb_Lbutton{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"BUTTON{_cmdExtension}=SWITCHCARD"));
-                        FindControls<ComboBox>(Controls, $"cb_Lbuttonlong{tagslotIndex}").ForEach( a =>
-                        {
-                            if (a.Items.Count > 0)
-                            {
-                                SendCommandWithoutResult($"BUTTON_LONG{_cmdExtension}={a.Items[0]}");
-                            }
-
-                        });
-                        break;
                     }
                 }
             }
-            RestoreActiveSlot();
 
+            RestoreActiveSlot();
             RefreshAllSlots();
 
             this.Cursor = Cursors.Default;

@@ -46,6 +46,7 @@ namespace ChameleonMiniGUI
 
         private const int REVGDefaultComboWidth = 80;
         private const int REVEDefaultComboWidth = 175;
+        private const int SerialRWTimeoutMs = 10000;
 
         private bool lockFlag = false;
         private DeviceType _CurrentDevType = DeviceType.RevG;
@@ -146,7 +147,7 @@ namespace ChameleonMiniGUI
             else
             {
                 // set the default value
-                // should be a setting aswell 
+                // should be a setting aswell
                 txt_interval.Text = "2000";
             }
 
@@ -289,7 +290,7 @@ namespace ChameleonMiniGUI
                         {
                             FindControls<ComboBox>(Controls, $"cb_Lbutton{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LBUTTON{_cmdExtension}={a.SelectedItem}"));
                             FindControls<ComboBox>(Controls, $"cb_Lbuttonlong{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LBUTTON_LONG{_cmdExtension}={a.SelectedItem}"));
-                            FindControls<ComboBox>(Controls, $"cb_Rbutton{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"RBUTTON{_cmdExtension}={a.SelectedItem}"));                            
+                            FindControls<ComboBox>(Controls, $"cb_Rbutton{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"RBUTTON{_cmdExtension}={a.SelectedItem}"));
                             FindControls<ComboBox>(Controls, $"cb_Rbuttonlong{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"RBUTTON_LONG{_cmdExtension}={a.SelectedItem}"));
                             FindControls<ComboBox>(Controls, $"cb_ledgreen{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LEDGREEN{_cmdExtension}={a.SelectedItem}"));
                             FindControls<ComboBox>(Controls, $"cb_ledred{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LEDRED{_cmdExtension}={a.SelectedItem}"));
@@ -307,20 +308,16 @@ namespace ChameleonMiniGUI
                 var txtUid = FindControls<TextBox>(Controls, $"txt_uid{tagslotIndex}").FirstOrDefault();
                 if (txtUid != null)
                 {
-                    var uid = txtUid.Text;
-                    // always set UID,  either with user provided or random. Is that acceptable?
-                    if (!string.IsNullOrEmpty(uid) && !string.IsNullOrEmpty(selectedMode) && IsUidValid(uid, selectedMode))
+                    string oldUid = SendCommand($"UID{_cmdExtension}?").ToString();
+                    string uid = txtUid.Text;
+                    uint uidSize = uint.Parse(SendCommand($"UIDSIZE{_cmdExtension}?").ToString());
+                    // Sets UID if valid only
+                    if (!string.IsNullOrEmpty(uid) && !string.IsNullOrEmpty(selectedMode) && IsUidValid(uid, uidSize, selectedMode))
                     {
-                        SendCommandWithoutResult($"UID{_cmdExtension}={uid}");
-                    }
-                    else
-                    {
-                        var tmpuid = "11223344";
-                        if (selectedMode.StartsWith("MF_ULTRALIGHT"))
+                        if(!SendCommand($"UID{_cmdExtension}={uid}").ToString().StartsWith("101"))
                         {
-                            tmpuid = "11223344556677";
+                            txtUid.Text = oldUid;
                         }
-                        SendCommandWithoutResult($"UID{_cmdExtension}={tmpuid}");
                     }
                 }
 
@@ -428,7 +425,7 @@ namespace ChameleonMiniGUI
         {
             this.Cursor = Cursors.WaitCursor;
             SaveActiveSlot();
-                
+
             var downloadPath = Application.StartupPath;
 
             // Try to use the default download path if exists
@@ -544,51 +541,52 @@ namespace ChameleonMiniGUI
             this.Cursor = Cursors.WaitCursor;
             SaveActiveSlot();
 
-            // Get all selected indices
-            foreach (var cb in FindControls<CheckBox>(Controls, "checkBox"))
+            // Get all selected checkboxes
+            List<CheckBox> selectedCheckBoxes = new List<CheckBox>();
+            List<CheckBox> allSlotsCheckBoxes = FindControls<CheckBox>(Controls, "checkBox");
+            foreach (var cb in allSlotsCheckBoxes)
             {
-                if (!cb.Checked) continue;
-
-                var tagslotIndex = int.Parse(cb.Name.Substring(cb.Name.Length - 1));
-                if (tagslotIndex <= 0) continue;
-                
-                SendCommandWithoutResult($"SETTING{_cmdExtension}={tagslotIndex - _tagslotIndexOffset}");
-                SendCommandWithoutResult($"CLEAR{_cmdExtension}");
-
-                // Set every field to a default value
-                
-                FindControls<ComboBox>(Controls, $"cb_mode{tagslotIndex}").ForEach( a => SendCommandWithoutResult($"CONFIG{_cmdExtension}=CLOSED"));
-
-                switch (_CurrentDevType)
+                if(cb.Checked)
                 {
-                    case DeviceType.RevG:
+                    selectedCheckBoxes.Add(cb);
+                }
+            }
+
+            // RevE-rebooted has ability to "CLEARALL" at once so if all CheckBoxes are selected and CLEARALL available, we do
+            if ((_CurrentDevType == DeviceType.RevE) && (selectedCheckBoxes.Count == allSlotsCheckBoxes.Count) && AvailableCommands.Contains("CLEARALL"))
+            {
+                SendCommandWithoutResult($"CLEARALL");
+                RefreshAllSlots();
+            }
+            // Else we clear all selected slots one by one
+            else
+            {
+                foreach (var cb in selectedCheckBoxes)
+                {
+                    var tagslotIndex = int.Parse(cb.Name.Substring(cb.Name.Length - 1));
+                    if (tagslotIndex <= 0) continue;
+
+                    int slotIndex = tagslotIndex - _tagslotIndexOffset;
+                    SendCommandWithoutResult($"SETTING{_cmdExtension}={slotIndex}");
+                    SendCommandWithoutResult($"CLEAR{_cmdExtension}");
+
+                    // The firmware of RevE-rebooted will deal with proper init to defaults after CLEAR/CLEARALL command
+                    // For RevG, we manually set default values
+                    if (_CurrentDevType == DeviceType.RevG)
                     {
+                        FindControls<ComboBox>(Controls, $"cb_mode{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"CONFIG{_cmdExtension}=CLOSED"));
                         FindControls<ComboBox>(Controls, $"cb_Lbutton{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LBUTTON{_cmdExtension}={a.Items[0]}"));
                         FindControls<ComboBox>(Controls, $"cb_Lbuttonlong{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LBUTTON_LONG{_cmdExtension}={a.Items[0]}"));
-                        FindControls<ComboBox>(Controls, $"cb_Rbutton{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"RBUTTON{_cmdExtension}={a.Items[0]}"));                                
+                        FindControls<ComboBox>(Controls, $"cb_Rbutton{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"RBUTTON{_cmdExtension}={a.Items[0]}"));
                         FindControls<ComboBox>(Controls, $"cb_Rbuttonlong{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"RBUTTON_LONG{_cmdExtension}={a.Items[0]}"));
                         FindControls<ComboBox>(Controls, $"cb_ledgreen{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LEDGREEN{_cmdExtension}={a.Items[0]}"));
                         FindControls<ComboBox>(Controls, $"cb_ledred{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LEDRED{_cmdExtension}={a.Items[0]}"));
-                        break;
                     }
-                    default:
-                    {
-                        FindControls<ComboBox>(Controls, $"cb_Lbutton{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"BUTTON{_cmdExtension}=SWITCHCARD"));
-                        FindControls<ComboBox>(Controls, $"cb_Lbuttonlong{tagslotIndex}").ForEach( a =>
-                        { 
-                            if (a.Items.Count > 0)
-                            {
-                                SendCommandWithoutResult($"BUTTON_LONG{_cmdExtension}={a.Items[0]}");
-                            }
-
-                        });
-                        break;
-                    }
+                    RefreshSlot(slotIndex);
                 }
             }
-            RestoreActiveSlot();
 
-            RefreshAllSlots();
+            RestoreActiveSlot();
 
             this.Cursor = Cursors.Default;
         }
@@ -858,7 +856,7 @@ namespace ChameleonMiniGUI
             }
             hexBox1.Focus();
         }
-        
+
         private void byteWidthCheckBoxes_CheckedChanged(object sender, EventArgs e)
         {
             var rb = sender as RadioButton;
@@ -1020,7 +1018,7 @@ namespace ChameleonMiniGUI
             SendCommandWithoutResult($"CONFIG{_cmdExtension}=ISO14443A_READER");
 
             var s = SendCommandWithMultilineResponse($"IDENTIFY{_cmdExtension}").ToString();
-            txt_output.Text += $"{s}{Environment.NewLine}"; 
+            txt_output.Text += $"{s}{Environment.NewLine}";
 
             RestoreActiveSlot();
             this.Cursor = Cursors.Default;
@@ -1284,8 +1282,8 @@ namespace ChameleonMiniGUI
 
                 _comport = new SerialPort(comPortStr, 115200)
                 {
-                    ReadTimeout = 4000,
-                    WriteTimeout = 6000,
+                    ReadTimeout = SerialRWTimeoutMs,
+                    WriteTimeout = SerialRWTimeoutMs,
                     DtrEnable = true,
                     RtsEnable = true,
                 };
@@ -1587,32 +1585,12 @@ namespace ChameleonMiniGUI
             }
         }
 
-        private bool IsUidValid(string uid, string selectedMode)
+        private bool IsUidValid(string uid, uint uidSize, string selectedMode)
         {
             if (!Regex.IsMatch(uid, @"\A\b[0-9a-fA-F]+\b\Z")) return false;
+            if (uid.Length != uidSize*2) return false;
 
-            // TODO: We could also find out the UID size with the UIDSIZEMY cmd
-            // and there exists 4,7,10 uid lengths.
-
-            // if mode is classic then UID must be 4 bytes (8 hex digits) long
-            if (selectedMode.StartsWith("MF_CLASSIC") || selectedMode.StartsWith("MF_DETECTION"))
-            {
-                if (uid.Length == 8)
-                {
-                    return true;
-                }
-            }
-
-            // if mode is ul then UID must be 7 bytes (14 hex digits) long
-            if (selectedMode.StartsWith("MF_ULTRALIGHT"))
-            {
-                if (uid.Length == 14)
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return true;
         }
 
         private void RefreshAllSlots()
@@ -1720,8 +1698,6 @@ namespace ChameleonMiniGUI
                         var cbMode = FindControls<ComboBox>(Controls, $"cb_mode{slotIndex}");
                         foreach (var box in cbMode)
                         {
-                            if (slotMode.Equals("MF_CLASSIC_4K") && box.Name != "cb_mode1")
-                                continue;
                             box.SelectedItem = slotMode;
                         }
                     }
@@ -1938,12 +1914,6 @@ namespace ChameleonMiniGUI
                     {
                         cb.Items.Clear();
                         cb.Items.AddRange(_modesArray);
-
-                        // We can set the MF_CLASSIC_4K mode only on the first tag slot
-                        if (cb.Name != "cb_mode1")
-                        {
-                            cb.Items.Remove("MF_CLASSIC_4K");
-                        }
                     }
                 }
             }
@@ -1998,7 +1968,7 @@ namespace ChameleonMiniGUI
                 case DeviceType.RevG:
                     SetRevGButtons();
                     break;
-                case DeviceType.RevE:                
+                case DeviceType.RevE:
                     SetRevEButtons();
                     break;
             }
@@ -2163,7 +2133,7 @@ namespace ChameleonMiniGUI
 
             // Then send the download command
             SendCommandWithoutResult($"DOWNLOAD{_cmdExtension}");
-            
+
             // For the "110:WAITING FOR XMODEM" text
             _comport.ReadLine();
 
@@ -2656,7 +2626,7 @@ namespace ChameleonMiniGUI
         }
 
         /// <summary>
-        /// save the active slot.  Use before all 
+        /// save the active slot.  Use before all
         /// </summary>
         private bool SaveActiveSlot()
         {
@@ -2680,7 +2650,7 @@ namespace ChameleonMiniGUI
             // Check if saved active slot is within the limit (0...7)
             if (_active_selected_slot < _tagslotIndexOffset) _active_selected_slot = _tagslotIndexOffset;
             if (_active_selected_slot > _tagslotIndexOffset+7) _active_selected_slot = _tagslotIndexOffset+7;
-            
+
             SendCommandWithoutResult($"SETTING{_cmdExtension}={_active_selected_slot - _tagslotIndexOffset}");
             HighlightActiveSlot();
         }

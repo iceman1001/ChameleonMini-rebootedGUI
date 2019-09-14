@@ -146,7 +146,7 @@ namespace ChameleonMiniGUI
             else
             {
                 // set the default value
-                // should be a setting aswell 
+                // should be a setting aswell
                 txt_interval.Text = "2000";
             }
 
@@ -289,7 +289,7 @@ namespace ChameleonMiniGUI
                         {
                             FindControls<ComboBox>(Controls, $"cb_Lbutton{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LBUTTON{_cmdExtension}={a.SelectedItem}"));
                             FindControls<ComboBox>(Controls, $"cb_Lbuttonlong{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LBUTTON_LONG{_cmdExtension}={a.SelectedItem}"));
-                            FindControls<ComboBox>(Controls, $"cb_Rbutton{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"RBUTTON{_cmdExtension}={a.SelectedItem}"));                            
+                            FindControls<ComboBox>(Controls, $"cb_Rbutton{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"RBUTTON{_cmdExtension}={a.SelectedItem}"));
                             FindControls<ComboBox>(Controls, $"cb_Rbuttonlong{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"RBUTTON_LONG{_cmdExtension}={a.SelectedItem}"));
                             FindControls<ComboBox>(Controls, $"cb_ledgreen{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LEDGREEN{_cmdExtension}={a.SelectedItem}"));
                             FindControls<ComboBox>(Controls, $"cb_ledred{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LEDRED{_cmdExtension}={a.SelectedItem}"));
@@ -428,7 +428,7 @@ namespace ChameleonMiniGUI
         {
             this.Cursor = Cursors.WaitCursor;
             SaveActiveSlot();
-                
+
             var downloadPath = Application.StartupPath;
 
             // Try to use the default download path if exists
@@ -551,12 +551,12 @@ namespace ChameleonMiniGUI
 
                 var tagslotIndex = int.Parse(cb.Name.Substring(cb.Name.Length - 1));
                 if (tagslotIndex <= 0) continue;
-                
+
                 SendCommandWithoutResult($"SETTING{_cmdExtension}={tagslotIndex - _tagslotIndexOffset}");
                 SendCommandWithoutResult($"CLEAR{_cmdExtension}");
 
                 // Set every field to a default value
-                
+
                 FindControls<ComboBox>(Controls, $"cb_mode{tagslotIndex}").ForEach( a => SendCommandWithoutResult($"CONFIG{_cmdExtension}=CLOSED"));
 
                 switch (_CurrentDevType)
@@ -565,7 +565,7 @@ namespace ChameleonMiniGUI
                     {
                         FindControls<ComboBox>(Controls, $"cb_Lbutton{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LBUTTON{_cmdExtension}={a.Items[0]}"));
                         FindControls<ComboBox>(Controls, $"cb_Lbuttonlong{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LBUTTON_LONG{_cmdExtension}={a.Items[0]}"));
-                        FindControls<ComboBox>(Controls, $"cb_Rbutton{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"RBUTTON{_cmdExtension}={a.Items[0]}"));                                
+                        FindControls<ComboBox>(Controls, $"cb_Rbutton{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"RBUTTON{_cmdExtension}={a.Items[0]}"));
                         FindControls<ComboBox>(Controls, $"cb_Rbuttonlong{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"RBUTTON_LONG{_cmdExtension}={a.Items[0]}"));
                         FindControls<ComboBox>(Controls, $"cb_ledgreen{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LEDGREEN{_cmdExtension}={a.Items[0]}"));
                         FindControls<ComboBox>(Controls, $"cb_ledred{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LEDRED{_cmdExtension}={a.Items[0]}"));
@@ -575,7 +575,7 @@ namespace ChameleonMiniGUI
                     {
                         FindControls<ComboBox>(Controls, $"cb_Lbutton{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"BUTTON{_cmdExtension}=SWITCHCARD"));
                         FindControls<ComboBox>(Controls, $"cb_Lbuttonlong{tagslotIndex}").ForEach( a =>
-                        { 
+                        {
                             if (a.Items.Count > 0)
                             {
                                 SendCommandWithoutResult($"BUTTON_LONG{_cmdExtension}={a.Items[0]}");
@@ -858,7 +858,7 @@ namespace ChameleonMiniGUI
             }
             hexBox1.Focus();
         }
-        
+
         private void byteWidthCheckBoxes_CheckedChanged(object sender, EventArgs e)
         {
             var rb = sender as RadioButton;
@@ -1020,7 +1020,7 @@ namespace ChameleonMiniGUI
             SendCommandWithoutResult($"CONFIG{_cmdExtension}=ISO14443A_READER");
 
             var s = SendCommandWithMultilineResponse($"IDENTIFY{_cmdExtension}").ToString();
-            txt_output.Text += $"{s}{Environment.NewLine}"; 
+            txt_output.Text += $"{s}{Environment.NewLine}";
 
             RestoreActiveSlot();
             this.Cursor = Cursors.Default;
@@ -1720,8 +1720,6 @@ namespace ChameleonMiniGUI
                         var cbMode = FindControls<ComboBox>(Controls, $"cb_mode{slotIndex}");
                         foreach (var box in cbMode)
                         {
-                            if (slotMode.Equals("MF_CLASSIC_4K") && box.Name != "cb_mode1")
-                                continue;
                             box.SelectedItem = slotMode;
                         }
                     }
@@ -1938,12 +1936,6 @@ namespace ChameleonMiniGUI
                     {
                         cb.Items.Clear();
                         cb.Items.AddRange(_modesArray);
-
-                        // We can set the MF_CLASSIC_4K mode only on the first tag slot
-                        if (cb.Name != "cb_mode1")
-                        {
-                            cb.Items.Remove("MF_CLASSIC_4K");
-                        }
                     }
                 }
             }
@@ -1998,7 +1990,7 @@ namespace ChameleonMiniGUI
                 case DeviceType.RevG:
                     SetRevGButtons();
                     break;
-                case DeviceType.RevE:                
+                case DeviceType.RevE:
                     SetRevEButtons();
                     break;
             }
@@ -2163,7 +2155,7 @@ namespace ChameleonMiniGUI
 
             // Then send the download command
             SendCommandWithoutResult($"DOWNLOAD{_cmdExtension}");
-            
+
             // For the "110:WAITING FOR XMODEM" text
             _comport.ReadLine();
 
@@ -2656,7 +2648,7 @@ namespace ChameleonMiniGUI
         }
 
         /// <summary>
-        /// save the active slot.  Use before all 
+        /// save the active slot.  Use before all
         /// </summary>
         private bool SaveActiveSlot()
         {
@@ -2680,7 +2672,7 @@ namespace ChameleonMiniGUI
             // Check if saved active slot is within the limit (0...7)
             if (_active_selected_slot < _tagslotIndexOffset) _active_selected_slot = _tagslotIndexOffset;
             if (_active_selected_slot > _tagslotIndexOffset+7) _active_selected_slot = _tagslotIndexOffset+7;
-            
+
             SendCommandWithoutResult($"SETTING{_cmdExtension}={_active_selected_slot - _tagslotIndexOffset}");
             HighlightActiveSlot();
         }

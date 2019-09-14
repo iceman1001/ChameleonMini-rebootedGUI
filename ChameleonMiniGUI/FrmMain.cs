@@ -308,20 +308,16 @@ namespace ChameleonMiniGUI
                 var txtUid = FindControls<TextBox>(Controls, $"txt_uid{tagslotIndex}").FirstOrDefault();
                 if (txtUid != null)
                 {
-                    var uid = txtUid.Text;
-                    // always set UID,  either with user provided or random. Is that acceptable?
-                    if (!string.IsNullOrEmpty(uid) && !string.IsNullOrEmpty(selectedMode) && IsUidValid(uid, selectedMode))
+                    string oldUid = SendCommand($"UID{_cmdExtension}?").ToString();
+                    string uid = txtUid.Text;
+                    uint uidSize = uint.Parse(SendCommand($"UIDSIZE{_cmdExtension}?").ToString());
+                    // Sets UID if valid only
+                    if (!string.IsNullOrEmpty(uid) && !string.IsNullOrEmpty(selectedMode) && IsUidValid(uid, uidSize, selectedMode))
                     {
-                        SendCommandWithoutResult($"UID{_cmdExtension}={uid}");
-                    }
-                    else
-                    {
-                        var tmpuid = "11223344";
-                        if (selectedMode.StartsWith("MF_ULTRALIGHT"))
+                        if(!SendCommand($"UID{_cmdExtension}={uid}").ToString().StartsWith("101"))
                         {
-                            tmpuid = "11223344556677";
+                            txtUid.Text = oldUid;
                         }
-                        SendCommandWithoutResult($"UID{_cmdExtension}={tmpuid}");
                     }
                 }
 
@@ -1589,32 +1585,12 @@ namespace ChameleonMiniGUI
             }
         }
 
-        private bool IsUidValid(string uid, string selectedMode)
+        private bool IsUidValid(string uid, uint uidSize, string selectedMode)
         {
             if (!Regex.IsMatch(uid, @"\A\b[0-9a-fA-F]+\b\Z")) return false;
+            if (uid.Length != uidSize*2) return false;
 
-            // TODO: We could also find out the UID size with the UIDSIZEMY cmd
-            // and there exists 4,7,10 uid lengths.
-
-            // if mode is classic then UID must be 4 bytes (8 hex digits) long
-            if (selectedMode.StartsWith("MF_CLASSIC") || selectedMode.StartsWith("MF_DETECTION"))
-            {
-                if (uid.Length == 8)
-                {
-                    return true;
-                }
-            }
-
-            // if mode is ul then UID must be 7 bytes (14 hex digits) long
-            if (selectedMode.StartsWith("MF_ULTRALIGHT"))
-            {
-                if (uid.Length == 14)
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return true;
         }
 
         private void RefreshAllSlots()

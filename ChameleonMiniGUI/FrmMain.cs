@@ -560,6 +560,7 @@ namespace ChameleonMiniGUI
             if ((_CurrentDevType == DeviceType.RevE) && (selectedCheckBoxes.Count == allSlotsCheckBoxes.Count) && AvailableCommands.Contains("CLEARALL"))
             {
                 SendCommandWithoutResult($"CLEARALL");
+                RefreshAllSlots();
             }
             // Else we clear all selected slots one by one
             else
@@ -569,7 +570,8 @@ namespace ChameleonMiniGUI
                     var tagslotIndex = int.Parse(cb.Name.Substring(cb.Name.Length - 1));
                     if (tagslotIndex <= 0) continue;
 
-                    SendCommandWithoutResult($"SETTING{_cmdExtension}={tagslotIndex - _tagslotIndexOffset}");
+                    int slotIndex = tagslotIndex - _tagslotIndexOffset;
+                    SendCommandWithoutResult($"SETTING{_cmdExtension}={slotIndex}");
                     SendCommandWithoutResult($"CLEAR{_cmdExtension}");
 
                     // The firmware of RevE-rebooted will deal with proper init to defaults after CLEAR/CLEARALL command
@@ -584,11 +586,11 @@ namespace ChameleonMiniGUI
                         FindControls<ComboBox>(Controls, $"cb_ledgreen{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LEDGREEN{_cmdExtension}={a.Items[0]}"));
                         FindControls<ComboBox>(Controls, $"cb_ledred{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LEDRED{_cmdExtension}={a.Items[0]}"));
                     }
+                    RefreshSlot(slotIndex);
                 }
             }
 
             RestoreActiveSlot();
-            RefreshAllSlots();
 
             this.Cursor = Cursors.Default;
         }

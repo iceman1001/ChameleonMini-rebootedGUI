@@ -5,10 +5,10 @@
 # Excited news!
 A windows based GUI for the ChameleonMini device. It supports all the official RevG, RevE and the rebooted RevE firmware.
 
-## Windows GUI - click once deployment  v1.2.0.19
+## Windows GUI - click once deployment  v1.2.1.0
 For those who can't compile this project there is a click-once deployment installation located here.
 
-Release: [v1.2.0.19](http://www.icesql.se/download/ChameleonMiniGUI/publish.htm)
+Release: [v1.2.1.0](http://www.icesql.se/download/ChameleonMiniGUI/publish.htm)
 
 Read the [changelog](https://github.com/iceman1001/ChameleonMini-rebootedGUI/blob/master/CHANGELOG.md) for information of what is new. 
 
@@ -47,3 +47,4 @@ A list of those who contributed to this repo in order to make it work. The commu
 - @kgamecarter
 - @Vrumfondel
 - @neijpass (spanish translations)
+- @shinhub

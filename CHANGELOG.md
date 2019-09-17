@@ -5,39 +5,31 @@ This project uses the changelog in accordance with [keepchangelog](http://keepac
 ## [unreleased][unreleased]
 
 ## [1.2.1.0] - 2019-09-17
-## Added
 - extended timeouts (@shinhub)
 - 4k allowed on all slots (@shinhub)
 - remember old UID when swapping sizes (@shinhub)
 
 ## [1.2.0.19] - 2019-03-12
-## Added
 - added scrollbars / resizeing of gui possible (@bogito)
 
 ## [1.2.0.18] - 2019-03-11
-## Added
 - moved legend to font
 
 ## [1.2.0.17] - 2019-03-11
-## Added
 - support for RevE firmware with or without MY-extensions. (@bogito)
 - ultralight/ntag download dump now should not add extra empty header every time. (@iceman)
 
 ## [1.2.0.13] - 2019-02-22
-## Added
 - selected language in combobox (@iceman)
 
 ## [1.2.0.10] - 2019-02-22
-## Added
 - Spanish translations (@neijpass)
 - Tablelayout adaptive regarding device (@bogito)
 
 ## [1.2.0.9] - 2019-02-01
-## Added
 - German translations (@vrumfondel)
 
 ## [1.2.0.8] - 2018-12-17
-## Added 
 - General stability bug fixes
 - New iClass dark template (@iceman)
 - Bugfix - mf_detection (@kgamecarter)
@@ -53,7 +45,6 @@ This project uses the changelog in accordance with [keepchangelog](http://keepac
 - Dark themed templates (@hiwanz)
 
 ## [1.1.0.0] - 2018-xx-xx
-## Added
 - Memory dump color templates (@iceman)
 - Multilanguage support (@iceman)
   (english, chinese, dutch, french, german, greek, italian, swedish)
@@ -61,7 +52,6 @@ This project uses the changelog in accordance with [keepchangelog](http://keepac
 - Serial interface tab, (@iceman) 
 
 ## [1.0.0.8] - 2018-03-16
-### Added
 - bindiff comparision (@bogition)
 - load / save of dumpfiles (@bogition)
 

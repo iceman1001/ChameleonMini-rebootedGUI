@@ -4,6 +4,12 @@ This project uses the changelog in accordance with [keepchangelog](http://keepac
 
 ## [unreleased][unreleased]
 
+## [1.2.1.0] - 2019-09-17
+## Added
+- extended timeouts (@shinhub)
+- 4k allowed on all slots (@shinhub)
+- remember old UID when swapping sizes (@shinhub)
+
 ## [1.2.0.19] - 2019-03-12
 ## Added
 - added scrollbars / resizeing of gui possible (@bogito)

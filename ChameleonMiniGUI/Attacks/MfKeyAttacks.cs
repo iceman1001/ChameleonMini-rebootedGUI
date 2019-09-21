@@ -27,6 +27,8 @@ namespace ChameleonMiniGUI
         public byte Block;
         public byte KeyType;
         public bool Found;
+        public const UInt32 DoNotDecryptCanary = 0xDE7EC710;
+        public const int DoNotDecryptCanaryOffset = 8;
     }
 
     /*
@@ -123,9 +125,12 @@ namespace ChameleonMiniGUI
             if (bytes == null || !bytes.Any())
                 return $"No data found on device{Environment.NewLine}";
 
-           
-            // Decrypt data,  with key 123321,  length 208
-            DecryptData(bytes, 123321, 208);
+            UInt32 canary = ToUInt32(bytes, MyKey.DoNotDecryptCanaryOffset);
+            if (canary != MyKey.DoNotDecryptCanary)
+            {
+                // Decrypt data,  with key 123321,  length 208
+                DecryptData(bytes, 123321, 208);
+            }
 
             // validate CRC is ok.  (length 210,  since two last bytes is crc)
             if (!Crc.CheckCrc14443(Crc.CRC16_14443_A, bytes, 210))

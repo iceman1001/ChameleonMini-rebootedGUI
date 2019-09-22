@@ -27,18 +27,21 @@ namespace ChameleonMiniGUI
         public byte Block;
         public byte KeyType;
         public bool Found;
+        public const UInt64 DoNotDecryptCanary = 0x5245564556312E34;
+        public const int DoNotDecryptCanaryOffset = 8;
+        public const int DoNotDecryptCanarySize = 8;
     }
 
     /*
      * Downloaded data from device should be 208 byte plus 2 for CRC. (210)
-     *  4 bytes uid, 
+     *  4 bytes uid,
      *  12 empty bytes
      *  192 bytes of collected nonce
      * Layout like this::
-     * 
+     *
      *  byte 0 - 3 == UID
      *  byte 4 - 15 == empty
-     *  --repeating 16 bytes 
+     *  --repeating 16 bytes
      *  byte 16  == keytype A/B
      *  byte 17  == sector
      *  byte 20 - 23 == NT
@@ -50,9 +53,9 @@ namespace ChameleonMiniGUI
      *  byte 36 - 39 == NT
      *  byte 40 - 43 == NR
      *  byte 44 - 47 == AR
-     *  
+     *
      *  In order to run mfkey32mobieus attack, you need two authentication tries against same sector and keytype (A/B).
-     *  
+     *
      */
 
 
@@ -117,15 +120,27 @@ namespace ChameleonMiniGUI
             return BitConverter.ToUInt32(data, offset);
         }
 
+        private static UInt64 ToUInt64(byte[] data, int offset)
+        {
+            if (BitConverter.IsLittleEndian)
+            {
+                return BitConverter.ToUInt64(data.Skip(offset).Take(8).Reverse().ToArray(), 0);
+            }
+            return BitConverter.ToUInt64(data, offset);
+        }
+
         public static string Attack(byte[] bytes)
         {
             var show_all = "";
             if (bytes == null || !bytes.Any())
                 return $"No data found on device{Environment.NewLine}";
 
-           
-            // Decrypt data,  with key 123321,  length 208
-            DecryptData(bytes, 123321, 208);
+            UInt64 canary = ToUInt64(bytes, MyKey.DoNotDecryptCanaryOffset);
+            if (canary != MyKey.DoNotDecryptCanary)
+            {
+                // Decrypt data,  with key 123321,  length 208
+                DecryptData(bytes, 123321, 208);
+            }
 
             // validate CRC is ok.  (length 210,  since two last bytes is crc)
             if (!Crc.CheckCrc14443(Crc.CRC16_14443_A, bytes, 210))
@@ -134,7 +149,7 @@ namespace ChameleonMiniGUI
             /*
             * Data layout
             * first 16byte is Sector0, Block0
-            * 
+            *
             * then comes items of 16bytes length
             *   0           auth cmd  (0x60 or 0x61)
                 1           blocknumber  (0 - 0x7F)
@@ -155,7 +170,7 @@ namespace ChameleonMiniGUI
                 {
                     UID = uid,
                     KeyType = bytes[(i + 1) * 16],
-                    Block = bytes[(i + 1) * 16 + 1],                   
+                    Block = bytes[(i + 1) * 16 + 1],
                     nt0 = ToUInt32(bytes, (i + 1) * 16 + 4),
                     nr0 = ToUInt32(bytes, (i + 1) * 16 + 8),
                     ar0 = ToUInt32(bytes, (i + 1) * 16 + 12)
@@ -180,7 +195,7 @@ namespace ChameleonMiniGUI
             // 32 first sectors has 4blocks
             if (block < 128)
                 return  (byte)(block/4);
-            
+
             // above 32, they have 16blocks
             return (byte)(32 + (block - 128)/16);
         }

@@ -8,6 +8,7 @@ This project uses the changelog in accordance with [keepchangelog](http://keepac
 - extended timeouts (@shinhub)
 - 4k allowed on all slots (@shinhub)
 - remember old UID when swapping sizes (@shinhub)
+- fix mfkey32 (@shinhub)
 
 ## [1.2.0.19] - 2019-03-12
 - added scrollbars / resizeing of gui possible (@bogito)

@@ -308,7 +308,7 @@ namespace ChameleonMiniGUI
                 var txtUid = FindControls<TextBox>(Controls, $"txt_uid{tagslotIndex}").FirstOrDefault();
                 if (txtUid != null)
                 {
-                    string oldUid = SendCommand($"UID{_cmdExtension}?").ToString();
+                    string fwSetUid = SendCommand($"UID{_cmdExtension}?").ToString();
                     string uid = txtUid.Text;
                     uint uidSize = uint.Parse(SendCommand($"UIDSIZE{_cmdExtension}?").ToString());
                     // Sets UID if valid only
@@ -316,8 +316,12 @@ namespace ChameleonMiniGUI
                     {
                         if(!SendCommand($"UID{_cmdExtension}={uid}").ToString().StartsWith("101"))
                         {
-                            txtUid.Text = oldUid;
+                            txtUid.Text = fwSetUid;
                         }
+                    }
+                    else 
+                    {
+                        txtUid.Text = fwSetUid;
                     }
                 }
 
@@ -327,8 +331,6 @@ namespace ChameleonMiniGUI
                 {
                     FindControls<TextBox>(Controls, $"txt_size{tagslotIndex}").ForEach(a => a.Text = slotMemSize);
                 }
-
-                RefreshSlot(tagslotIndex);
             }
             RestoreActiveSlot();
 
@@ -582,7 +584,7 @@ namespace ChameleonMiniGUI
                         FindControls<ComboBox>(Controls, $"cb_ledgreen{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LEDGREEN{_cmdExtension}={a.Items[0]}"));
                         FindControls<ComboBox>(Controls, $"cb_ledred{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LEDRED{_cmdExtension}={a.Items[0]}"));
                     }
-                    RefreshSlot(slotIndex);
+                    RefreshSlot(tagslotIndex);
                 }
             }
 

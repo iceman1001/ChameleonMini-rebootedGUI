@@ -1434,7 +1434,7 @@ namespace ChameleonMiniGUI
             }
             catch (Exception ex)
             {
-                var msg = $"{Environment.NewLine}[!] {ex.Message}{Environment.NewLine}";
+                var msg = $"{Environment.NewLine}[!] {cmdText}: {ex.Message}{Environment.NewLine}";
                 txt_output.Text += msg;
                 return false;
             }
@@ -1478,7 +1478,7 @@ namespace ChameleonMiniGUI
                     }
                     catch(TimeoutException ex)
                     {
-                        var msg = $"{Environment.NewLine}[!] {ex.Message}{Environment.NewLine}";
+                        var msg = $"{Environment.NewLine}[!] {cmdText}: {ex.Message}{Environment.NewLine}";
                         txt_output.Text += msg;
                     }
                     

@@ -1461,14 +1461,24 @@ namespace ChameleonMiniGUI
                 }
                 else
                 {
-                    var read_response = string.Empty;
-                    var start = DateTime.Now;
+                    string read_response = string.Empty;
+                    string read_response_line = string.Empty;
 
-                    while (((read_response == "") || (read_response == null)) && (DateTime.Now.Subtract(start).TotalMilliseconds < 1000))
+                    try
                     {
-                        read_response = _comport.ReadLine();
-                        read_response = read_response.Replace("101:OK WITH TEXT", "").Replace("100:OK", "").Replace("\r", "");
+                        while (string.IsNullOrEmpty(read_response))
+                        {
+                            read_response_line = _comport.ReadLine();
+                            read_response_line = read_response_line.Replace("101:OK WITH TEXT", "").Replace("100:OK", "").Replace("\r", "");
+                            read_response += read_response_line;
+                        }
                     }
+                    catch(TimeoutException ex)
+                    {
+                        var msg = $"{Environment.NewLine}[!] {ex.Message}{Environment.NewLine}";
+                        txt_output.Text += msg;
+                    }
+                    
                     return read_response;
                 }
             }

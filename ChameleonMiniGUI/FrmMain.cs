@@ -414,7 +414,7 @@ namespace ChameleonMiniGUI
                     UploadDump(dumpFilename);
 
                     // Refresh slot
-                    RefreshSlot(tagslotIndex);
+                    RefreshSlot(tagslotIndex, false);
                 }
 
                 break; // We can only upload a single dump at a time
@@ -542,7 +542,6 @@ namespace ChameleonMiniGUI
         private void btn_clear_Click(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;
-            SaveActiveSlot();
 
             // Get all selected checkboxes
             List<CheckBox> selectedCheckBoxes = new List<CheckBox>();
@@ -564,6 +563,7 @@ namespace ChameleonMiniGUI
             // Else we clear all selected slots one by one
             else
             {
+                SaveActiveSlot();
                 foreach (var cb in selectedCheckBoxes)
                 {
                     var tagslotIndex = int.Parse(cb.Name.Substring(cb.Name.Length - 1));
@@ -585,11 +585,10 @@ namespace ChameleonMiniGUI
                         FindControls<ComboBox>(Controls, $"cb_ledgreen{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LEDGREEN{_cmdExtension}={a.Items[0]}"));
                         FindControls<ComboBox>(Controls, $"cb_ledred{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LEDRED{_cmdExtension}={a.Items[0]}"));
                     }
-                    RefreshSlot(tagslotIndex);
+                    RefreshSlot(tagslotIndex, false);
                 }
+                RestoreActiveSlot();
             }
-
-            RestoreActiveSlot();
 
             this.Cursor = Cursors.Default;
         }
@@ -1608,15 +1607,17 @@ namespace ChameleonMiniGUI
 
         private void RefreshAllSlots()
         {
+            SaveActiveSlot();
             for (int i = 1; i < 9; i++)
             {
-                RefreshSlot(i);
+                RefreshSlot(i, false);
             }
+            RestoreActiveSlot();
         }
 
-        private void RefreshSlot(int slotIndex)
+        private void RefreshSlot(int slotIndex, bool doSaveActive = true)
         {
-            SaveActiveSlot();
+            if(doSaveActive) SaveActiveSlot();
 
             //SETTINGMY=i
             SendCommandWithoutResult($"SETTING{_cmdExtension}={slotIndex - _tagslotIndexOffset}");
@@ -1731,7 +1732,7 @@ namespace ChameleonMiniGUI
                     break;
                 }
             }
-            RestoreActiveSlot();
+            if(doSaveActive) RestoreActiveSlot();
         }
 
         private bool IsLButtonModeValid(string s)

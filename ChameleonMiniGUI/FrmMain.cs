@@ -314,7 +314,7 @@ namespace ChameleonMiniGUI
                     // Sets UID if valid only
                     if (!string.IsNullOrEmpty(uid) && !string.IsNullOrEmpty(selectedMode) && IsUidValid(uid, uidSize, selectedMode))
                     {
-                        if(!SendCommand($"UID{_cmdExtension}={uid}").ToString().StartsWith("101"))
+                        if (SendCommand($"UID{_cmdExtension}={uid}").ToString() != "")
                         {
                             txtUid.Text = fwSetUid;
                         }

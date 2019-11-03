@@ -319,7 +319,7 @@ namespace ChameleonMiniGUI
                     // Sets UID if valid only
                     if (IsUidValid(uid, uidSize, selectedMode))
                     {
-                        SendCommand($"UID{_cmdExtension}={uid}");
+                        SendCommandWithoutResult($"UID{_cmdExtension}={uid}");
                     }
                     txtUid.Text = SendCommand($"UID{_cmdExtension}?").ToString();
                 }
@@ -1414,21 +1414,31 @@ namespace ChameleonMiniGUI
             txt_output.Text += $"Didn't find any Chameleon Mini device connected{Environment.NewLine}";
         }
 
-        private void SendCommandWithoutResult(string cmdText)
+        private bool SendCommandWithoutResult(string cmdText)
         {
-            if (!SendCommandPossible(cmdText)) return;
-
+            if (!SendCommandPossible(cmdText)) return false;
             try
             {
+                _comport.DiscardInBuffer();
+                _comport.DiscardOutBuffer();
                 var tx_data = Encoding.ASCII.GetBytes(cmdText);
                 _comport.Write(tx_data, 0, tx_data.Length);
                 _comport.Write("\r\n");
+                // Catch the return code
+                string retCode = _comport.ReadLine();
+                // If we get an error
+                if( !retCode.StartsWith("1") )
+                {
+                    throw new Exception(cmdText + "returned: " + retCode.Replace("\r", ""));
+                }
             }
             catch (Exception ex)
             {
                 var msg = $"{Environment.NewLine}[!] {ex.Message}{Environment.NewLine}";
                 txt_output.Text += msg;
+                return false;
             }
+            return true;
         }
 
         private object SendCommand(string cmdText)
@@ -1437,9 +1447,8 @@ namespace ChameleonMiniGUI
 
             try
             {
-                _comport.DiscardInBuffer();
-                // send command
-                SendCommandWithoutResult(cmdText);
+                // send command and catch return code
+                if (!SendCommandWithoutResult(cmdText)) return string.Empty;
 
                 if (cmdText.Contains($"DETECTION{_cmdExtension}?"))
                 {
@@ -1458,16 +1467,13 @@ namespace ChameleonMiniGUI
                 }
                 else
                 {
-                    string read_response = string.Empty;
                     string read_response_line = string.Empty;
 
                     try
                     {
-                        while (string.IsNullOrEmpty(read_response))
+                        while (string.IsNullOrEmpty(read_response_line))
                         {
                             read_response_line = _comport.ReadLine();
-                            read_response_line = read_response_line.Replace("101:OK WITH TEXT", "").Replace("100:OK", "").Replace("\r", "");
-                            read_response += read_response_line;
                         }
                     }
                     catch(TimeoutException ex)
@@ -1476,7 +1482,7 @@ namespace ChameleonMiniGUI
                         txt_output.Text += msg;
                     }
                     
-                    return read_response;
+                    return read_response_line.Replace("\r", "");
                 }
             }
             catch (Exception)
@@ -1492,7 +1498,6 @@ namespace ChameleonMiniGUI
             var full_response = string.Empty;
             try
             {
-                _comport.DiscardInBuffer();
                 // send command
                 SendCommandWithoutResult(cmdText);
                 var read_response = string.Empty;
@@ -2063,9 +2068,6 @@ namespace ChameleonMiniGUI
 
             SendCommandWithoutResult($"UPLOAD{_cmdExtension}");
 
-            // For the "110:WAITING FOR XMODEM" text
-            _comport.ReadLine();
-
             var bytes = dump.Data.Concat(dump.Extra).ToArray();
             int numBytesSuccessfullySent = xmodem.Send(bytes);
 
@@ -2145,9 +2147,6 @@ namespace ChameleonMiniGUI
 
             // Then send the download command
             SendCommandWithoutResult($"DOWNLOAD{_cmdExtension}");
-
-            // For the "110:WAITING FOR XMODEM" text
-            _comport.ReadLine();
 
             var bytes = ReceiveXModemData();
             if (bytes != null)

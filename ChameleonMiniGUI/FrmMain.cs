@@ -277,12 +277,17 @@ namespace ChameleonMiniGUI
 
                 SendCommandWithoutResult($"SETTING{_cmdExtension}=" + (tagslotIndex - _tagslotIndexOffset));
 
-                var selectedMode = string.Empty;
+                string selectedMode = string.Empty;
                 var mode = FindControls<ComboBox>(Controls, $"cb_mode{tagslotIndex}").FirstOrDefault();
                 if (mode != null)
                 {
-                    SendCommandWithoutResult($"CONFIG{_cmdExtension}={mode.SelectedItem}");
+                    string actualMode = SendCommand($"CONFIG{_cmdExtension}?").ToString();
                     selectedMode = mode.SelectedItem.ToString();
+                    if (actualMode != selectedMode)
+                    {
+                        SendCommandWithoutResult($"CONFIG{_cmdExtension}={mode.SelectedItem}");
+                    }
+                    
                 }
 
                 switch (_CurrentDevType)
@@ -309,21 +314,14 @@ namespace ChameleonMiniGUI
                 var txtUid = FindControls<TextBox>(Controls, $"txt_uid{tagslotIndex}").FirstOrDefault();
                 if (txtUid != null)
                 {
-                    string fwSetUid = SendCommand($"UID{_cmdExtension}?").ToString();
                     string uid = txtUid.Text;
                     uint uidSize = uint.Parse(SendCommand($"UIDSIZE{_cmdExtension}?").ToString());
                     // Sets UID if valid only
-                    if (!string.IsNullOrEmpty(uid) && !string.IsNullOrEmpty(selectedMode) && IsUidValid(uid, uidSize, selectedMode))
+                    if (IsUidValid(uid, uidSize, selectedMode))
                     {
-                        if (SendCommand($"UID{_cmdExtension}={uid}").ToString() != "")
-                        {
-                            txtUid.Text = fwSetUid;
-                        }
+                        SendCommand($"UID{_cmdExtension}={uid}");
                     }
-                    else 
-                    {
-                        txtUid.Text = fwSetUid;
-                    }
+                    txtUid.Text = SendCommand($"UID{_cmdExtension}?").ToString();
                 }
 
                 // Set MEMSIZE
@@ -1599,10 +1597,10 @@ namespace ChameleonMiniGUI
 
         private bool IsUidValid(string uid, uint uidSize, string selectedMode)
         {
-            if (!Regex.IsMatch(uid, @"\A\b[0-9a-fA-F]+\b\Z")) return false;
-            if (uid.Length != uidSize*2) return false;
-
-            return true;
+            return (!string.IsNullOrEmpty(uid)) 
+                && (!string.IsNullOrEmpty(selectedMode)) 
+                && (Regex.IsMatch(uid, @"\A\b[0-9a-fA-F]+\b\Z"))
+                && (uid.Length == uidSize*2);
         }
 
         private void RefreshAllSlots()

@@ -277,12 +277,17 @@ namespace ChameleonMiniGUI
 
                 SendCommandWithoutResult($"SETTING{_cmdExtension}=" + (tagslotIndex - _tagslotIndexOffset));
 
-                var selectedMode = string.Empty;
+                string selectedMode = string.Empty;
                 var mode = FindControls<ComboBox>(Controls, $"cb_mode{tagslotIndex}").FirstOrDefault();
                 if (mode != null)
                 {
-                    SendCommandWithoutResult($"CONFIG{_cmdExtension}={mode.SelectedItem}");
+                    string actualMode = SendCommand($"CONFIG{_cmdExtension}?").ToString();
                     selectedMode = mode.SelectedItem.ToString();
+                    if (actualMode != selectedMode)
+                    {
+                        SendCommandWithoutResult($"CONFIG{_cmdExtension}={mode.SelectedItem}");
+                    }
+                    
                 }
 
                 switch (_CurrentDevType)
@@ -309,21 +314,14 @@ namespace ChameleonMiniGUI
                 var txtUid = FindControls<TextBox>(Controls, $"txt_uid{tagslotIndex}").FirstOrDefault();
                 if (txtUid != null)
                 {
-                    string fwSetUid = SendCommand($"UID{_cmdExtension}?").ToString();
                     string uid = txtUid.Text;
                     uint uidSize = uint.Parse(SendCommand($"UIDSIZE{_cmdExtension}?").ToString());
                     // Sets UID if valid only
-                    if (!string.IsNullOrEmpty(uid) && !string.IsNullOrEmpty(selectedMode) && IsUidValid(uid, uidSize, selectedMode))
+                    if (IsUidValid(uid, uidSize, selectedMode))
                     {
-                        if (SendCommand($"UID{_cmdExtension}={uid}").ToString() != "")
-                        {
-                            txtUid.Text = fwSetUid;
-                        }
+                        SendCommandWithoutResult($"UID{_cmdExtension}={uid}");
                     }
-                    else 
-                    {
-                        txtUid.Text = fwSetUid;
-                    }
+                    txtUid.Text = SendCommand($"UID{_cmdExtension}?").ToString();
                 }
 
                 // Set MEMSIZE
@@ -414,7 +412,7 @@ namespace ChameleonMiniGUI
                     UploadDump(dumpFilename);
 
                     // Refresh slot
-                    RefreshSlot(tagslotIndex);
+                    RefreshSlot(tagslotIndex, false);
                 }
 
                 break; // We can only upload a single dump at a time
@@ -542,7 +540,6 @@ namespace ChameleonMiniGUI
         private void btn_clear_Click(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;
-            SaveActiveSlot();
 
             // Get all selected checkboxes
             List<CheckBox> selectedCheckBoxes = new List<CheckBox>();
@@ -564,6 +561,7 @@ namespace ChameleonMiniGUI
             // Else we clear all selected slots one by one
             else
             {
+                SaveActiveSlot();
                 foreach (var cb in selectedCheckBoxes)
                 {
                     var tagslotIndex = int.Parse(cb.Name.Substring(cb.Name.Length - 1));
@@ -585,11 +583,10 @@ namespace ChameleonMiniGUI
                         FindControls<ComboBox>(Controls, $"cb_ledgreen{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LEDGREEN{_cmdExtension}={a.Items[0]}"));
                         FindControls<ComboBox>(Controls, $"cb_ledred{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LEDRED{_cmdExtension}={a.Items[0]}"));
                     }
-                    RefreshSlot(tagslotIndex);
+                    RefreshSlot(tagslotIndex, false);
                 }
+                RestoreActiveSlot();
             }
-
-            RestoreActiveSlot();
 
             this.Cursor = Cursors.Default;
         }
@@ -1417,21 +1414,31 @@ namespace ChameleonMiniGUI
             txt_output.Text += $"Didn't find any Chameleon Mini device connected{Environment.NewLine}";
         }
 
-        private void SendCommandWithoutResult(string cmdText)
+        private bool SendCommandWithoutResult(string cmdText)
         {
-            if (!SendCommandPossible(cmdText)) return;
-
+            if (!SendCommandPossible(cmdText)) return false;
             try
             {
+                _comport.DiscardInBuffer();
+                _comport.DiscardOutBuffer();
                 var tx_data = Encoding.ASCII.GetBytes(cmdText);
                 _comport.Write(tx_data, 0, tx_data.Length);
                 _comport.Write("\r\n");
+                // Catch the return code
+                string retCode = _comport.ReadLine();
+                // If we get an error
+                if( !retCode.StartsWith("1") )
+                {
+                    throw new Exception(cmdText + "returned: " + retCode.Replace("\r", ""));
+                }
             }
             catch (Exception ex)
             {
                 var msg = $"{Environment.NewLine}[!] {ex.Message}{Environment.NewLine}";
                 txt_output.Text += msg;
+                return false;
             }
+            return true;
         }
 
         private object SendCommand(string cmdText)
@@ -1440,9 +1447,8 @@ namespace ChameleonMiniGUI
 
             try
             {
-                _comport.DiscardInBuffer();
-                // send command
-                SendCommandWithoutResult(cmdText);
+                // send command and catch return code
+                if (!SendCommandWithoutResult(cmdText)) return string.Empty;
 
                 if (cmdText.Contains($"DETECTION{_cmdExtension}?"))
                 {
@@ -1461,15 +1467,22 @@ namespace ChameleonMiniGUI
                 }
                 else
                 {
-                    var read_response = string.Empty;
-                    var start = DateTime.Now;
+                    string read_response_line = string.Empty;
 
-                    while (((read_response == "") || (read_response == null)) && (DateTime.Now.Subtract(start).TotalMilliseconds < 1000))
+                    try
                     {
-                        read_response = _comport.ReadLine();
-                        read_response = read_response.Replace("101:OK WITH TEXT", "").Replace("100:OK", "").Replace("\r", "");
+                        while (string.IsNullOrEmpty(read_response_line))
+                        {
+                            read_response_line = _comport.ReadLine();
+                        }
                     }
-                    return read_response;
+                    catch(TimeoutException ex)
+                    {
+                        var msg = $"{Environment.NewLine}[!] {ex.Message}{Environment.NewLine}";
+                        txt_output.Text += msg;
+                    }
+                    
+                    return read_response_line.Replace("\r", "");
                 }
             }
             catch (Exception)
@@ -1485,7 +1498,6 @@ namespace ChameleonMiniGUI
             var full_response = string.Empty;
             try
             {
-                _comport.DiscardInBuffer();
                 // send command
                 SendCommandWithoutResult(cmdText);
                 var read_response = string.Empty;
@@ -1590,23 +1602,25 @@ namespace ChameleonMiniGUI
 
         private bool IsUidValid(string uid, uint uidSize, string selectedMode)
         {
-            if (!Regex.IsMatch(uid, @"\A\b[0-9a-fA-F]+\b\Z")) return false;
-            if (uid.Length != uidSize*2) return false;
-
-            return true;
+            return (!string.IsNullOrEmpty(uid)) 
+                && (!string.IsNullOrEmpty(selectedMode)) 
+                && (Regex.IsMatch(uid, @"\A\b[0-9a-fA-F]+\b\Z"))
+                && (uid.Length == uidSize*2);
         }
 
         private void RefreshAllSlots()
         {
+            SaveActiveSlot();
             for (int i = 1; i < 9; i++)
             {
-                RefreshSlot(i);
+                RefreshSlot(i, false);
             }
+            RestoreActiveSlot();
         }
 
-        private void RefreshSlot(int slotIndex)
+        private void RefreshSlot(int slotIndex, bool doSaveActive = true)
         {
-            SaveActiveSlot();
+            if(doSaveActive) SaveActiveSlot();
 
             //SETTINGMY=i
             SendCommandWithoutResult($"SETTING{_cmdExtension}={slotIndex - _tagslotIndexOffset}");
@@ -1721,7 +1735,7 @@ namespace ChameleonMiniGUI
                     break;
                 }
             }
-            RestoreActiveSlot();
+            if(doSaveActive) RestoreActiveSlot();
         }
 
         private bool IsLButtonModeValid(string s)
@@ -2054,9 +2068,6 @@ namespace ChameleonMiniGUI
 
             SendCommandWithoutResult($"UPLOAD{_cmdExtension}");
 
-            // For the "110:WAITING FOR XMODEM" text
-            _comport.ReadLine();
-
             var bytes = dump.Data.Concat(dump.Extra).ToArray();
             int numBytesSuccessfullySent = xmodem.Send(bytes);
 
@@ -2136,9 +2147,6 @@ namespace ChameleonMiniGUI
 
             // Then send the download command
             SendCommandWithoutResult($"DOWNLOAD{_cmdExtension}");
-
-            // For the "110:WAITING FOR XMODEM" text
-            _comport.ReadLine();
 
             var bytes = ReceiveXModemData();
             if (bytes != null)

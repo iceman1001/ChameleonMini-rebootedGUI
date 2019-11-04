@@ -1432,12 +1432,14 @@ namespace ChameleonMiniGUI
                 var tx_data = Encoding.ASCII.GetBytes(cmdText);
                 _comport.Write(tx_data, 0, tx_data.Length);
                 _comport.Write("\r\n");
-                // Catch the return code
-                string retCode = _comport.ReadLine();
-                // If we get an error
-                if( !retCode.StartsWith("1") )
+                if (!cmdText.StartsWith($"DETECTION{_cmdExtension}?"))
                 {
-                    throw new Exception(cmdText + "returned: " + retCode.Replace("\r", ""));
+                    string retCode = _comport.ReadLine();
+                    // If we get an error
+                    if (!retCode.StartsWith("1"))
+                    {
+                        throw new Exception(cmdText + "returned: " + retCode.Replace("\r", ""));
+                    }
                 }
             }
             catch (Exception ex)
@@ -1478,7 +1480,7 @@ namespace ChameleonMiniGUI
                     if (read_count <= 0) return string.Empty;
 
                     var foo = new byte[read_count];
-                    Array.Copy(rx_data, 8, foo, 0, read_count - 7);
+                    Array.Copy(rx_data, 0, foo, 0, read_count);
                     return foo;
                 }
                 else

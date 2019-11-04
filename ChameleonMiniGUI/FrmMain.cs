@@ -47,7 +47,8 @@ namespace ChameleonMiniGUI
         private const int REVGDefaultComboWidth = 80;
         private const int REVEDefaultComboWidth = 175;
         private const int SerialRTimeoutMs = 4000;
-        private const int SerialWTimeoutMs = 10000;
+        private const int SerialWTimeoutMs = 6000;
+        private const int SerialRWTimeoutExtendedMs = 12000;
 
         private bool lockFlag = false;
         private DeviceType _CurrentDevType = DeviceType.RevG;
@@ -1417,8 +1418,15 @@ namespace ChameleonMiniGUI
         private bool SendCommandWithoutResult(string cmdText)
         {
             if (!SendCommandPossible(cmdText)) return false;
+            bool isExtendedTimeout = false;
             try
             {
+                if(cmdText.StartsWith("CLEAR"))
+                {
+                    isExtendedTimeout = true;
+                    _comport.ReadTimeout = SerialRWTimeoutExtendedMs;
+                    _comport.WriteTimeout = SerialRWTimeoutExtendedMs;
+                }
                 _comport.DiscardInBuffer();
                 _comport.DiscardOutBuffer();
                 var tx_data = Encoding.ASCII.GetBytes(cmdText);
@@ -1434,9 +1442,17 @@ namespace ChameleonMiniGUI
             }
             catch (Exception ex)
             {
-                var msg = $"{Environment.NewLine}[!] {ex.Message}{Environment.NewLine}";
+                var msg = $"{Environment.NewLine}[!] {cmdText}: {ex.Message}{Environment.NewLine}";
                 txt_output.Text += msg;
                 return false;
+            }
+            finally
+            {
+                if (isExtendedTimeout)
+                {
+                    _comport.ReadTimeout = SerialRTimeoutMs;
+                    _comport.WriteTimeout = SerialWTimeoutMs;
+                }
             }
             return true;
         }
@@ -1478,7 +1494,7 @@ namespace ChameleonMiniGUI
                     }
                     catch(TimeoutException ex)
                     {
-                        var msg = $"{Environment.NewLine}[!] {ex.Message}{Environment.NewLine}";
+                        var msg = $"{Environment.NewLine}[!] {cmdText}: {ex.Message}{Environment.NewLine}";
                         txt_output.Text += msg;
                     }
                     

@@ -2,12 +2,12 @@
 All notable changes to this project will be documented in this file.
 This project uses the changelog in accordance with [keepchangelog](http://keepachangelog.com/). Please use this to write notable changes, which is not the same as git commit log...
 
-## [1.2.1.3] - 2019-11-05
-- fixed various serial commands bugs and delays (@shinhub)
-- adapted UID behavior so they are read back from memory when what is set in GUI is invalid (@shinhub)
-- more fixes to mfkey32 (@shinhub)
-
 ## [unreleased]
+
+## [1.2.1.3] - 2019-11-05
+- Fixed various serial commands bugs and delays (@shinhub)
+- Fixed mfkey32 data reception from current firmware (@shinhub)
+- Changed UID behavior so they are read back from memory when what is set in GUI is invalid (@shinhub)
 
 ## [1.2.1.0] - 2019-09-17
 - extended timeouts (@shinhub)

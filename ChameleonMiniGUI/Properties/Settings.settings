@@ -15,7 +15,7 @@
       <Value Profile="(Default)">English</Value>
     </Setting>
     <Setting Name="version" Type="System.String" Scope="User">
-      <Value Profile="(Default)">v1.2.1.1</Value>
+      <Value Profile="(Default)">v1.2.1.3</Value>
     </Setting>
   </Settings>
 </SettingsFile>

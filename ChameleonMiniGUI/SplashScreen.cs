@@ -16,6 +16,8 @@ namespace ChameleonMiniGUI
         public SplashScreen()
         {
             InitializeComponent();
+            label1.Parent = pictureBox1;
+            label1.Text = Properties.Settings.Default.version;
         }
         //Delegate for cross thread call to close
         private delegate void CloseDelegate();

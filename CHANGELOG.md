@@ -4,6 +4,9 @@ This project uses the changelog in accordance with [keepchangelog](http://keepac
 
 ## [unreleased]
 
+## [1.2.1.4] - 2019-11-11
+- New logo and icons  (@grspy)
+
 ## [1.2.1.3] - 2019-11-05
 - Fixed various serial commands bugs and delays (@shinhub)
 - Fixed mfkey32 data reception from current firmware (@shinhub)

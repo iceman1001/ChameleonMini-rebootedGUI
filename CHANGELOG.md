@@ -17,6 +17,9 @@ This project uses the changelog in accordance with [keepchangelog](http://keepac
 - 4k allowed on all slots (@shinhub)
 - remember old UID when swapping sizes (@shinhub)
 - fix mfkey32 (@shinhub)
+- Support new NTAG/Ev dumo format (@mceloff)
+- 7byte uid identification from dump (@mceloff)
+- Fixed application crash (@uspilot)
 
 ## [1.2.0.19] - 2019-03-12
 - added scrollbars / resizeing of gui possible (@bogito)

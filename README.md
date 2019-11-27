@@ -41,6 +41,8 @@ A list of those who contributed to this repo in order to make it work. The commu
 - @Vrumfondel
 - @neijpass (spanish translations)
 - @shinhub
+- @mceloff
+- @uspilot
 - @grspy
 
 

@@ -2,8 +2,7 @@
 [![Build Status](https://travis-ci.org/iceman1001/ChameleonMini-rebootedGUI.svg?branch=master)](https://travis-ci.org/iceman1001/ChameleonMini-rebootedGUI)
 [![Latest release](https://img.shields.io/github/release/iceman1001/ChameleonMini-rebootedGUI.svg)](https://github.com/iceman1001/ChameleonMini-rebootedGUI/releases/latest)
 
-# Excited news!
-A windows based GUI for the ChameleonMini device. It supports all the official RevG, RevE and the rebooted RevE firmware.
+This is a windows based GUI for the ChameleonMini device. It supports all known chameleon mini firmware today. Its device agnostic.
 
 ## Windows GUI - click once deployment  v1.2.1.5
 For those who can't compile this project there is a click-once deployment installation located here.
@@ -51,3 +50,4 @@ A list of those who contributed to this repo in order to make it work. The commu
 - @Vrumfondel
 - @neijpass (spanish translations)
 - @shinhub
+- @grspy

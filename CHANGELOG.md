@@ -17,7 +17,7 @@ This project uses the changelog in accordance with [keepchangelog](http://keepac
 - 4k allowed on all slots (@shinhub)
 - remember old UID when swapping sizes (@shinhub)
 - fix mfkey32 (@shinhub)
-- Support new NTAG/Ev dumo format (@mceloff)
+- Support new NTAG/Ev dump format (@mceloff)
 - 7byte uid identification from dump (@mceloff)
 - Fixed application crash (@uspilot)
 

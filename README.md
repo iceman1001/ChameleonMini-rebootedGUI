@@ -4,19 +4,26 @@
 
 This is a windows based GUI for the ChameleonMini device. It supports all known chameleon mini firmware today. Its device agnostic.
 
-## Click once deployment v1.2.1.5
-For those who can't compile this project there is a click-once deployment installation located here.
+## Binary distribution / windows installer
+For the sake of easiness or for those who can't compile this project there is a _click-once deployment_ installation located here.
 
 Release: [v1.2.1.5](http://www.icesql.se/download/ChameleonMiniGUI/publish.htm)
 
 Read the [changelog](https://github.com/iceman1001/ChameleonMini-rebootedGUI/blob/master/CHANGELOG.md) for information of what is new. 
 
-prerequisite
+__Prerequisite__
 * dot.net 4.6.2
 * Application needs full rights.
 
 ### About the clice once technology
 The application is being deployed with Click-Once technology, this means that the application phones home to see if there is an update available everytime you start it. If there is an update you get an choice to install or skip.  I do recommend that you update. If you think this is not good for your privacy,  feel free to block the application from reaching internet.  It should work but its untested.
+
+## Roadmap
+There isn't a roadmap for this software. Go in under _issues_ and see which ideas / known bugs there is.
+
+## Code Quality
+This project doesn't use any code quality service like _Coverity scan_  nor do we use a CI service like _Appveyor_.
+It would be nice if we did,  feel free to contribute!
 
 ## Screenshots
 ![chameleon1](https://user-images.githubusercontent.com/34060135/37828799-90af7bba-2e94-11e8-98d2-d832ddfd720d.jpg)

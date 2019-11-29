@@ -46,6 +46,9 @@ namespace ChameleonMiniGUI
 
         private const int REVGDefaultComboWidth = 80;
         private const int REVEDefaultComboWidth = 175;
+        private const int SerialRTimeoutMs = 4000;
+        private const int SerialWTimeoutMs = 6000;
+        private const int SerialRWTimeoutExtendedMs = 12000;
 
         private bool lockFlag = false;
         private DeviceType _CurrentDevType = DeviceType.RevG;
@@ -146,7 +149,7 @@ namespace ChameleonMiniGUI
             else
             {
                 // set the default value
-                // should be a setting aswell 
+                // should be a setting aswell
                 txt_interval.Text = "2000";
             }
 
@@ -275,12 +278,17 @@ namespace ChameleonMiniGUI
 
                 SendCommandWithoutResult($"SETTING{_cmdExtension}=" + (tagslotIndex - _tagslotIndexOffset));
 
-                var selectedMode = string.Empty;
+                string selectedMode = string.Empty;
                 var mode = FindControls<ComboBox>(Controls, $"cb_mode{tagslotIndex}").FirstOrDefault();
                 if (mode != null)
                 {
-                    SendCommandWithoutResult($"CONFIG{_cmdExtension}={mode.SelectedItem}");
+                    string actualMode = SendCommand($"CONFIG{_cmdExtension}?").ToString();
                     selectedMode = mode.SelectedItem.ToString();
+                    if (actualMode != selectedMode)
+                    {
+                        SendCommandWithoutResult($"CONFIG{_cmdExtension}={mode.SelectedItem}");
+                    }
+                    
                 }
 
                 switch (_CurrentDevType)
@@ -289,7 +297,7 @@ namespace ChameleonMiniGUI
                         {
                             FindControls<ComboBox>(Controls, $"cb_Lbutton{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LBUTTON{_cmdExtension}={a.SelectedItem}"));
                             FindControls<ComboBox>(Controls, $"cb_Lbuttonlong{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LBUTTON_LONG{_cmdExtension}={a.SelectedItem}"));
-                            FindControls<ComboBox>(Controls, $"cb_Rbutton{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"RBUTTON{_cmdExtension}={a.SelectedItem}"));                            
+                            FindControls<ComboBox>(Controls, $"cb_Rbutton{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"RBUTTON{_cmdExtension}={a.SelectedItem}"));
                             FindControls<ComboBox>(Controls, $"cb_Rbuttonlong{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"RBUTTON_LONG{_cmdExtension}={a.SelectedItem}"));
                             FindControls<ComboBox>(Controls, $"cb_ledgreen{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LEDGREEN{_cmdExtension}={a.SelectedItem}"));
                             FindControls<ComboBox>(Controls, $"cb_ledred{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LEDRED{_cmdExtension}={a.SelectedItem}"));
@@ -307,21 +315,14 @@ namespace ChameleonMiniGUI
                 var txtUid = FindControls<TextBox>(Controls, $"txt_uid{tagslotIndex}").FirstOrDefault();
                 if (txtUid != null)
                 {
-                    var uid = txtUid.Text;
-                    // always set UID,  either with user provided or random. Is that acceptable?
-                    if (!string.IsNullOrEmpty(uid) && !string.IsNullOrEmpty(selectedMode) && IsUidValid(uid, selectedMode))
+                    string uid = txtUid.Text;
+                    uint uidSize = uint.Parse(SendCommand($"UIDSIZE{_cmdExtension}?").ToString());
+                    // Sets UID if valid only
+                    if (IsUidValid(uid, uidSize, selectedMode))
                     {
                         SendCommandWithoutResult($"UID{_cmdExtension}={uid}");
                     }
-                    else
-                    {
-                        var tmpuid = "11223344";
-                        if (selectedMode.StartsWith("MF_ULTRALIGHT"))
-                        {
-                            tmpuid = "11223344556677";
-                        }
-                        SendCommandWithoutResult($"UID{_cmdExtension}={tmpuid}");
-                    }
+                    txtUid.Text = SendCommand($"UID{_cmdExtension}?").ToString();
                 }
 
                 // Set MEMSIZE
@@ -330,8 +331,6 @@ namespace ChameleonMiniGUI
                 {
                     FindControls<TextBox>(Controls, $"txt_size{tagslotIndex}").ForEach(a => a.Text = slotMemSize);
                 }
-
-                RefreshSlot(tagslotIndex);
             }
             RestoreActiveSlot();
 
@@ -414,7 +413,7 @@ namespace ChameleonMiniGUI
                     UploadDump(dumpFilename);
 
                     // Refresh slot
-                    RefreshSlot(tagslotIndex);
+                    RefreshSlot(tagslotIndex, false);
                 }
 
                 break; // We can only upload a single dump at a time
@@ -428,7 +427,7 @@ namespace ChameleonMiniGUI
         {
             this.Cursor = Cursors.WaitCursor;
             SaveActiveSlot();
-                
+
             var downloadPath = Application.StartupPath;
 
             // Try to use the default download path if exists
@@ -542,53 +541,53 @@ namespace ChameleonMiniGUI
         private void btn_clear_Click(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;
-            SaveActiveSlot();
 
-            // Get all selected indices
-            foreach (var cb in FindControls<CheckBox>(Controls, "checkBox"))
+            // Get all selected checkboxes
+            List<CheckBox> selectedCheckBoxes = new List<CheckBox>();
+            List<CheckBox> allSlotsCheckBoxes = FindControls<CheckBox>(Controls, "checkBox");
+            foreach (var cb in allSlotsCheckBoxes)
             {
-                if (!cb.Checked) continue;
-
-                var tagslotIndex = int.Parse(cb.Name.Substring(cb.Name.Length - 1));
-                if (tagslotIndex <= 0) continue;
-                
-                SendCommandWithoutResult($"SETTING{_cmdExtension}={tagslotIndex - _tagslotIndexOffset}");
-                SendCommandWithoutResult($"CLEAR{_cmdExtension}");
-
-                // Set every field to a default value
-                
-                FindControls<ComboBox>(Controls, $"cb_mode{tagslotIndex}").ForEach( a => SendCommandWithoutResult($"CONFIG{_cmdExtension}=CLOSED"));
-
-                switch (_CurrentDevType)
+                if(cb.Checked)
                 {
-                    case DeviceType.RevG:
+                    selectedCheckBoxes.Add(cb);
+                }
+            }
+
+            // RevE-rebooted has ability to "CLEARALL" at once so if all CheckBoxes are selected and CLEARALL available, we do
+            if ((_CurrentDevType == DeviceType.RevE) && (selectedCheckBoxes.Count == allSlotsCheckBoxes.Count) && AvailableCommands.Contains("CLEARALL"))
+            {
+                SendCommandWithoutResult($"CLEARALL");
+                RefreshAllSlots();
+            }
+            // Else we clear all selected slots one by one
+            else
+            {
+                SaveActiveSlot();
+                foreach (var cb in selectedCheckBoxes)
+                {
+                    var tagslotIndex = int.Parse(cb.Name.Substring(cb.Name.Length - 1));
+                    if (tagslotIndex <= 0) continue;
+
+                    int slotIndex = tagslotIndex - _tagslotIndexOffset;
+                    SendCommandWithoutResult($"SETTING{_cmdExtension}={slotIndex}");
+                    SendCommandWithoutResult($"CLEAR{_cmdExtension}");
+
+                    // The firmware of RevE-rebooted will deal with proper init to defaults after CLEAR/CLEARALL command
+                    // For RevG, we manually set default values
+                    if (_CurrentDevType == DeviceType.RevG)
                     {
+                        FindControls<ComboBox>(Controls, $"cb_mode{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"CONFIG{_cmdExtension}=CLOSED"));
                         FindControls<ComboBox>(Controls, $"cb_Lbutton{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LBUTTON{_cmdExtension}={a.Items[0]}"));
                         FindControls<ComboBox>(Controls, $"cb_Lbuttonlong{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LBUTTON_LONG{_cmdExtension}={a.Items[0]}"));
-                        FindControls<ComboBox>(Controls, $"cb_Rbutton{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"RBUTTON{_cmdExtension}={a.Items[0]}"));                                
+                        FindControls<ComboBox>(Controls, $"cb_Rbutton{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"RBUTTON{_cmdExtension}={a.Items[0]}"));
                         FindControls<ComboBox>(Controls, $"cb_Rbuttonlong{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"RBUTTON_LONG{_cmdExtension}={a.Items[0]}"));
                         FindControls<ComboBox>(Controls, $"cb_ledgreen{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LEDGREEN{_cmdExtension}={a.Items[0]}"));
                         FindControls<ComboBox>(Controls, $"cb_ledred{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LEDRED{_cmdExtension}={a.Items[0]}"));
-                        break;
                     }
-                    default:
-                    {
-                        FindControls<ComboBox>(Controls, $"cb_Lbutton{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"BUTTON{_cmdExtension}=SWITCHCARD"));
-                        FindControls<ComboBox>(Controls, $"cb_Lbuttonlong{tagslotIndex}").ForEach( a =>
-                        { 
-                            if (a.Items.Count > 0)
-                            {
-                                SendCommandWithoutResult($"BUTTON_LONG{_cmdExtension}={a.Items[0]}");
-                            }
-
-                        });
-                        break;
-                    }
+                    RefreshSlot(tagslotIndex, false);
                 }
+                RestoreActiveSlot();
             }
-            RestoreActiveSlot();
-
-            RefreshAllSlots();
 
             this.Cursor = Cursors.Default;
         }
@@ -858,7 +857,7 @@ namespace ChameleonMiniGUI
             }
             hexBox1.Focus();
         }
-        
+
         private void byteWidthCheckBoxes_CheckedChanged(object sender, EventArgs e)
         {
             var rb = sender as RadioButton;
@@ -1020,7 +1019,7 @@ namespace ChameleonMiniGUI
             SendCommandWithoutResult($"CONFIG{_cmdExtension}=ISO14443A_READER");
 
             var s = SendCommandWithMultilineResponse($"IDENTIFY{_cmdExtension}").ToString();
-            txt_output.Text += $"{s}{Environment.NewLine}"; 
+            txt_output.Text += $"{s}{Environment.NewLine}";
 
             RestoreActiveSlot();
             this.Cursor = Cursors.Default;
@@ -1273,7 +1272,7 @@ namespace ChameleonMiniGUI
         {
             this.Cursor = Cursors.WaitCursor;
             pb_device.Image = pb_device.InitialImage;
-            txt_output.Text = string.Empty;
+            txt_output.Text += $"{Environment.NewLine}"; // add empty line into log output
 
             var searcher = new ManagementObjectSearcher("select Name, DeviceID, PNPDeviceID from Win32_SerialPort where PNPDeviceID like '%VID_03EB&PID_2044%' or PNPDeviceID like '%VID_16D0&PID_04B2%'");
 
@@ -1284,21 +1283,21 @@ namespace ChameleonMiniGUI
 
                 _comport = new SerialPort(comPortStr, 115200)
                 {
-                    ReadTimeout = 4000,
-                    WriteTimeout = 6000,
+                    ReadTimeout = SerialRTimeoutMs,
+                    WriteTimeout = SerialWTimeoutMs,
                     DtrEnable = true,
                     RtsEnable = true,
                 };
 
                 try
                 {
-                    _comport.Open();
                     var name = obj["Name"].ToString();
                     txt_output.Text += $"[=] Connecting to {name} at {comPortStr}{Environment.NewLine}";
+                    _comport.Open();
                 }
                 catch (Exception)
                 {
-                    txt_output.Text = $"[!] Failed {comPortStr}{Environment.NewLine}";
+                    txt_output.Text += $"[!] Failed {comPortStr}{Environment.NewLine}";
                 }
 
                 if (_comport.IsOpen)
@@ -1329,7 +1328,7 @@ namespace ChameleonMiniGUI
                     if (!string.IsNullOrEmpty(_firmwareVersion) && _firmwareVersion.Contains("Chameleon"))
                     {
                         _cmdExtension = string.Empty;
-                        txt_output.Text = $"[+] Success, found Chameleon Mini device on '{comPortStr}' with {_deviceIdentification} installed{Environment.NewLine}";
+                        txt_output.Text += $"[+] Success, found Chameleon Mini device on '{comPortStr}' with {_deviceIdentification} installed{Environment.NewLine}";
                         _current_comport = comPortStr;
                         this.Cursor = Cursors.Default;
                         return;
@@ -1339,7 +1338,7 @@ namespace ChameleonMiniGUI
                     if (!string.IsNullOrEmpty(_firmwareVersion) && _firmwareVersion.Contains("Chameleon"))
                     {
                         _cmdExtension = "MY";
-                        txt_output.Text = $"[+] Success, found Chameleon Mini device on '{comPortStr}' with {_deviceIdentification} installed{Environment.NewLine}";
+                        txt_output.Text += $"[+] Success, found Chameleon Mini device on '{comPortStr}' with {_deviceIdentification} installed{Environment.NewLine}";
                         _current_comport = comPortStr;
                         this.Cursor = Cursors.Default;
                         return;
@@ -1363,13 +1362,13 @@ namespace ChameleonMiniGUI
 
                 try
                 {
-                    _comport.Open();
                     var name = obj["Name"].ToString();
                     txt_output.Text += $"[=] Connecting to {name} at {comPortStr}{Environment.NewLine}";
+                    _comport.Open();
                 }
                 catch (Exception)
                 {
-                    txt_output.Text = $"[!] Failed {comPortStr}{Environment.NewLine}";
+                    txt_output.Text += $"[!] Failed {comPortStr}{Environment.NewLine}";
                 }
 
                 if (!_comport.IsOpen) continue;
@@ -1384,7 +1383,7 @@ namespace ChameleonMiniGUI
                 {
                     _cmdExtension = string.Empty;
                     pb_device.Image = (Bitmap)Properties.Resources.ResourceManager.GetObject("chamRevG1");
-                    txt_output.Text = $"[+] Success, found Chameleon Mini device on '{comPortStr}' with {_deviceIdentification} installed{Environment.NewLine}";
+                    txt_output.Text += $"[+] Success, found Chameleon Mini device on '{comPortStr}' with {_deviceIdentification} installed{Environment.NewLine}";
                     _current_comport = comPortStr;
                     _CurrentDevType = DeviceType.RevG;
                     ConfigHMIForRevG();
@@ -1397,7 +1396,7 @@ namespace ChameleonMiniGUI
                 {
                     _cmdExtension = "MY";
                     pb_device.Image = (Bitmap)Properties.Resources.ResourceManager.GetObject("chamRevE");
-                    txt_output.Text = $"[+] Success, found Chameleon Mini device on '{comPortStr}' with {_deviceIdentification} installed{Environment.NewLine}";
+                    txt_output.Text += $"[+] Success, found Chameleon Mini device on '{comPortStr}' with {_deviceIdentification} installed{Environment.NewLine}";
                     _current_comport = comPortStr;
                     _CurrentDevType = DeviceType.RevE;
                     ConfigHMIForRevE();
@@ -1416,21 +1415,48 @@ namespace ChameleonMiniGUI
             txt_output.Text += $"Didn't find any Chameleon Mini device connected{Environment.NewLine}";
         }
 
-        private void SendCommandWithoutResult(string cmdText)
+        private bool SendCommandWithoutResult(string cmdText)
         {
-            if (!SendCommandPossible(cmdText)) return;
-
+            if (!SendCommandPossible(cmdText)) return false;
+            bool isExtendedTimeout = false;
             try
             {
+                if(cmdText.StartsWith("CLEAR"))
+                {
+                    isExtendedTimeout = true;
+                    _comport.ReadTimeout = SerialRWTimeoutExtendedMs;
+                    _comport.WriteTimeout = SerialRWTimeoutExtendedMs;
+                }
+                _comport.DiscardInBuffer();
+                _comport.DiscardOutBuffer();
                 var tx_data = Encoding.ASCII.GetBytes(cmdText);
                 _comport.Write(tx_data, 0, tx_data.Length);
                 _comport.Write("\r\n");
+                if (!cmdText.StartsWith($"DETECTION{_cmdExtension}?"))
+                {
+                    string retCode = _comport.ReadLine();
+                    // If we get an error
+                    if (!retCode.StartsWith("1"))
+                    {
+                        throw new Exception(cmdText + "returned: " + retCode.Replace("\r", ""));
+                    }
+                }
             }
             catch (Exception ex)
             {
-                var msg = $"{Environment.NewLine}[!] {ex.Message}{Environment.NewLine}";
+                var msg = $"{Environment.NewLine}[!] {cmdText}: {ex.Message}{Environment.NewLine}";
                 txt_output.Text += msg;
+                return false;
             }
+            finally
+            {
+                if (isExtendedTimeout)
+                {
+                    _comport.ReadTimeout = SerialRTimeoutMs;
+                    _comport.WriteTimeout = SerialWTimeoutMs;
+                }
+            }
+            return true;
         }
 
         private object SendCommand(string cmdText)
@@ -1439,9 +1465,8 @@ namespace ChameleonMiniGUI
 
             try
             {
-                _comport.DiscardInBuffer();
-                // send command
-                SendCommandWithoutResult(cmdText);
+                // send command and catch return code
+                if (!SendCommandWithoutResult(cmdText)) return string.Empty;
 
                 if (cmdText.Contains($"DETECTION{_cmdExtension}?"))
                 {
@@ -1455,20 +1480,27 @@ namespace ChameleonMiniGUI
                     if (read_count <= 0) return string.Empty;
 
                     var foo = new byte[read_count];
-                    Array.Copy(rx_data, 8, foo, 0, read_count - 7);
+                    Array.Copy(rx_data, 0, foo, 0, read_count);
                     return foo;
                 }
                 else
                 {
-                    var read_response = string.Empty;
-                    var start = DateTime.Now;
+                    string read_response_line = string.Empty;
 
-                    while (((read_response == "") || (read_response == null)) && (DateTime.Now.Subtract(start).TotalMilliseconds < 1000))
+                    try
                     {
-                        read_response = _comport.ReadLine();
-                        read_response = read_response.Replace("101:OK WITH TEXT", "").Replace("100:OK", "").Replace("\r", "");
+                        while (string.IsNullOrEmpty(read_response_line))
+                        {
+                            read_response_line = _comport.ReadLine();
+                        }
                     }
-                    return read_response;
+                    catch(TimeoutException ex)
+                    {
+                        var msg = $"{Environment.NewLine}[!] {cmdText}: {ex.Message}{Environment.NewLine}";
+                        txt_output.Text += msg;
+                    }
+                    
+                    return read_response_line.Replace("\r", "");
                 }
             }
             catch (Exception)
@@ -1484,7 +1516,6 @@ namespace ChameleonMiniGUI
             var full_response = string.Empty;
             try
             {
-                _comport.DiscardInBuffer();
                 // send command
                 SendCommandWithoutResult(cmdText);
                 var read_response = string.Empty;
@@ -1587,45 +1618,27 @@ namespace ChameleonMiniGUI
             }
         }
 
-        private bool IsUidValid(string uid, string selectedMode)
+        private bool IsUidValid(string uid, uint uidSize, string selectedMode)
         {
-            if (!Regex.IsMatch(uid, @"\A\b[0-9a-fA-F]+\b\Z")) return false;
-
-            // TODO: We could also find out the UID size with the UIDSIZEMY cmd
-            // and there exists 4,7,10 uid lengths.
-
-            // if mode is classic then UID must be 4 bytes (8 hex digits) long
-            if (selectedMode.StartsWith("MF_CLASSIC") || selectedMode.StartsWith("MF_DETECTION"))
-            {
-                if (uid.Length == 8)
-                {
-                    return true;
-                }
-            }
-
-            // if mode is ul then UID must be 7 bytes (14 hex digits) long
-            if (selectedMode.StartsWith("MF_ULTRALIGHT"))
-            {
-                if (uid.Length == 14)
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return (!string.IsNullOrEmpty(uid)) 
+                && (!string.IsNullOrEmpty(selectedMode)) 
+                && (Regex.IsMatch(uid, @"\A\b[0-9a-fA-F]+\b\Z"))
+                && (uid.Length == uidSize*2);
         }
 
         private void RefreshAllSlots()
         {
+            SaveActiveSlot();
             for (int i = 1; i < 9; i++)
             {
-                RefreshSlot(i);
+                RefreshSlot(i, false);
             }
+            RestoreActiveSlot();
         }
 
-        private void RefreshSlot(int slotIndex)
+        private void RefreshSlot(int slotIndex, bool doSaveActive = true)
         {
-            SaveActiveSlot();
+            if(doSaveActive) SaveActiveSlot();
 
             //SETTINGMY=i
             SendCommandWithoutResult($"SETTING{_cmdExtension}={slotIndex - _tagslotIndexOffset}");
@@ -1720,8 +1733,6 @@ namespace ChameleonMiniGUI
                         var cbMode = FindControls<ComboBox>(Controls, $"cb_mode{slotIndex}");
                         foreach (var box in cbMode)
                         {
-                            if (slotMode.Equals("MF_CLASSIC_4K") && box.Name != "cb_mode1")
-                                continue;
                             box.SelectedItem = slotMode;
                         }
                     }
@@ -1742,7 +1753,7 @@ namespace ChameleonMiniGUI
                     break;
                 }
             }
-            RestoreActiveSlot();
+            if(doSaveActive) RestoreActiveSlot();
         }
 
         private bool IsLButtonModeValid(string s)
@@ -1938,12 +1949,6 @@ namespace ChameleonMiniGUI
                     {
                         cb.Items.Clear();
                         cb.Items.AddRange(_modesArray);
-
-                        // We can set the MF_CLASSIC_4K mode only on the first tag slot
-                        if (cb.Name != "cb_mode1")
-                        {
-                            cb.Items.Remove("MF_CLASSIC_4K");
-                        }
                     }
                 }
             }
@@ -1998,7 +2003,7 @@ namespace ChameleonMiniGUI
                 case DeviceType.RevG:
                     SetRevGButtons();
                     break;
-                case DeviceType.RevE:                
+                case DeviceType.RevE:
                     SetRevEButtons();
                     break;
             }
@@ -2018,43 +2023,13 @@ namespace ChameleonMiniGUI
             AvailableCommands.AddRange(helpArray);
         }
 
-        private static bool HasUltralightHeader(IReadOnlyList<byte> bytes)
+        private class DumpData
         {
-            // empty header
-            var empty_header = new byte[]
-            {
-                0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-                0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-                0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-            };
-
-            if (bytes.SequenceEqual(empty_header))
-            {
-                return true;
-            }
-
-            // detect mfu header. If probability of magic values is more than 50%, assume file has header.
-            var probability = 0d;
-            // first two bytes of version should be 0x00, 0x04
-            if (bytes[0] == 0x00 && bytes[1] == 0x04)
-                probability += 0.25;
-
-            // tbo should be ZERO
-            if (bytes[8] == 0x00 && bytes[9] == 0x00)
-                probability += 0.15;
-
-            // tbo1 should be ZERO
-            if (bytes[15] == 0x00)
-                probability += 0.15;
-
-            // tearing is normally 0xBD
-            if (bytes[10] == 0xBD || bytes[11] == 0xBD || bytes[12] == 0xBD)
-                probability += 0.35;
-
-            return (probability >= 0.50);
+            public byte[] Data;
+            public byte[] Extra;
         }
 
-        private static byte[] ReadFileIntoByteArray(string filename)
+        private static DumpData ReadFileIntoByteArray(string filename)
         {
             var fi = new FileInfo(filename);
             if (!fi.Exists) return null;
@@ -2064,30 +2039,54 @@ namespace ChameleonMiniGUI
 
             // most likely Mifare Classic card.
             if (data.Length >= 1024 || data.Length == 320)
-                return data;
+                return new DumpData() { Data = data, Extra = new byte[] { } };
 
-            // ultralight/ntag based dump might have a header
-            if (HasUltralightHeader(data) )
+            // new format of ev1/ntag dump header
+            if (MifareUltralightModel.HasUltralightNewHeader(data))
             {
-                data = data.Skip(MifareUltralightCardInfo.PrefixLength).ToArray();
+                // extract header data into pages out of dump
+                var getVersion = data.Skip(0).Take(8);
+                var signature = data.Skip(12).Take(32);
+                var counters = data.Skip(44).Take(12);
+                return
+                    new DumpData()
+                    {
+                        Data = data.Skip(MifareUltralightCardInfo.NewPrefixLength).ToArray(),
+                        Extra = counters.Concat(getVersion).Concat(signature).ToArray()
+                    };
             }
-            return data;
+            // ultralight/ntag based dump might have a header
+            if (MifareUltralightModel.HasUltralightHeader(data) )
+            {
+                // extract header data into pages out of dump
+                var getVersion = data.Skip(0).Take(8);
+                var counters = new byte[] {0, 0, 0}.Concat(data.Skip(10).Take(1)).
+                    Concat(new byte[] { 0, 0, 0 }).Concat(data.Skip(11).Take(1)).
+                    Concat(new byte[] { 0, 0, 0 }).Concat(data.Skip(12).Take(1));
+                var signature = data.Skip(16).Take(32);
+                return
+                    new DumpData()
+                    {
+                        Data = data.Skip(MifareUltralightCardInfo.PrefixLength).ToArray(),
+                        Extra = counters.Concat(getVersion).Concat(signature).ToArray()
+                    };
+            }
+            // for general purpose return zero-filled extra datas
+            return new DumpData() { Data = data, Extra = Enumerable.Repeat((byte)0, 52).ToArray() };
         }
 
         internal void UploadDump(string filename)
         {
-            var bytes = ReadFileIntoByteArray(filename);
+            var dump = ReadFileIntoByteArray(filename);
 
             // Try to identify the dump type
-            IndentifyDumpTypeBySize(bytes.Length);
+            IndentifyDumpTypeBySize(dump);
 
             var xmodem = new XMODEM(_comport, XMODEM.Variants.XModemChecksum);
 
             SendCommandWithoutResult($"UPLOAD{_cmdExtension}");
 
-            // For the "110:WAITING FOR XMODEM" text
-            _comport.ReadLine();
-
+            var bytes = dump.Data.Concat(dump.Extra).ToArray();
             int numBytesSuccessfullySent = xmodem.Send(bytes);
 
             if (numBytesSuccessfullySent == bytes.Length && xmodem.TerminationReason == XMODEM.TerminationReasonEnum.EndOfFile)
@@ -2104,12 +2103,25 @@ namespace ChameleonMiniGUI
             }
         }
 
-        private void IndentifyDumpTypeBySize(int byteLength)
+        private int IdentifyUIDSize(byte[] bytes)
         {
-            switch (byteLength)
+            // we accept more 16 bytes dump
+            // try to check single UID size
+            byte bcc = (byte) (bytes[0] ^ bytes[1] ^ bytes[2] ^ bytes[3]);
+            if (bcc == bytes[4] && (bytes[6] & 0xc0) == 0)
+                return 4;
+            // try to check double UID size
+            if ((bytes[8] & 0xc0) == 0x40)
+                return 7;
+            // by default single UID size
+            return 4;
+        }
+        private void IndentifyDumpTypeBySize(DumpData dump)
+        {
+            switch (dump.Data.Length)
             {
                 case 4096:
-                    SendCommandWithoutResult($"CONFIG{_cmdExtension}=MF_CLASSIC_4K");
+                    SendCommandWithoutResult(IdentifyUIDSize(dump.Data) == 7 ? $"CONFIG{_cmdExtension}=MF_CLASSIC_4K_7B" : $"CONFIG{_cmdExtension}=MF_CLASSIC_4K");
                     break;
                 case 64:
                     SendCommandWithoutResult($"CONFIG{_cmdExtension}=MF_ULTRALIGHT");
@@ -2121,7 +2133,7 @@ namespace ChameleonMiniGUI
                     SendCommandWithoutResult($"CONFIG{_cmdExtension}=MF_ULTRALIGHT_EV1_164B");
                     break;
                 default:
-                    SendCommandWithoutResult($"CONFIG{_cmdExtension}=MF_CLASSIC_1K");
+                    SendCommandWithoutResult(IdentifyUIDSize(dump.Data) == 7 ? $"CONFIG{_cmdExtension}=MF_CLASSIC_1K_7B" : $"CONFIG{_cmdExtension}=MF_CLASSIC_1K");
                     break;
             }
         }
@@ -2133,6 +2145,7 @@ namespace ChameleonMiniGUI
 
             // Default value
             int memsize = 4096;
+            int extrasize = 0;
 
             if (!string.IsNullOrEmpty(memsizeStr))
             {
@@ -2141,20 +2154,17 @@ namespace ChameleonMiniGUI
 
             // Also check if the tag is UL to save the counters too
             var configStr = SendCommand($"CONFIG{_cmdExtension}?").ToString();
-            if (!string.IsNullOrWhiteSpace(configStr) && (configStr.Contains("ULTRALIGHT")))
+            if (!string.IsNullOrWhiteSpace(configStr) && (configStr.Contains("ULTRALIGHT_EV1")))
             {
                 if (memsize < 4069)
                 {
-                    // 3 more pages
-                    memsize += 3 * 4; 
+                    // 52 bytes extra data = 3 * 4 (counters, tearing) + 8 (version) + 32 (signature)
+                    extrasize = 52;
                 }
             }
 
             // Then send the download command
             SendCommandWithoutResult($"DOWNLOAD{_cmdExtension}");
-            
-            // For the "110:WAITING FOR XMODEM" text
-            _comport.ReadLine();
 
             var bytes = ReceiveXModemData();
             if (bytes != null)
@@ -2164,24 +2174,33 @@ namespace ChameleonMiniGUI
                 txt_output.Text += msg;
 
                 byte[] neededBytes = bytes;
+                byte[] extraBytes = new byte[] { };
 
                 if (bytes.Length > memsize)
                 {
                     // Create a new array same size as memsize
                     neededBytes = new byte[memsize];
-
                     Array.Copy(bytes, neededBytes, neededBytes.Length);
+                    // Create extra data
+                    if (bytes.Length >= memsize + extrasize)
+                    {
+                        extraBytes = new byte[extrasize];
+                        Array.Copy(bytes.Skip(memsize).ToArray(), extraBytes, extrasize);
+                    }
                 }
 
-                if (neededBytes.Length < 1024 && neededBytes.Length != 320)
+                if (neededBytes.Length < 1024 && neededBytes.Length != 320 && neededBytes.Length % 4 == 0 && extraBytes.Length > 0)
                 {
-                    if (HasUltralightHeader(neededBytes))
-                    {
-                    neededBytes = Enumerable
-                        .Repeat((byte)0, MifareUltralightCardInfo.PrefixLength)
+                    // Construct dump with new heder format
+                    var counters = extraBytes.Skip(0).Take(12);
+                    var version = extraBytes.Skip(12).Take(8);
+                    var signature = extraBytes.Skip(20).Take(32);
+                    byte[] pagecount = new byte[] { (byte)(neededBytes.Length / 4 - 1)};
+                    neededBytes =  version
+                        .Concat(Enumerable.Repeat((byte)0, 3)).Concat(pagecount)
+                        .Concat(signature).Concat(counters)
                         .Concat(neededBytes)
                         .ToArray();
-                    }
                 }
                 // Write the actual file
                 var dumpStrategy = DumpStrategyFactory.Create(filename);
@@ -2636,12 +2655,15 @@ namespace ChameleonMiniGUI
         }
 
         /// <summary>
-        /// save the active slot.  Use before all 
+        /// save the active slot.  Use before all
         /// </summary>
         private bool SaveActiveSlot()
         {
             // Determine which slot is active
             var actSetting = SendCommand($"SETTING{_cmdExtension}?").ToString();
+
+            // return false if empty answer or set default value (ex. 0)
+            if (actSetting.Length <= 0) return false;// or actSetting = "NO.0";
 
             int slotindex;
             if (int.TryParse(actSetting.Substring(actSetting.Length - 1), out slotindex))
@@ -2654,6 +2676,10 @@ namespace ChameleonMiniGUI
 
         private void RestoreActiveSlot()
         {
+            // Check if saved active slot is within the limit (0...7)
+            if (_active_selected_slot < _tagslotIndexOffset) _active_selected_slot = _tagslotIndexOffset;
+            if (_active_selected_slot > _tagslotIndexOffset+7) _active_selected_slot = _tagslotIndexOffset+7;
+
             SendCommandWithoutResult($"SETTING{_cmdExtension}={_active_selected_slot - _tagslotIndexOffset}");
             HighlightActiveSlot();
         }

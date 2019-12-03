@@ -147,6 +147,8 @@
     <Compile Include="Legend\UcLegend.Designer.cs">
       <DependentUpon>UcLegend.cs</DependentUpon>
     </Compile>
+    <Compile Include="Log\LogEntryType.cs" />
+    <Compile Include="Log\LogEntryUtils.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MultiLanguage.cs" />

@@ -89,6 +89,8 @@ namespace ChameleonMiniGUI
 
         private List<string> AvailableCommands { get; set; }
 
+        private List<string> ErrorResponses = new List<string>(new string[] { "200:UNKNOWN COMMAND", "201:INVALID COMMAND USAGE", "202:INVALID PARAMETER", "203:TIMEOUT" });
+
         public frm_main()
         {
             InitializeComponent();
@@ -690,6 +692,8 @@ namespace ChameleonMiniGUI
                 btn_keycalc.Enabled = true;
                 btn_upload.Enabled = true;
                 btn_download.Enabled = true;
+                if (_CurrentDevType == DeviceType.RevG)
+                    btn_identify.Enabled = true;
             }
             else if (checkCount > 1)
             {
@@ -701,6 +705,7 @@ namespace ChameleonMiniGUI
                 btn_keycalc.Enabled = true;
                 btn_upload.Enabled = false;
                 btn_download.Enabled = true;
+                btn_identify.Enabled = false;
             }
             else
             {
@@ -1436,7 +1441,7 @@ namespace ChameleonMiniGUI
                 {
                     string retCode = _comport.ReadLine();
                     // If we get an error
-                    if (!retCode.StartsWith("1"))
+                    if (ErrorResponses.Any(s => retCode.Contains(s)))
                     {
                         throw new Exception(cmdText + "returned: " + retCode.Replace("\r", ""));
                     }
@@ -1593,6 +1598,11 @@ namespace ChameleonMiniGUI
                     var hex = new StringBuilder(result.Length * 2);
                     hex.Append($"{Environment.NewLine}");
                     var counter = 0;
+
+                    if (cmdText.Contains($"LOGDOWNLOAD{_cmdExtension}"))
+                    {
+                        return Log.LogEntryUtils.ParseDownloadedLog(result);
+                    }
 
                     foreach (var b in result)
                     {

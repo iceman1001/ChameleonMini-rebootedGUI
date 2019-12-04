@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("ChameleonMini GUI - Iceman Edition 冰人")]
-[assembly: AssemblyDescription("GUI for Chameleon Mini - Rebooted  RevE or RevG")]
+[assembly: AssemblyDescription("GUI for Chameleon Mini")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("IceSQL AB")]
 [assembly: AssemblyProduct("ChameleonMini GUI")]
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.2.1.4")]
-[assembly: AssemblyFileVersion("1.2.1.4")]
+[assembly: AssemblyVersion("1.2.1.6")]
+[assembly: AssemblyFileVersion("1.2.1.6")]

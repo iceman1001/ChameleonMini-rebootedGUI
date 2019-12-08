@@ -1004,6 +1004,7 @@ namespace ChameleonMiniGUI
             this.cb_Rbuttonlong6.Name = "cb_Rbuttonlong6";
             this.cb_Rbuttonlong6.Size = new System.Drawing.Size(80, 21);
             this.cb_Rbuttonlong6.TabIndex = 21;
+            this.cb_Rbuttonlong6.DropDownWidth = 160;
             // 
             // cb_ledred6
             // 
@@ -1053,6 +1054,7 @@ namespace ChameleonMiniGUI
             this.cb_Rbutton6.Name = "cb_Rbutton6";
             this.cb_Rbutton6.Size = new System.Drawing.Size(80, 21);
             this.cb_Rbutton6.TabIndex = 20;
+            this.cb_Rbutton6.DropDownWidth = 160;
             // 
             // cb_mode6
             // 
@@ -1157,6 +1159,7 @@ namespace ChameleonMiniGUI
             this.cb_Lbuttonlong6.Name = "cb_Lbuttonlong6";
             this.cb_Lbuttonlong6.Size = new System.Drawing.Size(80, 21);
             this.cb_Lbuttonlong6.TabIndex = 19;
+            this.cb_Lbuttonlong6.DropDownWidth = 160;
             // 
             // lb_ledledgreen6
             // 
@@ -1197,6 +1200,7 @@ namespace ChameleonMiniGUI
             this.cb_Lbutton6.Name = "cb_Lbutton6";
             this.cb_Lbutton6.Size = new System.Drawing.Size(80, 21);
             this.cb_Lbutton6.TabIndex = 5;
+            this.cb_Lbutton6.DropDownWidth = 160;
             // 
             // lbl_size6
             // 
@@ -1369,6 +1373,7 @@ namespace ChameleonMiniGUI
             this.cb_Rbuttonlong1.Name = "cb_Rbuttonlong1";
             this.cb_Rbuttonlong1.Size = new System.Drawing.Size(84, 21);
             this.cb_Rbuttonlong1.TabIndex = 13;
+            this.cb_Rbuttonlong1.DropDownWidth = 160;
             // 
             // cb_Lbuttonlong1
             // 
@@ -1391,6 +1396,7 @@ namespace ChameleonMiniGUI
             this.cb_Lbuttonlong1.Name = "cb_Lbuttonlong1";
             this.cb_Lbuttonlong1.Size = new System.Drawing.Size(82, 21);
             this.cb_Lbuttonlong1.TabIndex = 11;
+            this.cb_Lbuttonlong1.DropDownWidth = 160;
             // 
             // lb_ledledred1
             // 
@@ -1422,6 +1428,7 @@ namespace ChameleonMiniGUI
             this.cb_Rbutton1.Name = "cb_Rbutton1";
             this.cb_Rbutton1.Size = new System.Drawing.Size(84, 21);
             this.cb_Rbutton1.TabIndex = 12;
+            this.cb_Rbutton1.DropDownWidth = 160;
             // 
             // cb_Lbutton1
             // 
@@ -1444,6 +1451,7 @@ namespace ChameleonMiniGUI
             this.cb_Lbutton1.Name = "cb_Lbutton1";
             this.cb_Lbutton1.Size = new System.Drawing.Size(82, 21);
             this.cb_Lbutton1.TabIndex = 5;
+            this.cb_Lbutton1.DropDownWidth = 160;
             // 
             // lbl_buttonlong1
             // 
@@ -1589,6 +1597,7 @@ namespace ChameleonMiniGUI
             this.cb_Rbuttonlong2.Name = "cb_Rbuttonlong2";
             this.cb_Rbuttonlong2.Size = new System.Drawing.Size(80, 21);
             this.cb_Rbuttonlong2.TabIndex = 15;
+            this.cb_Rbuttonlong2.DropDownWidth = 160;
             // 
             // cb_ledgreen2
             // 
@@ -1630,6 +1639,7 @@ namespace ChameleonMiniGUI
             this.cb_Rbutton2.Name = "cb_Rbutton2";
             this.cb_Rbutton2.Size = new System.Drawing.Size(80, 21);
             this.cb_Rbutton2.TabIndex = 14;
+            this.cb_Rbutton2.DropDownWidth = 160;
             // 
             // cb_ledred2
             // 
@@ -1671,6 +1681,7 @@ namespace ChameleonMiniGUI
             this.cb_Lbutton2.Name = "cb_Lbutton2";
             this.cb_Lbutton2.Size = new System.Drawing.Size(80, 21);
             this.cb_Lbutton2.TabIndex = 5;
+            this.cb_Lbutton2.DropDownWidth = 160;
             // 
             // cb_Lbuttonlong2
             // 
@@ -1693,6 +1704,7 @@ namespace ChameleonMiniGUI
             this.cb_Lbuttonlong2.Name = "cb_Lbuttonlong2";
             this.cb_Lbuttonlong2.Size = new System.Drawing.Size(80, 21);
             this.cb_Lbuttonlong2.TabIndex = 13;
+            this.cb_Lbuttonlong2.DropDownWidth = 160;
             // 
             // cb_mode2
             // 
@@ -1865,6 +1877,7 @@ namespace ChameleonMiniGUI
             this.cb_Rbuttonlong4.Name = "cb_Rbuttonlong4";
             this.cb_Rbuttonlong4.Size = new System.Drawing.Size(80, 21);
             this.cb_Rbuttonlong4.TabIndex = 17;
+            this.cb_Rbuttonlong4.DropDownWidth = 160;
             // 
             // cb_ledred4
             // 
@@ -1906,6 +1919,7 @@ namespace ChameleonMiniGUI
             this.cb_Rbutton4.Name = "cb_Rbutton4";
             this.cb_Rbutton4.Size = new System.Drawing.Size(80, 21);
             this.cb_Rbutton4.TabIndex = 16;
+            this.cb_Rbutton4.DropDownWidth = 160;
             // 
             // lbl_uid4
             // 
@@ -1992,6 +2006,7 @@ namespace ChameleonMiniGUI
             this.cb_Lbuttonlong4.Name = "cb_Lbuttonlong4";
             this.cb_Lbuttonlong4.Size = new System.Drawing.Size(80, 21);
             this.cb_Lbuttonlong4.TabIndex = 15;
+            this.cb_Lbuttonlong4.DropDownWidth = 160;
             // 
             // lb_ledledgreen4
             // 
@@ -2032,6 +2047,7 @@ namespace ChameleonMiniGUI
             this.cb_Lbutton4.Name = "cb_Lbutton4";
             this.cb_Lbutton4.Size = new System.Drawing.Size(80, 21);
             this.cb_Lbutton4.TabIndex = 5;
+            this.cb_Lbutton4.DropDownWidth = 160;
             // 
             // cb_mode4
             // 
@@ -2141,6 +2157,7 @@ namespace ChameleonMiniGUI
             this.cb_Rbuttonlong3.Name = "cb_Rbuttonlong3";
             this.cb_Rbuttonlong3.Size = new System.Drawing.Size(80, 21);
             this.cb_Rbuttonlong3.TabIndex = 17;
+            this.cb_Rbuttonlong3.DropDownWidth = 160;
             // 
             // cb_ledred3
             // 
@@ -2182,6 +2199,7 @@ namespace ChameleonMiniGUI
             this.cb_Rbutton3.Name = "cb_Rbutton3";
             this.cb_Rbutton3.Size = new System.Drawing.Size(80, 21);
             this.cb_Rbutton3.TabIndex = 16;
+            this.cb_Rbutton3.DropDownWidth = 160;
             // 
             // lbl_uid3
             // 
@@ -2268,6 +2286,7 @@ namespace ChameleonMiniGUI
             this.cb_Lbuttonlong3.Name = "cb_Lbuttonlong3";
             this.cb_Lbuttonlong3.Size = new System.Drawing.Size(80, 21);
             this.cb_Lbuttonlong3.TabIndex = 15;
+            this.cb_Lbuttonlong3.DropDownWidth = 160;
             // 
             // lb_ledledgreen3
             // 
@@ -2308,6 +2327,7 @@ namespace ChameleonMiniGUI
             this.cb_Lbutton3.Name = "cb_Lbutton3";
             this.cb_Lbutton3.Size = new System.Drawing.Size(80, 21);
             this.cb_Lbutton3.TabIndex = 5;
+            this.cb_Lbutton3.DropDownWidth = 160;
             // 
             // cb_mode3
             // 
@@ -2417,6 +2437,7 @@ namespace ChameleonMiniGUI
             this.cb_Rbuttonlong5.Name = "cb_Rbuttonlong5";
             this.cb_Rbuttonlong5.Size = new System.Drawing.Size(80, 21);
             this.cb_Rbuttonlong5.TabIndex = 19;
+            this.cb_Rbuttonlong5.DropDownWidth = 160;
             // 
             // cb_ledred5
             // 
@@ -2458,6 +2479,7 @@ namespace ChameleonMiniGUI
             this.cb_Rbutton5.Name = "cb_Rbutton5";
             this.cb_Rbutton5.Size = new System.Drawing.Size(80, 21);
             this.cb_Rbutton5.TabIndex = 18;
+            this.cb_Rbutton5.DropDownWidth = 160;
             // 
             // lbl_uid5
             // 
@@ -2544,6 +2566,7 @@ namespace ChameleonMiniGUI
             this.cb_Lbuttonlong5.Name = "cb_Lbuttonlong5";
             this.cb_Lbuttonlong5.Size = new System.Drawing.Size(80, 21);
             this.cb_Lbuttonlong5.TabIndex = 17;
+            this.cb_Lbuttonlong5.DropDownWidth = 160;
             // 
             // lb_ledledgreen5
             // 
@@ -2584,6 +2607,7 @@ namespace ChameleonMiniGUI
             this.cb_Lbutton5.Name = "cb_Lbutton5";
             this.cb_Lbutton5.Size = new System.Drawing.Size(80, 21);
             this.cb_Lbutton5.TabIndex = 5;
+            this.cb_Lbutton5.DropDownWidth = 160;
             // 
             // cb_mode5
             // 
@@ -2693,6 +2717,7 @@ namespace ChameleonMiniGUI
             this.cb_Rbuttonlong7.Name = "cb_Rbuttonlong7";
             this.cb_Rbuttonlong7.Size = new System.Drawing.Size(80, 21);
             this.cb_Rbuttonlong7.TabIndex = 21;
+            this.cb_Rbuttonlong7.DropDownWidth = 160;
             // 
             // cb_ledred7
             // 
@@ -2734,6 +2759,7 @@ namespace ChameleonMiniGUI
             this.cb_Rbutton7.Name = "cb_Rbutton7";
             this.cb_Rbutton7.Size = new System.Drawing.Size(80, 21);
             this.cb_Rbutton7.TabIndex = 20;
+            this.cb_Rbutton7.DropDownWidth = 160;
             // 
             // lbl_uid7
             // 
@@ -2820,6 +2846,7 @@ namespace ChameleonMiniGUI
             this.cb_Lbuttonlong7.Name = "cb_Lbuttonlong7";
             this.cb_Lbuttonlong7.Size = new System.Drawing.Size(80, 21);
             this.cb_Lbuttonlong7.TabIndex = 19;
+            this.cb_Lbuttonlong7.DropDownWidth = 160;
             // 
             // lb_ledledgreen7
             // 
@@ -2860,6 +2887,7 @@ namespace ChameleonMiniGUI
             this.cb_Lbutton7.Name = "cb_Lbutton7";
             this.cb_Lbutton7.Size = new System.Drawing.Size(80, 21);
             this.cb_Lbutton7.TabIndex = 5;
+            this.cb_Lbutton7.DropDownWidth = 160;
             // 
             // cb_mode7
             // 
@@ -2969,6 +2997,7 @@ namespace ChameleonMiniGUI
             this.cb_Rbuttonlong8.Name = "cb_Rbuttonlong8";
             this.cb_Rbuttonlong8.Size = new System.Drawing.Size(80, 21);
             this.cb_Rbuttonlong8.TabIndex = 21;
+            this.cb_Rbuttonlong8.DropDownWidth = 160;
             // 
             // cb_ledred8
             // 
@@ -3010,6 +3039,7 @@ namespace ChameleonMiniGUI
             this.cb_Rbutton8.Name = "cb_Rbutton8";
             this.cb_Rbutton8.Size = new System.Drawing.Size(80, 21);
             this.cb_Rbutton8.TabIndex = 20;
+            this.cb_Rbutton8.DropDownWidth = 160;
             // 
             // lbl_uid8
             // 
@@ -3096,6 +3126,7 @@ namespace ChameleonMiniGUI
             this.cb_Lbuttonlong8.Name = "cb_Lbuttonlong8";
             this.cb_Lbuttonlong8.Size = new System.Drawing.Size(80, 21);
             this.cb_Lbuttonlong8.TabIndex = 19;
+            this.cb_Lbuttonlong8.DropDownWidth = 160;
             // 
             // lb_ledledgreen8
             // 
@@ -3136,6 +3167,7 @@ namespace ChameleonMiniGUI
             this.cb_Lbutton8.Name = "cb_Lbutton8";
             this.cb_Lbutton8.Size = new System.Drawing.Size(80, 21);
             this.cb_Lbutton8.TabIndex = 5;
+            this.cb_Lbutton8.DropDownWidth = 160;
             // 
             // cb_mode8
             // 

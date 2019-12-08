@@ -396,20 +396,20 @@ namespace ChameleonMiniGUI
             this.Cursor = Cursors.WaitCursor;
             SaveActiveSlot();
 
-            foreach (var cb in FindControls<CheckBox>(Controls, "checkBox"))
+            // Open dialog
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                if (!cb.Checked) continue;
+                var dumpFilename = openFileDialog1.FileName;
 
-                var tagslotIndex = int.Parse(cb.Name.Substring(cb.Name.Length - 1));
-                if (tagslotIndex <= 0) continue;
-
-                // select the corresponding slot
-                SendCommandWithoutResult($"SETTING{_cmdExtension}={tagslotIndex - _tagslotIndexOffset}");
-
-                // Open dialog
-                if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                foreach (var cb in FindControls<CheckBox>(Controls, "checkBox"))
                 {
-                    var dumpFilename = openFileDialog1.FileName;
+                    if (!cb.Checked) continue;
+
+                    var tagslotIndex = int.Parse(cb.Name.Substring(cb.Name.Length - 1));
+                    if (tagslotIndex <= 0) continue;
+
+                    // select the corresponding slot
+                    SendCommandWithoutResult($"SETTING{_cmdExtension}={tagslotIndex - _tagslotIndexOffset}");
 
                     // Load the dump
                     UploadDump(dumpFilename);
@@ -418,7 +418,6 @@ namespace ChameleonMiniGUI
                     RefreshSlot(tagslotIndex, false);
                 }
 
-                break; // We can only upload a single dump at a time
             }
 
             RestoreActiveSlot();
@@ -452,7 +451,7 @@ namespace ChameleonMiniGUI
                 // select the corresponding slot
                 SendCommandWithoutResult($"SETTING{_cmdExtension}={tagslotIndex - _tagslotIndexOffset}");
 
-                if (btn_upload.Enabled)
+                if (btn_setactive.Enabled)
                 {
                     // Only one tag slot is selected, show the save dialog
 
@@ -703,7 +702,7 @@ namespace ChameleonMiniGUI
                 btn_clear.Enabled = true;
                 btn_setactive.Enabled = false;
                 btn_keycalc.Enabled = true;
-                btn_upload.Enabled = false;
+                btn_upload.Enabled = true;
                 btn_download.Enabled = true;
                 btn_identify.Enabled = false;
             }

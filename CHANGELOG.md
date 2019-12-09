@@ -4,6 +4,12 @@ This project uses the changelog in accordance with [keepchangelog](http://keepac
 
 ## [unreleased]
 
+## [1.2.1.7] - 2019-12-09
+- Upload one dump to several slots  (@grspy)
+
+## [1.2.1.6] - 2019-12-03
+- Annotate RevG log output  (@grspy)
+
 ## [1.2.1.4] - 2019-11-11
 - New logo and icons  (@grspy)
 

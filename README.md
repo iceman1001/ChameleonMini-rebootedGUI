@@ -7,7 +7,7 @@ This is a windows based GUI for the ChameleonMini device. It supports all known 
 ## Binary distribution / windows installer
 For the sake of easiness or for those who can't compile this project there is a _click-once deployment_ installation located here.
 
-Release: [v1.2.1.6](http://www.icesql.se/download/ChameleonMiniGUI/publish.htm)
+Release: [v1.2.1.7](http://www.icesql.se/download/ChameleonMiniGUI/publish.htm)
 
 Read the [changelog](https://github.com/iceman1001/ChameleonMini-rebootedGUI/blob/master/CHANGELOG.md) for information of what is new. 
 

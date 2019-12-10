@@ -493,7 +493,10 @@ namespace ChameleonMiniGUI
 
                     if (!string.IsNullOrEmpty(uid))
                     {
-                        var varFullDownloadPath = Path.Combine(downloadPath, uid + ".bin");
+                        var varFullDownloadPath = Path.Combine(downloadPath, $"{uid}.bin");
+                        var dupeCount = 0;
+                        while (File.Exists(varFullDownloadPath))
+                            varFullDownloadPath = Path.Combine(downloadPath, $"{uid}_{++dupeCount}.bin");
                         DownloadAndSaveDump(varFullDownloadPath);
                     }
                 }

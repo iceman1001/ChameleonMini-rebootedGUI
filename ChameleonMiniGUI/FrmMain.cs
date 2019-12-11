@@ -152,7 +152,7 @@ namespace ChameleonMiniGUI
             {
                 // set the default value
                 // should be a setting aswell
-                txt_interval.Text = "2000";
+                txt_interval.Text = "10000";
             }
 
             var ml = new MultiLanguage();
@@ -2266,7 +2266,7 @@ namespace ChameleonMiniGUI
 
             if (!int.TryParse(txt_interval.Text, out tickInterval)) return;
 
-            timer1.Interval = tickInterval > 0 ? tickInterval : 2000;
+            timer1.Interval = tickInterval > 0 ? tickInterval : 10000;
 
             timer1.Start();
         }

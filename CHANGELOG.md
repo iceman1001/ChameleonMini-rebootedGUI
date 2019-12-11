@@ -4,6 +4,9 @@ This project uses the changelog in accordance with [keepchangelog](http://keepac
 
 ## [unreleased]
 
+## [1.2.1.9] - 2019-12-11
+- Increase default "keep alive" setting to 10sec (@grspy)
+
 ## [1.2.1.8] - 2019-12-11
 - Download / saving dump now uses unique naming. aka.  uid_{counter}.bin format (@grspy)
 

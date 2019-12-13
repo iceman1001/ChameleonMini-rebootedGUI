@@ -1,4 +1,4 @@
-# ChameleonMini GUI (win)
+# ChameleonMini GUI (windows)
 [![Build Status](https://travis-ci.org/iceman1001/ChameleonMini-rebootedGUI.svg?branch=master)](https://travis-ci.org/iceman1001/ChameleonMini-rebootedGUI)
 [![Latest release](https://img.shields.io/github/release/iceman1001/ChameleonMini-rebootedGUI.svg)](https://github.com/iceman1001/ChameleonMini-rebootedGUI/releases/latest)
 
@@ -14,8 +14,7 @@ RevE Rebooted,
 [RevG Rebooted, ChameleonTiny](https://www.indiegogo.com/projects/chameleonmini-rev-g-chameleontiny-by-proxgrind#/)
 
 ## Changelog
-You find the changelog 
-[changelog](https://github.com/iceman1001/ChameleonMini-rebootedGUI/blob/master/CHANGELOG.md) 
+You find the [changelog](https://github.com/iceman1001/ChameleonMini-rebootedGUI/blob/master/CHANGELOG.md) 
 
 
 ## Binary distribution / windows installer

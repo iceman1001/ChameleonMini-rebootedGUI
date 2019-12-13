@@ -843,7 +843,7 @@ namespace ChameleonMiniGUI
             // 
             this.btn_selectnone.AutoSize = true;
             this.btn_selectnone.Enabled = false;
-            this.btn_selectnone.Location = new System.Drawing.Point(110, 24);
+            this.btn_selectnone.Location = new System.Drawing.Point(110, 20);
             this.btn_selectnone.Name = "btn_selectnone";
             this.btn_selectnone.Size = new System.Drawing.Size(106, 30);
             this.btn_selectnone.TabIndex = 10;
@@ -855,7 +855,7 @@ namespace ChameleonMiniGUI
             // 
             this.btn_selectall.AutoSize = true;
             this.btn_selectall.Enabled = false;
-            this.btn_selectall.Location = new System.Drawing.Point(9, 24);
+            this.btn_selectall.Location = new System.Drawing.Point(9, 20);
             this.btn_selectall.Name = "btn_selectall";
             this.btn_selectall.Size = new System.Drawing.Size(95, 30);
             this.btn_selectall.TabIndex = 9;
@@ -3653,11 +3653,12 @@ namespace ChameleonMiniGUI
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(1318, 929);
             this.Name = "frm_main";
+            this.DoubleBuffered = true;
             this.Activated += new System.EventHandler(this.frm_main_Activated);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frm_main_FormClosed);
             this.Load += new System.EventHandler(this.frm_main_Load);
+            this.ResizeBegin += new System.EventHandler(this.frm_main_ResizeBegin);
             this.ResizeEnd += new System.EventHandler(this.frm_main_ResizeEnd);
-            this.Move += new System.EventHandler(this.frm_main_Move);
             this.gb_output.ResumeLayout(false);
             this.gb_output.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bsLanguages)).EndInit();

@@ -25,6 +25,7 @@ namespace ChameleonMiniGUI
 
     public partial class frm_main : Form
     {
+        #region Fields
         private SerialPort _comport;
         private string[] _modesArray;
         private string[] _lbuttonModesArray;
@@ -54,6 +55,13 @@ namespace ChameleonMiniGUI
         private DeviceType _CurrentDevType = DeviceType.RevG;
         private int _active_selected_slot;
 
+        public string SoftwareVersion => $"Chameleon Mini GUI - {Default.version} - Iceman Edition 冰人";
+
+        private List<string> AvailableCommands = new List<string>();
+        private List<string> ErrorResponses = new List<string>(new string[] { "200:UNKNOWN COMMAND", "201:INVALID COMMAND USAGE", "202:INVALID PARAMETER", "203:TIMEOUT" });
+        #endregion
+
+        #region Properties
         private double ByteWidth
         {
             get
@@ -75,6 +83,7 @@ namespace ChameleonMiniGUI
                 return width;
             }
         }
+
         public string FirmwareVersion
         {
             get { return _firmwareVersion; }
@@ -85,19 +94,23 @@ namespace ChameleonMiniGUI
             }
         }
 
-        public string SoftwareVersion => $"Chameleon Mini GUI - {Default.version} - Iceman Edition 冰人";
-
-        private List<string> AvailableCommands { get; set; }
-
-        private List<string> ErrorResponses = new List<string>(new string[] { "200:UNKNOWN COMMAND", "201:INVALID COMMAND USAGE", "202:INVALID PARAMETER", "203:TIMEOUT" });
+        // Attempt to reduce flickering of the controls
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                cp.ExStyle |= 0x02000000;  // Turn on WS_EX_COMPOSITED
+                return cp;
+            }
+        }
+        #endregion
 
         public frm_main()
         {
             InitializeComponent();
 
             this.Text = SoftwareVersion;
-
-            AvailableCommands = new List<string>();
         }
 
         #region Event Handlers
@@ -123,78 +136,6 @@ namespace ChameleonMiniGUI
             InitTimer();
 
             SplashScreen.CloseForm();
-        }
-
-        private void InitHelp()
-        {
-            tfSerialHelp.AvailableCommands = AvailableCommands;
-            tfSerialHelp.SetList();
-        }
-
-        private void LoadSettings()
-        {
-            // Set the default download path if not empty and exists
-            if (!string.IsNullOrEmpty(Default.DownloadDumpPath))
-            {
-                if (Directory.Exists(Default.DownloadDumpPath))
-                {
-                    txt_defaultdownload.Text = Default.DownloadDumpPath;
-                } // else create folder?
-            }
-
-            // Set the keep alive options
-            chk_keepalive.Checked = Default.EnableKeepAlive;
-            if (Default.KeepAliveInterval > 0)
-            {
-                txt_interval.Text = Default.KeepAliveInterval.ToString();
-            }
-            else
-            {
-                // set the default value
-                // should be a setting aswell
-                txt_interval.Text = "10000";
-            }
-
-            var ml = new MultiLanguage();
-            var languages = ml.GetLanguages();
-            if (languages.Any())
-            {
-                lockFlag = true;
-                bsLanguages.DataSource = languages;
-                cb_languages.DisplayMember = "Key";
-                cb_languages.ValueMember = "Value";
-                lockFlag = false;
-            }
-
-            // load prefered language
-            var lang = Default.Language.ToLowerInvariant();
-            if (!string.IsNullOrWhiteSpace(lang))
-            {
-                ml.LoadLanguage(this.Controls, lang);
-
-                // select lang in combobox
-                lockFlag = true;
-                foreach (KeyValuePair<string, string> i in cb_languages.Items)
-                {
-                    if (i.Key.ToLowerInvariant() == lang || i.Value.ToLowerInvariant() == lang)
-                    {
-                        cb_languages.SelectedItem = i;
-                        break;
-                    }
-                }
-                lockFlag = false;
-            }
-
-            var t = new Templating();
-            var templates = t.GetTemplates();
-            if (templates.Any())
-            {
-                lockFlag = true;
-                bsTemplates.DataSource = templates;
-                cb_templateA.DisplayMember = "Key";
-                cb_templateA.ValueMember = "Value";
-                lockFlag = false;
-            }
         }
 
         private void frm_main_FormClosed(object sender, FormClosedEventArgs e)
@@ -1003,19 +944,20 @@ namespace ChameleonMiniGUI
             CloseFile(hexBox2);
         }
 
-        private void frm_main_Move(object sender, EventArgs e)
-        {
-            GroupBoxEnhanced.RedrawGroupBoxDisplay(tpOperation);
-        }
-
         private void frm_main_Activated(object sender, EventArgs e)
         {
             GroupBoxEnhanced.RedrawGroupBoxDisplay(tpOperation);
         }
 
+        private void frm_main_ResizeBegin(object sender, EventArgs e)
+        {
+            SuspendLayout();
+        }
+
         private void frm_main_ResizeEnd(object sender, EventArgs e)
         {
             GroupBoxEnhanced.RedrawGroupBoxDisplay(tpOperation);
+            ResumeLayout();
         }
 
         private void btn_identify_Click(object sender, EventArgs e)
@@ -1026,7 +968,7 @@ namespace ChameleonMiniGUI
             SendCommandWithoutResult($"CONFIG{_cmdExtension}=ISO14443A_READER");
 
             var s = SendCommandWithMultilineResponse($"IDENTIFY{_cmdExtension}").ToString();
-            txt_output.Text += $"{s}{Environment.NewLine}";
+            txt_output.AppendText($"{s}{Environment.NewLine}");
 
             RestoreActiveSlot();
             this.Cursor = Cursors.Default;
@@ -1077,6 +1019,77 @@ namespace ChameleonMiniGUI
         #endregion
 
         #region Helper methods
+        private void InitHelp()
+        {
+            tfSerialHelp.AvailableCommands = AvailableCommands;
+            tfSerialHelp.SetList();
+        }
+
+        private void LoadSettings()
+        {
+            // Set the default download path if not empty and exists
+            if (!string.IsNullOrEmpty(Default.DownloadDumpPath))
+            {
+                if (Directory.Exists(Default.DownloadDumpPath))
+                {
+                    txt_defaultdownload.Text = Default.DownloadDumpPath;
+                } // else create folder?
+            }
+
+            // Set the keep alive options
+            chk_keepalive.Checked = Default.EnableKeepAlive;
+            if (Default.KeepAliveInterval > 0)
+            {
+                txt_interval.Text = Default.KeepAliveInterval.ToString();
+            }
+            else
+            {
+                // set the default value
+                // should be a setting aswell
+                txt_interval.Text = "10000";
+            }
+
+            var ml = new MultiLanguage();
+            var languages = ml.GetLanguages();
+            if (languages.Any())
+            {
+                lockFlag = true;
+                bsLanguages.DataSource = languages;
+                cb_languages.DisplayMember = "Key";
+                cb_languages.ValueMember = "Value";
+                lockFlag = false;
+            }
+
+            // load prefered language
+            var lang = Default.Language.ToLowerInvariant();
+            if (!string.IsNullOrWhiteSpace(lang))
+            {
+                ml.LoadLanguage(this.Controls, lang);
+
+                // select lang in combobox
+                lockFlag = true;
+                foreach (KeyValuePair<string, string> i in cb_languages.Items)
+                {
+                    if (i.Key.ToLowerInvariant() == lang || i.Value.ToLowerInvariant() == lang)
+                    {
+                        cb_languages.SelectedItem = i;
+                        break;
+                    }
+                }
+                lockFlag = false;
+            }
+
+            var t = new Templating();
+            var templates = t.GetTemplates();
+            if (templates.Any())
+            {
+                lockFlag = true;
+                bsTemplates.DataSource = templates;
+                cb_templateA.DisplayMember = "Key";
+                cb_templateA.ValueMember = "Value";
+                lockFlag = false;
+            }
+        }
 
         private async void Send(string cmd)
         {
@@ -1279,7 +1292,7 @@ namespace ChameleonMiniGUI
         {
             this.Cursor = Cursors.WaitCursor;
             pb_device.Image = pb_device.InitialImage;
-            txt_output.Text += $"{Environment.NewLine}"; // add empty line into log output
+            txt_output.AppendText($"{Environment.NewLine}"); // add empty line into log output
 
             var searcher = new ManagementObjectSearcher("select Name, DeviceID, PNPDeviceID from Win32_SerialPort where PNPDeviceID like '%VID_03EB&PID_2044%' or PNPDeviceID like '%VID_16D0&PID_04B2%'");
 
@@ -1299,12 +1312,12 @@ namespace ChameleonMiniGUI
                 try
                 {
                     var name = obj["Name"].ToString();
-                    txt_output.Text += $"[=] Connecting to {name} at {comPortStr}{Environment.NewLine}";
+                    txt_output.AppendText($"[=] Connecting to {name} at {comPortStr}{Environment.NewLine}");
                     _comport.Open();
                 }
                 catch (Exception)
                 {
-                    txt_output.Text += $"[!] Failed {comPortStr}{Environment.NewLine}";
+                    txt_output.AppendText($"[!] Failed {comPortStr}{Environment.NewLine}");
                 }
 
                 if (_comport.IsOpen)
@@ -1335,7 +1348,7 @@ namespace ChameleonMiniGUI
                     if (!string.IsNullOrEmpty(_firmwareVersion) && _firmwareVersion.Contains("Chameleon"))
                     {
                         _cmdExtension = string.Empty;
-                        txt_output.Text += $"[+] Success, found Chameleon Mini device on '{comPortStr}' with {_deviceIdentification} installed{Environment.NewLine}";
+                        txt_output.AppendText($"[+] Success, found Chameleon Mini device on '{comPortStr}' with {_deviceIdentification} installed{Environment.NewLine}");
                         _current_comport = comPortStr;
                         this.Cursor = Cursors.Default;
                         return;
@@ -1345,7 +1358,7 @@ namespace ChameleonMiniGUI
                     if (!string.IsNullOrEmpty(_firmwareVersion) && _firmwareVersion.Contains("Chameleon"))
                     {
                         _cmdExtension = "MY";
-                        txt_output.Text += $"[+] Success, found Chameleon Mini device on '{comPortStr}' with {_deviceIdentification} installed{Environment.NewLine}";
+                        txt_output.AppendText($"[+] Success, found Chameleon Mini device on '{comPortStr}' with {_deviceIdentification} installed{Environment.NewLine}");
                         _current_comport = comPortStr;
                         this.Cursor = Cursors.Default;
                         return;
@@ -1370,12 +1383,12 @@ namespace ChameleonMiniGUI
                 try
                 {
                     var name = obj["Name"].ToString();
-                    txt_output.Text += $"[=] Connecting to {name} at {comPortStr}{Environment.NewLine}";
+                    txt_output.AppendText($"[=] Connecting to {name} at {comPortStr}{Environment.NewLine}");
                     _comport.Open();
                 }
                 catch (Exception)
                 {
-                    txt_output.Text += $"[!] Failed {comPortStr}{Environment.NewLine}";
+                    txt_output.AppendText($"[!] Failed {comPortStr}{Environment.NewLine}");
                 }
 
                 if (!_comport.IsOpen) continue;
@@ -1390,7 +1403,7 @@ namespace ChameleonMiniGUI
                 {
                     _cmdExtension = string.Empty;
                     pb_device.Image = (Bitmap)Properties.Resources.ResourceManager.GetObject("chamRevG1");
-                    txt_output.Text += $"[+] Success, found Chameleon Mini device on '{comPortStr}' with {_deviceIdentification} installed{Environment.NewLine}";
+                    txt_output.AppendText($"[+] Success, found Chameleon Mini device on '{comPortStr}' with {_deviceIdentification} installed{Environment.NewLine}");
                     _current_comport = comPortStr;
                     _CurrentDevType = DeviceType.RevG;
                     ConfigHMIForRevG();
@@ -1403,7 +1416,7 @@ namespace ChameleonMiniGUI
                 {
                     _cmdExtension = "MY";
                     pb_device.Image = (Bitmap)Properties.Resources.ResourceManager.GetObject("chamRevE");
-                    txt_output.Text += $"[+] Success, found Chameleon Mini device on '{comPortStr}' with {_deviceIdentification} installed{Environment.NewLine}";
+                    txt_output.AppendText($"[+] Success, found Chameleon Mini device on '{comPortStr}' with {_deviceIdentification} installed{Environment.NewLine}");
                     _current_comport = comPortStr;
                     _CurrentDevType = DeviceType.RevE;
                     ConfigHMIForRevE();
@@ -1415,11 +1428,11 @@ namespace ChameleonMiniGUI
 
                 _comport.Close();
 
-                txt_output.Text += $"Didn't find a Chameleon on '{comPortStr}'{Environment.NewLine}";
+                txt_output.AppendText($"Didn't find a Chameleon on '{comPortStr}'{Environment.NewLine}");
             }
             _current_comport = string.Empty;
             this.Cursor = Cursors.Default;
-            txt_output.Text += $"Didn't find any Chameleon Mini device connected{Environment.NewLine}";
+            txt_output.AppendText($"Didn't find any Chameleon Mini device connected{Environment.NewLine}");
         }
 
         private bool SendCommandWithoutResult(string cmdText)
@@ -1452,7 +1465,7 @@ namespace ChameleonMiniGUI
             catch (Exception ex)
             {
                 var msg = $"{Environment.NewLine}[!] {cmdText}: {ex.Message}{Environment.NewLine}";
-                txt_output.Text += msg;
+                txt_output.AppendText(msg);
                 return false;
             }
             finally
@@ -1504,7 +1517,7 @@ namespace ChameleonMiniGUI
                     catch(TimeoutException ex)
                     {
                         var msg = $"{Environment.NewLine}[!] {cmdText}: {ex.Message}{Environment.NewLine}";
-                        txt_output.Text += msg;
+                        txt_output.AppendText(msg);
                     }
                     
                     return read_response_line.Replace("\r", "");
@@ -1625,7 +1638,7 @@ namespace ChameleonMiniGUI
             catch (Exception ex)
             {
                 var msg = $"{Environment.NewLine}[!] {ex.Message}{Environment.NewLine}";
-                txt_output.Text += msg;
+                txt_output.AppendText(msg);
                 return string.Empty;
             }
         }
@@ -2099,19 +2112,20 @@ namespace ChameleonMiniGUI
             SendCommandWithoutResult($"UPLOAD{_cmdExtension}");
 
             var bytes = dump.Data.Concat(dump.Extra).ToArray();
+            
             int numBytesSuccessfullySent = xmodem.Send(bytes);
 
             if (numBytesSuccessfullySent == bytes.Length && xmodem.TerminationReason == XMODEM.TerminationReasonEnum.EndOfFile)
             {
                 var msg = $"[+] File upload ok{Environment.NewLine}";
                 Console.WriteLine(msg);
-                txt_output.Text += msg;
+                txt_output.AppendText(msg);
             }
             else
             {
                 var msg = $"[!] Failed to upload file{Environment.NewLine}";
                 MessageBox.Show(msg);
-                txt_output.Text += msg;
+                txt_output.AppendText(msg);
             }
         }
 
@@ -2128,6 +2142,7 @@ namespace ChameleonMiniGUI
             // by default single UID size
             return 4;
         }
+
         private void IndentifyDumpTypeBySize(DumpData dump)
         {
             switch (dump.Data.Length)
@@ -2183,7 +2198,7 @@ namespace ChameleonMiniGUI
             {
                 var msg = $"[+] File download from device ok{Environment.NewLine}";
                 Console.WriteLine(msg);
-                txt_output.Text += msg;
+                txt_output.AppendText(msg);
 
                 byte[] neededBytes = bytes;
                 byte[] extraBytes = new byte[] { };
@@ -2220,14 +2235,14 @@ namespace ChameleonMiniGUI
 
                 msg = $"[+] File saved to {filename}{Environment.NewLine}";
                 Console.WriteLine(msg);
-                txt_output.Text += msg;
+                txt_output.AppendText(msg);
             }
             else
             {
                 // Something went wrong during the transfer
                 var msg = $"[!] Failed to save dump{Environment.NewLine}";
                 MessageBox.Show(msg);
-                txt_output.Text += msg;
+                txt_output.AppendText(msg);
             }
         }
 
@@ -2285,13 +2300,13 @@ namespace ChameleonMiniGUI
                 var dynamicFileByteProvider = hexBox.ByteProvider;
                 dynamicFileByteProvider?.ApplyChanges();
 
-                txt_output.Text += $"[+] Saved file {l?.Text}{Environment.NewLine}";
+                txt_output.AppendText($"[+] Saved file {l?.Text}{Environment.NewLine}");
             }
             catch (Exception)
             {
                 var msg = $"[!] Failed to save file {l?.Text}{Environment.NewLine}";
                 MessageBox.Show(msg);
-                txt_output.Text += msg;
+                txt_output.AppendText(msg);
             }
         }
 
@@ -2301,7 +2316,7 @@ namespace ChameleonMiniGUI
             {
                 var msg = $"[!] Failed to open - File does not exist{Environment.NewLine}";
                 MessageBox.Show(msg);
-                txt_output.Text += msg;
+                txt_output.AppendText(msg);
                 return;
             }
 
@@ -2373,14 +2388,14 @@ namespace ChameleonMiniGUI
                 PerformComparison();
 
                 var msg = $"[!] Loaded '{fi.Name}' {Environment.NewLine}";
-                txt_output.Text += msg;
+                txt_output.AppendText(msg);
             }
             catch (IOException ex) // write mode failed
             {
                 // file cannot be opened
                 var msg = $"[!] Failed to open file{Environment.NewLine}{ex.Message}{Environment.NewLine}";
                 MessageBox.Show(msg);
-                txt_output.Text += msg;
+                txt_output.AppendText(msg);
             }
         }
 
@@ -2420,7 +2435,7 @@ namespace ChameleonMiniGUI
             var l = FindControls<Label>(Controls, $"lbl_hbfilename{hbIdx}").FirstOrDefault();
             if (l != null)
             {
-                txt_output.Text += $"[+] Closed file {l.Text}{Environment.NewLine}";
+                txt_output.AppendText($"[+] Closed file {l.Text}{Environment.NewLine}");
                 l.Text = "N/A";
             }
         }
@@ -2716,7 +2731,6 @@ namespace ChameleonMiniGUI
             }
             DeviceDisconnected();
         }
-
         #endregion
     }
 }

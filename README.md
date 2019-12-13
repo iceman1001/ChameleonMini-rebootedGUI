@@ -1,22 +1,35 @@
-# Windows based ChameleonMini GUI
+# ChameleonMini GUI (win)
 [![Build Status](https://travis-ci.org/iceman1001/ChameleonMini-rebootedGUI.svg?branch=master)](https://travis-ci.org/iceman1001/ChameleonMini-rebootedGUI)
 [![Latest release](https://img.shields.io/github/release/iceman1001/ChameleonMini-rebootedGUI.svg)](https://github.com/iceman1001/ChameleonMini-rebootedGUI/releases/latest)
 
-This is a windows based GUI for the ChameleonMini device. It supports all known chameleon mini firmware today. Its device agnostic.
+
+This is a MS Windows based GUI for the ChameleonMini device.
+
+
+## Which device does GUI support?
+in short, it Device agnostic / Firmware independent.
+It supports all known chameleon mini firmware today. Its device agnostic, you can connect
+[RevG, (RevE)](https://kasper-oswald.de/gb/chameleonmini/),
+RevE Rebooted,
+[RevG Rebooted, ChameleonTiny](https://www.indiegogo.com/projects/chameleonmini-rev-g-chameleontiny-by-proxgrind#/)
+
+## Changelog
+You find the changelog 
+[changelog](https://github.com/iceman1001/ChameleonMini-rebootedGUI/blob/master/CHANGELOG.md) 
+
 
 ## Binary distribution / windows installer
 For the sake of easiness or for those who can't compile this project there is a _click-once deployment_ installation located here.
 
 Release: [v1.2.1.9](http://www.icesql.se/download/ChameleonMiniGUI/publish.htm)
 
-Read the [changelog](https://github.com/iceman1001/ChameleonMini-rebootedGUI/blob/master/CHANGELOG.md) for information of what is new. 
-
 __Prerequisite__
 * dot.net 4.6.2
 * Application needs full rights.
 
-### About the clice once technology
+### About _click once technology_
 The application is being deployed with Click-Once technology, this means that the application phones home to see if there is an update available everytime you start it. If there is an update you get an choice to install or skip.  I do recommend that you update. If you think this is not good for your privacy,  feel free to block the application from reaching internet.  It should work but its untested.
+
 
 ## Roadmap
 There isn't a roadmap for this software. Go in under _issues_ and see which ideas / known bugs there is.

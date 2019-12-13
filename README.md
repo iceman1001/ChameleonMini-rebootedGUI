@@ -7,12 +7,12 @@ This is a MS Windows based GUI for the ChameleonMini device.
 
 
 ## Which device does GUI support?
-in short
+in short, the GUI, it's
  - Device agnostic 
- - Firmware independent.
- - It supports all known chameleon mini firmware today.
+ - Firmware independent
 
-you can connect
+you can connect any known chameleon mini device, installed with any known firmware.
+
  - [RevG, (RevE)](https://kasper-oswald.de/gb/chameleonmini/),
  - RevE Rebooted,
  - [RevG Rebooted, ChameleonTiny](https://www.indiegogo.com/projects/chameleonmini-rev-g-chameleontiny-by-proxgrind#/)

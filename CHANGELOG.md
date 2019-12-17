@@ -4,6 +4,10 @@ This project uses the changelog in accordance with [keepchangelog](http://keepac
 
 ## [unreleased]
 
+## [1.2.1.10] - 2019-12-17
+- speedups (@grspy)
+- log textbox scrolls to end when appending. (@grspy , @iceman)
+
 ## [1.2.1.9] - 2019-12-11
 - Increase default "keep alive" setting to 10sec (@grspy)
 

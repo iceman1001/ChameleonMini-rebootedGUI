@@ -2732,5 +2732,14 @@ namespace ChameleonMiniGUI
             DeviceDisconnected();
         }
         #endregion
+
+        private void txt_output_VisibleChanged(object sender, EventArgs e)
+        {
+            var tb = (TextBox) sender;
+            if (tb == null || !tb.Visible) return;
+            
+            tb.SelectionStart = tb.TextLength;
+            tb.ScrollToCaret();
+        }
     }
 }

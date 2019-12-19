@@ -288,47 +288,116 @@ namespace ChameleonMiniGUI
 
         private void btn_exitboot_Click(object sender, EventArgs e)
         {
-            bool failed = true;
+            bool success = false;
+            bool found = false;
 
-            // Run the bootloader exe
-            try
+            ManagementObjectSearcher searcher =
+                    new ManagementObjectSearcher("SELECT * FROM Win32_PnPEntity where DeviceID like '%VID_03EB&PID_2FDE%' or DeviceID like '%VID_03EB&PID_204A%' or DeviceID like '%VID_03EB&PID_2FE4%'");
+
+            var queryCollection = searcher.Get();
+            if (queryCollection != null && queryCollection.Count > 0)
             {
-                var bootloaderPath = ConfigurationManager.AppSettings["BOOTLOADER_PATH"];
-                var bootloaderFileName = ConfigurationManager.AppSettings["BOOTLOADER_EXE"];
-                var flashFileName = ConfigurationManager.AppSettings["FLASH_BINARY"];
-                var eepromFileName = ConfigurationManager.AppSettings["EEPROM_BINARY"];
+                var mo = queryCollection.OfType<ManagementObject>().FirstOrDefault();
 
-                var fullpath = Path.Combine(Application.StartupPath, bootloaderPath);
-
-                var flasher = Path.Combine(fullpath, bootloaderFileName);
-                var firmware = Path.Combine(fullpath, flashFileName);
-                var eeprom = Path.Combine(fullpath, eepromFileName);
-
-                if (File.Exists(flasher) && File.Exists(firmware) && File.Exists(eeprom))
+                if (mo != null)
                 {
-                    var ps = new ProcessStartInfo
+                    var deviceName = mo["Name"].ToString();
+                    var deviceID = mo["DeviceID"].ToString();
+                    if (deviceName.Equals("ATxmega128A4U") && (deviceID.Contains("VID_03EB&PID_2FDE") || deviceID.Contains("VID_03EB&PID_204A")))
                     {
-                        UseShellExecute = true,
-                        WorkingDirectory = fullpath,
-                        FileName = flasher
-                    };
-                    Start(ps);
-                    failed = false;
+                        // RevG
+                        found = true;
+                        try
+                        {
+                            var extrasPath = ConfigurationManager.AppSettings["BOOTLOADER_PATH"];
+                            var avrdudeFileName = ConfigurationManager.AppSettings["AVRDUDE_EXE"];
+                            var flashFileName = ConfigurationManager.AppSettings["REVG_FLASH_HEX"];
+                            var eepromFileName = ConfigurationManager.AppSettings["REVG_EEPROM_HEX"];
+
+                            var fullpath = Path.Combine(Application.StartupPath, extrasPath);
+
+                            var flasher = Path.Combine(fullpath, avrdudeFileName);
+                            var firmware = Path.Combine(fullpath, flashFileName);
+                            var eeprom = Path.Combine(fullpath, eepromFileName);
+
+                            if (File.Exists(flasher) && File.Exists(firmware) && File.Exists(eeprom))
+                            {
+                                var ps = new ProcessStartInfo
+                                {
+                                    UseShellExecute = true,
+                                    WorkingDirectory = fullpath,
+                                    FileName = flasher,
+                                    Arguments = "-c flip2 -p ATXMega128A4U -B 60 -P usb -U application:w:" + flashFileName + ":i -U eeprom:w:" + eepromFileName + ":i"
+                                };
+                                Start(ps);
+                                success = true;
+                            }
+                            else
+                            {
+                                txt_output.AppendText("[!] Firmware flashing failed: Unable to find all the required files to flash the firmware");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            //
+                            Console.WriteLine(ex.Message);
+                        }
+                    }
+                    else if (deviceName.Equals("ATxmega32A4U") && deviceID.Contains("VID_03EB&PID_2FE4"))
+                    {
+                        // RevE rebooted
+                        found = true;
+                        try
+                        {
+                            // Run the bootloader exe
+
+                            var bootloaderPath = ConfigurationManager.AppSettings["BOOTLOADER_PATH"];
+                            var bootloaderFileName = ConfigurationManager.AppSettings["BOOTLOADER_EXE"];
+                            var flashFileName = ConfigurationManager.AppSettings["FLASH_BINARY"];
+                            var eepromFileName = ConfigurationManager.AppSettings["EEPROM_BINARY"];
+
+                            var fullpath = Path.Combine(Application.StartupPath, bootloaderPath);
+
+                            var flasher = Path.Combine(fullpath, bootloaderFileName);
+                            var firmware = Path.Combine(fullpath, flashFileName);
+                            var eeprom = Path.Combine(fullpath, eepromFileName);
+
+                            if (File.Exists(flasher) && File.Exists(firmware) && File.Exists(eeprom))
+                            {
+                                var ps = new ProcessStartInfo
+                                {
+                                    UseShellExecute = true,
+                                    WorkingDirectory = fullpath,
+                                    FileName = flasher
+                                };
+                                Start(ps);
+                                success = true;
+                            }
+                            else
+                            {
+                                txt_output.AppendText("[!] Firmware flashing failed: Unable to find all the required files to flash the firmware");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            //
+                            Console.WriteLine(ex.Message);
+                        }
+                    }
                 }
-                else
-                {
-                    MessageBox.Show("Unable to find all the required files to exit the boot mode", "Exit Boot Mode failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-            catch (Exception ex)
-            {
-                //
-                Console.WriteLine(ex.Message);
             }
 
-            if (failed)
+            if (success)
             {
-                MessageBox.Show("Unable to exit the bootloader mode", "Exit Boot Mode failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                txt_output.AppendText("[+] Firmware flashed successfully");
+            }
+            else
+            {
+                if (!found)
+                {
+                    txt_output.AppendText("[!] Firmware flashing failed: Unable to find a ChameleonMini device. Maybe not in bootloader mode?");
+                }
+                MessageBox.Show("Unable to flash the firmware. Check the log output for more information.", "Firmware flashing failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

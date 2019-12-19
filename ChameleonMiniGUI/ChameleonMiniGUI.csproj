@@ -173,6 +173,9 @@
       <DependentUpon>UcExplorer.cs</DependentUpon>
     </Compile>
     <Compile Include="XMODEM.cs" />
+    <Content Include="Extras\avrdude.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Languages\Chinese.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -199,6 +202,15 @@
     </Content>
     <Content Include="Languages\German.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Extras\avrdude.conf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Extras\Chameleon-RevG.eep">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Extras\Chameleon-RevG.hex">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Resources\cdrom.ico" />
     <None Include="Resources\folder-close.ico" />

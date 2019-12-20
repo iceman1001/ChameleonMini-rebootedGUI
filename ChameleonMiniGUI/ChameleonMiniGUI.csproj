@@ -158,6 +158,7 @@
     <Compile Include="SplashScreen.Designer.cs">
       <DependentUpon>SplashScreen.cs</DependentUpon>
     </Compile>
+    <Compile Include="SuspendUpdate.cs" />
     <Compile Include="Templating.cs" />
     <Compile Include="UserControls\UcTextFlow.cs">
       <SubType>UserControl</SubType>

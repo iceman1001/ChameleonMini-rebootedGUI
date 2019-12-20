@@ -127,7 +127,7 @@ namespace ChameleonMiniGUI
             }
 
             // Select no tag slot
-            foreach (var cb in FindControls<CheckBox>(Controls, "checkBox"))
+            foreach (var cb in FindControls<CheckBox>(tpOperation.Controls, "checkBox"))
             {
                 cb.Checked = false;
             }
@@ -212,7 +212,7 @@ namespace ChameleonMiniGUI
             SaveActiveSlot();
 
             // Get all selected indices
-            foreach (var cb in FindControls<CheckBox>(Controls, "checkBox"))
+            foreach (var cb in FindControls<CheckBox>(tpOperation.Controls, "checkBox"))
             {
                 if (!cb.Checked) continue;
 
@@ -222,7 +222,7 @@ namespace ChameleonMiniGUI
                 SendCommandWithoutResult($"SETTING{_cmdExtension}=" + (tagslotIndex - _tagslotIndexOffset));
 
                 string selectedMode = string.Empty;
-                var mode = FindControls<ComboBox>(Controls, $"cb_mode{tagslotIndex}").FirstOrDefault();
+                var mode = FindControls<ComboBox>(tpOperation.Controls, $"cb_mode{tagslotIndex}").FirstOrDefault();
                 if (mode != null)
                 {
                     string actualMode = SendCommand($"CONFIG{_cmdExtension}?").ToString();
@@ -238,24 +238,24 @@ namespace ChameleonMiniGUI
                 {
                     case DeviceType.RevG:
                         {
-                            FindControls<ComboBox>(Controls, $"cb_Lbutton{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LBUTTON{_cmdExtension}={a.SelectedItem}"));
-                            FindControls<ComboBox>(Controls, $"cb_Lbuttonlong{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LBUTTON_LONG{_cmdExtension}={a.SelectedItem}"));
-                            FindControls<ComboBox>(Controls, $"cb_Rbutton{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"RBUTTON{_cmdExtension}={a.SelectedItem}"));
-                            FindControls<ComboBox>(Controls, $"cb_Rbuttonlong{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"RBUTTON_LONG{_cmdExtension}={a.SelectedItem}"));
-                            FindControls<ComboBox>(Controls, $"cb_ledgreen{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LEDGREEN{_cmdExtension}={a.SelectedItem}"));
-                            FindControls<ComboBox>(Controls, $"cb_ledred{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LEDRED{_cmdExtension}={a.SelectedItem}"));
+                            FindControls<ComboBox>(tpOperation.Controls, $"cb_Lbutton{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LBUTTON{_cmdExtension}={a.SelectedItem}"));
+                            FindControls<ComboBox>(tpOperation.Controls, $"cb_Lbuttonlong{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LBUTTON_LONG{_cmdExtension}={a.SelectedItem}"));
+                            FindControls<ComboBox>(tpOperation.Controls, $"cb_Rbutton{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"RBUTTON{_cmdExtension}={a.SelectedItem}"));
+                            FindControls<ComboBox>(tpOperation.Controls, $"cb_Rbuttonlong{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"RBUTTON_LONG{_cmdExtension}={a.SelectedItem}"));
+                            FindControls<ComboBox>(tpOperation.Controls, $"cb_ledgreen{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LEDGREEN{_cmdExtension}={a.SelectedItem}"));
+                            FindControls<ComboBox>(tpOperation.Controls, $"cb_ledred{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LEDRED{_cmdExtension}={a.SelectedItem}"));
                             break;
                         }
                     default:
                         {
-                            FindControls<ComboBox>(Controls, $"cb_Lbutton{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"BUTTON{_cmdExtension}={a.SelectedItem}"));
-                            FindControls<ComboBox>(Controls, $"cb_Lbuttonlong{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"BUTTON_LONG{_cmdExtension}={a.SelectedItem}"));
+                            FindControls<ComboBox>(tpOperation.Controls, $"cb_Lbutton{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"BUTTON{_cmdExtension}={a.SelectedItem}"));
+                            FindControls<ComboBox>(tpOperation.Controls, $"cb_Lbuttonlong{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"BUTTON_LONG{_cmdExtension}={a.SelectedItem}"));
                             break;
                         }
                 }
 
                 // Set the UID
-                var txtUid = FindControls<TextBox>(Controls, $"txt_uid{tagslotIndex}").FirstOrDefault();
+                var txtUid = FindControls<TextBox>(tpOperation.Controls, $"txt_uid{tagslotIndex}").FirstOrDefault();
                 if (txtUid != null)
                 {
                     string uid = txtUid.Text;
@@ -272,7 +272,7 @@ namespace ChameleonMiniGUI
                 var slotMemSize = SendCommand($"MEMSIZE{_cmdExtension}?").ToString();
                 if (!string.IsNullOrEmpty(slotMemSize) && !slotMemSize.StartsWith("202:"))
                 {
-                    FindControls<TextBox>(Controls, $"txt_size{tagslotIndex}").ForEach(a => a.Text = slotMemSize);
+                    FindControls<TextBox>(tpOperation.Controls, $"txt_size{tagslotIndex}").ForEach(a => a.Text = slotMemSize);
                 }
             }
             RestoreActiveSlot();
@@ -411,7 +411,7 @@ namespace ChameleonMiniGUI
             {
                 var dumpFilename = openFileDialog1.FileName;
 
-                foreach (var cb in FindControls<CheckBox>(Controls, "checkBox"))
+                foreach (var cb in FindControls<CheckBox>(tpOperation.Controls, "checkBox"))
                 {
                     if (!cb.Checked) continue;
 
@@ -451,7 +451,7 @@ namespace ChameleonMiniGUI
             }
 
             // Get all selected indices
-            foreach (var cb in FindControls<CheckBox>(Controls, "checkBox"))
+            foreach (var cb in FindControls<CheckBox>(tpOperation.Controls, "checkBox"))
             {
                 if (!cb.Checked) continue;
 
@@ -522,7 +522,7 @@ namespace ChameleonMiniGUI
             SaveActiveSlot();
 
             // Get all selected indices
-            var results = FindControls<CheckBox>(Controls, "checkBox")
+            var results = FindControls<CheckBox>(tpOperation.Controls, "checkBox")
                 .Where(cb => cb.Checked)
                 .Select(cb =>
                 {
@@ -558,7 +558,7 @@ namespace ChameleonMiniGUI
 
             // Get all selected checkboxes
             List<CheckBox> selectedCheckBoxes = new List<CheckBox>();
-            List<CheckBox> allSlotsCheckBoxes = FindControls<CheckBox>(Controls, "checkBox");
+            List<CheckBox> allSlotsCheckBoxes = FindControls<CheckBox>(tpOperation.Controls, "checkBox");
             foreach (var cb in allSlotsCheckBoxes)
             {
                 if(cb.Checked)
@@ -590,13 +590,13 @@ namespace ChameleonMiniGUI
                     // For RevG, we manually set default values
                     if (_CurrentDevType == DeviceType.RevG)
                     {
-                        FindControls<ComboBox>(Controls, $"cb_mode{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"CONFIG{_cmdExtension}=CLOSED"));
-                        FindControls<ComboBox>(Controls, $"cb_Lbutton{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LBUTTON{_cmdExtension}={a.Items[0]}"));
-                        FindControls<ComboBox>(Controls, $"cb_Lbuttonlong{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LBUTTON_LONG{_cmdExtension}={a.Items[0]}"));
-                        FindControls<ComboBox>(Controls, $"cb_Rbutton{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"RBUTTON{_cmdExtension}={a.Items[0]}"));
-                        FindControls<ComboBox>(Controls, $"cb_Rbuttonlong{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"RBUTTON_LONG{_cmdExtension}={a.Items[0]}"));
-                        FindControls<ComboBox>(Controls, $"cb_ledgreen{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LEDGREEN{_cmdExtension}={a.Items[0]}"));
-                        FindControls<ComboBox>(Controls, $"cb_ledred{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LEDRED{_cmdExtension}={a.Items[0]}"));
+                        FindControls<ComboBox>(tpOperation.Controls, $"cb_mode{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"CONFIG{_cmdExtension}=CLOSED"));
+                        FindControls<ComboBox>(tpOperation.Controls, $"cb_Lbutton{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LBUTTON{_cmdExtension}={a.Items[0]}"));
+                        FindControls<ComboBox>(tpOperation.Controls, $"cb_Lbuttonlong{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LBUTTON_LONG{_cmdExtension}={a.Items[0]}"));
+                        FindControls<ComboBox>(tpOperation.Controls, $"cb_Rbutton{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"RBUTTON{_cmdExtension}={a.Items[0]}"));
+                        FindControls<ComboBox>(tpOperation.Controls, $"cb_Rbuttonlong{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"RBUTTON_LONG{_cmdExtension}={a.Items[0]}"));
+                        FindControls<ComboBox>(tpOperation.Controls, $"cb_ledgreen{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LEDGREEN{_cmdExtension}={a.Items[0]}"));
+                        FindControls<ComboBox>(tpOperation.Controls, $"cb_ledred{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LEDRED{_cmdExtension}={a.Items[0]}"));
                     }
                     RefreshSlot(tagslotIndex, false);
                 }
@@ -610,7 +610,7 @@ namespace ChameleonMiniGUI
         {
             this.Cursor = Cursors.WaitCursor;
             // Get all selected indices
-            foreach (var cb in FindControls<CheckBox>(Controls, "checkBox"))
+            foreach (var cb in FindControls<CheckBox>(tpOperation.Controls, "checkBox"))
             {
                 if (!cb.Checked) continue;
 
@@ -625,7 +625,7 @@ namespace ChameleonMiniGUI
         private void btn_setactive_Click(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;
-            foreach (var cb in FindControls<CheckBox>(Controls, "checkBox"))
+            foreach (var cb in FindControls<CheckBox>(tpOperation.Controls, "checkBox"))
             {
                 if (!cb.Checked) continue;
 
@@ -1020,13 +1020,11 @@ namespace ChameleonMiniGUI
 
         private void frm_main_ResizeBegin(object sender, EventArgs e)
         {
-            SuspendLayout();
         }
 
         private void frm_main_ResizeEnd(object sender, EventArgs e)
         {
             GroupBoxEnhanced.RedrawGroupBoxDisplay(tpOperation);
-            ResumeLayout();
         }
 
         private void btn_identify_Click(object sender, EventArgs e)
@@ -1037,8 +1035,10 @@ namespace ChameleonMiniGUI
             SendCommandWithoutResult($"CONFIG{_cmdExtension}=ISO14443A_READER");
 
             var s = SendCommandWithMultilineResponse($"IDENTIFY{_cmdExtension}").ToString();
-            txt_output.AppendText($"{s}{Environment.NewLine}");
-
+            var lines = s.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+            foreach( var line in lines) {
+                txt_output.Text += $"[+] {line}{Environment.NewLine}";
+            }
             RestoreActiveSlot();
             this.Cursor = Cursors.Default;
         }
@@ -1085,6 +1085,15 @@ namespace ChameleonMiniGUI
                 }
             }
         }
+
+         private void txt_output_VisibleChanged(object sender, EventArgs e)
+        {
+            var tb = (TextBox) sender;
+            if (tb == null || !tb.Visible) return;
+            
+            tb.SelectionStart = tb.TextLength;
+            tb.ScrollToCaret();
+        }  
         #endregion
 
         #region Helper methods
@@ -1228,7 +1237,7 @@ namespace ChameleonMiniGUI
 
         private void SetCheckBox(bool value)
         {
-            foreach (var cb in FindControls<CheckBox>(Controls, "checkBox"))
+            foreach (var cb in FindControls<CheckBox>(tpOperation.Controls, "checkBox"))
             {
                 cb.Checked = value;
             }
@@ -1236,7 +1245,7 @@ namespace ChameleonMiniGUI
 
         private int GetNumberOfChecked()
         {
-            return FindControls<CheckBox>(Controls, "checkBox").Count(cb => cb.Checked);
+            return FindControls<CheckBox>(tpOperation.Controls, "checkBox").Count(cb => cb.Checked);
         }
 
         private void DeviceDisconnected()
@@ -1257,7 +1266,7 @@ namespace ChameleonMiniGUI
                 _comport = null;
             }
 
-            this.Text = $"{SoftwareVersion} ---> Device disconnected";
+            this.Text = $"{SoftwareVersion}";
 
             pb_device.Image = pb_device.InitialImage;
             FirmwareVersion = string.Empty;
@@ -1268,7 +1277,7 @@ namespace ChameleonMiniGUI
             txt_constatus.SelectionStart = 0;
 
             // Disable all tag slots and don't select any tag slot
-            foreach (var cb in FindControls<CheckBox>(Controls, "checkBox"))
+            foreach (var cb in FindControls<CheckBox>(tpOperation.Controls, "checkBox"))
             {
                 cb.Enabled = false;
                 cb.Checked = false;
@@ -1312,8 +1321,10 @@ namespace ChameleonMiniGUI
 
             DisplayText();
 
+            SuspendUpdate.Suspend(tpOperation);
+
             // Enable all tag slots but don't select any tag slot
-            foreach (var cb in FindControls<CheckBox>(Controls, "checkBox"))
+            foreach (var cb in FindControls<CheckBox>(tpOperation.Controls, "checkBox"))
             {
                 cb.Enabled = true;
                 cb.Checked = false;
@@ -1354,6 +1365,8 @@ namespace ChameleonMiniGUI
             tbSerialCmd.Enabled = true;
 
             GetAvailableCommands();
+
+            SuspendUpdate.Resume(tpOperation);
             this.Cursor = Cursors.Default;
         }
 
@@ -1391,6 +1404,7 @@ namespace ChameleonMiniGUI
 
                 if (_comport.IsOpen)
                 {
+                    tpOperation.SuspendLayout();
                     if (pnpId.Contains("VID_03EB&PID_2044"))
                     {
                         // revE
@@ -1398,7 +1412,9 @@ namespace ChameleonMiniGUI
                         pb_device.Image = (Bitmap)Properties.Resources.ResourceManager.GetObject("chamRevE");
                         _CurrentDevType = DeviceType.RevE;
                         _tagslotIndexOffset = 1;
+                        tpOperation.Hide();
                         ConfigHMIForRevE();
+                        tpOperation.Show();
                     }
 
                     else if (pnpId.Contains("VID_16D0&PID_04B2"))
@@ -1408,9 +1424,11 @@ namespace ChameleonMiniGUI
                         pb_device.Image = (Bitmap)Properties.Resources.ResourceManager.GetObject("chamRevG1");
                         _CurrentDevType = DeviceType.RevG;
                         _tagslotIndexOffset = 0;
+                        tpOperation.Hide();
                         ConfigHMIForRevG();
+                        tpOperation.Show();
                     }
-
+                    tpOperation.ResumeLayout(true);
 
                     // try without the "MY" extension first
                     FirmwareVersion = SendCommand("VERSION?").ToString();
@@ -1732,7 +1750,7 @@ namespace ChameleonMiniGUI
 
         private void RefreshSlot(int slotIndex, bool doSaveActive = true)
         {
-            if(doSaveActive) SaveActiveSlot();
+            if (doSaveActive) SaveActiveSlot();
 
             //SETTINGMY=i
             SendCommandWithoutResult($"SETTING{_cmdExtension}={slotIndex - _tagslotIndexOffset}");
@@ -1746,7 +1764,7 @@ namespace ChameleonMiniGUI
             if (!string.IsNullOrWhiteSpace(slotUid))
             {
                 // set the textbox value of the i+1 txt_uid
-                var tbs = FindControls<TextBox>(Controls, $"txt_uid{slotIndex}");
+                var tbs = FindControls<TextBox>(tpOperation.Controls, $"txt_uid{slotIndex}");
                 foreach (var box in tbs)
                 {
                     box.Text = slotUid;
@@ -1758,7 +1776,7 @@ namespace ChameleonMiniGUI
             if (!string.IsNullOrEmpty(slotMemSize))
             {
                 // set the textbox value of the i+1 txt_size
-                var txtMemSize = FindControls<TextBox>(Controls, $"txt_size{slotIndex}");
+                var txtMemSize = FindControls<TextBox>(tpOperation.Controls, $"txt_size{slotIndex}");
                 foreach (var box in txtMemSize)
                 {
                     box.Text = slotMemSize;
@@ -1773,47 +1791,47 @@ namespace ChameleonMiniGUI
                     var slotMode = SendCommand($"CONFIG{_cmdExtension}?").ToString();
                     if (IsModeValid(slotMode))
                     {
-                        FindControls<ComboBox>(Controls, $"cb_mode{slotIndex}").ForEach(box => box.SelectedItem = slotMode);
+                        FindControls<ComboBox>(tpOperation.Controls, $"cb_mode{slotIndex}").ForEach(box => box.SelectedItem = slotMode);
                     }
 
                     //BUTTONMY? -> RETURNS THE MODE OF THE BUTTON
                     var slotLButtonMode = SendCommand($"LBUTTON{_cmdExtension}?").ToString();
                     if (IsLButtonModeValid(slotLButtonMode))
                     {
-                        FindControls<ComboBox>(Controls, $"cb_lbutton{slotIndex}").ForEach(box => box.SelectedItem = slotLButtonMode);
+                        FindControls<ComboBox>(tpOperation.Controls, $"cb_lbutton{slotIndex}").ForEach(box => box.SelectedItem = slotLButtonMode);
                     }
 
                     //BUTTON_LONGMY? -> RETURNS THE MODE OF THE BUTTON LONG
                     var slotLButtonLongMode = SendCommand($"LBUTTON_LONG{_cmdExtension}?").ToString();
                     if (IsLButtonLongModeValid(slotLButtonLongMode))
                     {
-                        FindControls<ComboBox>(Controls, $"cb_lbuttonlong{slotIndex}").ForEach(box => box.SelectedItem = slotLButtonLongMode);
+                        FindControls<ComboBox>(tpOperation.Controls, $"cb_lbuttonlong{slotIndex}").ForEach(box => box.SelectedItem = slotLButtonLongMode);
                     }
 
                     //BUTTONMY? -> RETURNS THE MODE OF THE BUTTON
                     var slotRButtonMode = SendCommand($"RBUTTON{_cmdExtension}?").ToString();
                     if (IsRButtonModeValid(slotRButtonMode))
                     {
-                        FindControls<ComboBox>(Controls, $"cb_rbutton{slotIndex}").ForEach(box => box.SelectedItem = slotRButtonMode);
+                        FindControls<ComboBox>(tpOperation.Controls, $"cb_rbutton{slotIndex}").ForEach(box => box.SelectedItem = slotRButtonMode);
                     }
 
                     //BUTTON_LONGMY? -> RETURNS THE MODE OF THE BUTTON LONG
                     var slotRButtonLongMode = SendCommand($"RBUTTON_LONG{_cmdExtension}?").ToString();
                     if (IsRButtonLongModeValid(slotRButtonLongMode))
                     {
-                        FindControls<ComboBox>(Controls, $"cb_rbuttonlong{slotIndex + _tagslotIndexOffset}").ForEach(box => box.SelectedItem = slotRButtonLongMode);
+                        FindControls<ComboBox>(tpOperation.Controls, $"cb_rbuttonlong{slotIndex + _tagslotIndexOffset}").ForEach(box => box.SelectedItem = slotRButtonLongMode);
                     }
 
                     var slotGreen = SendCommand($"LEDGREEN{_cmdExtension}?").ToString();
                     if (IsLEDGreenModeValid(slotGreen))
                     {
-                        FindControls<ComboBox>(Controls, $"cb_ledgreen{slotIndex}").ForEach(box => box.SelectedItem = slotGreen);
+                        FindControls<ComboBox>(tpOperation.Controls, $"cb_ledgreen{slotIndex}").ForEach(box => box.SelectedItem = slotGreen);
                     }
 
                     var slotRed = SendCommand($"LEDRED{_cmdExtension}?").ToString();
                     if (IsLEDRedModeValid(slotRed))
                     {
-                        FindControls<ComboBox>(Controls, $"cb_ledred{slotIndex}").ForEach(box => box.SelectedItem = slotRed);
+                        FindControls<ComboBox>(tpOperation.Controls, $"cb_ledred{slotIndex}").ForEach(box => box.SelectedItem = slotRed);
                     }
                     break;
                 }
@@ -1824,7 +1842,7 @@ namespace ChameleonMiniGUI
                     if (IsModeValid(slotMode))
                     {
                         // set the combobox value of the i+1 cb_mode
-                        var cbMode = FindControls<ComboBox>(Controls, $"cb_mode{slotIndex}");
+                        var cbMode = FindControls<ComboBox>(tpOperation.Controls, $"cb_mode{slotIndex}");
                         foreach (var box in cbMode)
                         {
                             box.SelectedItem = slotMode;
@@ -1835,14 +1853,14 @@ namespace ChameleonMiniGUI
                     var slotLButtonMode = SendCommand($"BUTTON{_cmdExtension}?").ToString();
                     if (IsLButtonModeValid(slotLButtonMode))
                     {
-                        FindControls<ComboBox>(Controls, $"cb_lbutton{slotIndex}").ForEach(box => box.SelectedItem = slotLButtonMode);
+                        FindControls<ComboBox>(tpOperation.Controls, $"cb_lbutton{slotIndex}").ForEach(box => box.SelectedItem = slotLButtonMode);
                     }
 
                     //BUTTON_LONGMY? -> RETURNS THE MODE OF THE BUTTON LONG
                     var slotLButtonLongMode = SendCommand($"BUTTON_LONG{_cmdExtension}?").ToString();
                     if (IsLButtonModeValid(slotLButtonLongMode))
                     {
-                        FindControls<ComboBox>(Controls, $"cb_lbuttonlong{slotIndex}").ForEach(box => box.SelectedItem = slotLButtonLongMode);
+                        FindControls<ComboBox>(tpOperation.Controls, $"cb_lbuttonlong{slotIndex}").ForEach(box => box.SelectedItem = slotLButtonLongMode);
                     }
                     break;
                 }
@@ -1909,7 +1927,7 @@ namespace ChameleonMiniGUI
                 if (_modesArray.Any())
                 {
                     // populate all dropdowns
-                    foreach (var cb in FindControls<ComboBox>(Controls, "cb_mode"))
+                    foreach (var cb in FindControls<ComboBox>(tpOperation.Controls, "cb_mode"))
                     {
                         cb.Items.Clear();
                         cb.Items.AddRange(_modesArray);
@@ -1924,7 +1942,7 @@ namespace ChameleonMiniGUI
             if (!_lbuttonModesArray.Any()) return;
 
             // populate all dropdowns
-            foreach (var cb in FindControls<ComboBox>(Controls, "cb_Lbutton"))
+            foreach (var cb in FindControls<ComboBox>(tpOperation.Controls, "cb_Lbutton"))
             {
                 cb.Items.Clear();
                 cb.Items.AddRange(_lbuttonModesArray);
@@ -1938,7 +1956,7 @@ namespace ChameleonMiniGUI
             if (!_rbuttonModesArray.Any()) return;
 
             // populate all dropdowns
-            foreach (var cb in FindControls<ComboBox>(Controls, "cb_Rbutton"))
+            foreach (var cb in FindControls<ComboBox>(tpOperation.Controls, "cb_Rbutton"))
             {
                 cb.Items.Clear();
                 cb.Items.AddRange(_rbuttonModesArray);
@@ -1951,7 +1969,7 @@ namespace ChameleonMiniGUI
             if (lbuttonLongModesStr.ToLower().StartsWith("200"))
             {
                 // disable all dropdowns
-                foreach (var cb in FindControls<ComboBox>(Controls, "cb_Lbuttonlong"))
+                foreach (var cb in FindControls<ComboBox>(tpOperation.Controls, "cb_Lbuttonlong"))
                 {
                     cb.Items.Clear();
                     cb.Enabled = false;
@@ -1964,7 +1982,7 @@ namespace ChameleonMiniGUI
                 if (!_lbuttonLongModesArray.Any()) return;
 
                 // populate all dropdowns
-                foreach (var cb in FindControls<ComboBox>(Controls, "cb_lbuttonlong"))
+                foreach (var cb in FindControls<ComboBox>(tpOperation.Controls, "cb_lbuttonlong"))
                 {
                     cb.Enabled = true;
                     cb.Items.Clear();
@@ -1978,7 +1996,7 @@ namespace ChameleonMiniGUI
                 if (rbuttonLongModesStr.ToLower().StartsWith("200"))
                 {
                     // disable all dropdowns
-                    foreach (var cb in FindControls<ComboBox>(Controls, "cb_rbuttonlong"))
+                    foreach (var cb in FindControls<ComboBox>(tpOperation.Controls, "cb_rbuttonlong"))
                     {
                         cb.Items.Clear();
                         cb.Enabled = false;
@@ -1991,7 +2009,7 @@ namespace ChameleonMiniGUI
                     if (!_rbuttonLongModesArray.Any()) return;
 
                     // populate all dropdowns
-                    foreach (var cb in FindControls<ComboBox>(Controls, "cb_rbuttonlong"))
+                    foreach (var cb in FindControls<ComboBox>(tpOperation.Controls, "cb_rbuttonlong"))
                     {
                         cb.Enabled = true;
                         cb.Items.Clear();
@@ -2008,7 +2026,7 @@ namespace ChameleonMiniGUI
             if (!_LEDGreenModesArray.Any()) return;
 
             // populate all dropdowns
-            foreach (var cb in FindControls<ComboBox>(Controls, "cb_ledgreen"))
+            foreach (var cb in FindControls<ComboBox>(tpOperation.Controls, "cb_ledgreen"))
             {
                 cb.Items.Clear();
                 cb.Items.AddRange(_LEDGreenModesArray);
@@ -2022,7 +2040,7 @@ namespace ChameleonMiniGUI
             if (!_LEDRedModesArray.Any()) return;
 
             // populate all dropdowns
-            foreach (var cb in FindControls<ComboBox>(Controls, "cb_ledred"))
+            foreach (var cb in FindControls<ComboBox>(tpOperation.Controls, "cb_ledred"))
             {
                 cb.Items.Clear();
                 cb.Items.AddRange(_LEDRedModesArray);
@@ -2039,7 +2057,7 @@ namespace ChameleonMiniGUI
                 if (_modesArray.Any())
                 {
                     // populate all dropdowns
-                    foreach (var cb in FindControls<ComboBox>(Controls, "cb_mode"))
+                    foreach (var cb in FindControls<ComboBox>(tpOperation.Controls, "cb_mode"))
                     {
                         cb.Items.Clear();
                         cb.Items.AddRange(_modesArray);
@@ -2055,7 +2073,7 @@ namespace ChameleonMiniGUI
             if (!_lbuttonModesArray.Any()) return;
 
             // populate all dropdowns
-            foreach (var cb in FindControls<ComboBox>(Controls, "cb_Lbutton"))
+            foreach (var cb in FindControls<ComboBox>(tpOperation.Controls, "cb_Lbutton"))
             {
                 cb.Items.Clear();
                 cb.Items.AddRange(_lbuttonModesArray);
@@ -2068,7 +2086,7 @@ namespace ChameleonMiniGUI
             if (lbuttonLongModesStr.ToLower().StartsWith("200"))
             {
                 // disable all dropdowns
-                foreach (var cb in FindControls<ComboBox>(Controls, "cb_Lbuttonlong"))
+                foreach (var cb in FindControls<ComboBox>(tpOperation.Controls, "cb_Lbuttonlong"))
                 {
                     cb.Items.Clear();
                     cb.Enabled = false;
@@ -2081,7 +2099,7 @@ namespace ChameleonMiniGUI
                 if (!_lbuttonLongModesArray.Any()) return;
 
                 // populate all dropdowns
-                foreach (var cb in FindControls<ComboBox>(Controls, "cb_lbuttonlong"))
+                foreach (var cb in FindControls<ComboBox>(tpOperation.Controls, "cb_lbuttonlong"))
                 {
                     cb.Enabled = true;
                     cb.Items.Clear();
@@ -2092,6 +2110,7 @@ namespace ChameleonMiniGUI
 
         private void GetSupportedModes()
         {
+            SuspendUpdate.Suspend(tpOperation);
             switch (_CurrentDevType)
             {
                 case DeviceType.RevG:
@@ -2101,6 +2120,7 @@ namespace ChameleonMiniGUI
                     SetRevEButtons();
                     break;
             }
+            SuspendUpdate.Resume(tpOperation);
         }
 
         private void GetAvailableCommands()
@@ -2350,7 +2370,7 @@ namespace ChameleonMiniGUI
 
             if (!int.TryParse(txt_interval.Text, out tickInterval)) return;
 
-            timer1.Interval = tickInterval > 0 ? tickInterval : 10000;
+            timer1.Interval = tickInterval > 0 ? tickInterval : 4000;
 
             timer1.Start();
         }
@@ -2621,34 +2641,34 @@ namespace ChameleonMiniGUI
 
         private void ConfigHMIForRevE()
         {
-            var list = FindControls<ComboBox>(Controls, "cb_Rbutton");
+            var list = FindControls<ComboBox>(tpOperation.Controls, "cb_Rbutton");
             list.ForEach(a => ApplyAll(a, c => { c.Visible = false; }));
 
-            list = FindControls<ComboBox>(Controls, "cb_Lbutton");
+            list = FindControls<ComboBox>(tpOperation.Controls, "cb_Lbutton");
             list.ForEach(a => ApplyAll(a, c =>
             {
                 c.Visible = true;
                 c.Width = REVEDefaultComboWidth;
             }));
 
-            list = FindControls<ComboBox>(Controls, "cb_Rbuttonlong");
+            list = FindControls<ComboBox>(tpOperation.Controls, "cb_Rbuttonlong");
             list.ForEach(a => ApplyAll(a, c => { c.Visible = false; }));
 
-            list = FindControls<ComboBox>(Controls, "cb_Lbuttonlong");
+            list = FindControls<ComboBox>(tpOperation.Controls, "cb_Lbuttonlong");
             list.ForEach(a => ApplyAll(a, c =>
             {
                 c.Visible = true;
                 c.Width = REVEDefaultComboWidth;
             }));
 
-            list = FindControls<ComboBox>(Controls, "cb_ledgreen");
+            list = FindControls<ComboBox>(tpOperation.Controls, "cb_ledgreen");
             list.ForEach(a => ApplyAll(a, c =>
             {
                 c.Visible = false;
                 c.Enabled = false;
             }));
 
-            list = FindControls<ComboBox>(Controls, "cb_ledred");
+            list = FindControls<ComboBox>(tpOperation.Controls, "cb_ledred");
             list.ForEach(a => ApplyAll(a, c =>
             {
                 c.Visible = false;
@@ -2660,7 +2680,7 @@ namespace ChameleonMiniGUI
 
             for (int cidx = 1; cidx < 9; cidx++)
             {
-                var gpbx = (GroupBox) this.Controls.Find($"gb_tagslot{cidx}", true).First();
+                var gpbx = (GroupBox) this.tpOperation.Controls.Find($"gb_tagslot{cidx}", true).First();
                 var pnl = (TableLayoutPanel) gpbx.Controls[$"tableLayoutPanel{cidx}"];
                 pnl.SetColumnSpan(pnl.Controls[$"cb_Lbutton{cidx}"], 2);
                 pnl.SetColumnSpan(pnl.Controls[$"cb_Lbuttonlong{cidx}"], 2);
@@ -2672,42 +2692,42 @@ namespace ChameleonMiniGUI
 
         private void ConfigHMIForRevG()
         {
-            var list = FindControls<ComboBox>(Controls, "cb_Rbutton");
+            var list = FindControls<ComboBox>(tpOperation.Controls, "cb_Rbutton");
             list.ForEach(a => ApplyAll(a, c =>
             {
                 c.Visible = true;
                 c.Width = REVGDefaultComboWidth;
             }));
 
-            list = FindControls<ComboBox>(Controls, "cb_Lbutton");
+            list = FindControls<ComboBox>(tpOperation.Controls, "cb_Lbutton");
             list.ForEach(a => ApplyAll(a, c =>
             {
                 c.Visible = true;
                 c.Width = REVGDefaultComboWidth;
             }));
 
-            list = FindControls<ComboBox>(Controls, "cb_Rbuttonlong");
+            list = FindControls<ComboBox>(tpOperation.Controls, "cb_Rbuttonlong");
             list.ForEach(a => ApplyAll(a, c =>
             {
                 c.Visible = true;
                 c.Width = REVGDefaultComboWidth;
             }));
 
-            list = FindControls<ComboBox>(Controls, "cb_Lbuttonlong");
+            list = FindControls<ComboBox>(tpOperation.Controls, "cb_Lbuttonlong");
             list.ForEach(a => ApplyAll(a, c =>
             {
                 c.Visible = true;
                 c.Width = REVGDefaultComboWidth;
             }));
 
-            list = FindControls<ComboBox>(Controls, "cb_ledgreen");
+            list = FindControls<ComboBox>(tpOperation.Controls, "cb_ledgreen");
             list.ForEach(a => ApplyAll(a, c =>
             {
                 c.Visible = true;
                 c.Enabled = true;
             }));
 
-            list = FindControls<ComboBox>(Controls, "cb_ledred");
+            list = FindControls<ComboBox>(tpOperation.Controls, "cb_ledred");
             list.ForEach(a => ApplyAll(a, c =>
             {
                 c.Visible = true;
@@ -2719,7 +2739,7 @@ namespace ChameleonMiniGUI
 
             for (int cidx = 1; cidx < 9; cidx++)
             {
-                var gpbx = (GroupBox) this.Controls.Find($"gb_tagslot{cidx}", true).First();
+                var gpbx = (GroupBox) this.tpOperation.Controls.Find($"gb_tagslot{cidx}", true).First();
                 var pnl = (TableLayoutPanel) gpbx.Controls[$"tableLayoutPanel{cidx}"];
                 pnl.SetColumnSpan(pnl.Controls[$"cb_Lbutton{cidx}"], 1);
                 pnl.SetColumnSpan(pnl.Controls[$"cb_Lbuttonlong{cidx}"], 1);
@@ -2731,7 +2751,7 @@ namespace ChameleonMiniGUI
 
         private void HighlightActiveSlot()
         {
-            foreach (var gb in FindControls<GroupBoxEnhanced>(Controls, "gb_tagslot"))
+            foreach (var gb in FindControls<GroupBoxEnhanced>(tpOperation.Controls, "gb_tagslot"))
             {
                 var tagslotIndex = int.Parse(gb.Name.Substring(gb.Name.Length - 1));
                 if (tagslotIndex <= 0) continue;
@@ -2802,13 +2822,5 @@ namespace ChameleonMiniGUI
         }
         #endregion
 
-        private void txt_output_VisibleChanged(object sender, EventArgs e)
-        {
-            var tb = (TextBox) sender;
-            if (tb == null || !tb.Visible) return;
-            
-            tb.SelectionStart = tb.TextLength;
-            tb.ScrollToCaret();
-        }
     }
 }

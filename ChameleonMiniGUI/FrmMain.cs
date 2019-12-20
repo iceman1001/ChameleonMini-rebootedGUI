@@ -301,9 +301,9 @@ namespace ChameleonMiniGUI
 
                 if (mo != null)
                 {
-                    var deviceName = mo["Name"].ToString();
-                    var deviceID = mo["DeviceID"].ToString();
-                    if (deviceName.Equals("ATxmega128A4U") && (deviceID.Contains("VID_03EB&PID_2FDE") || deviceID.Contains("VID_03EB&PID_204A")))
+                    var deviceName = mo["Name"].ToString().ToLower();
+                    var deviceID = mo["DeviceID"].ToString().ToLower();
+                    if (deviceName.Equals("atxmega128a4u") && (deviceID.Contains("vid_03eb&pid_2fde") || deviceID.Contains("vid_03eb&pid_204a")))
                     {
                         // RevG
                         found = true;
@@ -343,7 +343,7 @@ namespace ChameleonMiniGUI
                             Console.WriteLine(ex.Message);
                         }
                     }
-                    else if (deviceName.Equals("ATxmega32A4U") && deviceID.Contains("VID_03EB&PID_2FE4"))
+                    else if (deviceName.Equals("atxmega32a4u") && deviceID.Contains("vid_03eb&pid_2fe4"))
                     {
                         // RevE rebooted
                         found = true;
@@ -973,6 +973,12 @@ namespace ChameleonMiniGUI
 
         private void menuClear_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
+            if (e.ClickedItem.Name == "tsmi_selectall")
+            {
+                tbSerialOutput.Focus();
+                tbSerialOutput.SelectAll();
+            }
+
             if (e.ClickedItem.Name == "tsmi_copy")
             {
                 Clipboard.SetText(tbSerialOutput.Text);
@@ -2370,7 +2376,7 @@ namespace ChameleonMiniGUI
 
             if (!int.TryParse(txt_interval.Text, out tickInterval)) return;
 
-            timer1.Interval = tickInterval > 0 ? tickInterval : 4000;
+            timer1.Interval = tickInterval > 0 ? tickInterval : Default.KeepAliveInterval;
 
             timer1.Start();
         }

@@ -561,8 +561,7 @@ namespace ChameleonMiniGUI
             this.lbl_defaults.Name = "lbl_defaults";
             this.lbl_defaults.Size = new System.Drawing.Size(629, 17);
             this.lbl_defaults.TabIndex = 10;
-            this.lbl_defaults.Text = "Flashes the stock firmware of the ChameleonMini RevE rebooted. Needs to be in boo" +
-    "tloader mode.";
+            this.lbl_defaults.Text = "Flashes the stock firmware of the ChameleonMini. Needs to be in bootloader mode.";
             // 
             // lbl_reset
             // 
@@ -572,7 +571,7 @@ namespace ChameleonMiniGUI
             this.lbl_reset.Name = "lbl_reset";
             this.lbl_reset.Size = new System.Drawing.Size(439, 17);
             this.lbl_reset.TabIndex = 9;
-            this.lbl_reset.Text = "Reboots the Chameleon, i.e., power down and subsequent power-up";
+            this.lbl_reset.Text = "Reboots the ChameleonMini, i.e., power down and subsequent power-up";
             // 
             // btn_reset
             // 
@@ -594,7 +593,7 @@ namespace ChameleonMiniGUI
             this.lbl_upgrade.Name = "lbl_upgrade";
             this.lbl_upgrade.Size = new System.Drawing.Size(357, 17);
             this.lbl_upgrade.TabIndex = 7;
-            this.lbl_upgrade.Text = "Sets the Chameleon into firmware upgrade mode (DFU)";
+            this.lbl_upgrade.Text = "Sets the ChameleonMini into firmware upgrade mode (DFU)";
             // 
             // btn_bootmode
             // 

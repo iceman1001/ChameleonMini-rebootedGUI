@@ -49,18 +49,6 @@ namespace ChameleonMiniGUI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("10000")]
-        public int KeepAliveInterval {
-            get {
-                return ((int)(this["KeepAliveInterval"]));
-            }
-            set {
-                this["KeepAliveInterval"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("English")]
         public string Language {
             get {
@@ -73,7 +61,19 @@ namespace ChameleonMiniGUI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("v1.2.2.0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("4000")]
+        public int KeepAliveInterval {
+            get {
+                return ((int)(this["KeepAliveInterval"]));
+            }
+            set {
+                this["KeepAliveInterval"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("v1.2.2")]
         public string version {
             get {
                 return ((string)(this["version"]));

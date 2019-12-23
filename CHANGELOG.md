@@ -4,6 +4,12 @@ This project uses the changelog in accordance with [keepchangelog](http://keepac
 
 ## [unreleased]
 
+## [1.2.2.1] - 2019-12-23
+- tab serial: select all text option  (@grspy)
+
+## [1.2.2] - 2019-12-20
+- Smooth updaste of slot graphics (@iceman)
+
 ## [1.2.1.10] - 2019-12-17
 - speedups (@grspy)
 - log textbox scrolls to end when appending. (@grspy , @iceman)

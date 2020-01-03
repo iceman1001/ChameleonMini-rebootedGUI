@@ -1,0 +1,30 @@
+image: 
+  - Visual Studio 2017
+  
+install:
+  - choco install gitversion.portable -pre -y
+  
+clone_folder: C:\ChameleonGUI
+
+before_build:
+  - ps: gitversion $env:APPVEYOR_BUILD_FOLDER /l console /output buildserver /updateAssemblyInfo /nofetch /b $env:APPVEYOR_REPO_BRANCH
+  - ps: cd C:\ChameleonGUI\ChameleonMiniGUI; nuget restore -PackagesDirectory ..\packages
+
+build_script:
+  - ps: pwd;cd C:\ChameleonGUI;msbuild
+
+test_script:
+  - ps: if(!(Test-Path C:\ChameleonGUI\Be.Windows.Forms.HexBox\bin\Debug\Be.Windows.Forms.HexBox.dll)){throw "Exe file do not exists."}
+  - ps: if(!(Test-Path C:\ChameleonGUI\ChameleonMiniGUI\bin\Debug\ChameleonMiniGUI.exe)){throw "Exe file do not exists."}
+
+pull_requests:
+  do_not_increment_build_number: true
+  
+on_success:
+- ps: Write-Host "Build success..." -ForegroundColor Green
+on_failure:
+- ps: Write-Host "Build error." -ForegroundColor Red
+on_finish:
+- ps: $blockRdp = $false; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+ 
+  

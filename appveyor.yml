@@ -12,6 +12,11 @@ before_build:
 
 build_script:
   - ps: pwd;cd C:\ChameleonGUI;msbuild
+  - ps: Copy-Item C:\ChameleonGUI\Be.Windows.Forms.HexBox\bin\Debug\*.dll C:\ChameleonGUI\ChameleonMiniGUI\bin\Debug\
+  - ps: Copy-Item C:\ChameleonGUI\packages\Crapto1Sharp.1.2.2\lib\net45\*.dll C:\ChameleonGUI\ChameleonMiniGUI\bin\Debug\
+  - ps: Copy-Item C:\ChameleonGUI\packages\DynamicExpresso.Core.2.0.0\lib\net461\*.dll C:\ChameleonGUI\ChameleonMiniGUI\bin\Debug\
+  - ps: 7z a release.zip C:\ChameleonGUI\ChameleonMiniGUI\bin\Debug\
+  - ps: Push-AppveyorArtifact release.zip -DeploymentName "$env:GitVersion_MajorMinorPatch";Write-Host "Artefact [ OK ]" -ForegroundColor Green
 
 test_script:
   - ps: if(!(Test-Path C:\ChameleonGUI\Be.Windows.Forms.HexBox\bin\Debug\Be.Windows.Forms.HexBox.dll)){throw "Exe file do not exists."}

@@ -1,5 +1,4 @@
 # ChameleonMini GUI (windows)
-[![Build Status](https://travis-ci.org/iceman1001/ChameleonMini-rebootedGUI.svg?branch=master)](https://travis-ci.org/iceman1001/ChameleonMini-rebootedGUI)
  [![Build status](https://ci.appveyor.com/api/projects/status/fqsw72e2os8jyuui/branch/master?svg=true)](https://ci.appveyor.com/project/iceman1001/ChameleonMini-rebootedGUI/branch/master) 
 [![Latest release](https://img.shields.io/github/release/iceman1001/ChameleonMini-rebootedGUI.svg)](https://github.com/iceman1001/ChameleonMini-rebootedGUI/releases/latest)
 

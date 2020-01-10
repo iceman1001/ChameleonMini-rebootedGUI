@@ -29,6 +29,7 @@ pull_requests:
   do_not_increment_build_number: true
   
 deploy_script:
+  - ps: cd C:\ChameleonGUI;msbuild
   - ps: Push-AppveyorArtifact release.zip -DeploymentName "$env:GitVersion_MajorMinorPatch";Write-Host "Artefact deploy [ OK ]" -ForegroundColor Green
   
 on_success:

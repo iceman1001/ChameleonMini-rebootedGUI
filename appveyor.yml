@@ -9,6 +9,7 @@ clone_folder: C:\ChameleonGUI
 before_build:
   - ps: gitversion $env:APPVEYOR_BUILD_FOLDER /l console /output buildserver /updateAssemblyInfo /nofetch /b $env:APPVEYOR_REPO_BRANCH
   - ps: cd C:\ChameleonGUI\ChameleonMiniGUI; nuget restore -PackagesDirectory ..\packages
+  - ps: cd C:\ChameleonGUI\ChameleonTest; nuget restore -PackagesDirectory packages
 
 build_script:
   - ps: pwd;cd C:\ChameleonGUI;msbuild

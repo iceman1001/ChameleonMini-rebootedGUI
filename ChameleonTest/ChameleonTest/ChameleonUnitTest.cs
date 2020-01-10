@@ -52,9 +52,27 @@ namespace ChameleonTest
             Assert.AreEqual(tab.TabItems[4].Properties.Name.Value, "Settings");
         }
 
-        [TestMethod]
-        public void TestModeContents()
+        [DataTestMethod]
+        [DataRow("cb_mode1")]
+        [DataRow("cb_mode2")]
+        [DataRow("cb_mode3")]
+        [DataRow("cb_mode4")]
+        [DataRow("cb_mode5")]
+        [DataRow("cb_mode6")]
+        [DataRow("cb_mode7")]
+        [DataRow("cb_mode8")]
+        public void TestModeContents(string name)
         {
+            var cb = MainWindow.FindFirstDescendant(name).AsComboBox();
+            Assert.IsNotNull(cb);
+            Assert.AreEqual(cb.Items[0].Properties.Name.Value, "NONE");
+            Assert.AreEqual(cb.Items[1].Properties.Name.Value, "MF_CLASSIC_1K");
+            Assert.AreEqual(cb.Items[2].Properties.Name.Value, "MF_CLASSIC_1K_7B");
+            Assert.AreEqual(cb.Items[3].Properties.Name.Value, "MF_CLASSIC_4K");
+            Assert.AreEqual(cb.Items[4].Properties.Name.Value, "MF_CLASSIC_4K_7B");
+            Assert.AreEqual(cb.Items[5].Properties.Name.Value, "MF_ULTRALIGHT");
+            Assert.AreEqual(cb.Items[6].Properties.Name.Value, "ISO14443A_SNIFF");
+            Assert.AreEqual(cb.Items[7].Properties.Name.Value, "ISO14443A_READER");
         }
 
         [ClassCleanup]

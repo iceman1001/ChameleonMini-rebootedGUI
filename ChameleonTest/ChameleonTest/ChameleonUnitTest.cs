@@ -91,6 +91,57 @@ namespace ChameleonTest
             Assert.AreEqual(cb.Items[7].Properties.Name.Value, "ISO14443A_READER");
         }
 
+        [DataTestMethod]
+        [DataRow("cb_Rbutton1")]
+        [DataRow("cb_Lbutton1")]
+        [DataRow("cb_Rbuttonlong1")]
+        [DataRow("cb_Lbuttonlong1")]
+        [DataRow("cb_Rbutton2")]
+        [DataRow("cb_Lbutton2")]
+        [DataRow("cb_Rbuttonlong2")]
+        [DataRow("cb_Lbuttonlong2")]
+        [DataRow("cb_Rbutton3")]
+        [DataRow("cb_Lbutton3")]
+        [DataRow("cb_Rbuttonlong3")]
+        [DataRow("cb_Lbuttonlong3")]
+        [DataRow("cb_Rbutton4")]
+        [DataRow("cb_Lbutton4")]
+        [DataRow("cb_Rbuttonlong4")]
+        [DataRow("cb_Lbuttonlong4")]
+        [DataRow("cb_Rbutton5")]
+        [DataRow("cb_Lbutton5")]
+        [DataRow("cb_Rbuttonlong5")]
+        [DataRow("cb_Lbuttonlong5")]
+        [DataRow("cb_Rbutton6")]
+        [DataRow("cb_Lbutton6")]
+        [DataRow("cb_Rbuttonlong6")]
+        [DataRow("cb_Lbuttonlong6")]
+        [DataRow("cb_Rbutton7")]
+        [DataRow("cb_Lbutton7")]
+        [DataRow("cb_Rbuttonlong7")]
+        [DataRow("cb_Lbuttonlong7")]
+        [DataRow("cb_Rbutton8")]
+        [DataRow("cb_Lbutton8")]
+        [DataRow("cb_Rbuttonlong8")]
+        [DataRow("cb_Lbuttonlong8")]
+        public void TestButtonContents(string name)
+        {
+            var cb = MainWindow.FindFirstDescendant(name).AsComboBox();
+            Assert.IsNotNull(cb);
+            Assert.AreEqual(cb.Items[0].Properties.Name.Value, "NONE");
+            Assert.AreEqual(cb.Items[1].Properties.Name.Value, "UID_RANDOM");
+            Assert.AreEqual(cb.Items[2].Properties.Name.Value, "UID_LEFT_INCREMENT");
+            Assert.AreEqual(cb.Items[3].Properties.Name.Value, "UID_RIGHT_INCREMENT");
+            Assert.AreEqual(cb.Items[4].Properties.Name.Value, "UID_LEFT_DECREMENT");
+            Assert.AreEqual(cb.Items[5].Properties.Name.Value, "UID_RIGHT_DECREMENT");
+            Assert.AreEqual(cb.Items[6].Properties.Name.Value, "CYCLE_SETTINGS");
+            Assert.AreEqual(cb.Items[7].Properties.Name.Value, "STORE_MEM");
+            Assert.AreEqual(cb.Items[8].Properties.Name.Value, "RECALL_MEM");
+            Assert.AreEqual(cb.Items[9].Properties.Name.Value, "TOGGLE_FIELD");
+            Assert.AreEqual(cb.Items[10].Properties.Name.Value, "STORE_LOG");
+            Assert.AreEqual(cb.Items[11].Properties.Name.Value, "CLONE");
+        }
+
         [ClassCleanup]
         public static void ChameleonUnitTestClean()
         {

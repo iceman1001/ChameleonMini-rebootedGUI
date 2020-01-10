@@ -61,6 +61,22 @@ namespace ChameleonTest
         [DataRow("cb_mode6")]
         [DataRow("cb_mode7")]
         [DataRow("cb_mode8")]
+        [DataRow("cb_ledgreen1")]
+        [DataRow("cb_ledgreen2")]
+        [DataRow("cb_ledgreen3")]
+        [DataRow("cb_ledgreen4")]
+        [DataRow("cb_ledgreen5")]
+        [DataRow("cb_ledgreen6")]
+        [DataRow("cb_ledgreen7")]
+        [DataRow("cb_ledgreen8")]
+        [DataRow("cb_ledred1")]
+        [DataRow("cb_ledred2")]
+        [DataRow("cb_ledred3")]
+        [DataRow("cb_ledred4")]
+        [DataRow("cb_ledred5")]
+        [DataRow("cb_ledred6")]
+        [DataRow("cb_ledred7")]
+        [DataRow("cb_ledred8")]
         public void TestModeContents(string name)
         {
             var cb = MainWindow.FindFirstDescendant(name).AsComboBox();

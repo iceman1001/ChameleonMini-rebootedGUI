@@ -23,8 +23,8 @@ test_script:
   - ps: if(!(Test-Path C:\ChameleonGUI\Be.Windows.Forms.HexBox\bin\Debug\Be.Windows.Forms.HexBox.dll)){throw "Exe file do not exists."}
   - ps: if(!(Test-Path C:\ChameleonGUI\ChameleonMiniGUI\bin\Debug\ChameleonMiniGUI.exe)){throw "Exe file do not exists."}
   - ps: cd C:\ChameleonGUI\ChameleonTest;msbuild
-  - ps: if(!(Test-Path C:\ChameleonGUI\ChameleonTest\bin\Debug\ChameleonTest.dll)){throw "Cant build tests."}
-  - ps: vstest.console.exe bin\Debug\ChameleonTest.dll
+  - ps: if(!(Test-Path C:\ChameleonGUI\ChameleonTest\ChameleonTest\bin\Debug\ChameleonTest.dll)){throw "Cant build tests."}
+  - ps: vstest.console.exe ChameleonTest\bin\Debug\ChameleonTest.dll
 
 pull_requests:
   do_not_increment_build_number: true

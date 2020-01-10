@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading;
 using FlaUI.Core;
+using FlaUI.Core.AutomationElements;
 using FlaUI.UIA3;
 
 namespace ChameleonTest
@@ -41,6 +42,14 @@ namespace ChameleonTest
         [TestMethod]
         public void TestTabs()
         {
+            var tab = MainWindow.FindFirstDescendant("tabControl1").AsTab();
+            Assert.IsNotNull(tab);
+            Assert.AreEqual(tab.SelectedTabItemIndex, 0);
+            Assert.AreEqual(tab.TabItems[0].Properties.Name.Value, "Operation");
+            Assert.AreEqual(tab.TabItems[1].Properties.Name.Value, "Dump Management");
+            Assert.AreEqual(tab.TabItems[2].Properties.Name.Value, "Utils");
+            Assert.AreEqual(tab.TabItems[3].Properties.Name.Value, "Serial");
+            Assert.AreEqual(tab.TabItems[4].Properties.Name.Value, "Settings");
         }
 
         [TestMethod]

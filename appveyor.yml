@@ -16,14 +16,21 @@ build_script:
   - ps: Copy-Item C:\ChameleonGUI\packages\Crapto1Sharp.1.2.2\lib\net45\*.dll C:\ChameleonGUI\ChameleonMiniGUI\bin\Debug\
   - ps: Copy-Item C:\ChameleonGUI\packages\DynamicExpresso.Core.2.0.0\lib\net461\*.dll C:\ChameleonGUI\ChameleonMiniGUI\bin\Debug\
   - ps: 7z a release.zip C:\ChameleonGUI\ChameleonMiniGUI\bin\Debug\
-  - ps: Push-AppveyorArtifact release.zip -DeploymentName "$env:GitVersion_MajorMinorPatch";Write-Host "Artefact [ OK ]" -ForegroundColor Green
 
 test_script:
   - ps: if(!(Test-Path C:\ChameleonGUI\Be.Windows.Forms.HexBox\bin\Debug\Be.Windows.Forms.HexBox.dll)){throw "Exe file do not exists."}
   - ps: if(!(Test-Path C:\ChameleonGUI\ChameleonMiniGUI\bin\Debug\ChameleonMiniGUI.exe)){throw "Exe file do not exists."}
+  - ps: cd C:\ChameleonGUI\ChameleonTest; nuget restore -PackagesDirectory packages
+  - ps: cd C:\ChameleonGUI\ChameleonTest;msbuild
+  - ps: if(!(Test-Path C:\ChameleonGUI\ChameleonTest\ChameleonTest\bin\Debug\ChameleonTest.dll)){throw "Cant build tests."}
+  - ps: vstest.console.exe ChameleonTest\bin\Debug\ChameleonTest.dll
 
 pull_requests:
   do_not_increment_build_number: true
+  
+deploy_script:
+  - ps: cd C:\ChameleonGUI
+  - ps: Push-AppveyorArtifact release.zip -DeploymentName "$env:GitVersion_MajorMinorPatch";Write-Host "Artefact deploy [ OK ]" -ForegroundColor Green
   
 on_success:
 - ps: Write-Host "Build success..." -ForegroundColor Green

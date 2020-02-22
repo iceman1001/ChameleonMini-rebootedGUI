@@ -38,7 +38,8 @@ The application is being deployed with Click-Once technology, this means that th
 There isn't a roadmap for this software. Go in under _issues_ and see which ideas / known bugs there is.
 
 ## Code Quality
-This project doesn't use any code quality service like _Coverity scan_  nor do we use a CI service like _Appveyor_.
+This projoect uses the CI service _Appveyor_.  Thanks to @merlokk for adding some tests and hooking it up.
+This project doesn't use any code quality service like _Coverity scan_  
 It would be nice if we did,  feel free to contribute!
 
 ## Screenshots
@@ -67,13 +68,11 @@ A list of those who contributed to this repo in order to make it work. The commu
 - @mceloff
 - @uspilot
 - @grspy
+- @merlokk
 
 
 ## Donate
-If you feel the love,  do feel free to become a iceman patron.
+If you feel the love,  do feel free to become a Iceman patron. 
 https://www.patreon.com/iceman1001 
-
-Or do the paypal way
-https://paypal.me/iceman1001
 
 All support is welcome.

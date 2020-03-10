@@ -4,6 +4,9 @@ This project uses the changelog in accordance with [keepchangelog](http://keepac
 
 ## [unreleased]
 
+## [1.3.0.1] - 2020-03-10 
+- rectified minimum version error introduced in 1.3.0.0 (@iceman1001)
+
 ## [1.3.0.0] - 2020-03-10 
 - Enable mfkey key recovery button for RevG devices if the firmware supports it. (@iceman1001)
 

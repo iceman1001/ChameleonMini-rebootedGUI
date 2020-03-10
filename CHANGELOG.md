@@ -4,6 +4,9 @@ This project uses the changelog in accordance with [keepchangelog](http://keepac
 
 ## [unreleased]
 
+## [1.3.0.0] - 2020-03-10 
+- Enable mfkey key recovery button for RevG devices if the firmware supports it. (@iceman1001)
+
 ## [1.2.2.1] - 2019-12-23
 - tab serial: select all text option  (@grspy)
 
@@ -12,7 +15,7 @@ This project uses the changelog in accordance with [keepchangelog](http://keepac
 
 ## [1.2.1.10] - 2019-12-17
 - speedups (@grspy)
-- log textbox scrolls to end when appending. (@grspy , @iceman)
+- log textbox scrolls to end when appending. (@grspy , @iceman1001)
 
 ## [1.2.1.9] - 2019-12-11
 - Increase default "keep alive" setting to 10sec (@grspy)
@@ -51,10 +54,10 @@ This project uses the changelog in accordance with [keepchangelog](http://keepac
 
 ## [1.2.0.17] - 2019-03-11
 - support for RevE firmware with or without MY-extensions. (@bogito)
-- ultralight/ntag download dump now should not add extra empty header every time. (@iceman)
+- ultralight/ntag download dump now should not add extra empty header every time. (@iceman1001)
 
 ## [1.2.0.13] - 2019-02-22
-- selected language in combobox (@iceman)
+- selected language in combobox (@iceman1001)
 
 ## [1.2.0.10] - 2019-02-22
 - Spanish translations (@neijpass)
@@ -65,7 +68,7 @@ This project uses the changelog in accordance with [keepchangelog](http://keepac
 
 ## [1.2.0.8] - 2018-12-17
 - General stability bug fixes
-- New iClass dark template (@iceman)
+- New iClass dark template (@iceman1001)
 - Bugfix - mf_detection (@kgamecarter)
 - Highlighted active tagslot (@vrumfondel)
 - Splash screen (@vrumfondel)
@@ -79,15 +82,15 @@ This project uses the changelog in accordance with [keepchangelog](http://keepac
 - Dark themed templates (@hiwanz)
 
 ## [1.1.0.0] - 2018-xx-xx
-- Memory dump color templates (@iceman)
-- Multilanguage support (@iceman)
+- Memory dump color templates (@iceman1001)
+- Multilanguage support (@iceman1001)
   (english, chinese, dutch, french, german, greek, italian, swedish)
 - Locked scrolling of dumpfiles
-- Serial interface tab, (@iceman) 
+- Serial interface tab, (@iceman1001) 
 
 ## [1.0.0.8] - 2018-03-16
 - bindiff comparision (@bogition)
 - load / save of dumpfiles (@bogition)
 
 ## [1.0.0.7] - 2018-01-xx
-- first version of GUI  (@iceman, @bogition)
+- first version of GUI  (@iceman1001, @bogition)

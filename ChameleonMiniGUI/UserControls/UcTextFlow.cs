@@ -32,6 +32,7 @@ namespace ChameleonMiniGUI
                 return;
 
             tb.BackColor = base.BackColor;
+            tb.Cursor = Cursors.Default;
         }
 
         private void Tb_OnMouseEnter(object sender, EventArgs e)
@@ -39,7 +40,8 @@ namespace ChameleonMiniGUI
             var tb = sender as TextBox;
             if (tb == null) return;
 
-            tb.BackColor = SystemColors.ControlDark;
+            tb.BackColor = SystemColors.ControlLight;
+            tb.Cursor = Cursors.Arrow;
         }
 
         void Tb_OnClick(object sender, EventArgs e)

@@ -2139,6 +2139,8 @@ namespace ChameleonMiniGUI
             var helpArray = result.Split(',');
             if (!helpArray.Any()) return;
 
+            Array.Sort(helpArray);
+
             AvailableCommands.Clear();
             AvailableCommands.AddRange(helpArray);
         }

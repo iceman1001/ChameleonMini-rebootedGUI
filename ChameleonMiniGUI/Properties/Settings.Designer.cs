@@ -73,7 +73,7 @@ namespace ChameleonMiniGUI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("v1.3.0.1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("v1.3.0.2")]
         public string version {
             get {
                 return ((string)(this["version"]));

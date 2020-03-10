@@ -268,12 +268,12 @@ namespace ChameleonMiniGUI
             this.btnClearCmd = new System.Windows.Forms.Button();
             this.tbSerialOutput = new System.Windows.Forms.RichTextBox();
             this.menuClear = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsmi_selectall = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_clear = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_copy = new System.Windows.Forms.ToolStripMenuItem();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.tsmi_selectall = new System.Windows.Forms.ToolStripMenuItem();
             this.gb_output.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bsLanguages)).BeginInit();
             this.tpSettings.SuspendLayout();
@@ -3249,19 +3249,19 @@ namespace ChameleonMiniGUI
             this.toolStripMenuItem1,
             this.toolStripMenuItem2});
             this.menuScroll.Name = "menuScroll";
-            this.menuScroll.Size = new System.Drawing.Size(170, 48);
+            this.menuScroll.Size = new System.Drawing.Size(172, 48);
             this.menuScroll.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuScroll_ItemClicked);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(169, 22);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(171, 22);
             this.toolStripMenuItem1.Text = "Toggle Sync Scroll";
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(169, 22);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(171, 22);
             this.toolStripMenuItem2.Text = "Close Files";
             // 
             // ucLegend1
@@ -3624,30 +3624,30 @@ namespace ChameleonMiniGUI
             this.tsmi_clear,
             this.tsmi_copy});
             this.menuClear.Name = "menuClear";
-            this.menuClear.Size = new System.Drawing.Size(181, 92);
+            this.menuClear.Size = new System.Drawing.Size(123, 70);
             this.menuClear.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuClear_ItemClicked);
+            // 
+            // tsmi_selectall
+            // 
+            this.tsmi_selectall.Name = "tsmi_selectall";
+            this.tsmi_selectall.Size = new System.Drawing.Size(122, 22);
+            this.tsmi_selectall.Text = "Select All";
             // 
             // tsmi_clear
             // 
             this.tsmi_clear.Name = "tsmi_clear";
-            this.tsmi_clear.Size = new System.Drawing.Size(180, 22);
+            this.tsmi_clear.Size = new System.Drawing.Size(122, 22);
             this.tsmi_clear.Text = "Clear";
             // 
             // tsmi_copy
             // 
             this.tsmi_copy.Name = "tsmi_copy";
-            this.tsmi_copy.Size = new System.Drawing.Size(180, 22);
+            this.tsmi_copy.Size = new System.Drawing.Size(122, 22);
             this.tsmi_copy.Text = "Copy";
             // 
             // openFileDialog2
             // 
             this.openFileDialog2.FileName = "openFileDialog2";
-            // 
-            // tsmi_selectall
-            // 
-            this.tsmi_selectall.Name = "tsmi_selectall";
-            this.tsmi_selectall.Size = new System.Drawing.Size(180, 22);
-            this.tsmi_selectall.Text = "Select All";
             // 
             // frm_main
             // 

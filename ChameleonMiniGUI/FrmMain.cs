@@ -2741,7 +2741,19 @@ namespace ChameleonMiniGUI
             }));
 
             btn_identify.Visible = true;
-            btn_keycalc.Visible = false;
+
+            // is MFKEY32 button visible / enabled?
+            // find if MF_DETECTED is supported by running CONFIG? 
+            // 
+            var detection_str = SendCommand($"HELP{_cmdExtension}").ToString().ToLower();
+            var support_detection = detection_str.Contains("detection");
+
+            btn_keycalc.Visible = support_detection;
+
+            if (support_detection == false)
+            {
+                txt_output.Text += $"[!] Firmware doesn't support DETECTION cmd -- mfkey32 key recovery is not possible{ Environment.NewLine}";
+            }
 
             for (int cidx = 1; cidx < 9; cidx++)
             {

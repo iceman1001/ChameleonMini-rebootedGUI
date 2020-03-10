@@ -15,7 +15,7 @@
       <Value Profile="(Default)">4000</Value>
     </Setting>
     <Setting Name="version" Type="System.String" Scope="User">
-      <Value Profile="(Default)">v1.2.2.1</Value>
+      <Value Profile="(Default)">v1.3.0.0</Value>
     </Setting>
   </Settings>
 </SettingsFile>

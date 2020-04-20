@@ -111,7 +111,7 @@ namespace ChameleonMiniGUI
             //}
         }
 
-        private static UInt32 ToUInt32(byte[] data, int offset)
+        public static UInt32 ToUInt32(byte[] data, int offset)
         {
             if (BitConverter.IsLittleEndian)
             {
@@ -200,7 +200,7 @@ namespace ChameleonMiniGUI
             return (byte)(32 + (block - 128)/16);
         }
 
-        private static string KeyWorker(List<MyKey> keys)
+        public static string KeyWorker(List<MyKey> keys)
         {
             var results = keys
                 .GroupBy(k => new { k.UID, k.Sector, k.Block, k.KeyType })

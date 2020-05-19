@@ -518,6 +518,7 @@ namespace ChameleonMiniGUI
 
         private void btn_mfkey_Click(object sender, EventArgs e)
         {
+            /*
             this.Cursor = Cursors.WaitCursor;
             SaveActiveSlot();
 
@@ -547,6 +548,110 @@ namespace ChameleonMiniGUI
                     return result;
                 });
             txt_output.AppendText(string.Join(string.Empty, results));
+
+            RestoreActiveSlot();
+            this.Cursor = Cursors.Default;
+            */
+
+            this.Cursor = Cursors.WaitCursor;
+            SaveActiveSlot();
+
+            if (_CurrentDevType == DeviceType.RevE)
+            {
+                // Get all selected indices
+                var results = FindControls<CheckBox>(tpOperation.Controls, "checkBox")
+                .Where(cb => cb.Checked)
+                .Select(cb =>
+                {
+                    var tagslotIndex = int.Parse(cb.Name.Substring(cb.Name.Length - 1));
+
+                    //SETTINGMY=tagslotIndex-1
+                    SendCommandWithoutResult($"SETTING{_cmdExtension}={tagslotIndex - _tagslotIndexOffset}");
+
+                    var data = SendCommand($"DETECTION{_cmdExtension}?") as byte[];
+                    return new KeyValuePair<int, byte[]>(tagslotIndex, data);
+                })
+                .OrderBy(pair => pair.Key)
+                .AsParallel()
+                .AsOrdered()
+                .Select(pair =>
+                {
+                    var result = MfKeyAttacks.Attack(pair.Value);
+                    if (string.IsNullOrWhiteSpace(result))
+                        result = $"mfkey32 attack failed, no keys found{Environment.NewLine}";
+
+                    result = $"[Tag slot {pair.Key}]{Environment.NewLine}" + result;
+                    return result;
+                });
+                txt_output.AppendText(string.Join(string.Empty, results));
+            }
+            else if (_CurrentDevType == DeviceType.RevG)
+            {
+                SendCommandWithoutResult($"DETECTION{_cmdExtension}?");
+
+                var result = ReceiveXModemData();
+
+                var result_size = result.Length;
+                var idx = 0;
+
+                if (result_size >= 2)
+                {
+                    // get the packet size
+                    var packetSizeArray = new byte[] { result[idx++], result[idx++] };
+                    int packetSize = (((int)packetSizeArray[1]) << 8) | ((int)packetSizeArray[0]);
+
+                    var myKeys = new List<MyKey>();
+
+                    while (idx <= packetSize)
+                    {
+                        if (idx + 4 > packetSize)
+                            break;
+
+                        var entry_type = result[idx++];
+                        var data_length = result[idx++];
+                        var timestampArray = new byte[] { result[idx++], result[idx++] };
+                        int timestamp = (((int)timestampArray[0]) << 8) | ((int)timestampArray[1]);
+
+                        if (entry_type == 0xC0 || entry_type == 0xA1)
+                        {
+                            if ((data_length > 0) && (idx + data_length <= packetSize))
+                            {
+                                byte[] data = new byte[data_length];
+                                Array.Copy(result, idx, data, 0, data_length);
+
+                                var mykey = new MyKey
+                                {
+                                    KeyType = data[0],
+                                    Block = data[1],
+                                    UID = MfKeyAttacks.ToUInt32(data, 2),
+                                    nt0 = MfKeyAttacks.ToUInt32(data, 7),
+                                    nr0 = MfKeyAttacks.ToUInt32(data, 11),
+                                    ar0 = MfKeyAttacks.ToUInt32(data, 15)
+                                };
+                                mykey.Sector = MfKeyAttacks.ToSector(mykey.Block);
+
+                                // skip sectors with 0xFF
+                                if (mykey.Sector != 0xFF)
+                                    myKeys.Add(mykey);
+                            }
+                        }
+
+                        idx += data_length;
+
+                    }
+
+                    var my_cmp = new KeyComparer();
+                    myKeys.Sort(my_cmp);
+
+                    var show_all = MfKeyAttacks.KeyWorker(myKeys);
+
+
+                    if (string.IsNullOrWhiteSpace(show_all))
+                        txt_output.AppendText(string.Join(string.Empty, $"mfkey32 attack failed, no keys found{Environment.NewLine}"));
+                    else
+                        txt_output.AppendText(string.Join(string.Empty, $"{Environment.NewLine}" + result));
+                }
+            }
 
             RestoreActiveSlot();
             this.Cursor = Cursors.Default;
@@ -1688,7 +1793,7 @@ namespace ChameleonMiniGUI
                 var received = new byte[bytesread];
                 Buffer.BlockCopy(rx_data, 0, received, 0, bytesread);
 
-                if (cmdText.Contains($"DETECTION{_cmdExtension}?"))
+                if (_CurrentDevType == DeviceType.RevE && cmdText.Contains($"DETECTION{_cmdExtension}?"))
                 {
                     var foo = new byte[bytesread];
                     Array.Copy(rx_data, 8, foo, 0, bytesread - 7);

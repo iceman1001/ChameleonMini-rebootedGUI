@@ -4,9 +4,12 @@ This project uses the changelog in accordance with [keepchangelog](http://keepac
 
 ## [unreleased]
 
+## [1.3.0.3] - 2020-05-19 
+- Enable mfkey32 key recovery for RevG rev2 / Chameleon Tiny (@grspy)
+- Support for RevG - rev2 / Chameleon Tiny 's mfkey data format. (@grspy)
+
 ## [1.3.0.2] - 2020-03-10 
 - tab serial: sorted command list, use a arrow pointer, a light background color. (@iceman1001)
-
 
 ## [1.3.0.1] - 2020-03-10 
 - rectified minimum version error introduced in 1.3.0.0 (@iceman1001)

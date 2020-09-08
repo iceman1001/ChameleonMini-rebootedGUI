@@ -624,9 +624,9 @@ namespace ChameleonMiniGUI
                                     KeyType = data[0],
                                     Block = data[1],
                                     UID = MfKeyAttacks.ToUInt32(data, 2),
-                                    nt0 = MfKeyAttacks.ToUInt32(data, 7),
-                                    nr0 = MfKeyAttacks.ToUInt32(data, 11),
-                                    ar0 = MfKeyAttacks.ToUInt32(data, 15)
+                                    nt0 = MfKeyAttacks.ToUInt32(data, 6),
+                                    nr0 = MfKeyAttacks.ToUInt32(data, 10),
+                                    ar0 = MfKeyAttacks.ToUInt32(data, 14)
                                 };
                                 mykey.Sector = MfKeyAttacks.ToSector(mykey.Block);
 
@@ -637,19 +637,33 @@ namespace ChameleonMiniGUI
                         }
 
                         idx += data_length;
-
                     }
+
+                    if (myKeys.Any() == false)
+                    {
+                        RestoreActiveSlot();
+                        this.Cursor = Cursors.Default;
+                        txt_output.AppendText($"{Environment.NewLine}Didn't find any nonces for mfkey32{Environment.NewLine}");
+                        return;
+                    }
+
+                    txt_output.AppendText($"{Environment.NewLine}Starting mfkey32 with {myKeys.Count} nonces {Environment.NewLine}");
 
                     var my_cmp = new KeyComparer();
                     myKeys.Sort(my_cmp);
 
                     var show_all = MfKeyAttacks.KeyWorker(myKeys);
 
-
                     if (string.IsNullOrWhiteSpace(show_all))
-                        txt_output.AppendText(string.Join(string.Empty, $"mfkey32 attack failed, no keys found{Environment.NewLine}"));
+                    {
+                        txt_output.AppendText(string.Join(string.Empty,
+                            $"mfkey32 attack failed, no keys found{Environment.NewLine}"));
+                    }
                     else
-                        txt_output.AppendText(string.Join(string.Empty, $"{Environment.NewLine}" + result));
+                    {
+                        txt_output.AppendText($"Success! recovered the following keys{Environment.NewLine}");
+                        txt_output.AppendText(string.Join(string.Empty, $"{Environment.NewLine}", show_all));
+                    }
                 }
             }
 

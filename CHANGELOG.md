@@ -3,19 +3,23 @@ All notable changes to this project will be documented in this file.
 This project uses the changelog in accordance with [keepchangelog](http://keepachangelog.com/). Please use this to write notable changes, which is not the same as git commit log...
 
 ## [unreleased]
+## [1.3.0.4] - 2020-09-08 
+- mfkey32 button now works for RevG RDV20 with latest fw from the RRG repository (@iceman1001)
+- mfkey32 button now skips faulty nonces for RevE rebooted devices (@iceman1001)
+- Textual instruction to inform that the load default button fw is targetted for RevE rebooted devices (@iceman1001)
 
 ## [1.3.0.3] - 2020-05-19 
 - Enable mfkey32 key recovery for RevG rev2 / Chameleon Tiny (@grspy)
-- Support for RevG - rev2 / Chameleon Tiny 's mfkey data format. (@grspy)
+- Support for RevG - rev2 / Chameleon Tiny 's mfkey data format (@grspy)
 
 ## [1.3.0.2] - 2020-03-10 
-- tab serial: sorted command list, use a arrow pointer, a light background color. (@iceman1001)
+- tab serial: sorted command list, use a arrow pointer, a light background color (@iceman1001)
 
 ## [1.3.0.1] - 2020-03-10 
 - rectified minimum version error introduced in 1.3.0.0 (@iceman1001)
 
 ## [1.3.0.0] - 2020-03-10 
-- Enable mfkey key recovery button for RevG devices if the firmware supports it. (@iceman1001)
+- Enable mfkey key recovery button for RevG devices if the firmware supports it (@iceman1001)
 
 ## [1.2.2.1] - 2019-12-23
 - tab serial: select all text option  (@grspy)

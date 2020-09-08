@@ -458,7 +458,7 @@ namespace ChameleonMiniGUI
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(175, 118);
+            this.label1.Location = new System.Drawing.Point(163, 118);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(86, 13);
             this.label1.TabIndex = 7;
@@ -479,26 +479,26 @@ namespace ChameleonMiniGUI
             // tb_firmware
             // 
             this.tb_firmware.Enabled = false;
-            this.tb_firmware.Location = new System.Drawing.Point(178, 134);
+            this.tb_firmware.Location = new System.Drawing.Point(166, 134);
             this.tb_firmware.Name = "tb_firmware";
             this.tb_firmware.ReadOnly = true;
-            this.tb_firmware.Size = new System.Drawing.Size(256, 20);
+            this.tb_firmware.Size = new System.Drawing.Size(297, 20);
             this.tb_firmware.TabIndex = 6;
             // 
             // txt_constatus
             // 
-            this.txt_constatus.Location = new System.Drawing.Point(178, 70);
+            this.txt_constatus.Location = new System.Drawing.Point(166, 70);
             this.txt_constatus.Margin = new System.Windows.Forms.Padding(8);
             this.txt_constatus.Name = "txt_constatus";
             this.txt_constatus.ReadOnly = true;
-            this.txt_constatus.Size = new System.Drawing.Size(256, 20);
+            this.txt_constatus.Size = new System.Drawing.Size(297, 20);
             this.txt_constatus.TabIndex = 5;
             this.txt_constatus.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // btn_disconnect
             // 
             this.btn_disconnect.Enabled = false;
-            this.btn_disconnect.Location = new System.Drawing.Point(349, 29);
+            this.btn_disconnect.Location = new System.Drawing.Point(337, 29);
             this.btn_disconnect.Name = "btn_disconnect";
             this.btn_disconnect.Size = new System.Drawing.Size(85, 30);
             this.btn_disconnect.TabIndex = 1;
@@ -508,7 +508,7 @@ namespace ChameleonMiniGUI
             // 
             // btn_connect
             // 
-            this.btn_connect.Location = new System.Drawing.Point(178, 29);
+            this.btn_connect.Location = new System.Drawing.Point(166, 29);
             this.btn_connect.Name = "btn_connect";
             this.btn_connect.Size = new System.Drawing.Size(85, 30);
             this.btn_connect.TabIndex = 0;
@@ -536,9 +536,10 @@ namespace ChameleonMiniGUI
             this.lbl_defaults.AutoSize = true;
             this.lbl_defaults.Location = new System.Drawing.Point(245, 95);
             this.lbl_defaults.Name = "lbl_defaults";
-            this.lbl_defaults.Size = new System.Drawing.Size(397, 13);
+            this.lbl_defaults.Size = new System.Drawing.Size(472, 13);
             this.lbl_defaults.TabIndex = 10;
-            this.lbl_defaults.Text = "Flashes the stock firmware of the ChameleonMini. Needs to be in bootloader mode.";
+            this.lbl_defaults.Text = "Flashes the stock RevE rebooted firmware of the ChameleonMini. Needs to be in boo" +
+    "tloader mode.";
             // 
             // lbl_reset
             // 

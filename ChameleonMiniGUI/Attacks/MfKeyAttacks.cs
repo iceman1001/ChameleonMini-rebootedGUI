@@ -178,7 +178,7 @@ namespace ChameleonMiniGUI
                 mykey.Sector = ToSector(mykey.Block);
 
                 // skip sectors with 0xFF
-                if ( mykey.Sector != 0xFF)
+                if ( mykey.Sector != 0xFF && mykey.KeyType != 0xFF)
                     myKeys.Add(mykey);
             }
 

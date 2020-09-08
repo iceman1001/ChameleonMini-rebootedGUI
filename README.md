@@ -5,6 +5,9 @@
 
 This is a MS Windows based GUI for the ChameleonMini device.
 
+## discord server
+The new Proxmark community discord server is a great place to discuss Chameleon Mini GUI releated stuff. [discord server](https://discord.gg/zjxc8ZB)
+
 
 ## Which device does GUI support?
 in short, the GUI, it's

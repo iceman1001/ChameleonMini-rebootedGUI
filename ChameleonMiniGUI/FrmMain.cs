@@ -1795,7 +1795,7 @@ namespace ChameleonMiniGUI
 
                 // wait to make sure data is transmitted
                 Thread.Sleep(100);
-                int blockLimit = 275;
+                int blockLimit = 512;
 
                 var cts = new CancellationTokenSource();
                 var rx_data = new byte[blockLimit];

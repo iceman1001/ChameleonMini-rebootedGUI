@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project uses the changelog in accordance with [keepchangelog](http://keepachangelog.com/). Please use this to write notable changes, which is not the same as git commit log...
 
 ## [unreleased]
+
+## [1.3.0.5] - 2020-09-08 
+- Update of French language translation (@loupetre)
+- Bug fix where devices with Official RevG fw get a truncated output ( #129 )  (@loupetre)
+
 ## [1.3.0.4] - 2020-09-08 
 - mfkey32 button now works for RevG RDV20 with latest fw from the RRG repository (@iceman1001)
 - mfkey32 button now skips faulty nonces for RevE rebooted devices (@iceman1001)

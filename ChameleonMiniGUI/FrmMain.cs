@@ -709,7 +709,7 @@ namespace ChameleonMiniGUI
                     // For RevG, we manually set default values
                     if (_CurrentDevType == DeviceType.RevG)
                     {
-                        FindControls<ComboBox>(tpOperation.Controls, $"cb_mode{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"CONFIG{_cmdExtension}=CLOSED"));
+                        FindControls<ComboBox>(tpOperation.Controls, $"cb_mode{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"CONFIG{_cmdExtension}=NONE"));
                         FindControls<ComboBox>(tpOperation.Controls, $"cb_Lbutton{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LBUTTON{_cmdExtension}={a.Items[0]}"));
                         FindControls<ComboBox>(tpOperation.Controls, $"cb_Lbuttonlong{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"LBUTTON_LONG{_cmdExtension}={a.Items[0]}"));
                         FindControls<ComboBox>(tpOperation.Controls, $"cb_Rbutton{tagslotIndex}").ForEach(a => SendCommandWithoutResult($"RBUTTON{_cmdExtension}={a.Items[0]}"));

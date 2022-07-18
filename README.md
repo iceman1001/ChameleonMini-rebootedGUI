@@ -27,10 +27,10 @@ You find the [changelog](https://github.com/iceman1001/ChameleonMini-rebootedGUI
 ## Binary distribution / windows installer
 For the sake of easiness or for those who can't compile this project there is a _click-once deployment_ installation located here.
 
-Release: [v1.3.0.5](http://www.icesql.se/download/ChameleonMiniGUI/publish.htm)
+Release: [v1.3.0.6](http://www.icesql.se/download/ChameleonMiniGUI/publish.htm)
 
 __Prerequisite__
-* dot.net 4.6.2
+* dot.net 4.7.2
 * Application needs full rights.
 
 ### About _click once technology_

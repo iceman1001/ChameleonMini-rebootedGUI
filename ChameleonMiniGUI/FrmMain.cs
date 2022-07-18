@@ -1919,28 +1919,28 @@ namespace ChameleonMiniGUI
                         FindControls<ComboBox>(tpOperation.Controls, $"cb_mode{slotIndex}").ForEach(box => box.SelectedItem = slotMode);
                     }
 
-                    //BUTTONMY? -> RETURNS THE MODE OF THE BUTTON
+                    //LBUTTON? -> RETURNS THE MODE OF THE BUTTON
                     var slotLButtonMode = SendCommand($"LBUTTON{_cmdExtension}?").ToString();
                     if (IsLButtonModeValid(slotLButtonMode))
                     {
                         FindControls<ComboBox>(tpOperation.Controls, $"cb_lbutton{slotIndex}").ForEach(box => box.SelectedItem = slotLButtonMode);
                     }
 
-                    //BUTTON_LONGMY? -> RETURNS THE MODE OF THE BUTTON LONG
+                    //LBUTTON_LONG? -> RETURNS THE MODE OF THE BUTTON LONG
                     var slotLButtonLongMode = SendCommand($"LBUTTON_LONG{_cmdExtension}?").ToString();
                     if (IsLButtonLongModeValid(slotLButtonLongMode))
                     {
                         FindControls<ComboBox>(tpOperation.Controls, $"cb_lbuttonlong{slotIndex}").ForEach(box => box.SelectedItem = slotLButtonLongMode);
                     }
 
-                    //BUTTONMY? -> RETURNS THE MODE OF THE BUTTON
+                    //RBUTTON? -> RETURNS THE MODE OF THE BUTTON
                     var slotRButtonMode = SendCommand($"RBUTTON{_cmdExtension}?").ToString();
                     if (IsRButtonModeValid(slotRButtonMode))
                     {
                         FindControls<ComboBox>(tpOperation.Controls, $"cb_rbutton{slotIndex}").ForEach(box => box.SelectedItem = slotRButtonMode);
                     }
 
-                    //BUTTON_LONGMY? -> RETURNS THE MODE OF THE BUTTON LONG
+                    //RBUTTON_LONG? -> RETURNS THE MODE OF THE BUTTON LONG
                     var slotRButtonLongMode = SendCommand($"RBUTTON_LONG{_cmdExtension}?").ToString();
                     if (IsRButtonLongModeValid(slotRButtonLongMode))
                     {
@@ -2950,7 +2950,7 @@ namespace ChameleonMiniGUI
         {
             // Check if saved active slot is within the limit (0...7)
             if (_active_selected_slot < _tagslotIndexOffset) _active_selected_slot = _tagslotIndexOffset;
-            if (_active_selected_slot > _tagslotIndexOffset+7) _active_selected_slot = _tagslotIndexOffset+7;
+            if (_active_selected_slot > _tagslotIndexOffset+7) _active_selected_slot = (8 - _tagslotIndexOffset);
 
             SendCommandWithoutResult($"SETTING{_cmdExtension}={_active_selected_slot - _tagslotIndexOffset}");
             HighlightActiveSlot();
